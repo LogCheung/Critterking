@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxqxjbkdfqn0q"]
+
+[ext_resource type="PackedScene" uid="uid://y0ju1mi4ih78" path="res://TileMap/Scenes/tile_world.tscn" id="1_jamle"]
+[ext_resource type="PackedScene" uid="uid://bytyqloqmpx5r" path="res://Units/Scenes/unit_group.tscn" id="2_p7567"]
+
+[node name="World" type="Node2D"]
+
+[node name="TileWorld" parent="." instance=ExtResource("1_jamle")]
+
+[node name="UnitGroup" parent="." instance=ExtResource("2_p7567")]
+position = Vector2(706, 281)
