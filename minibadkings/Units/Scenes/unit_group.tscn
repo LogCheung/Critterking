@@ -1,13 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://bytyqloqmpx5r"]
+[gd_scene load_steps=3 format=3 uid="uid://bytyqloqmpx5r"]
 
 [ext_resource type="Script" uid="uid://ckgu67whte16x" path="res://Units/Scripts/unit_group.gd" id="1_onkey"]
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_onkey"]
+points = PackedVector2Array(0, -16, 32, 0, 0, 16, -32, 0)
 
 [node name="UnitGroup" type="CharacterBody2D"]
 script = ExtResource("1_onkey")
 max_size = 9
+selected = null
 
 [node name="UnitsNode" type="Node2D" parent="."]
 unique_name_in_owner = true
 
 [node name="PositionsNode" type="Node2D" parent="."]
 unique_name_in_owner = true
+
+[node name="SelectArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SelectArea"]
+shape = SubResource("ConvexPolygonShape2D_onkey")
+
+[connection signal="input_event" from="SelectArea" to="." method="_on_select_area_input_event"]
+[connection signal="mouse_entered" from="SelectArea" to="." method="_on_select_area_mouse_entered"]
+[connection signal="mouse_exited" from="SelectArea" to="." method="_on_select_area_mouse_exited"]

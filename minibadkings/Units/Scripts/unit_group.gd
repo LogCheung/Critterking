@@ -7,9 +7,12 @@ const UNIT = preload("res://Units/Scenes/unit.tscn")
 @export var size : int = 9
 @export var max_size : int
 @export var type : int
+@export var selected : bool = false
 
-var x_sep : int = -16
-var y_sep : int = 8
+@onready var tileWorld
+
+var x_sep : int = -10
+var y_sep : int = 4
 var columns : int = 3
 var rows : int
 
@@ -26,7 +29,7 @@ func create_formation() -> void:
 	if size % columns != 0:  rows += 1
 	
 	var new_row_margin = -(x_sep)
-	var last_pos : Vector2 = Vector2(new_row_margin,-31 )
+	var last_pos : Vector2 = Vector2(new_row_margin,-15 )
 	for r in range(rows):
 		for c in range(columns):
 			# add unit
@@ -43,3 +46,22 @@ func create_formation() -> void:
 			unit.formation_position = formation_pos
 		last_pos += Vector2(abs(x_sep) * 2.75,-y_sep) # add margin for next row
 		last_pos -= Vector2(x_sep,y_sep) # new row margin
+
+var is_under_mouse : bool = false
+func _on_select_area_mouse_entered() -> void:
+	is_under_mouse = true
+	for unit : Unit in %UnitsNode.get_children():
+		if unit.sprite_2d.material != null:
+			continue
+		unit.selected.emit()
+func _on_select_area_mouse_exited() -> void:
+	is_under_mouse = false
+	if selected:
+		return
+	for unit : Unit in %UnitsNode.get_children():
+		unit.unselected.emit()
+func _on_select_area_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event.is_action_pressed("select") and is_under_mouse:
+		selected = !selected
+		if selected:
+			_on_select_area_mouse_exited()
