@@ -1,11 +1,32 @@
-[gd_scene load_steps=3 format=3 uid="uid://bxqxjbkdfqn0q"]
+[gd_scene load_steps=4 format=3 uid="uid://bxqxjbkdfqn0q"]
 
 [ext_resource type="PackedScene" uid="uid://y0ju1mi4ih78" path="res://TileMap/Scenes/tile_world.tscn" id="1_jamle"]
 [ext_resource type="PackedScene" uid="uid://bytyqloqmpx5r" path="res://Units/Scenes/unit_group.tscn" id="2_p7567"]
+[ext_resource type="PackedScene" uid="uid://dkqw1dmj0wkgb" path="res://Units/Scenes/unit.tscn" id="3_yw7h8"]
 
 [node name="World" type="Node2D"]
 
 [node name="TileWorld" parent="." instance=ExtResource("1_jamle")]
 
 [node name="UnitGroup" parent="." instance=ExtResource("2_p7567")]
-position = Vector2(706, 281)
+position = Vector2(708, 287)
+
+[node name="Unit" parent="." instance=ExtResource("3_yw7h8")]
+visible = false
+position = Vector2(708, 264)
+
+[node name="Unit4" parent="." instance=ExtResource("3_yw7h8")]
+visible = false
+position = Vector2(726, 275)
+
+[node name="Unit5" parent="." instance=ExtResource("3_yw7h8")]
+visible = false
+position = Vector2(726, 275)
+
+[node name="Unit2" parent="." instance=ExtResource("3_yw7h8")]
+visible = false
+position = Vector2(692, 272)
+
+[node name="Unit3" parent="." instance=ExtResource("3_yw7h8")]
+visible = false
+position = Vector2(676, 280)
