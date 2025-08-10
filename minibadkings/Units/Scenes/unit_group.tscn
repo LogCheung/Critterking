@@ -4,6 +4,7 @@
 
 [node name="UnitGroup" type="CharacterBody2D"]
 script = ExtResource("1_onkey")
+max_size = 9
 
 [node name="UnitsNode" type="Node2D" parent="."]
 unique_name_in_owner = true

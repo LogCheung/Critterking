@@ -9,7 +9,7 @@ const UNIT = preload("res://Units/Scenes/unit.tscn")
 @export var type : int
 
 var x_sep : int = -16
-var y_sep : int = 8 
+var y_sep : int = 8
 var columns : int = 3
 var rows : int
 
@@ -41,5 +41,5 @@ func create_formation() -> void:
 			formation_pos.position = unit.position
 			%PositionsNode.add_child(formation_pos)
 			unit.formation_position = formation_pos
-		last_pos += Vector2(52,-y_sep) # add margin for next row
-		last_pos -= Vector2(x_sep,y_sep)
+		last_pos += Vector2(abs(x_sep) * 2.75,-y_sep) # add margin for next row
+		last_pos -= Vector2(x_sep,y_sep) # new row margin
