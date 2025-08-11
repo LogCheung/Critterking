@@ -26,6 +26,8 @@ enabled=PackedStringArray("res://addons/utility_ai/plugin.cfg")
 [global_group]
 
 TILEWORLD=""
+UNITSNODE=""
+GROUPSNODE=""
 
 [input]
 

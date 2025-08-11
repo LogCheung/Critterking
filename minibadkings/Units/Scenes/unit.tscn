@@ -1,18 +1,29 @@
-[gd_scene load_steps=6 format=3 uid="uid://dkqw1dmj0wkgb"]
+[gd_scene load_steps=11 format=3 uid="uid://dkqw1dmj0wkgb"]
 
 [ext_resource type="PackedScene" uid="uid://ddc6mf0gqftb" path="res://Units/Scenes/hit_box.tscn" id="1_pm8qt"]
 [ext_resource type="Script" uid="uid://13y7jtc01ydv" path="res://Units/Scripts/unit.gd" id="1_q458e"]
 [ext_resource type="Material" uid="uid://blwf6yqh85bg4" path="res://Units/Shaders/unitHighlight.tres" id="1_vlxp4"]
 [ext_resource type="Texture2D" uid="uid://b5g3yuaejn6if" path="res://Units/Assets/AllyMeleeNormal.png" id="2_1ekc5"]
+[ext_resource type="Script" uid="uid://bxew2mys8y8u8" path="res://addons/utility_ai/agent/agent.gd" id="5_t35g5"]
+[ext_resource type="PackedScene" uid="uid://d0dhe2lv3x4u3" path="res://Units/Debug/utility_debug.tscn" id="5_yd6on"]
+[ext_resource type="Script" uid="uid://bpvkdlp8jw4sj" path="res://addons/utility_ai/actions/action.gd" id="6_m88pn"]
+[ext_resource type="Script" uid="uid://dojkyt7skh8fh" path="res://addons/utility_ai/considerations/consideration_from_node.gd" id="7_m88pn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm8qt"]
 size = Vector2(4, 7)
+
+[sub_resource type="Curve" id="Curve_daau3"]
+_data = [Vector2(0.07, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="Unit" type="CharacterBody2D"]
 material = ExtResource("1_vlxp4")
 script = ExtResource("1_q458e")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Flip" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Flip"]
+unique_name_in_owner = true
 texture = ExtResource("2_1ekc5")
 hframes = 4
 
@@ -23,5 +34,32 @@ position = Vector2(-2, -7)
 [node name="CollisionShape2D" parent="HitBox" index="0"]
 position = Vector2(2, 8)
 shape = SubResource("RectangleShape2D_pm8qt")
+
+[node name="utility_debug" parent="." node_paths=PackedStringArray("utility_agent") instance=ExtResource("5_yd6on")]
+visible = false
+scale = Vector2(0.25, 0.25)
+utility_agent = NodePath("../UtilityAiAgent")
+
+[node name="UtilityAiAgent" type="Node" parent="."]
+script = ExtResource("5_t35g5")
+metadata/_custom_type_script = "uid://bxew2mys8y8u8"
+
+[node name="UtilityAiAction" type="Node" parent="UtilityAiAgent"]
+script = ExtResource("6_m88pn")
+_action_id = "form"
+metadata/_custom_type_script = "uid://bpvkdlp8jw4sj"
+
+[node name="UtilityAiConsideration" type="Node" parent="UtilityAiAgent/UtilityAiAction" node_paths=PackedStringArray("node")]
+script = ExtResource("7_m88pn")
+node = NodePath("../../..")
+property_name = "in_combat"
+curve = SubResource("Curve_daau3")
+metadata/_custom_type_script = "uid://dojkyt7skh8fh"
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true
+
+[connection signal="top_score_action_changed" from="UtilityAiAgent" to="." method="_on_utility_ai_agent_top_score_action_changed"]
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 
 [editable path="HitBox"]
