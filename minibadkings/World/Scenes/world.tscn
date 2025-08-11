@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bxqxjbkdfqn0q"]
+[gd_scene load_steps=4 format=3 uid="uid://bxqxjbkdfqn0q"]
 
 [ext_resource type="PackedScene" uid="uid://y0ju1mi4ih78" path="res://TileMap/Scenes/tile_world.tscn" id="1_jamle"]
 [ext_resource type="PackedScene" uid="uid://bytyqloqmpx5r" path="res://Units/Scenes/unit_group.tscn" id="2_p7567"]
+[ext_resource type="Script" uid="uid://bjiaogu16dctd" path="res://World/Scenes/camera_2d.gd" id="2_yw7h8"]
 
 [node name="World" type="Node2D"]
 
@@ -13,6 +14,7 @@ unique_name_in_owner = true
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(289, 162)
 zoom = Vector2(2, 2)
+script = ExtResource("2_yw7h8")
 
 [node name="UnitGroupsNode" type="Node" parent="." groups=["GROUPSNODE"]]
 
