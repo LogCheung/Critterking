@@ -9,6 +9,8 @@ signal selected
 signal unselected
 
 const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
+@export var health : int = 4
+@export var damage : int = 2
 @export var speed : float = 100
 @export var formation_position : Node2D 
 @export var group : UnitGroup
@@ -16,25 +18,42 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @onready var sprite_2d: Sprite2D = %Sprite2D
 @onready var nav: NavigationAgent2D = $NavigationAgent2D
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
+@onready var anim: AnimationPlayer = $AnimationPlayer
 
 var action : ACTION = ACTION.NONE
+var in_formation : bool = false
 var in_combat : bool = false
 var path_points : Array
+
+var is_behind_wall : bool
 
 func _ready() -> void:
 	selected.connect(on_selected)
 	unselected.connect(on_unselected)
 
 func _process(delta: float) -> void:
+	if global_position.distance_to(formation_position.global_position) <= 2:
+		in_formation = true
+		is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
+		handle_behind_wall()
+	else:
+		in_formation = false
+	
 	match action:
 		ACTION.NONE:
+			anim.play("idle")
 			return
 		ACTION.FORM:
+			anim.stop()
 			nav.target_position = formation_position.global_position
-			if global_position.distance_to(nav.target_position) < 3:
+			if global_position.distance_to(nav.target_position) <= 2:
+				in_formation = true
+				is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
+				handle_behind_wall()
 				return
 	
 	move_to(self.global_position.direction_to(nav.get_next_path_position()), delta)
+
 
 func on_selected() -> void:
 	sprite_2d.material = HIGHLIGHT
@@ -62,6 +81,29 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 
 func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> void:
 	match top_action_id:
+		"none":
+			action = ACTION.NONE
 		"form":
 			action = ACTION.FORM
 		pass
+
+var wall_tile # wall that it is behind
+func handle_behind_wall() -> void:
+	# not liking but looks for closest tile by going all wall tiles and makes transparent
+	if is_behind_wall:
+		print("ok")
+		var walls = tileWorld.wall.get_used_cells()
+		wall_tile = walls.front()
+		for w in walls:
+			var w_local_pos = tileWorld.wall.map_to_local(w)
+			var wall_tile_local_pos = tileWorld.wall.map_to_local(wall_tile)
+			var cur_dist = global_position.distance_to(wall_tile_local_pos)
+			var next_dist = global_position.distance_to(w_local_pos)
+			if next_dist < cur_dist:
+				wall_tile = w
+		
+		tileWorld.wall.set_cell(wall_tile,0,Vector2(0,2),1)
+	else:
+		if wall_tile and tileWorld.wall.get_used_cells().has(wall_tile):
+			tileWorld.wall.set_cell(wall_tile,0,Vector2(0,2),0)
+			wall_tile = null

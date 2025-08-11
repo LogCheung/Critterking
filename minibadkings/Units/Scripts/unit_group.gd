@@ -1,5 +1,5 @@
 @tool
-extends CharacterBody2D
+extends Node2D
 class_name UnitGroup
 
 const UNIT = preload("res://Units/Scenes/unit.tscn")
@@ -12,7 +12,7 @@ const UNIT = preload("res://Units/Scenes/unit.tscn")
 
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var unitsNode : Node2D = get_tree().get_first_node_in_group("UNITSNODE")
-@onready var groupsNode : Node = get_tree().get_first_node_in_group("GROUPSNODE")
+@onready var groupsNode : Node2D = get_tree().get_first_node_in_group("GROUPSNODE")
 
 var x_sep : int = -10
 var y_sep : int = 4
@@ -35,7 +35,8 @@ func create_formation() -> void:
 	if size % columns != 0:  rows += 1
 	
 	var new_row_margin = -(x_sep)
-	var last_pos : Vector2 = Vector2(new_row_margin,-15 )
+	var vertical_off = -15 if size <= 9 else -19
+	var last_pos : Vector2 = Vector2(new_row_margin,vertical_off) 
 	for r in range(rows):
 		for c in range(columns):
 			# add unit

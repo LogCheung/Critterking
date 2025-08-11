@@ -5,18 +5,22 @@
 [ext_resource type="Script" uid="uid://bjiaogu16dctd" path="res://World/Scenes/camera_2d.gd" id="2_yw7h8"]
 
 [node name="World" type="Node2D"]
+y_sort_enabled = true
 
 [node name="TileWorld" parent="." instance=ExtResource("1_jamle")]
 
 [node name="UnitsNode" type="Node2D" parent="." groups=["UNITSNODE"]]
 unique_name_in_owner = true
+z_index = 1
+y_sort_enabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(289, 162)
 zoom = Vector2(2, 2)
 script = ExtResource("2_yw7h8")
 
-[node name="UnitGroupsNode" type="Node" parent="." groups=["GROUPSNODE"]]
+[node name="UnitGroupsNode" type="Node2D" parent="." groups=["GROUPSNODE"]]
+z_index = 1
 
 [node name="UnitGroup" parent="UnitGroupsNode" instance=ExtResource("2_p7567")]
 position = Vector2(480, 176)

@@ -5,9 +5,11 @@
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_onkey"]
 points = PackedVector2Array(0, -16, 32, 0, 0, 16, -32, 0)
 
-[node name="UnitGroup" type="CharacterBody2D"]
+[node name="UnitGroup" type="Node2D"]
+z_index = 1
+z_as_relative = false
 script = ExtResource("1_onkey")
-max_size = 9
+size = 12
 
 [node name="PositionsNode" type="Node2D" parent="."]
 unique_name_in_owner = true
