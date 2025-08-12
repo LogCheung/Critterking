@@ -80,7 +80,7 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yd6on"]
 size = Vector2(2, 2)
 
-[node name="Unit" type="CharacterBody2D"]
+[node name="Unit" type="CharacterBody2D" groups=["UNIT"]]
 material = ExtResource("1_vlxp4")
 script = ExtResource("1_q458e")
 

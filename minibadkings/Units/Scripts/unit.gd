@@ -26,6 +26,7 @@ var in_combat : bool = false
 var path_points : Array
 
 var is_behind_wall : bool
+var was_behind_wall : bool
 
 func _ready() -> void:
 	selected.connect(on_selected)
@@ -35,6 +36,7 @@ func _process(delta: float) -> void:
 	if global_position.distance_to(formation_position.global_position) <= 2:
 		in_formation = true
 		is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
+		was_behind_wall = true if is_behind_wall else false
 		handle_behind_wall()
 	else:
 		in_formation = false
@@ -49,6 +51,7 @@ func _process(delta: float) -> void:
 			if global_position.distance_to(nav.target_position) <= 2:
 				in_formation = true
 				is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
+				was_behind_wall = true if is_behind_wall else false
 				handle_behind_wall()
 				return
 	
@@ -91,7 +94,6 @@ var wall_tile # wall that it is behind
 func handle_behind_wall() -> void:
 	# not liking but looks for closest tile by going all wall tiles and makes transparent
 	if is_behind_wall:
-		print("ok")
 		var walls = tileWorld.wall.get_used_cells()
 		wall_tile = walls.front()
 		for w in walls:
@@ -103,7 +105,4 @@ func handle_behind_wall() -> void:
 				wall_tile = w
 		
 		tileWorld.wall.set_cell(wall_tile,0,Vector2(0,2),1)
-	else:
-		if wall_tile and tileWorld.wall.get_used_cells().has(wall_tile):
-			tileWorld.wall.set_cell(wall_tile,0,Vector2(0,2),0)
-			wall_tile = null
+		tileWorld.replace_transparent_walls()

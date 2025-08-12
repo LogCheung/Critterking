@@ -8,10 +8,12 @@ class_name TileWorld
 
 @onready var unit_groups : Array
 
+var wall_tiles : Array
 var unit_tiles : Array
 
 func _ready() -> void:
 	await get_tree().create_timer(.2).timeout
+	wall_tiles = wall.get_used_cells()
 	handle_navigable_cells()
 
 func handle_navigable_cells() -> void:
@@ -36,3 +38,14 @@ func handle_navigable_cells() -> void:
 	# change tile data of tiles with buildings on them
 	for tile in buildings.get_used_cells():
 		ground.set_cell(tile,0,Vector2(0,0),2)
+func replace_transparent_walls() -> void:
+	var units = get_tree().get_nodes_in_group("UNIT")
+	var trans_walls = units.map(func(u : Unit):return u.wall_tile)
+	trans_walls = trans_walls.filter(func(e):return e != null)
+	print(trans_walls)
+	var opaque_cells = wall.get_used_cells_by_id(0,Vector2(0,2),0)
+	for cell in wall_tiles:
+		if opaque_cells.has(cell): continue
+		if trans_walls.has(cell): continue
+		
+		wall.set_cell(cell,0,Vector2(0,2))
