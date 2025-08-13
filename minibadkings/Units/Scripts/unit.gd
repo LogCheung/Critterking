@@ -26,33 +26,38 @@ var in_combat : bool = false
 var path_points : Array
 
 var is_behind_wall : bool
-var was_behind_wall : bool
 
 func _ready() -> void:
 	selected.connect(on_selected)
 	unselected.connect(on_unselected)
 
 func _process(delta: float) -> void:
-	if global_position.distance_to(formation_position.global_position) <= 2:
-		in_formation = true
-		is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
-		was_behind_wall = true if is_behind_wall else false
+	if action != ACTION.NONE:
 		handle_behind_wall()
+	
+	if global_position.distance_to(formation_position.global_position) <= 2:
+		# precheck if it is behind something
+		is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
+		if !is_behind_wall: wall_tile = null
+		
+		in_formation = true
 	else:
 		in_formation = false
 	
 	match action:
 		ACTION.NONE:
 			anim.play("idle")
+			
 			return
 		ACTION.FORM:
 			anim.stop()
 			nav.target_position = formation_position.global_position
 			if global_position.distance_to(nav.target_position) <= 2:
-				in_formation = true
+				# precheck if it is behind something
 				is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
-				was_behind_wall = true if is_behind_wall else false
-				handle_behind_wall()
+				if !is_behind_wall: wall_tile = null
+				
+				in_formation = true
 				return
 	
 	move_to(self.global_position.direction_to(nav.get_next_path_position()), delta)
@@ -85,6 +90,7 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> void:
 	match top_action_id:
 		"none":
+			tileWorld.replace_transparent_walls()
 			action = ACTION.NONE
 		"form":
 			action = ACTION.FORM
@@ -92,17 +98,20 @@ func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> vo
 
 var wall_tile # wall that it is behind
 func handle_behind_wall() -> void:
+	is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
 	# not liking but looks for closest tile by going all wall tiles and makes transparent
 	if is_behind_wall:
-		var walls = tileWorld.wall.get_used_cells()
+		var walls = tileWorld.wall.get_used_cells_by_id(0,Vector2(0,2),2)
+		walls.append_array(tileWorld.wall.get_used_cells_by_id(0,Vector2(0,2),1))
+		
 		wall_tile = walls.front()
 		for w in walls:
+			
 			var w_local_pos = tileWorld.wall.map_to_local(w)
 			var wall_tile_local_pos = tileWorld.wall.map_to_local(wall_tile)
 			var cur_dist = global_position.distance_to(wall_tile_local_pos)
 			var next_dist = global_position.distance_to(w_local_pos)
-			if next_dist < cur_dist:
+			if next_dist < cur_dist :
 				wall_tile = w
 		
 		tileWorld.wall.set_cell(wall_tile,0,Vector2(0,2),1)
-		tileWorld.replace_transparent_walls()

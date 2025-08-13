@@ -15,6 +15,7 @@ func _ready() -> void:
 	await get_tree().create_timer(.2).timeout
 	wall_tiles = wall.get_used_cells()
 	handle_navigable_cells()
+	limit_colliding_walls()
 
 func handle_navigable_cells() -> void:
 	# reset 
@@ -42,10 +43,22 @@ func replace_transparent_walls() -> void:
 	var units = get_tree().get_nodes_in_group("UNIT")
 	var trans_walls = units.map(func(u : Unit):return u.wall_tile)
 	trans_walls = trans_walls.filter(func(e):return e != null)
-	print(trans_walls)
 	var opaque_cells = wall.get_used_cells_by_id(0,Vector2(0,2),0)
 	for cell in wall_tiles:
 		if opaque_cells.has(cell): continue
 		if trans_walls.has(cell): continue
 		
-		wall.set_cell(cell,0,Vector2(0,2))
+		wall.set_cell(cell,0,Vector2(0,2),2)
+
+func limit_colliding_walls() -> void:
+	for w in wall.get_used_cells():
+		if has_surrounding_ground_cells(w):
+			wall.set_cell(w,0,Vector2(0,2),2)
+
+func has_surrounding_ground_cells(tile : Vector2i) -> bool:
+	var groundCells = ground.get_used_cells()
+	for x in range(tile.x -1, tile.x + 1):
+		for y in range(tile.y -1, tile.y + 1):
+			if groundCells.has(Vector2i(x,y)):
+				return true
+	return false

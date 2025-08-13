@@ -136,6 +136,7 @@ metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_postprocessing = 1
+avoidance_enabled = true
 radius = 30.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

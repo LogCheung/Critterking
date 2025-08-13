@@ -35,7 +35,7 @@ func create_formation() -> void:
 	if size % columns != 0:  rows += 1
 	
 	var new_row_margin = -(x_sep)
-	var vertical_off = -15 if size <= 9 else -19
+	var vertical_off = -12 if size <= 9 else -17
 	var last_pos : Vector2 = Vector2(new_row_margin,vertical_off) 
 	for r in range(rows):
 		for c in range(columns):
