@@ -13,7 +13,7 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @export var damage : int = 2
 @export var speed : float = 100
 @export var formation_position : Node2D 
-@export var group : UnitGroup
+@export var group : Group
 
 @onready var sprite_2d: Sprite2D = %Sprite2D
 @onready var nav: NavigationAgent2D = $NavigationAgent2D
@@ -26,10 +26,13 @@ var in_combat : bool = false
 var path_points : Array
 
 var is_behind_wall : bool
+var wall_tile
 
 func _ready() -> void:
-	selected.connect(on_selected)
-	unselected.connect(on_unselected)
+	#selected.connect(on_selected)
+	#unselected.connect(on_unselected)
+	nav.velocity_computed.connect(_on_navigation_agent_2d_velocity_computed)
+	pass
 
 func _process(delta: float) -> void:
 	if action != ACTION.NONE:
@@ -43,30 +46,6 @@ func _process(delta: float) -> void:
 		in_formation = true
 	else:
 		in_formation = false
-	
-	match action:
-		ACTION.NONE:
-			anim.play("idle")
-			
-			return
-		ACTION.FORM:
-			anim.stop()
-			nav.target_position = formation_position.global_position
-			if global_position.distance_to(nav.target_position) <= 2:
-				# precheck if it is behind something
-				is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
-				if !is_behind_wall: wall_tile = null
-				
-				in_formation = true
-				return
-	
-	move_to(self.global_position.direction_to(nav.get_next_path_position()), delta)
-
-
-func on_selected() -> void:
-	sprite_2d.material = HIGHLIGHT
-func on_unselected() -> void:
-	sprite_2d.material = null
 
 func move_to(direction, _delta):
 	if direction.x > 0:
@@ -83,20 +62,8 @@ func move_to(direction, _delta):
 		_on_navigation_agent_2d_velocity_computed(new_velocity)
 		
 	move_and_slide()
-	
 func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 	velocity = safe_velocity
-
-func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> void:
-	match top_action_id:
-		"none":
-			tileWorld.replace_transparent_walls()
-			action = ACTION.NONE
-		"form":
-			action = ACTION.FORM
-		pass
-
-var wall_tile # wall that it is behind
 func handle_behind_wall() -> void:
 	is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
 	# not liking but looks for closest tile by going all wall tiles and makes transparent

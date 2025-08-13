@@ -1,2 +1,2 @@
-extends CharacterBody2D
+extends Unit
 class_name Enemy

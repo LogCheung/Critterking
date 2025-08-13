@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://dkqw1dmj0wkgb"]
 
 [ext_resource type="PackedScene" uid="uid://ddc6mf0gqftb" path="res://Units/Scenes/hit_box.tscn" id="1_pm8qt"]
-[ext_resource type="Script" uid="uid://13y7jtc01ydv" path="res://Units/Scripts/unit.gd" id="1_q458e"]
+[ext_resource type="Script" uid="uid://13y7jtc01ydv" path="res://Units/Scripts/ally.gd" id="1_q458e"]
 [ext_resource type="Material" uid="uid://blwf6yqh85bg4" path="res://Units/Shaders/unitHighlight.tres" id="1_vlxp4"]
 [ext_resource type="Texture2D" uid="uid://b5g3yuaejn6if" path="res://Units/Assets/AllyMeleeNormal.png" id="2_1ekc5"]
 [ext_resource type="Script" uid="uid://bxew2mys8y8u8" path="res://addons/utility_ai/agent/agent.gd" id="5_t35g5"]
@@ -153,6 +153,5 @@ position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_yd6on")
 
 [connection signal="top_score_action_changed" from="UtilityAiAgent" to="." method="_on_utility_ai_agent_top_score_action_changed"]
-[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 
 [editable path="HitBox"]

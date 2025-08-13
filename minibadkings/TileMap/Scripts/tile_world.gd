@@ -25,7 +25,7 @@ func handle_navigable_cells() -> void:
 	
 	# get where the units are
 	unit_groups = get_tree().get_first_node_in_group("GROUPSNODE").get_children()
-	for group : UnitGroup in unit_groups:
+	for group : AllyGroup in unit_groups:
 		unit_tiles.append(group.tile)
 	
 	var navCells : Array = ground.get_used_cells_by_id(0,Vector2(0,0),0)
