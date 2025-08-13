@@ -1,0 +1,82 @@
+[gd_resource type="TileSet" load_steps=8 format=3 uid="uid://bxsbqepu6rxgc"]
+
+[ext_resource type="Texture2D" uid="uid://cx0b0ucjd4cee" path="res://TileMap/Assets/tiles.png" id="1_nbqb2"]
+[ext_resource type="Texture2D" uid="uid://d06rjt2g5bhak" path="res://TileMap/Assets/test.png" id="2_hh4v1"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_jb8ou"]
+vertices = PackedVector2Array(32, 0, 0, 16, -32, 0, 0, -16)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, -16, -32, 0, 0, 16, 32, 0)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_h7jyf"]
+vertices = PackedVector2Array(32, 0, 0, 16, -32, 0, 0, -16)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, -16, -32, 0, 0, 16, 32, 0)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_fl1qv"]
+vertices = PackedVector2Array(32, 0, 0, 16, -32, 0, 0, -16)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, -16, -32, 0, 0, 16, 32, 0)])
+agent_radius = 0.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h7jyf"]
+texture = ExtResource("1_nbqb2")
+texture_region_size = Vector2i(64, 64)
+0:1/next_alternative_id = 3
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, -16)
+0:1/1 = 1
+0:1/1/texture_origin = Vector2i(0, 16)
+0:1/2 = 2
+0:0/next_alternative_id = 5
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, -16)
+0:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_jb8ou")
+0:0/1 = 1
+0:0/1/texture_origin = Vector2i(0, -16)
+0:0/1/modulate = Color(0.674815, 0.674815, 0.674815, 1)
+0:0/1/navigation_layer_0/polygon = SubResource("NavigationPolygon_h7jyf")
+0:0/2 = 2
+0:0/2/texture_origin = Vector2i(0, -16)
+0:0/3 = 3
+0:0/3/texture_origin = Vector2i(0, -16)
+0:0/3/navigation_layer_0/polygon = SubResource("NavigationPolygon_fl1qv")
+1:0/0 = 0
+1:0/0/texture_origin = Vector2i(0, 16)
+2:0/0 = 0
+2:0/0/texture_origin = Vector2i(0, 16)
+3:0/0 = 0
+3:0/0/texture_origin = Vector2i(0, 16)
+3:0/0/z_index = 1
+4:0/0 = 0
+4:0/0/texture_origin = Vector2i(0, 16)
+4:0/0/z_index = 1
+0:2/next_alternative_id = 3
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 4)
+0:2/1 = 1
+0:2/1/texture_origin = Vector2i(0, 4)
+0:2/1/modulate = Color(1, 1, 1, 0.482353)
+0:2/1/physics_layer_0/polygon_0/points = PackedVector2Array(-0.637262, -28.0395, -26.1277, -20.3924, -18.1973, -6.90137, 0, -16, 17.5475, -7.22625, 24.8532, -19.1178)
+0:2/2 = 2
+0:2/2/texture_origin = Vector2i(0, 4)
+0:2/2/physics_layer_0/polygon_0/points = PackedVector2Array(0.477943, -33.6155, -32.0224, -17.0467, -15.003, -8.49848, 2.38972, -18.3213, 18.9585, -9.39961, 31.7038, -16.4095)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_leqhe"]
+texture = ExtResource("2_hh4v1")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, -32)
+
+[resource]
+tile_shape = 1
+tile_layout = 5
+tile_offset_axis = 1
+tile_size = Vector2i(64, 32)
+physics_layer_0/collision_layer = 16
+physics_layer_0/collision_mask = 0
+navigation_layer_0/layers = 1
+sources/50 = SubResource("TileSetAtlasSource_leqhe")
+sources/0 = SubResource("TileSetAtlasSource_h7jyf")

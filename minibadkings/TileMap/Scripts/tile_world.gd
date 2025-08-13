@@ -5,7 +5,7 @@ class_name TileWorld
 @onready var hover : TileMapLayer = $Hover
 @onready var buildings: TileMapLayer = $Buildings
 @onready var wall: TileMapLayer = $wall
-
+@onready var center: Node2D = $Center
 @onready var unit_groups : Array
 
 var wall_tiles : Array
