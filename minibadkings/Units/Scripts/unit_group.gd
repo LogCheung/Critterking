@@ -1,4 +1,3 @@
-@tool
 extends Group
 class_name AllyGroup
 

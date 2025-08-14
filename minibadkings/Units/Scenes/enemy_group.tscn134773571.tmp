@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://crgrp0juuu53l"]
+
+[ext_resource type="Script" uid="uid://bw27g3fanckan" path="res://Units/Scripts/enemy_group.gd" id="1_kvufm"]
+
+[node name="enemyGroup" type="Node2D"]
+script = ExtResource("1_kvufm")
+size = 12
+
+[node name="PositionsNode" type="Node2D" parent="."]
+unique_name_in_owner = true

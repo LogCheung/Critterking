@@ -12,7 +12,6 @@ signal selected
 signal unselected
 
 const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
-const PROJ = preload("res://Units/Scenes/projectile.tscn")
 
 @export var health : int = 4
 @export var max_health : int = 4
@@ -49,10 +48,9 @@ var attack_ready : bool
 func _ready() -> void:
 	nav.velocity_computed.connect(_on_navigation_agent_2d_velocity_computed)
 	%HurtBox.area_entered.connect(on_hurt_box_land)
-	
 	pass
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	attack_ready = attack_cd.time_left <= 0
 	distance_from_form = global_position.distance_to(formation_position.global_position)
 	
@@ -77,7 +75,7 @@ func move_to(direction, _delta):
 	var new_velocity = direction * speed
 	velocity = new_velocity
 	
-	if !nav.avoidance_enabled:
+	if nav.avoidance_enabled:
 		nav.set_velocity(new_velocity)
 	else:
 		_on_navigation_agent_2d_velocity_computed(new_velocity)
@@ -108,11 +106,10 @@ func handle_behind_wall() -> void:
 # Attacking
 func attack_finished() -> void:
 	attacking = false
-	
 	# Shooting after animation finished
 	if !target : return
 	if type == TYPE.RANGED:
-		var proj = PROJ.instantiate()
+		var proj = preload("res://Units/Scenes/projectile.tscn").instantiate()
 		proj.DIRECTION = global_position.direction_to(target.global_position)
 		proj.global_position = global_position
 		proj.damage = damage

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c14eoupysd2xd"]
+[gd_scene load_steps=23 format=3 uid="uid://c14eoupysd2xd"]
 
 [ext_resource type="Material" uid="uid://blwf6yqh85bg4" path="res://Units/Shaders/unitHighlight.tres" id="1_mh310"]
 [ext_resource type="Script" uid="uid://bvqtdufd1qjrv" path="res://Units/Scripts/enemy.gd" id="2_mh310"]
@@ -32,6 +32,10 @@ point_count = 2
 
 [sub_resource type="Curve" id="Curve_mh310"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_ubmlb"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.797753), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Animation" id="Animation_daau3"]
@@ -175,6 +179,7 @@ position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_pm8qt")
 
 [node name="utility_debug" parent="." node_paths=PackedStringArray("utility_agent") instance=ExtResource("5_wh35a")]
+visible = false
 scale = Vector2(0.25, 0.25)
 utility_agent = NodePath("../UtilityAiAgent")
 
@@ -189,7 +194,6 @@ metadata/_custom_type_script = "uid://bpvkdlp8jw4sj"
 
 [node name="UtilityAiAggregation" type="Node" parent="UtilityAiAgent/form"]
 script = ExtResource("8_ubmlb")
-aggregation_type = 3
 metadata/_custom_type_script = "uid://b2f8vq1st70r0"
 
 [node name="target_in_range2" type="Node" parent="UtilityAiAgent/form/UtilityAiAggregation" node_paths=PackedStringArray("node")]
@@ -217,7 +221,20 @@ property_name = "target_in_range"
 curve = SubResource("Curve_mh310")
 metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
+[node name="raid" type="Node" parent="UtilityAiAgent"]
+script = ExtResource("7_7xmed")
+_action_id = "raid"
+metadata/_custom_type_script = "uid://bpvkdlp8jw4sj"
+
+[node name="UtilityAiConsiderationFromNode" type="Node" parent="UtilityAiAgent/raid" node_paths=PackedStringArray("node")]
+script = ExtResource("8_ohg4d")
+node = NodePath("../../..")
+property_name = "is_active"
+curve = SubResource("Curve_ubmlb")
+metadata/_custom_type_script = "uid://dojkyt7skh8fh"
+
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+navigation_layers = 3
 path_postprocessing = 1
 avoidance_enabled = true
 radius = 20.0

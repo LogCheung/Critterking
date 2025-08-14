@@ -13,11 +13,11 @@ var unit_tiles : Array
 var outskirt_tiles : Array
 
 func _ready() -> void:
+	find_outskirt_tiles()
 	await get_tree().create_timer(.2).timeout
 	wall_tiles = wall.get_used_cells()
 	handle_navigable_cells()
 	limit_colliding_walls()
-	find_outskirt_tiles()
 
 func handle_navigable_cells() -> void:
 	# reset 
@@ -28,6 +28,7 @@ func handle_navigable_cells() -> void:
 	# get where the units are
 	unit_groups = get_tree().get_first_node_in_group("GROUPSNODE").get_children()
 	for group : AllyGroup in unit_groups:
+		if !group is AllyGroup : continue
 		unit_tiles.append(group.tile)
 	
 	var navCells : Array = ground.get_used_cells_by_id(0,Vector2(0,0),0)
@@ -70,12 +71,10 @@ func find_outskirt_tiles() -> void:
 	var end : Vector2i = rect.end
 	var pos : Vector2i = rect.position
 	for y in range(pos.y,end.y):
-		outskirt_tiles.append(Vector2i(pos.x,y))
-	for x in range(pos.x + 1,end.x):
-		outskirt_tiles.append(Vector2i(x,end.y - 1))
-	for y in range(end.y -1,pos.y,-1):
-		outskirt_tiles.append(Vector2i(end.x - 1,y))
-	for x in range(end.x -1 ,pos.x,-1):
-		outskirt_tiles.append(Vector2i(x,pos.y))
+		outskirt_tiles.append(Vector2i(pos.x - 1,y))
+		outskirt_tiles.append(Vector2i(end.x ,y))
+	for x in range(pos.x ,end.x):
+		outskirt_tiles.append(Vector2i(x,end.y))
+		outskirt_tiles.append(Vector2i(x,pos.y - 1))
 	for tile in outskirt_tiles:
 		ground.set_cell(tile,0,Vector2(0,0),4)

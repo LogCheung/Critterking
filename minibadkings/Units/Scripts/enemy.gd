@@ -25,6 +25,8 @@ func handle_action(delta) -> void:
 				
 				in_formation = true
 				return
+			else:
+				in_formation = false
 		ACTION.FIGHT:
 			if attacking : return
 			find_target()
@@ -38,12 +40,27 @@ func handle_action(delta) -> void:
 				attack_cd.start()
 				attacking = true
 				return
+		ACTION.RAID:
+			if distToTarget <= 32:
+				anim.play("attack")
+				return
+			
 	
 	move_to(self.global_position.direction_to(nav.get_next_path_position()), delta)
 	
 func become_active() -> void:
 	is_active = true
 	hit_box.monitorable = true
+
+func find_building() -> void:
+	var buildings = tileWorld.buildings.get_used_cells()
+	if buildings.is_empty() : return
+	buildings = buildings.map(func(b):return tileWorld.ground.map_to_local(b))
+	target = buildings.front()
+	for b in buildings:
+		if global_position.distance_to(b) < global_position.distance_to(target):
+			target = b
+	if target: nav.target_position = target
 
 func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> void:
 	match top_action_id:
@@ -52,3 +69,6 @@ func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> vo
 		"fight":
 			action = ACTION.FIGHT
 			find_target()
+		"raid":
+			action = ACTION.RAID
+			find_building()
