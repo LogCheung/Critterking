@@ -9,7 +9,7 @@ size = Vector2(7, 7)
 [node name="Projectile" type="Area2D"]
 z_index = 4096
 collision_layer = 0
-collision_mask = 4
+collision_mask = 0
 script = ExtResource("1_rk1kh")
 SPEED = 150.0
 RANGE = 128.0

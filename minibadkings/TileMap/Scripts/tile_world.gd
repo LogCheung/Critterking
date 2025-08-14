@@ -3,7 +3,6 @@ class_name TileWorld
 
 @onready var ground : TileMapLayer = $Ground
 @onready var hover : TileMapLayer = $Hover
-@onready var buildings: TileMapLayer = $Buildings
 @onready var wall: TileMapLayer = $wall
 @onready var center: Node2D = $Center
 @onready var unit_groups : Array
@@ -31,17 +30,21 @@ func handle_navigable_cells() -> void:
 		if !group is AllyGroup : continue
 		unit_tiles.append(group.tile)
 	
+	var buildingsCells = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
+	buildingsCells = buildingsCells.map(func(b : Building):return b.tile)
+	# change tile data for buildings
+	for cell in buildingsCells:
+		ground.set_cell(cell,0,Vector2(0,0),2)
+	
 	var navCells : Array = ground.get_used_cells_by_id(0,Vector2(0,0),0)
 	navCells.append_array(ground.get_used_cells_by_id(0,Vector2(0,0),1))
 	for tile in navCells:
 		if unit_tiles.has(Vector2(tile)): continue
-		if buildings.get_used_cells().has(Vector2i(tile)) : continue
+		if buildingsCells.has(Vector2(tile)) : continue
 		hover.set_cell(tile,0,Vector2(0,0))
 	hover.visible = false
 	
-	# change tile data of tiles with buildings on them
-	for tile in buildings.get_used_cells():
-		ground.set_cell(tile,0,Vector2(0,0),2)
+	
 func replace_transparent_walls() -> void:
 	var units = get_tree().get_nodes_in_group("UNIT")
 	var trans_walls = units.map(func(u : Unit):return u.wall_tile)

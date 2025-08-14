@@ -5,6 +5,7 @@ const MELEENORMAL = preload("res://Units/Assets/AllyMeleeNormal.png")
 const RANGEDNORMAL = preload("res://Units/Assets/AllyRangedNormal.png")
 
 var allyGroup : AllyGroup
+var healing : bool
 
 func _ready() -> void:
 	allyGroup = group
@@ -26,13 +27,16 @@ func handle_action(delta) -> void:
 			anim.play("idle")
 			return
 		ACTION.FORM:
+			anim.play("walk")
 			nav.target_position = formation_position.global_position
 			if distToTarget <= 2:
+				set_collision_layer_value(1,true)
 				# precheck if it is behind something
 				is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
 				if !is_behind_wall: wall_tile = null
 				
 				in_formation = true
+				anim.stop()
 				return
 		ACTION.FIGHT:
 			if attacking : return
@@ -40,12 +44,26 @@ func handle_action(delta) -> void:
 			if distToTarget <= attackRange :
 				if !attack_cd.time_left <= 0 : return
 				if anim.is_playing() : return
+				if type == TYPE.RANGED and distToTarget < 15: 
+					too_close = true
+					return
+				too_close = false
 				
 				anim.play("attack")
 				
 				await anim.animation_finished
 				attack_cd.start()
 				attacking = true
+				return
+		ACTION.STRAFE:
+			find_target()
+			if !target : return
+			var strafe_dist = 20
+			var dir = global_position.direction_to(target.global_position)
+			nav.target_position = target.global_position - dir * strafe_dist
+		ACTION.HEAL:
+			if distToTarget < 5:
+				visible = false
 				return
 	
 	move_to(self.global_position.direction_to(nav.get_next_path_position()), delta)
@@ -61,9 +79,11 @@ func match_type() -> void:
 			return
 		TYPE.RANGED:
 			sprite_2d.texture = RANGEDNORMAL
+			health = 1
 			attackRange = 100
 			var visionShape : CollisionShape2D = vision.get_child(0)
 			visionShape.shape.radius = 120
+			attack_cd.wait_time = 4
 
 func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> void:
 	match top_action_id:
@@ -76,4 +96,9 @@ func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> vo
 			anim.stop()
 			action = ACTION.FIGHT
 			find_target()
-		pass
+		"strafe":
+			action = ACTION.STRAFE
+		"heal":
+			action = ACTION.HEAL
+			nav.target_position = allyGroup.house.entrance.global_position
+			set_collision_layer_value(1,false)

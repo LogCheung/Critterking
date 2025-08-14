@@ -2,7 +2,7 @@ extends CharacterBody2D
 class_name Unit
 
 enum ACTION {
-	NONE,FORM, FIGHT, RAID
+	NONE,FORM, FIGHT, RAID, STRAFE, HEAL
 }
 enum TYPE {
 	NONE, MELEE, SHIELDED, RANGED
@@ -16,7 +16,7 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @export var health : int = 4
 @export var max_health : int = 4
 @export var damage : int = 2
-@export var speed : float = 50
+@export var speed : float = 30
 @export var attackRange : float = 10
 @export var formation_position : Node2D 
 @export var group : Group
@@ -44,10 +44,13 @@ var target
 var attacking : bool
 var distance_from_form : float = 0.0
 var attack_ready : bool
+var too_close : bool
+
 
 func _ready() -> void:
 	nav.velocity_computed.connect(_on_navigation_agent_2d_velocity_computed)
 	%HurtBox.area_entered.connect(on_hurt_box_land)
+	%HurtBox.body_entered.connect(on_hurt_box_building_land)
 	pass
 
 func _process(_delta: float) -> void:
@@ -65,6 +68,7 @@ func _process(_delta: float) -> void:
 		in_formation = true
 	else:
 		in_formation = false
+	
 
 func move_to(direction, _delta):
 	if direction.x > 0:
@@ -74,6 +78,8 @@ func move_to(direction, _delta):
 		
 	var new_velocity = direction * speed
 	velocity = new_velocity
+	if action == ACTION.STRAFE:
+		velocity /= 4
 	
 	if nav.avoidance_enabled:
 		nav.set_velocity(new_velocity)
@@ -113,9 +119,11 @@ func attack_finished() -> void:
 		proj.DIRECTION = global_position.direction_to(target.global_position)
 		proj.global_position = global_position
 		proj.damage = damage
+		proj.is_enemy = self is Enemy
 		get_tree().get_first_node_in_group("WORLD").add_child(proj)
 
 func find_target() -> void:
+	target = null
 	var enemies = vision.get_overlapping_areas().map(func(a):return a.owner)
 	find_closest(enemies)
 	if !target : return
@@ -144,3 +152,7 @@ func on_hurt_box_land(area : Area2D) -> void:
 			enemy.group.unit_died.emit()
 			enemy.queue_free()
 			hurtbox_cd.start()
+func on_hurt_box_building_land(body : Node2D):
+	if body is Building:
+		print("ok")
+	pass

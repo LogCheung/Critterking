@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://bxqxjbkdfqn0q"]
+[gd_scene load_steps=7 format=3 uid="uid://bxqxjbkdfqn0q"]
 
 [ext_resource type="Script" uid="uid://dvsiuovo1wgp" path="res://World/Scripts/world.gd" id="1_fdxdb"]
 [ext_resource type="PackedScene" uid="uid://y0ju1mi4ih78" path="res://TileMap/Scenes/tile_world.tscn" id="1_jamle"]
 [ext_resource type="Script" uid="uid://bjiaogu16dctd" path="res://World/Scripts/camera_2d.gd" id="2_yw7h8"]
+[ext_resource type="PackedScene" uid="uid://bytyqloqmpx5r" path="res://Units/Scenes/unit_group.tscn" id="4_xvb7p"]
 [ext_resource type="PackedScene" uid="uid://crgrp0juuu53l" path="res://Units/Scenes/enemy_group.tscn" id="5_xvb7p"]
+[ext_resource type="PackedScene" uid="uid://cct0mtgpy7ut6" path="res://TileMap/Scenes/building.tscn" id="6_t7din"]
 
 [node name="World" type="Node2D" groups=["WORLD"]]
 y_sort_enabled = true
@@ -29,6 +31,11 @@ script = ExtResource("2_yw7h8")
 [node name="UnitGroupsNode" type="Node2D" parent="." groups=["GROUPSNODE"]]
 z_index = 1
 
+[node name="UnitGroup" parent="UnitGroupsNode" instance=ExtResource("4_xvb7p")]
+position = Vector2(449, 160)
+type = 3
+size = 3
+
 [node name="EnemyPerimeters" type="Node" parent="."]
 
 [node name="SpawnTimer" type="Timer" parent="."]
@@ -37,6 +44,17 @@ wait_time = 6.0
 [node name="EnemyGroupsNode" type="Node2D" parent="." groups=["ENEMYGRPNODE"]]
 
 [node name="enemyGroup" parent="EnemyGroupsNode" instance=ExtResource("5_xvb7p")]
-position = Vector2(253, 190)
+position = Vector2(286, 304)
+type = 3
+
+[node name="enemyGroup2" parent="EnemyGroupsNode" instance=ExtResource("5_xvb7p")]
+position = Vector2(-609, 574)
+type = 3
+
+[node name="BuidlingsNode" type="Node2D" parent="." groups=["BUILDINGSNODE"]]
+
+[node name="Building" parent="BuidlingsNode" instance=ExtResource("6_t7din")]
+position = Vector2(319, 128)
+type = 1
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

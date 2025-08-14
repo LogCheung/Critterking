@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dkqw1dmj0wkgb"]
+[gd_scene load_steps=31 format=3 uid="uid://dkqw1dmj0wkgb"]
 
 [ext_resource type="PackedScene" uid="uid://ddc6mf0gqftb" path="res://Units/Scenes/hit_box.tscn" id="1_pm8qt"]
 [ext_resource type="Script" uid="uid://13y7jtc01ydv" path="res://Units/Scripts/ally.gd" id="1_q458e"]
@@ -9,13 +9,14 @@
 [ext_resource type="Script" uid="uid://bpvkdlp8jw4sj" path="res://addons/utility_ai/actions/action.gd" id="6_m88pn"]
 [ext_resource type="Script" uid="uid://dojkyt7skh8fh" path="res://addons/utility_ai/considerations/consideration_from_node.gd" id="7_m88pn"]
 [ext_resource type="Script" uid="uid://b2f8vq1st70r0" path="res://addons/utility_ai/considerations/aggregation.gd" id="9_daau3"]
+[ext_resource type="Script" uid="uid://c4w8b5x2jd5q3" path="res://Units/Scenes/considerType.gd" id="9_jqc0h"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_daau3"]
 radius = 2.0
 height = 4.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_daau3"]
-size = Vector2(8, 7)
+size = Vector2(7, 9.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm8qt"]
 size = Vector2(4, 5)
@@ -49,6 +50,24 @@ point_count = 2
 
 [sub_resource type="Curve" id="Curve_t5nd1"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_8nglq"]
+_limits = [0.0, 1.5, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1.5), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_iqrsy"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_esq2s"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_tcpyn"]
+_limits = [0.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 2), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Animation" id="Animation_daau3"]
@@ -89,10 +108,10 @@ tracks/0/path = NodePath("Flip/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.74943),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [8, 9, 10, 11, 12, 13]
+"values": [8, 9, 10, 11, 12, 13, 0]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -138,14 +157,32 @@ tracks/0/keys = {
 "values": [0, 1, 4, 5]
 }
 
+[sub_resource type="Animation" id="Animation_37x55"]
+resource_name = "walk"
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Flip/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [14, 15, 16, 17, 18, 19, 20, 21]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jqc0h"]
 _data = {
 &"RESET": SubResource("Animation_daau3"),
 &"attack": SubResource("Animation_jqc0h"),
-&"idle": SubResource("Animation_yd6on")
+&"idle": SubResource("Animation_yd6on"),
+&"walk": SubResource("Animation_37x55")
 }
 
-[node name="Unit" type="CharacterBody2D" groups=["UNIT"]]
+[node name="Ally" type="CharacterBody2D" groups=["UNIT"]]
 light_mask = 33
 material = ExtResource("1_vlxp4")
 motion_mode = 1
@@ -171,7 +208,7 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Flip/HurtBox"]
-position = Vector2(5, 3)
+position = Vector2(4.5, 2)
 shape = SubResource("RectangleShape2D_daau3")
 disabled = true
 debug_color = Color(0.793403, 0.426364, 1.92523e-07, 0.42)
@@ -274,6 +311,52 @@ script = ExtResource("7_m88pn")
 node = NodePath("../../../..")
 property_name = "attack_ready"
 curve = SubResource("Curve_t5nd1")
+metadata/_custom_type_script = "uid://dojkyt7skh8fh"
+
+[node name="strafe" type="Node" parent="UtilityAiAgent"]
+script = ExtResource("6_m88pn")
+_action_id = "strafe"
+metadata/_custom_type_script = "uid://bpvkdlp8jw4sj"
+
+[node name="UtilityAiAggregation2" type="Node" parent="UtilityAiAgent/strafe"]
+script = ExtResource("9_daau3")
+metadata/_custom_type_script = "uid://b2f8vq1st70r0"
+
+[node name="is_ranged" type="Node" parent="UtilityAiAgent/strafe/UtilityAiAggregation2"]
+script = ExtResource("9_jqc0h")
+type = 3
+curve = SubResource("Curve_8nglq")
+metadata/_custom_type_script = "uid://ds3cm31xh6g85"
+
+[node name="UtilityAiAggregation" type="Node" parent="UtilityAiAgent/strafe/UtilityAiAggregation2"]
+script = ExtResource("9_daau3")
+aggregation_type = 3
+metadata/_custom_type_script = "uid://b2f8vq1st70r0"
+
+[node name="reloading" type="Node" parent="UtilityAiAgent/strafe/UtilityAiAggregation2/UtilityAiAggregation" node_paths=PackedStringArray("node")]
+script = ExtResource("7_m88pn")
+node = NodePath("../../../../..")
+property_name = "attack_ready"
+curve = SubResource("Curve_iqrsy")
+metadata/_custom_type_script = "uid://dojkyt7skh8fh"
+
+[node name="UtilityAiConsiderationFromNode" type="Node" parent="UtilityAiAgent/strafe/UtilityAiAggregation2/UtilityAiAggregation" node_paths=PackedStringArray("node")]
+script = ExtResource("7_m88pn")
+node = NodePath("../../../../..")
+property_name = "too_close"
+curve = SubResource("Curve_esq2s")
+metadata/_custom_type_script = "uid://dojkyt7skh8fh"
+
+[node name="heal" type="Node" parent="UtilityAiAgent"]
+script = ExtResource("6_m88pn")
+_action_id = "heal"
+metadata/_custom_type_script = "uid://bpvkdlp8jw4sj"
+
+[node name="UtilityAiConsiderationFromNode" type="Node" parent="UtilityAiAgent/heal" node_paths=PackedStringArray("node")]
+script = ExtResource("7_m88pn")
+node = NodePath("../../..")
+property_name = "healing"
+curve = SubResource("Curve_tcpyn")
 metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
 [node name="utility_debug" parent="." node_paths=PackedStringArray("utility_agent") instance=ExtResource("5_yd6on")]

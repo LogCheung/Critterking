@@ -27,6 +27,9 @@ func _on_area_entered(area: Area2D) -> void:
 		var target : Unit = area.owner
 		# for shielded
 		if target.type == Unit.TYPE.SHIELDED:
+		 # chance to ignore damage while also having reduced damage
+			#var rand = randi()
+			#if rand % 2 == 0: 
 			target.health -= damage - 1
 		else:
 			target.health -= damage 

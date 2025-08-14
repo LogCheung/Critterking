@@ -5,7 +5,7 @@ signal unit_died
 
 @export var type : Unit.TYPE
 @export var size : int = 9
-@export var max_size : int
+@export var max_size : int = 9
 @export var selected : bool = false
 @export var unitsArray : Array[Unit]
 @export var upgraded : bool = false
@@ -31,8 +31,8 @@ func create_formation(unit_type : PackedScene) -> void:
 		child.queue_free()
 	unitsArray.clear()
 	# attempt to make square formation
-	rows = size / columns
-	if size % columns != 0:  rows += 1
+	rows = max_size / columns
+	if max_size % columns != 0:  rows += 1
 	
 	var new_row_margin = -(x_sep)
 	var vertical_off = -15 if size <= 9 else -16

@@ -15,7 +15,7 @@ var innerFollow : PathFollow2D
 func _ready() -> void:
 	create_enemy_perimeter(10 + Global.expansions, true)
 	create_enemy_perimeter(9 + Global.expansions, false)
-	spawn_enemy()
+	#spawn_enemy()
 
 func clear_perimeters() -> void:
 	# clear children
