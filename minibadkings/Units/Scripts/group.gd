@@ -2,11 +2,14 @@
 extends Node2D
 class_name Group
 
+signal unit_died
+
+@export var type : Unit.TYPE
 @export var size : int = 9
 @export var max_size : int
-@export var type : int
 @export var selected : bool = false
 @export var unitsArray : Array[Unit]
+@export var upgraded : bool = false
 
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var unitsNode : Node2D = get_tree().get_first_node_in_group("UNITSNODE")
@@ -19,6 +22,9 @@ var rows : int
 
 var tile : Vector2
 
+func _ready() -> void:
+	unit_died.connect(_on_unit_died)
+
 func create_formation(unit_type : PackedScene) -> void:
 	# clear all units and create new formation based on size
 	for child : Unit in unitsArray:
@@ -30,7 +36,7 @@ func create_formation(unit_type : PackedScene) -> void:
 	if size % columns != 0:  rows += 1
 	
 	var new_row_margin = -(x_sep)
-	var vertical_off = -12 if size <= 9 else -16
+	var vertical_off = -15 if size <= 9 else -16
 	var last_pos : Vector2 = Vector2(new_row_margin,vertical_off) 
 	for r in range(rows):
 		for c in range(columns):
@@ -39,6 +45,8 @@ func create_formation(unit_type : PackedScene) -> void:
 			unit.position = last_pos + Vector2(x_sep,y_sep)
 			unit.rotation -= rotation
 			unit.group = self
+			unit.type = type
+			
 			last_pos = unit.position
 			unitsNode.add_child(unit)
 			unitsArray.append(unit)
@@ -52,3 +60,7 @@ func create_formation(unit_type : PackedScene) -> void:
 			unit.global_position += global_position # for global offset
 		last_pos += Vector2(abs(x_sep) * 2.75,-y_sep) # add margin for next row
 		last_pos -= Vector2(x_sep,y_sep) # new row margin
+
+func _on_unit_died() -> void:
+	if unitsArray.is_empty():
+		queue_free()

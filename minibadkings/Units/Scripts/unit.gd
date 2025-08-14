@@ -2,23 +2,36 @@ extends CharacterBody2D
 class_name Unit
 
 enum ACTION {
-	NONE,FORM, FIGHT
+	NONE,FORM, FIGHT, RAID
+}
+enum TYPE {
+	NONE, MELEE, SHIELDED, RANGED
 }
 
 signal selected
 signal unselected
 
 const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
+const PROJ = preload("res://Units/Scenes/projectile.tscn")
+
 @export var health : int = 4
+@export var max_health : int = 4
 @export var damage : int = 2
-@export var speed : float = 100
+@export var speed : float = 50
+@export var attackRange : float = 10
 @export var formation_position : Node2D 
 @export var group : Group
+@export var type : TYPE = TYPE.MELEE
+@export var upgraded : bool = false
 
 @onready var sprite_2d: Sprite2D = %Sprite2D
 @onready var nav: NavigationAgent2D = $NavigationAgent2D
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var anim: AnimationPlayer = $AnimationPlayer
+@onready var attack_cd: Timer = $AttackCD
+@onready var vision: Area2D = $Vision
+@onready var hurtbox_cd: Timer = $HurtboxCD
+@onready var hit_box: Area2D = %HitBox
 
 var action : ACTION = ACTION.NONE
 var in_formation : bool = false
@@ -28,13 +41,21 @@ var path_points : Array
 var is_behind_wall : bool
 var wall_tile
 
+var target
+var attacking : bool
+var distance_from_form : float = 0.0
+var attack_ready : bool
+
 func _ready() -> void:
-	#selected.connect(on_selected)
-	#unselected.connect(on_unselected)
 	nav.velocity_computed.connect(_on_navigation_agent_2d_velocity_computed)
+	%HurtBox.area_entered.connect(on_hurt_box_land)
+	
 	pass
 
 func _process(delta: float) -> void:
+	attack_ready = attack_cd.time_left <= 0
+	distance_from_form = global_position.distance_to(formation_position.global_position)
+	
 	if action != ACTION.NONE:
 		handle_behind_wall()
 	
@@ -56,12 +77,13 @@ func move_to(direction, _delta):
 	var new_velocity = direction * speed
 	velocity = new_velocity
 	
-	if nav.avoidance_enabled:
+	if !nav.avoidance_enabled:
 		nav.set_velocity(new_velocity)
 	else:
 		_on_navigation_agent_2d_velocity_computed(new_velocity)
 		
 	move_and_slide()
+	
 func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 	velocity = safe_velocity
 func handle_behind_wall() -> void:
@@ -82,3 +104,46 @@ func handle_behind_wall() -> void:
 				wall_tile = w
 		
 		tileWorld.wall.set_cell(wall_tile,0,Vector2(0,2),1)
+
+# Attacking
+func attack_finished() -> void:
+	attacking = false
+	
+	# Shooting after animation finished
+	if !target : return
+	if type == TYPE.RANGED:
+		var proj = PROJ.instantiate()
+		proj.DIRECTION = global_position.direction_to(target.global_position)
+		proj.global_position = global_position
+		proj.damage = damage
+		get_tree().get_first_node_in_group("WORLD").add_child(proj)
+
+func find_target() -> void:
+	var enemies = vision.get_overlapping_areas().map(func(a):return a.owner)
+	find_closest(enemies)
+	if !target : return
+	nav.target_position = target.global_position
+
+func find_closest(nodeArray : Array) -> void:
+	if nodeArray.is_empty() : return
+	
+	# finds closest in range enemy and makes it our target
+	var closest = nodeArray.front()
+	for node in nodeArray:
+		var cur_dist = global_position.distance_to(closest.global_position)
+		var next_dist = global_position.distance_to(node.global_position)
+		if next_dist < cur_dist:
+			closest = node
+	target = closest
+
+func on_hurt_box_land(area : Area2D) -> void:
+	if hurtbox_cd.time_left > 0 : return
+	if area.owner is Unit:
+		var enemy : Unit = area.owner
+		enemy.health -= damage
+		if enemy.health <= 0:
+			var enemyGroup = enemy.group.unitsArray
+			if enemyGroup.find(enemy) != -1 : enemyGroup.remove_at(enemyGroup.find(enemy))
+			enemy.group.unit_died.emit()
+			enemy.queue_free()
+			hurtbox_cd.start()

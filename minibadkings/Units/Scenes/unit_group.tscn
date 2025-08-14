@@ -9,7 +9,7 @@ points = PackedVector2Array(0, -16, 32, 0, 0, 16, -32, 0)
 z_index = 1
 z_as_relative = false
 script = ExtResource("1_onkey")
-size = 12
+upgraded = null
 
 [node name="PositionsNode" type="Node2D" parent="."]
 unique_name_in_owner = true

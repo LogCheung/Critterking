@@ -4,10 +4,12 @@ class_name AllyGroup
 
 const UNIT : PackedScene = preload("res://Units/Scenes/unit.tscn")
 
+
 func _ready() -> void:
+	super._ready()
 	tile = tileWorld.ground.local_to_map(global_position)
 	create_formation(UNIT)
-	
+
 var is_under_mouse : bool = false
 func _on_select_area_mouse_entered() -> void:
 	is_under_mouse = true

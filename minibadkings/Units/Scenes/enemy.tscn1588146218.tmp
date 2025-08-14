@@ -1,0 +1,183 @@
+[gd_scene load_steps=19 format=3 uid="uid://c14eoupysd2xd"]
+
+[ext_resource type="Material" uid="uid://blwf6yqh85bg4" path="res://Units/Shaders/unitHighlight.tres" id="1_mh310"]
+[ext_resource type="Script" uid="uid://bvqtdufd1qjrv" path="res://Units/Scripts/enemy.gd" id="2_mh310"]
+[ext_resource type="Texture2D" uid="uid://b5g3yuaejn6if" path="res://Units/Assets/AllyMeleeNormal.png" id="3_1flw5"]
+[ext_resource type="PackedScene" uid="uid://ddc6mf0gqftb" path="res://Units/Scenes/hit_box.tscn" id="4_0wncj"]
+[ext_resource type="PackedScene" uid="uid://d0dhe2lv3x4u3" path="res://Units/Debug/utility_debug.tscn" id="5_wh35a"]
+[ext_resource type="Script" uid="uid://bxew2mys8y8u8" path="res://addons/utility_ai/agent/agent.gd" id="6_8inca"]
+[ext_resource type="Script" uid="uid://bpvkdlp8jw4sj" path="res://addons/utility_ai/actions/action.gd" id="7_7xmed"]
+[ext_resource type="Script" uid="uid://dojkyt7skh8fh" path="res://addons/utility_ai/considerations/consideration_from_node.gd" id="8_ohg4d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pm8qt"]
+size = Vector2(4, 7)
+
+[sub_resource type="Curve" id="Curve_yd6on"]
+_limits = [0.0, 1.1, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1.1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_daau3"]
+_data = [Vector2(0.07, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_mh310"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Animation" id="Animation_daau3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Flip/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_jqc0h"]
+resource_name = "attack"
+length = 0.75
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Flip/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11, 12, 13]
+}
+
+[sub_resource type="Animation" id="Animation_yd6on"]
+resource_name = "idle"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Flip/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jqc0h"]
+_data = {
+&"RESET": SubResource("Animation_daau3"),
+&"attack": SubResource("Animation_jqc0h"),
+&"idle": SubResource("Animation_yd6on")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yd6on"]
+size = Vector2(2, 2)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mh310"]
+radius = 128.0
+
+[node name="Enemy" type="CharacterBody2D" groups=["UNIT"]]
+modulate = Color(0.891657, 0.493547, 0.544112, 1)
+material = ExtResource("1_mh310")
+script = ExtResource("2_mh310")
+
+[node name="Flip" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Flip"]
+unique_name_in_owner = true
+texture = ExtResource("3_1flw5")
+offset = Vector2(4, 0)
+hframes = 14
+frame = 1
+
+[node name="HitBox" parent="." instance=ExtResource("4_0wncj")]
+visible = false
+position = Vector2(-2, -7)
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+position = Vector2(2, 8)
+shape = SubResource("RectangleShape2D_pm8qt")
+
+[node name="utility_debug" parent="." node_paths=PackedStringArray("utility_agent") instance=ExtResource("5_wh35a")]
+visible = false
+scale = Vector2(0.25, 0.25)
+utility_agent = NodePath("../UtilityAiAgent")
+
+[node name="UtilityAiAgent" type="Node" parent="."]
+script = ExtResource("6_8inca")
+metadata/_custom_type_script = "uid://bxew2mys8y8u8"
+
+[node name="none" type="Node" parent="UtilityAiAgent"]
+script = ExtResource("7_7xmed")
+_action_id = "none"
+metadata/_custom_type_script = "uid://bpvkdlp8jw4sj"
+
+[node name="UtilityAiConsiderationFromNode" type="Node" parent="UtilityAiAgent/none" node_paths=PackedStringArray("node")]
+script = ExtResource("8_ohg4d")
+node = NodePath("../../..")
+property_name = "in_formation"
+curve = SubResource("Curve_yd6on")
+metadata/_custom_type_script = "uid://dojkyt7skh8fh"
+
+[node name="form" type="Node" parent="UtilityAiAgent"]
+script = ExtResource("7_7xmed")
+_action_id = "form"
+metadata/_custom_type_script = "uid://bpvkdlp8jw4sj"
+
+[node name="is_active" type="Node" parent="UtilityAiAgent/form" node_paths=PackedStringArray("node")]
+script = ExtResource("8_ohg4d")
+node = NodePath("../../..")
+property_name = "is_active"
+curve = SubResource("Curve_daau3")
+metadata/_custom_type_script = "uid://dojkyt7skh8fh"
+
+[node name="fight" type="Node" parent="UtilityAiAgent"]
+script = ExtResource("7_7xmed")
+metadata/_custom_type_script = "uid://bpvkdlp8jw4sj"
+
+[node name="target_in_range" type="Node" parent="UtilityAiAgent/fight" node_paths=PackedStringArray("node")]
+script = ExtResource("8_ohg4d")
+node = NodePath("../../..")
+property_name = "target_in_range"
+curve = SubResource("Curve_mh310")
+metadata/_custom_type_script = "uid://dojkyt7skh8fh"
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_postprocessing = 1
+avoidance_enabled = true
+radius = 30.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_jqc0h")
+}
+
+[node name="behindWall" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="behindWall"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_yd6on")
+
+[node name="Vision" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
+shape = SubResource("CircleShape2D_mh310")
+
+[connection signal="top_score_action_changed" from="UtilityAiAgent" to="." method="_on_utility_ai_agent_top_score_action_changed"]
+
+[editable path="HitBox"]

@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://cpdgkoo57h7p5"]
+
+[ext_resource type="Script" uid="uid://bujip4vrgojsr" path="res://Units/Scripts/projectile.gd" id="1_rk1kh"]
+[ext_resource type="Texture2D" uid="uid://mjdslnm8s23a" path="res://Units/Assets/AllyProjectile.png" id="2_6y74n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6y74n"]
+size = Vector2(7, 7)
+
+[node name="Projectile" type="Area2D"]
+z_index = 4096
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_rk1kh")
+SPEED = 150.0
+RANGE = 128.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_6y74n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -0.5)
+shape = SubResource("RectangleShape2D_6y74n")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dkqw1dmj0wkgb"]
+[gd_scene load_steps=25 format=3 uid="uid://dkqw1dmj0wkgb"]
 
 [ext_resource type="PackedScene" uid="uid://ddc6mf0gqftb" path="res://Units/Scenes/hit_box.tscn" id="1_pm8qt"]
 [ext_resource type="Script" uid="uid://13y7jtc01ydv" path="res://Units/Scripts/ally.gd" id="1_q458e"]
@@ -8,17 +8,47 @@
 [ext_resource type="PackedScene" uid="uid://d0dhe2lv3x4u3" path="res://Units/Debug/utility_debug.tscn" id="5_yd6on"]
 [ext_resource type="Script" uid="uid://bpvkdlp8jw4sj" path="res://addons/utility_ai/actions/action.gd" id="6_m88pn"]
 [ext_resource type="Script" uid="uid://dojkyt7skh8fh" path="res://addons/utility_ai/considerations/consideration_from_node.gd" id="7_m88pn"]
+[ext_resource type="Script" uid="uid://b2f8vq1st70r0" path="res://addons/utility_ai/considerations/aggregation.gd" id="9_daau3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_daau3"]
+radius = 2.0
+height = 4.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_daau3"]
+size = Vector2(8, 7)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm8qt"]
-size = Vector2(4, 7)
+size = Vector2(4, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yd6on"]
+size = Vector2(2, 2)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yd6on"]
+radius = 48.0
 
 [sub_resource type="Curve" id="Curve_yd6on"]
 _limits = [0.0, 1.1, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1.1), 0.0, 0.0, 0, 0]
 point_count = 2
 
+[sub_resource type="Curve" id="Curve_37x55"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="Curve" id="Curve_daau3"]
-_data = [Vector2(0.07, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_amxnv"]
+_data = [Vector2(0, 0.494382), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_jqc0h"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.696629), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_t5nd1"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Animation" id="Animation_daau3"]
@@ -34,6 +64,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Flip/HurtBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_jqc0h"]
@@ -51,6 +93,32 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [8, 9, 10, 11, 12, 13]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.75),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"attack_finished"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Flip/HurtBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.375, 0.636948),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
 }
 
 [sub_resource type="Animation" id="Animation_yd6on"]
@@ -77,34 +145,62 @@ _data = {
 &"idle": SubResource("Animation_yd6on")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yd6on"]
-size = Vector2(2, 2)
-
 [node name="Unit" type="CharacterBody2D" groups=["UNIT"]]
+light_mask = 33
 material = ExtResource("1_vlxp4")
+motion_mode = 1
+wall_min_slide_angle = 0.0
 script = ExtResource("1_q458e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 1)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_daau3")
 
 [node name="Flip" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Flip"]
 unique_name_in_owner = true
 texture = ExtResource("2_1ekc5")
-offset = Vector2(4, 0)
-hframes = 14
+hframes = 22
 frame = 1
 
+[node name="HurtBox" type="Area2D" parent="Flip"]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Flip/HurtBox"]
+position = Vector2(5, 3)
+shape = SubResource("RectangleShape2D_daau3")
+disabled = true
+debug_color = Color(0.793403, 0.426364, 1.92523e-07, 0.42)
+
 [node name="HitBox" parent="." instance=ExtResource("1_pm8qt")]
-visible = false
+unique_name_in_owner = true
 position = Vector2(-2, -7)
+collision_layer = 2
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
-position = Vector2(2, 8)
+position = Vector2(2, 8.5)
 shape = SubResource("RectangleShape2D_pm8qt")
 
-[node name="utility_debug" parent="." node_paths=PackedStringArray("utility_agent") instance=ExtResource("5_yd6on")]
+[node name="behindWall" type="Area2D" parent="."]
 visible = false
-scale = Vector2(0.25, 0.25)
-utility_agent = NodePath("../UtilityAiAgent")
+collision_layer = 16
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="behindWall"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_yd6on")
+
+[node name="Vision" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
+shape = SubResource("CircleShape2D_yd6on")
 
 [node name="UtilityAiAgent" type="Node" parent="."]
 script = ExtResource("5_t35g5")
@@ -115,11 +211,22 @@ script = ExtResource("6_m88pn")
 _action_id = "none"
 metadata/_custom_type_script = "uid://bpvkdlp8jw4sj"
 
-[node name="UtilityAiConsiderationFromNode" type="Node" parent="UtilityAiAgent/none" node_paths=PackedStringArray("node")]
+[node name="UtilityAiAggregation" type="Node" parent="UtilityAiAgent/none"]
+script = ExtResource("9_daau3")
+metadata/_custom_type_script = "uid://b2f8vq1st70r0"
+
+[node name="UtilityAiConsiderationFromNode" type="Node" parent="UtilityAiAgent/none/UtilityAiAggregation" node_paths=PackedStringArray("node")]
 script = ExtResource("7_m88pn")
-node = NodePath("../../..")
+node = NodePath("../../../..")
 property_name = "in_formation"
 curve = SubResource("Curve_yd6on")
+metadata/_custom_type_script = "uid://dojkyt7skh8fh"
+
+[node name="UtilityAiConsiderationFromNode2" type="Node" parent="UtilityAiAgent/none/UtilityAiAggregation" node_paths=PackedStringArray("node")]
+script = ExtResource("7_m88pn")
+node = NodePath("../../../..")
+property_name = "in_combat"
+curve = SubResource("Curve_37x55")
 metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
 [node name="form" type="Node" parent="UtilityAiAgent"]
@@ -127,31 +234,72 @@ script = ExtResource("6_m88pn")
 _action_id = "form"
 metadata/_custom_type_script = "uid://bpvkdlp8jw4sj"
 
-[node name="UtilityAiConsideration" type="Node" parent="UtilityAiAgent/form" node_paths=PackedStringArray("node")]
+[node name="UtilityAiAggregation" type="Node" parent="UtilityAiAgent/form"]
+script = ExtResource("9_daau3")
+aggregation_type = 3
+metadata/_custom_type_script = "uid://b2f8vq1st70r0"
+
+[node name="enemies_in_range_in_combat" type="Node" parent="UtilityAiAgent/form/UtilityAiAggregation" node_paths=PackedStringArray("node")]
 script = ExtResource("7_m88pn")
-node = NodePath("../../..")
+node = NodePath("../../../..")
 property_name = "in_combat"
 curve = SubResource("Curve_daau3")
 metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
+[node name="attack_not_ready" type="Node" parent="UtilityAiAgent/form/UtilityAiAggregation" node_paths=PackedStringArray("node")]
+script = ExtResource("7_m88pn")
+node = NodePath("../../../..")
+property_name = "attack_ready"
+curve = SubResource("Curve_amxnv")
+metadata/_custom_type_script = "uid://dojkyt7skh8fh"
+
+[node name="fight" type="Node" parent="UtilityAiAgent"]
+script = ExtResource("6_m88pn")
+_action_id = "fight"
+metadata/_custom_type_script = "uid://bpvkdlp8jw4sj"
+
+[node name="UtilityAiAggregation" type="Node" parent="UtilityAiAgent/fight"]
+script = ExtResource("9_daau3")
+metadata/_custom_type_script = "uid://b2f8vq1st70r0"
+
+[node name="enemies_in_range_in_combat" type="Node" parent="UtilityAiAgent/fight/UtilityAiAggregation" node_paths=PackedStringArray("node")]
+script = ExtResource("7_m88pn")
+node = NodePath("../../../..")
+property_name = "in_combat"
+curve = SubResource("Curve_jqc0h")
+metadata/_custom_type_script = "uid://dojkyt7skh8fh"
+
+[node name="attack_ready" type="Node" parent="UtilityAiAgent/fight/UtilityAiAggregation" node_paths=PackedStringArray("node")]
+script = ExtResource("7_m88pn")
+node = NodePath("../../../..")
+property_name = "attack_ready"
+curve = SubResource("Curve_t5nd1")
+metadata/_custom_type_script = "uid://dojkyt7skh8fh"
+
+[node name="utility_debug" parent="." node_paths=PackedStringArray("utility_agent") instance=ExtResource("5_yd6on")]
+visible = false
+scale = Vector2(0.125, 0.125)
+utility_agent = NodePath("../UtilityAiAgent")
+
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_postprocessing = 1
 avoidance_enabled = true
-radius = 30.0
+max_neighbors = 100
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_jqc0h")
 }
 
-[node name="behindWall" type="Area2D" parent="."]
-collision_layer = 16
-collision_mask = 16
+[node name="AttackCD" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="behindWall"]
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_yd6on")
+[node name="HurtboxCD" type="Timer" parent="."]
+one_shot = true
 
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="top_score_action_changed" from="UtilityAiAgent" to="." method="_on_utility_ai_agent_top_score_action_changed"]
 
 [editable path="HitBox"]

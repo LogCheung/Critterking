@@ -1,11 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://bxqxjbkdfqn0q"]
+[gd_scene load_steps=6 format=3 uid="uid://bxqxjbkdfqn0q"]
 
 [ext_resource type="Script" uid="uid://dvsiuovo1wgp" path="res://World/Scripts/world.gd" id="1_fdxdb"]
 [ext_resource type="PackedScene" uid="uid://y0ju1mi4ih78" path="res://TileMap/Scenes/tile_world.tscn" id="1_jamle"]
 [ext_resource type="PackedScene" uid="uid://bytyqloqmpx5r" path="res://Units/Scenes/unit_group.tscn" id="2_p7567"]
 [ext_resource type="Script" uid="uid://bjiaogu16dctd" path="res://World/Scripts/camera_2d.gd" id="2_yw7h8"]
+[ext_resource type="PackedScene" uid="uid://crgrp0juuu53l" path="res://Units/Scenes/enemy_group.tscn" id="5_xvb7p"]
 
-[node name="World" type="Node2D"]
+[node name="World" type="Node2D" groups=["WORLD"]]
 y_sort_enabled = true
 script = ExtResource("1_fdxdb")
 
@@ -18,7 +19,7 @@ y_sort_enabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(289, 162)
-zoom = Vector2(0.25, 0.25)
+zoom = Vector2(2, 2)
 limit_left = -300
 limit_top = -120
 limit_right = 1000
@@ -30,9 +31,17 @@ script = ExtResource("2_yw7h8")
 z_index = 1
 
 [node name="UnitGroup" parent="UnitGroupsNode" instance=ExtResource("2_p7567")]
-position = Vector2(480, 176)
+position = Vector2(479, 176)
 
 [node name="UnitGroup2" parent="UnitGroupsNode" instance=ExtResource("2_p7567")]
-position = Vector2(512, 160)
+position = Vector2(511, 160)
 
 [node name="EnemyPerimeters" type="Node" parent="."]
+
+[node name="enemyGroup" parent="." instance=ExtResource("5_xvb7p")]
+position = Vector2(253, 190)
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 6.0
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

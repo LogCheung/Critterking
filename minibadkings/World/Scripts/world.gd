@@ -55,3 +55,7 @@ func create_enemy_perimeter(dist : int, outer : bool) -> void:
 
 func spawn_enemy() -> void:
 	pass
+
+
+func _on_spawn_timer_timeout() -> void:
+	pass # Replace with function body.

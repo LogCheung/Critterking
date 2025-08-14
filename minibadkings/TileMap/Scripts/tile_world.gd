@@ -10,12 +10,14 @@ class_name TileWorld
 
 var wall_tiles : Array
 var unit_tiles : Array
+var outskirt_tiles : Array
 
 func _ready() -> void:
 	await get_tree().create_timer(.2).timeout
 	wall_tiles = wall.get_used_cells()
 	handle_navigable_cells()
 	limit_colliding_walls()
+	find_outskirt_tiles()
 
 func handle_navigable_cells() -> void:
 	# reset 
@@ -62,3 +64,18 @@ func has_surrounding_ground_cells(tile : Vector2i) -> bool:
 			if groundCells.has(Vector2i(x,y)):
 				return true
 	return false
+
+func find_outskirt_tiles() -> void:
+	var rect : Rect2i = ground.get_used_rect()
+	var end : Vector2i = rect.end
+	var pos : Vector2i = rect.position
+	for y in range(pos.y,end.y):
+		outskirt_tiles.append(Vector2i(pos.x,y))
+	for x in range(pos.x + 1,end.x):
+		outskirt_tiles.append(Vector2i(x,end.y - 1))
+	for y in range(end.y -1,pos.y,-1):
+		outskirt_tiles.append(Vector2i(end.x - 1,y))
+	for x in range(end.x -1 ,pos.x,-1):
+		outskirt_tiles.append(Vector2i(x,pos.y))
+	for tile in outskirt_tiles:
+		ground.set_cell(tile,0,Vector2(0,0),4)

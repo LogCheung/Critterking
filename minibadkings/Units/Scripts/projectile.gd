@@ -1,0 +1,38 @@
+extends Area2D
+
+@export var SPEED : float
+@export var RANGE : float
+@export var DIRECTION : Vector2
+@export var damage : int
+@export var is_enemy : bool
+
+var travelled_distance = 0
+
+func _ready() -> void:
+	if is_enemy:
+		set_collision_mask_value(2,true)
+	else:
+		set_collision_mask_value(3, true)
+
+func _process(delta):
+	position += DIRECTION * SPEED * delta
+	
+	travelled_distance += SPEED * delta
+	if travelled_distance > RANGE:
+		queue_free()
+
+
+func _on_area_entered(area: Area2D) -> void:
+	if area.owner is Unit:
+		var target : Unit = area.owner
+		# for shielded
+		if target.type == Unit.TYPE.SHIELDED:
+			target.health -= damage - 1
+		else:
+			target.health -= damage 
+		if target.health <= 0:
+			var group = target.group.unitsArray
+			if group.find(target) != - 1: group.remove_at(group.find(target))
+			target.group.unit_died.emit()
+			target.queue_free()
+		queue_free()
