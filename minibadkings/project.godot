@@ -39,6 +39,7 @@ WORLD=""
 ENEMYGRPNODE=""
 BUILDINGSNODE=""
 UI=""
+CARD=""
 
 [input]
 

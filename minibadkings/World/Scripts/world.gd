@@ -6,7 +6,7 @@ signal night_started
 signal enemy_group_eliminated
 signal night_ended
 
-@export var is_combat_phase : bool = true
+@export var is_combat_phase : bool = false
 @export var enemy_parties : int = 4
 
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
@@ -27,8 +27,6 @@ func _ready() -> void:
 	
 	create_enemy_perimeter(12 + Global.expansions, true)
 	create_enemy_perimeter(11 + Global.expansions, false)
-	on_night_started()
-	spawn_enemy()
 
 func clear_perimeters() -> void:
 	# clear children
@@ -94,19 +92,19 @@ func spawn_enemy() -> void:
 	# set groupPos to target and the units within the group will follow
 
 func on_night_started() -> void:
+	is_combat_phase = true
+	spawned_parties = 0
+	%Game.process_mode = Node.PROCESS_MODE_PAUSABLE
 	%SpawnTimer.start()
 
 func on_enemy_group_eliminated() -> void:
-	print("ok")
 	await get_tree().create_timer(.05).timeout
 	var enemyGroupNode = get_tree().get_first_node_in_group("ENEMYGRPNODE")
 	if enemyGroupNode.get_children().is_empty():
-		print("ok2")
 		is_combat_phase = false
 		night_ended.emit()
 		
 func on_night_ended() -> void:
-	print("alright")
 	%Game.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	ui.cards.visible = true
 	pass
