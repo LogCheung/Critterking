@@ -1,4 +1,5 @@
 extends Node2D
+class_name World
 
 const ENEMYGROUP = preload("res://Units/Scenes/enemy_group.tscn")
 
@@ -6,8 +7,10 @@ signal night_started
 signal enemy_group_eliminated
 signal night_ended
 
+signal mouse_clicked
+
 @export var is_combat_phase : bool = false
-@export var enemy_parties : int = 4
+@export var enemy_parties : int = 1
 
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var enemy_perimeters: Node = %EnemyPerimeters
@@ -20,14 +23,17 @@ var innerFollow : PathFollow2D
 var spawned_parties : int = 0
 
 func _ready() -> void:
-	Engine.time_scale = 6
+	Engine.time_scale = 8
+	new_game()
+func new_game() -> void:
 	night_started.connect(on_night_started)
 	night_ended.connect(on_night_ended)
 	enemy_group_eliminated.connect(on_enemy_group_eliminated)
 	
 	create_enemy_perimeter(12 + Global.expansions, true)
 	create_enemy_perimeter(11 + Global.expansions, false)
-
+	Global.nights = 0
+	Global.expansions = 0
 func clear_perimeters() -> void:
 	# clear children
 	outerFollow = null
@@ -96,6 +102,10 @@ func on_night_started() -> void:
 	spawned_parties = 0
 	%Game.process_mode = Node.PROCESS_MODE_PAUSABLE
 	%SpawnTimer.start()
+	
+	for c in ui.get_children():
+		if !c is Control: continue
+		c.hide()
 
 func on_enemy_group_eliminated() -> void:
 	await get_tree().create_timer(.05).timeout
@@ -105,13 +115,40 @@ func on_enemy_group_eliminated() -> void:
 		night_ended.emit()
 		
 func on_night_ended() -> void:
-	%Game.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
-	ui.cards.visible = true
-	pass
+	#%Game.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+	ui.cards.show()
+	ui.end_turn.show()
+	
+	# convert units to cards
+	var unitsGroups = get_tree().get_first_node_in_group("GROUPSNODE")
+	for g : Group in unitsGroups.get_children():
+		var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
+		newCard = match_unit_to_card(newCard,g.type)
+		Global.cardsInHand.append(newCard)
+		ui.hand.get_child(0).add_child(newCard)
+		newCard.for_show = false
+		
+		g.terminate()
 
 func _on_spawn_timer_timeout() -> void:
 	spawn_enemy()
 	spawned_parties += 1
-	if spawned_parties == enemy_parties:
+	if spawned_parties >= enemy_parties:
 		%SpawnTimer.stop()
 	
+
+func match_unit_to_card(card : Card,unitType : Unit.TYPE) -> Card:
+	match unitType:
+		Unit.TYPE.MELEE:
+			card.type = Card.CARDTYPE.BITER
+		Unit.TYPE.RANGED:
+			card.type = Card.CARDTYPE.SPITTER
+		Unit.TYPE.SHIELDED:
+			card.type = Card.CARDTYPE.PLATED
+	return card
+
+var tile2
+func _input(event: InputEvent) -> void:
+	if event.is_action_released("select"):
+		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
+		mouse_clicked.emit()

@@ -60,7 +60,6 @@ func check_on_house(mousePos : Vector2) -> void:
 	if size == max_size : return
 	var houses = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
 	houses = houses.filter(func(b : Building):return b.type == Building.TYPE.HOUSE )
-	print(houses)
 	for h : Building in houses:
 		if h.occupant != null : continue
 		h.sprite_2d.material = null

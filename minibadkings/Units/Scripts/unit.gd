@@ -106,7 +106,7 @@ func find_target() -> void:
 	if !vision.monitoring: return
 	var enemies = vision.get_overlapping_areas().map(func(a):return a.owner)
 	find_closest(enemies)
-	if !target : return
+	if !target : return 
 	nav.target_position = target.global_position
 
 func find_closest(nodeArray : Array) -> void:

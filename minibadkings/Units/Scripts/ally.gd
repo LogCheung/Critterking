@@ -1,9 +1,9 @@
 extends Unit
 class_name Ally
 
-const MELEENORMAL = preload("res://Units/Assets/AllyMeleeNormal.png")
-const RANGEDNORMAL = preload("res://Units/Assets/AllyRangedNormal.png")
-
+const MELEENORMALSE = preload("res://Units/Assets/AllyMeleeNormal.png")
+const RANGEDNORMALSE = preload("res://Units/Assets/AllyRangedNormal.png")
+const SHIELDEDNORMALSE = preload("res://Units/Assets/AllyShield/AllyShieldNormalSE.png")
 var allyGroup : AllyGroup
 var healing : bool
 
@@ -109,13 +109,14 @@ func match_type() -> void:
 		TYPE.MELEE:
 			return
 		TYPE.RANGED:
-			sprite_2d.texture = RANGEDNORMAL
+			sprite_2d.texture = RANGEDNORMALSE
 			health = 2
 			attackRange = 100
 			var visionShape : CollisionShape2D = vision.get_child(0)
 			visionShape.shape.radius = 120
 			attack_cd.wait_time = 4
 		TYPE.SHIELDED:
+			sprite_2d.texture = SHIELDEDNORMALSE
 			damage = 1
 
 func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> void:

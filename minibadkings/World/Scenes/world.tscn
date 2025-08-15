@@ -15,12 +15,12 @@ script = ExtResource("1_fdxdb")
 unique_name_in_owner = true
 process_mode = 1
 
-[node name="TileWorld" parent="Game" instance=ExtResource("1_jamle")]
-
 [node name="UnitsNode" type="Node2D" parent="Game" groups=["UNITSNODE"]]
 unique_name_in_owner = true
 z_index = 1
 y_sort_enabled = true
+
+[node name="TileWorld" parent="Game" instance=ExtResource("1_jamle")]
 
 [node name="Camera2D" type="Camera2D" parent="Game"]
 position = Vector2(289, 162)

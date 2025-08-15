@@ -66,3 +66,11 @@ func _on_unit_died() -> void:
 		queue_free()
 		var world = get_tree().get_first_node_in_group("WORLD")
 		if self is EnemyGroup : world.enemy_group_eliminated.emit()
+
+func terminate() -> void:
+	for unit in unitsArray:
+		unit.process_mode = Node.PROCESS_MODE_DISABLED
+	for unit in unitsArray:
+		unit.queue_free()
+	queue_free()
+		

@@ -38,6 +38,7 @@ func handle_action(delta) -> void:
 		ACTION.FIGHT:
 			if attacking : return
 			find_target()
+			if target == null: target_in_range = false
 			if distToTarget <= attackRange :
 				if !attack_cd.time_left <= 0 : return
 				if type == TYPE.RANGED and distToTarget < 15: 

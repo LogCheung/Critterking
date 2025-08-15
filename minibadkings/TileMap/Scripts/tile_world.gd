@@ -31,6 +31,7 @@ func handle_navigable_cells() -> void:
 		unit_tiles.append(group.tile)
 	
 	var buildingsCells = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
+	buildingsCells = buildingsCells.filter(func(b: Building):return b.type != b.TYPE.TRAP)
 	buildingsCells = buildingsCells.map(func(b : Building):return b.tile)
 	# change tile data for buildings
 	for cell in buildingsCells:

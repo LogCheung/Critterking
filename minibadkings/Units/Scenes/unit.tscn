@@ -18,7 +18,7 @@ height = 4.0
 size = Vector2(8, 15)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm8qt"]
-size = Vector2(4, 5)
+size = Vector2(5, 7)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yd6on"]
 size = Vector2(2, 2)
@@ -221,7 +221,7 @@ position = Vector2(-2, -7)
 collision_layer = 2
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
-position = Vector2(2, 8.5)
+position = Vector2(1.5, 8.5)
 shape = SubResource("RectangleShape2D_pm8qt")
 
 [node name="behindWall" type="Area2D" parent="."]

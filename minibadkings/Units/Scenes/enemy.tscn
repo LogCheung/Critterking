@@ -18,7 +18,7 @@ height = 4.0
 size = Vector2(8, 15)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm8qt"]
-size = Vector2(7, 7.5)
+size = Vector2(7, 8)
 
 [sub_resource type="Curve" id="Curve_1flw5"]
 _limits = [0.0, 1.1, 0.0, 1.0]
@@ -200,7 +200,6 @@ debug_color = Color(0.793403, 0.426364, 1.92523e-07, 0.42)
 
 [node name="HitBox" parent="." instance=ExtResource("4_0wncj")]
 unique_name_in_owner = true
-visible = false
 collision_layer = 4
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
