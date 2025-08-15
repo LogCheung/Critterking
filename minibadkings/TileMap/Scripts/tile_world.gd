@@ -28,6 +28,7 @@ func handle_navigable_cells() -> void:
 	unit_groups = get_tree().get_first_node_in_group("GROUPSNODE").get_children()
 	for group : AllyGroup in unit_groups:
 		if !group is AllyGroup : continue
+		group.tile = ground.local_to_map(group.global_position)
 		unit_tiles.append(group.tile)
 	
 	var buildingsCells = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()

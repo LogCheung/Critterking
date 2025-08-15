@@ -5,6 +5,8 @@ const UNIT : PackedScene = preload("res://Units/Scenes/unit.tscn")
 
 @export var house : Building
 
+@onready var world : World = get_tree().get_first_node_in_group("WORLD")
+
 func _ready() -> void:
 	super._ready()
 	tile = tileWorld.ground.local_to_map(global_position)
@@ -31,6 +33,7 @@ func _on_select_area_mouse_exited() -> void:
 	for unit : Ally in unitsArray:
 		unit.unselected.emit()
 func _input(event: InputEvent) -> void:
+	if !world.is_combat_phase: return
 	if event.is_action_pressed("select") and selected:
 		Engine.time_scale = 1
 		var mouse_pos = get_global_mouse_position()
@@ -47,6 +50,7 @@ func _input(event: InputEvent) -> void:
 		global_position = pos
 		tileWorld.handle_navigable_cells()
 func _on_select_area_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if !world.is_combat_phase: return
 	if event.is_action_pressed("select"):
 		if is_under_mouse:
 			selected = !selected

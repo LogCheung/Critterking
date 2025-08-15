@@ -25,7 +25,6 @@ func show_hand() -> void:
 	await get_tree().create_timer(1).timeout
 	for c : Card in container.get_children():
 		c.set_up()
-		print(c.default_position)
 	#for card : Card in Global.cardsInHand:
 		#container.add_child(card)
 func _on_show_pressed() -> void:

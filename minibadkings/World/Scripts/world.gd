@@ -111,11 +111,13 @@ func on_enemy_group_eliminated() -> void:
 	await get_tree().create_timer(.05).timeout
 	var enemyGroupNode = get_tree().get_first_node_in_group("ENEMYGRPNODE")
 	if enemyGroupNode.get_children().is_empty():
-		is_combat_phase = false
 		night_ended.emit()
 		
 func on_night_ended() -> void:
 	#%Game.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+	if is_combat_phase == false : return
+	tileWorld.handle_navigable_cells()
+	is_combat_phase = false
 	ui.cards.show()
 	ui.end_turn.show()
 	
