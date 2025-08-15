@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://ddc6mf0gqftb" path="res://Units/Scenes/hit_box.tscn" id="1_pm8qt"]
 [ext_resource type="Script" uid="uid://13y7jtc01ydv" path="res://Units/Scripts/ally.gd" id="1_q458e"]
-[ext_resource type="Material" uid="uid://blwf6yqh85bg4" path="res://Units/Shaders/unitHighlight.tres" id="1_vlxp4"]
 [ext_resource type="Texture2D" uid="uid://b5g3yuaejn6if" path="res://Units/Assets/AllyMeleeNormal.png" id="2_1ekc5"]
 [ext_resource type="Script" uid="uid://bxew2mys8y8u8" path="res://addons/utility_ai/agent/agent.gd" id="5_t35g5"]
 [ext_resource type="PackedScene" uid="uid://d0dhe2lv3x4u3" path="res://Units/Debug/utility_debug.tscn" id="5_yd6on"]
@@ -16,7 +15,7 @@ radius = 2.0
 height = 4.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_daau3"]
-size = Vector2(7, 9.5)
+size = Vector2(8, 15)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm8qt"]
 size = Vector2(4, 5)
@@ -25,7 +24,7 @@ size = Vector2(4, 5)
 size = Vector2(2, 2)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yd6on"]
-radius = 48.0
+radius = 32.0
 
 [sub_resource type="Curve" id="Curve_yd6on"]
 _limits = [0.0, 1.1, 0.0, 1.0]
@@ -41,14 +40,18 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_amxnv"]
-_data = [Vector2(0, 0.494382), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_jqc0h"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.696629), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_t5nd1"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_lx5cy"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
@@ -184,7 +187,6 @@ _data = {
 
 [node name="Ally" type="CharacterBody2D" groups=["UNIT"]]
 light_mask = 33
-material = ExtResource("1_vlxp4")
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_q458e")
@@ -208,7 +210,7 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Flip/HurtBox"]
-position = Vector2(4.5, 2)
+position = Vector2(5, 1.5)
 shape = SubResource("RectangleShape2D_daau3")
 disabled = true
 debug_color = Color(0.793403, 0.426364, 1.92523e-07, 0.42)
@@ -238,6 +240,7 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
 shape = SubResource("CircleShape2D_yd6on")
+debug_color = Color(0, 0.6, 0.701961, 0.141176)
 
 [node name="UtilityAiAgent" type="Node" parent="."]
 script = ExtResource("5_t35g5")
@@ -321,6 +324,13 @@ metadata/_custom_type_script = "uid://bpvkdlp8jw4sj"
 [node name="UtilityAiAggregation2" type="Node" parent="UtilityAiAgent/strafe"]
 script = ExtResource("9_daau3")
 metadata/_custom_type_script = "uid://b2f8vq1st70r0"
+
+[node name="enemies_in_range_in_combat2" type="Node" parent="UtilityAiAgent/strafe/UtilityAiAggregation2" node_paths=PackedStringArray("node")]
+script = ExtResource("7_m88pn")
+node = NodePath("../../../..")
+property_name = "in_combat"
+curve = SubResource("Curve_lx5cy")
+metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
 [node name="is_ranged" type="Node" parent="UtilityAiAgent/strafe/UtilityAiAggregation2"]
 script = ExtResource("9_jqc0h")

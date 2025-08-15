@@ -4,57 +4,73 @@
 [ext_resource type="PackedScene" uid="uid://y0ju1mi4ih78" path="res://TileMap/Scenes/tile_world.tscn" id="1_jamle"]
 [ext_resource type="Script" uid="uid://bjiaogu16dctd" path="res://World/Scripts/camera_2d.gd" id="2_yw7h8"]
 [ext_resource type="PackedScene" uid="uid://bytyqloqmpx5r" path="res://Units/Scenes/unit_group.tscn" id="4_xvb7p"]
-[ext_resource type="PackedScene" uid="uid://crgrp0juuu53l" path="res://Units/Scenes/enemy_group.tscn" id="5_xvb7p"]
+[ext_resource type="PackedScene" uid="uid://bhln07v3h2elp" path="res://UI/Scenes/ui.tscn" id="6_7qq3u"]
 [ext_resource type="PackedScene" uid="uid://cct0mtgpy7ut6" path="res://TileMap/Scenes/building.tscn" id="6_t7din"]
 
 [node name="World" type="Node2D" groups=["WORLD"]]
 y_sort_enabled = true
 script = ExtResource("1_fdxdb")
 
-[node name="TileWorld" parent="." instance=ExtResource("1_jamle")]
+[node name="Game" type="Node2D" parent="."]
+unique_name_in_owner = true
+process_mode = 1
 
-[node name="UnitsNode" type="Node2D" parent="." groups=["UNITSNODE"]]
+[node name="TileWorld" parent="Game" instance=ExtResource("1_jamle")]
+
+[node name="UnitsNode" type="Node2D" parent="Game" groups=["UNITSNODE"]]
 unique_name_in_owner = true
 z_index = 1
 y_sort_enabled = true
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="Game"]
 position = Vector2(289, 162)
-zoom = Vector2(0.5, 0.5)
+zoom = Vector2(2, 2)
 limit_left = -300
 limit_top = -120
 limit_right = 1000
 limit_bottom = 600
 editor_draw_limits = true
 script = ExtResource("2_yw7h8")
+min_zoom = 3.0
+max_zoom = 5.0
 
-[node name="UnitGroupsNode" type="Node2D" parent="." groups=["GROUPSNODE"]]
+[node name="UnitGroupsNode" type="Node2D" parent="Game" groups=["GROUPSNODE"]]
 z_index = 1
 
-[node name="UnitGroup" parent="UnitGroupsNode" instance=ExtResource("4_xvb7p")]
+[node name="UnitGroup" parent="Game/UnitGroupsNode" instance=ExtResource("4_xvb7p")]
 position = Vector2(449, 160)
-type = 3
+type = 2
 size = 3
 
-[node name="EnemyPerimeters" type="Node" parent="."]
-
-[node name="SpawnTimer" type="Timer" parent="."]
-wait_time = 6.0
-
-[node name="EnemyGroupsNode" type="Node2D" parent="." groups=["ENEMYGRPNODE"]]
-
-[node name="enemyGroup" parent="EnemyGroupsNode" instance=ExtResource("5_xvb7p")]
-position = Vector2(286, 304)
+[node name="UnitGroup2" parent="Game/UnitGroupsNode" instance=ExtResource("4_xvb7p")]
+position = Vector2(384, 159)
 type = 3
 
-[node name="enemyGroup2" parent="EnemyGroupsNode" instance=ExtResource("5_xvb7p")]
-position = Vector2(-609, 574)
+[node name="UnitGroup3" parent="Game/UnitGroupsNode" instance=ExtResource("4_xvb7p")]
+position = Vector2(320, 159)
 type = 3
 
-[node name="BuidlingsNode" type="Node2D" parent="." groups=["BUILDINGSNODE"]]
+[node name="UnitGroup4" parent="Game/UnitGroupsNode" instance=ExtResource("4_xvb7p")]
+position = Vector2(352, 175)
+type = 3
 
-[node name="Building" parent="BuidlingsNode" instance=ExtResource("6_t7din")]
+[node name="EnemyPerimeters" type="Node" parent="Game"]
+unique_name_in_owner = true
+
+[node name="SpawnTimer" type="Timer" parent="Game"]
+unique_name_in_owner = true
+wait_time = 10.0
+
+[node name="EnemyGroupsNode" type="Node2D" parent="Game" groups=["ENEMYGRPNODE"]]
+
+[node name="BuidlingsNode" type="Node2D" parent="Game" groups=["BUILDINGSNODE"]]
+
+[node name="Building" parent="Game/BuidlingsNode" instance=ExtResource("6_t7din")]
 position = Vector2(319, 128)
 type = 1
 
-[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[node name="UI" parent="." groups=["UI"] instance=ExtResource("6_7qq3u")]
+unique_name_in_owner = true
+process_mode = 3
+
+[connection signal="timeout" from="Game/SpawnTimer" to="." method="_on_spawn_timer_timeout"]

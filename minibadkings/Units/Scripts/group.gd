@@ -61,5 +61,8 @@ func create_formation(unit_type : PackedScene) -> void:
 		last_pos -= Vector2(x_sep,y_sep) # new row margin
 
 func _on_unit_died() -> void:
+	size = unitsArray.size()
 	if unitsArray.is_empty():
 		queue_free()
+		var world = get_tree().get_first_node_in_group("WORLD")
+		if self is EnemyGroup : world.enemy_group_eliminated.emit()

@@ -62,6 +62,7 @@ func check_on_house(mousePos : Vector2) -> void:
 	houses = houses.filter(func(b : Building):return b.type == Building.TYPE.HOUSE )
 	print(houses)
 	for h : Building in houses:
+		if h.occupant != null : continue
 		h.sprite_2d.material = null
 		if mousePos.distance_to(h.global_position) < 32:
 			h.occupant = self

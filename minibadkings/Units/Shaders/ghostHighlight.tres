@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dqdfe2e77868r"]
+
+[ext_resource type="Shader" uid="uid://cf80b3xmnqv32" path="res://Units/Shaders/ghost.gdshader" id="1_um5uq"]
+
+[resource]
+shader = ExtResource("1_um5uq")
+shader_parameter/line_color = Color(0.704575, 8.66354e-07, 0.410534, 1)
+shader_parameter/line_thickness = 1.0

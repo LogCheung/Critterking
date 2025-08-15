@@ -2,22 +2,25 @@ extends Group
 class_name EnemyGroup
 
 signal formation_finished
+signal at_border
 
 const ENEMY : PackedScene = preload("res://Units/Scenes/enemy.tscn")
 
+var approaching : bool = true
+
 func _ready() -> void:
 	super._ready()
+	type = randi() % Unit.TYPE.size()
 	tile = tileWorld.ground.local_to_map(global_position)
 	create_formation(ENEMY)
-	await get_tree().create_timer(.1).timeout
-	formation_finished.emit()
+	at_border.connect(activate_units)
 
 func _process(delta: float) -> void:
+	if !approaching : return
 	for unit in unitsArray:
 		if !unit.in_formation:
 			return
-	for unit : Enemy in unitsArray:
-		unit.become_active()
+	at_border.emit()
 
 func activate_units() -> void:
 	for unit : Enemy in unitsArray:

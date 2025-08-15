@@ -9,6 +9,7 @@
 [node name="Building" type="StaticBody2D"]
 z_index = 1
 z_as_relative = false
+collision_layer = 0
 script = ExtResource("1_mpr6t")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -19,9 +20,8 @@ vframes = 4
 frame = 3
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
-visible = false
 position = Vector2(1, 0)
-polygon = PackedVector2Array(32, 0, 0, -16, -32, 0, 0, 16)
+polygon = PackedVector2Array(28, 0, -1, -15, -28, 0, -1, 15)
 
 [node name="Entrance" type="Node2D" parent="."]
 position = Vector2(13, 10)

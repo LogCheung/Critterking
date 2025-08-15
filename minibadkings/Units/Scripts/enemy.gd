@@ -1,6 +1,8 @@
 extends Unit
 class_name Enemy
 
+const GHOST = preload("res://Units/Shaders/ghostHighlight.tres")
+
 const MELEENORMALSE = preload("res://Units/Assets/EnemyMelee/EnemyMeleeNormalSE.png")
 const RANGEDNORMALSE = preload("res://Units/Assets/EnemyRanged/EnemyRangedNormalSE.png")
 
@@ -13,8 +15,9 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	super._process(delta)
-	target_in_range = vision.has_overlapping_areas()
+	if vision.monitoring : target_in_range = vision.has_overlapping_areas()
 	handle_action(delta)
+	handle_approach()
 	
 func handle_action(delta) -> void:
 	var distToTarget = global_position.distance_to(nav.target_position)
@@ -52,18 +55,24 @@ func handle_action(delta) -> void:
 			if distToTarget <= 24:
 				anim.play("attack")
 				return
+			else:
+				anim.play("walk")
 		ACTION.STRAFE:
 			find_target()
 			if !target : return
 			var strafe_dist = 20
 			var dir = global_position.direction_to(target.global_position)
 			nav.target_position = target.global_position - dir * strafe_dist
+			anim.play("walk")
 			
 	move_to(self.global_position.direction_to(nav.get_next_path_position()), delta)
 	
 func become_active() -> void:
 	is_active = true
-	hit_box.monitorable = true
+	vision.monitoring = true
+	sprite_2d.material = null
+	z_index = 0
+	nav.set_navigation_layer_value(2,false)
 
 func match_type() -> void:
 	match type:
@@ -71,11 +80,13 @@ func match_type() -> void:
 			sprite_2d.texture = MELEENORMALSE
 		TYPE.RANGED:
 			sprite_2d.texture = RANGEDNORMALSE
-			health = 1
+			health = 2
 			attackRange = 100
 			var visionShape : CollisionShape2D = vision.get_child(0)
 			visionShape.shape.radius = 120
 			attack_cd.wait_time = 4
+		TYPE.SHIELDED:
+			damage = 1
 
 func find_building() -> void:
 	await get_tree().create_timer(.1).timeout
@@ -83,6 +94,11 @@ func find_building() -> void:
 	if buildings.is_empty() : return
 	find_closest(buildings)
 	if target: nav.target_position = target.global_position
+
+func handle_approach() -> void:
+	if !is_active:
+		z_index = 10
+		sprite_2d.material = GHOST
 
 func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> void:
 	match top_action_id:

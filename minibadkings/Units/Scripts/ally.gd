@@ -13,13 +13,40 @@ func _ready() -> void:
 	selected.connect(on_selected)
 	unselected.connect(on_unselected)
 	match_type()
+	await get_tree().create_timer(.5).timeout
+	set_collision_layer_value(1,true)
 
 func _process(delta: float) -> void:
 	super._process(delta)
-	
-	in_combat = vision.has_overlapping_areas()
+	if action != ACTION.NONE:
+		handle_behind_wall()
+	if vision.has_overlapping_areas(): # inside sight of ally
+		for area in vision.get_overlapping_areas(): # not dead and not in walls
+			in_combat = is_instance_valid(area.owner) and area.owner.is_active
+	else:
+		in_combat = false
 	
 	handle_action(delta)
+
+func handle_behind_wall() -> void:
+	is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
+	# not liking but looks for closest tile by going all wall tiles and makes transparent
+	if is_behind_wall:
+		var walls = tileWorld.wall.get_used_cells_by_id(0,Vector2(0,2),2)
+		walls.append_array(tileWorld.wall.get_used_cells_by_id(0,Vector2(0,2),1))
+		
+		wall_tile = walls.front()
+		for w in walls:
+			
+			var w_local_pos = tileWorld.wall.map_to_local(w)
+			var wall_tile_local_pos = tileWorld.wall.map_to_local(wall_tile)
+			var cur_dist = global_position.distance_to(wall_tile_local_pos)
+			var next_dist = global_position.distance_to(w_local_pos)
+			if next_dist < cur_dist :
+				wall_tile = w
+		
+		tileWorld.wall.set_cell(wall_tile,0,Vector2(0,2),1)
+
 func handle_action(delta) -> void:
 	var distToTarget = global_position.distance_to(nav.target_position)
 	match action:
@@ -57,11 +84,15 @@ func handle_action(delta) -> void:
 				return
 		ACTION.STRAFE:
 			find_target()
-			if !target : return
-			var strafe_dist = 20
+			if !target : 
+				in_combat = false if !vision.has_overlapping_areas() else true
+				return
+			var strafe_dist = 5
 			var dir = global_position.direction_to(target.global_position)
-			nav.target_position = target.global_position - dir * strafe_dist
+			nav.target_position = global_position - dir * strafe_dist
+			anim.play("walk")
 		ACTION.HEAL:
+			anim.play("walk")
 			if distToTarget < 5:
 				visible = false
 				return
@@ -79,11 +110,13 @@ func match_type() -> void:
 			return
 		TYPE.RANGED:
 			sprite_2d.texture = RANGEDNORMAL
-			health = 1
+			health = 2
 			attackRange = 100
 			var visionShape : CollisionShape2D = vision.get_child(0)
 			visionShape.shape.radius = 120
 			attack_cd.wait_time = 4
+		TYPE.SHIELDED:
+			damage = 1
 
 func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> void:
 	match top_action_id:
@@ -102,3 +135,4 @@ func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> vo
 			action = ACTION.HEAL
 			nav.target_position = allyGroup.house.entrance.global_position
 			set_collision_layer_value(1,false)
+			hit_box.set_collision_layer_value(2,false)

@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://d04u5kkfiu6dp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_41dpp"]
+font_size = 64
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -252.5
+offset_top = 84.0
+offset_right = 252.5
+offset_bottom = 172.0
+grow_horizontal = 2
+text = "MINI BAD KINGS"
+label_settings = SubResource("LabelSettings_41dpp")
+
+[node name="Play" type="Button" parent="."]
+layout_mode = 0
+offset_left = 456.0
+offset_top = 377.0
+offset_right = 683.0
+offset_bottom = 478.0
+text = "PLAY"

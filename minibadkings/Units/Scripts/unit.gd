@@ -57,8 +57,6 @@ func _process(_delta: float) -> void:
 	attack_ready = attack_cd.time_left <= 0
 	distance_from_form = global_position.distance_to(formation_position.global_position)
 	
-	if action != ACTION.NONE:
-		handle_behind_wall()
 	
 	if global_position.distance_to(formation_position.global_position) <= 2:
 		# precheck if it is behind something
@@ -90,25 +88,6 @@ func move_to(direction, _delta):
 	
 func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 	velocity = safe_velocity
-func handle_behind_wall() -> void:
-	is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
-	# not liking but looks for closest tile by going all wall tiles and makes transparent
-	if is_behind_wall:
-		var walls = tileWorld.wall.get_used_cells_by_id(0,Vector2(0,2),2)
-		walls.append_array(tileWorld.wall.get_used_cells_by_id(0,Vector2(0,2),1))
-		
-		wall_tile = walls.front()
-		for w in walls:
-			
-			var w_local_pos = tileWorld.wall.map_to_local(w)
-			var wall_tile_local_pos = tileWorld.wall.map_to_local(wall_tile)
-			var cur_dist = global_position.distance_to(wall_tile_local_pos)
-			var next_dist = global_position.distance_to(w_local_pos)
-			if next_dist < cur_dist :
-				wall_tile = w
-		
-		tileWorld.wall.set_cell(wall_tile,0,Vector2(0,2),1)
-
 # Attacking
 func attack_finished() -> void:
 	attacking = false
@@ -124,6 +103,7 @@ func attack_finished() -> void:
 
 func find_target() -> void:
 	target = null
+	if !vision.monitoring: return
 	var enemies = vision.get_overlapping_areas().map(func(a):return a.owner)
 	find_closest(enemies)
 	if !target : return
