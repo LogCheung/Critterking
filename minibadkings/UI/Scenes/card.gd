@@ -21,14 +21,17 @@ enum ROLLTYPE {
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
 
 var default_position : Vector2
+var setting_up : bool = true
 
 func set_up() -> void:
 	match_type()
 	default_position = position
+	setting_up = false
 
 var selected : bool = false
 var tile : Vector2i
 func _process(delta: float) -> void:
+	if setting_up : return
 	if for_show: return
 	scale = Vector2(.75,.75)
 	if Input.is_action_just_pressed("select") and !selected:
@@ -40,6 +43,10 @@ func _process(delta: float) -> void:
 	elif Input.is_action_just_released("select") and selected:
 		plop()
 	elif selected:
+		sprite_2d.scale = Vector2(1.0,1.0)
+		position = default_position
+		selected = false
+	else:
 		sprite_2d.scale = Vector2(1.0,1.0)
 		position = default_position
 		selected = false
@@ -76,6 +83,7 @@ func plop() -> void:
 		sprite_2d.scale = Vector2(1.0,1.0)
 		position = default_position
 		selected = false
+	tileWorld.handle_navigable_cells()
 func plop_building() -> void:
 	return
 

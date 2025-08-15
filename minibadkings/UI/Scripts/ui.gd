@@ -7,9 +7,14 @@ class_name UI
 @onready var mainmenu: Control = %mainmenu
 @onready var help: Control = %Help
 @onready var settings: Control = %Settings
-@onready var world = get_tree().get_first_node_in_group("WORLD")
+@onready var world : World = get_tree().get_first_node_in_group("WORLD")
 @onready var end_turn: Control = %EndTurn
 
+func _ready() -> void:
+	for c in get_children():
+		if !c is Control: continue
+		c.hide()
+	mainmenu.show()
 
 func display_cards(display : bool) -> void:
 	var cardSprites = get_tree().get_nodes_in_group("CARD")
@@ -33,7 +38,7 @@ func _on_show_pressed() -> void:
 
 func _on_play_pressed() -> void:
 	mainmenu.hide()
-
+	world.start_day()
 
 func _on_help_pressed() -> void:
 	pass # Replace with function body.
@@ -53,6 +58,10 @@ func _on_backhelp_pressed() -> void:
 func _on_settingsback_pressed() -> void:
 	pass # Replace with function body.
 
-
 func _on_endturn_pressed() -> void:
+	# check if house is not placed
+	for card : Card in Global.cardsInHand:
+		if card.type == Card.CARDTYPE.HOUSE: 
+			%noHouse.show()
+			return
 	world.night_started.emit()

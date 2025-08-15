@@ -18,6 +18,9 @@ func _ready() -> void:
 	handle_navigable_cells()
 	limit_colliding_walls()
 
+func _process(delta: float) -> void:
+	hover.show()
+
 func handle_navigable_cells() -> void:
 	# reset 
 	unit_tiles.clear()

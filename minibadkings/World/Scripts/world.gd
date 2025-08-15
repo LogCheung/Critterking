@@ -116,6 +116,11 @@ func on_enemy_group_eliminated() -> void:
 func on_night_ended() -> void:
 	#%Game.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	if is_combat_phase == false : return
+	Global.nights += 1
+	start_day()
+
+func start_day() -> void:
+	print("day")
 	tileWorld.handle_navigable_cells()
 	is_combat_phase = false
 	ui.cards.show()
