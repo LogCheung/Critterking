@@ -6,6 +6,21 @@
 [ext_resource type="Texture2D" uid="uid://bv3jqqow41vyp" path="res://UI/Assets/HealingOver.png" id="4_5rqce"]
 [ext_resource type="Texture2D" uid="uid://ba2e2y1w34bcg" path="res://UI/Assets/HealingProgress.png" id="5_j1jnl"]
 
+[sub_resource type="Animation" id="Animation_5rqce"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
 [sub_resource type="Animation" id="Animation_i4c7k"]
 resource_name = "build"
 step = 0.125
@@ -20,21 +35,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7]
-}
-
-[sub_resource type="Animation" id="Animation_5rqce"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
 }
 
 [sub_resource type="Animation" id="Animation_j1jnl"]
@@ -71,6 +71,7 @@ type = 1
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
 texture = ExtResource("2_i4c7k")
+offset = Vector2(0, -12)
 hframes = 8
 frame = 1
 
@@ -105,6 +106,7 @@ collision_mask = 6
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HurtBox"]
 unique_name_in_owner = true
+visible = false
 polygon = PackedVector2Array(0, -15, -31, 0, 0, 15, 31, 0)
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]

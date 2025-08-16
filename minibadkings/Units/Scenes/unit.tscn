@@ -398,22 +398,18 @@ one_shot = true
 [node name="Attack" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("10_t5nd1")
-bus = &"SFX"
 
 [node name="Hurt" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("11_amxnv")
-bus = &"SFX"
 
 [node name="Shoot" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("12_iqrsy")
-bus = &"SFX"
 
 [node name="Death" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("13_esq2s")
-bus = &"SFX"
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

@@ -361,42 +361,34 @@ libraries = {
 [node name="crtrPause" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("8_oj6tj")
-bus = &"Music"
 
 [node name="crtrOver" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("9_ftqev")
-bus = &"Music"
 
 [node name="crtrMenu" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("10_n2q0n")
-bus = &"Music"
 
 [node name="Shuffle" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("11_6dw6b")
-bus = &"SFX"
 
 [node name="Card" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("12_yqd36")
-bus = &"SFX"
 
 [node name="crtrNight" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("13_oemsu")
-bus = &"Music"
 
 [node name="crtrDay" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("14_gu1s8")
-bus = &"Music"
 
 [node name="Button" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("15_8g5lr")
-bus = &"SFX"
 
 [connection signal="pressed" from="Cards/CardShow/Show" to="." method="_on_show_pressed"]
 [connection signal="pressed" from="mainmenu/main/Play" to="." method="_on_play_pressed"]
