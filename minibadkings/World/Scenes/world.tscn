@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bxqxjbkdfqn0q"]
+[gd_scene load_steps=6 format=3 uid="uid://bxqxjbkdfqn0q"]
 
 [ext_resource type="Script" uid="uid://dvsiuovo1wgp" path="res://World/Scripts/world.gd" id="1_fdxdb"]
 [ext_resource type="PackedScene" uid="uid://y0ju1mi4ih78" path="res://TileMap/Scenes/tile_world.tscn" id="1_jamle"]
 [ext_resource type="Script" uid="uid://bjiaogu16dctd" path="res://World/Scripts/camera_2d.gd" id="2_yw7h8"]
 [ext_resource type="PackedScene" uid="uid://bytyqloqmpx5r" path="res://Units/Scenes/unit_group.tscn" id="4_xvb7p"]
 [ext_resource type="PackedScene" uid="uid://bhln07v3h2elp" path="res://UI/Scenes/ui.tscn" id="6_7qq3u"]
-[ext_resource type="PackedScene" uid="uid://cct0mtgpy7ut6" path="res://TileMap/Scenes/building.tscn" id="6_t7din"]
 
 [node name="World" type="Node2D" groups=["WORLD"]]
 y_sort_enabled = true
@@ -14,6 +13,7 @@ script = ExtResource("1_fdxdb")
 [node name="Game" type="Node2D" parent="."]
 unique_name_in_owner = true
 process_mode = 1
+y_sort_enabled = true
 
 [node name="UnitsNode" type="Node2D" parent="Game" groups=["UNITSNODE"]]
 unique_name_in_owner = true
@@ -64,10 +64,7 @@ wait_time = 10.0
 [node name="EnemyGroupsNode" type="Node2D" parent="Game" groups=["ENEMYGRPNODE"]]
 
 [node name="BuidlingsNode" type="Node2D" parent="Game" groups=["BUILDINGSNODE"]]
-
-[node name="Building" parent="Game/BuidlingsNode" instance=ExtResource("6_t7din")]
-position = Vector2(319, 128)
-type = 1
+y_sort_enabled = true
 
 [node name="UI" parent="." groups=["UI"] instance=ExtResource("6_7qq3u")]
 unique_name_in_owner = true

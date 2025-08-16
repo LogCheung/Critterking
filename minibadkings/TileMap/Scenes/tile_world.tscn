@@ -34,6 +34,7 @@ tile_map_data = PackedByteArray("AAADAPv/AAAAAAIAAAABAPn/AAAAAAIAAAD///f/AAAAAAI
 tile_set = ExtResource("2_jb8ou")
 
 [node name="Hover" type="TileMapLayer" parent="."]
+visible = false
 z_index = 1
 tile_set = SubResource("TileSet_c7ucq")
 

@@ -2,6 +2,7 @@ extends Control
 class_name Card
 
 const GROUP = preload("res://Units/Scenes/unit_group.tscn")
+const BUILDING = preload("res://TileMap/Scenes/building.tscn")
 
 enum CARDTYPE {
 	NONE, BITER,PLATED,SPITTER, TRAPS,DESTROY, HOUSE
@@ -56,7 +57,6 @@ func _process(delta: float) -> void:
 		selected = false
 func plop() -> void:
 	tileWorld.handle_navigable_cells()
-	await world.mouse_clicked
 	tile = world.tile2
 	var ploppableTiles = tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),1)
 	var hoverTiles = tileWorld.hover.get_used_cells()
@@ -85,12 +85,45 @@ func plop() -> void:
 		selected = false
 	tileWorld.handle_navigable_cells()
 func plop_building() -> void:
-	return
+	var buildingNode = get_tree().get_first_node_in_group("BUILDINGSNODE")
+	var building = BUILDING.instantiate()
+	match type:
+		CARDTYPE.TRAPS:
+			building.type = Building.TYPE.TRAP
+		CARDTYPE.HOUSE:
+			building.type = Building.TYPE.HOUSE
+			if check_if_blocking(tile):
+				print("ok")
+				sprite_2d.scale = Vector2(1.0,1.0)
+				position = default_position
+				selected = false
+				return
+	building.global_position = tileWorld.ground.map_to_local(tile)
+	buildingNode.add_child(building)
+	
+	# remove self
+	selected = false
+	Global.cardsInHand.remove_at(Global.cardsInHand.find(self))
+	refresh_positions()
+	queue_free()
+
+func check_if_blocking(plopTile : Vector2) -> bool:
+	# tile is showing tilemap coords
+	var buildTiles = tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),2)
+	var takenTiles = []
+	
+	for t in buildTiles:
+		takenTiles.append(t)
+		takenTiles.append(Vector2i(t.x+1,t.y))
+		takenTiles.append(Vector2i(t.x-1,t.y))
+	if takenTiles.has(Vector2i(plopTile)): return true
+	return false
 
 func randomize_type() -> void:
 	match rolltype:
 		ROLLTYPE.GENERAL:
 			type = (randi() % CARDTYPE.size() - 1) + 1
+	if type == CARDTYPE.HOUSE : randomize_type()
 	
 	# check if not same as other card
 	var cards = get_tree().get_nodes_in_group("CARD")
