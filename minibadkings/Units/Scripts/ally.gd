@@ -1,8 +1,8 @@
 extends Unit
 class_name Ally
 
-const MELEENORMALSE = preload("res://Units/Assets/AllyMeleeNormal.png")
-const RANGEDNORMALSE = preload("res://Units/Assets/AllyRangedNormal.png")
+const MELEENORMALSE = preload("res://Units/Assets/AllyMelee/AllyMeleeNormalSE.png")
+const RANGEDNORMALSE = preload("res://Units/Assets/AllyRanged/AllyRangedNormalSE.png")
 const SHIELDEDNORMALSE = preload("res://Units/Assets/AllyShield/AllyShieldNormalSE.png")
 var allyGroup : AllyGroup
 var healing : bool

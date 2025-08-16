@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=23 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Texture2D" uid="uid://kf8vcph4uky7" path="res://UI/Assets/menus/cardshow.png" id="2_rbgpe"]
@@ -16,6 +16,10 @@
 [ext_resource type="AudioStream" uid="uid://cqs4ssc2g47ia" path="res://Audio/music/crtrnight1.wav" id="13_oemsu"]
 [ext_resource type="AudioStream" uid="uid://cbsqcafyluqad" path="res://Audio/music/crtrday1.wav" id="14_gu1s8"]
 [ext_resource type="AudioStream" uid="uid://bxpbo04dxxuf4" path="res://Audio/sfx/Button.tres" id="15_8g5lr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ftqev"]
+font = ExtResource("7_titua")
+font_size = 88
 
 [sub_resource type="LabelSettings" id="LabelSettings_bujes"]
 font = ExtResource("7_titua")
@@ -339,6 +343,17 @@ offset_right = 318.0
 offset_bottom = 178.0
 focus_mode = 0
 flat = true
+
+[node name="nights" type="Label" parent="gameover/over"]
+unique_name_in_owner = true
+offset_left = 934.0
+offset_top = 861.0
+offset_right = 1122.0
+offset_bottom = 1079.0
+text = "1"
+label_settings = SubResource("LabelSettings_ftqev")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="EndTurn" type="Control" parent="."]
 unique_name_in_owner = true

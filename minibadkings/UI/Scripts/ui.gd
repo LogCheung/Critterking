@@ -86,6 +86,7 @@ func show_hand() -> void:
 
 func on_game_over() -> void:
 	gameover.show()
+	%nights.text = str(Global.nights)
 
 func _on_show_pressed() -> void:
 	$Shuffle
