@@ -64,6 +64,8 @@ wait_time = 10.0
 [node name="EnemyGroupsNode" type="Node2D" parent="Game" groups=["ENEMYGRPNODE"]]
 
 [node name="BuidlingsNode" type="Node2D" parent="Game" groups=["BUILDINGSNODE"]]
+[node name="Building" parent="Game/BuidlingsNode" instance=ExtResource("6_t7din")]
+position = Vector2(319, 128)
 y_sort_enabled = true
 
 [node name="UI" parent="." groups=["UI"] instance=ExtResource("6_7qq3u")]

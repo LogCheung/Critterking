@@ -1,0 +1,10 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=3 format=3 uid="uid://bmrvq8a3r1mcb"]
+
+[ext_resource type="AudioStream" uid="uid://c3nfv0kpr6dgg" path="res://Audio/sfx/Shoot2.wav" id="1_oyom3"]
+[ext_resource type="AudioStream" uid="uid://bxfwgfevmp5rw" path="res://Audio/sfx/Shoot1.wav" id="2_eed65"]
+
+[resource]
+playback_mode = 1
+streams_count = 2
+stream_0/stream = ExtResource("1_oyom3")
+stream_1/stream = ExtResource("2_eed65")
