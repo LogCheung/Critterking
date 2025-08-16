@@ -10,7 +10,7 @@ signal night_ended
 signal mouse_clicked
 
 @export var is_combat_phase : bool = false
-@export var enemy_parties : int = 1
+@export var enemy_parties : int = 4
 
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var enemy_perimeters: Node = %EnemyPerimeters
@@ -21,33 +21,61 @@ var outerFollow : PathFollow2D
 var innerFollow : PathFollow2D
 
 var spawned_parties : int = 0
+var starting_roll : bool = true
 
 func _ready() -> void:
-	Engine.time_scale = 1
-	new_game()
-	
-func new_game() -> void:
 	night_started.connect(on_night_started)
 	night_ended.connect(on_night_ended)
 	enemy_group_eliminated.connect(on_enemy_group_eliminated)
 	
-	create_enemy_perimeter(12 + Global.expansions, true)
-	create_enemy_perimeter(11 + Global.expansions, false)
+	Engine.time_scale = 1
+	new_game()
+	
+func new_game() -> void:
 	Global.nights = 0
 	Global.expansions = 0
 	Global.cardsInHand.clear()
 	
+	clear_world()
+	
+	ui.cards.show()
+	create_enemy_perimeter(12 + Global.expansions, true)
+	create_enemy_perimeter(11 + Global.expansions, false)
+	
 	# add house card
-	for i in range(2):
-		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.TRAPS
-		ui.hand.get_child(0).add_child(hCard)
+	starting_roll = true
+	for i in range(1):
+		add_house_card()
+func add_house_card() -> void:
+	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+	hCard.type = Card.CARDTYPE.HOUSE
+	ui.hand.get_child(0).add_child(hCard)
 func clear_perimeters() -> void:
 	# clear children
 	outerFollow = null
 	innerFollow = null
 	for path in enemy_perimeters.get_children():
 		path.queue_free()
+
+func clear_world() -> void:
+	# groups
+	for group : Group in groupNode.get_children():
+		group.terminate()
+	# enemies
+	var enemGroups = get_tree().get_first_node_in_group("ENEMYGRPNODE")
+	var units = get_tree().get_first_node_in_group("UNITSNODE")
+	for u in units.get_children():
+		u.queue_free()
+	for g in enemGroups.get_children():
+		g.queue_free()
+	# buildings
+	for b in get_tree().get_nodes_in_group("BUILDING"):
+		b.remove()
+	# cards
+	var cards = get_tree().get_nodes_in_group("CARD")
+	for c : Card in cards:
+		if c.for_show : continue
+		c.queue_free()
 
 func create_enemy_perimeter(dist : int, outer : bool) -> void:
 	# Battlefield is 10x10, 
@@ -106,6 +134,7 @@ func spawn_enemy() -> void:
 	# set groupPos to target and the units within the group will follow
 
 func on_night_started() -> void:
+	tileWorld.handle_navigable_cells()
 	is_combat_phase = true
 	spawned_parties = 0
 	%Game.process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -124,11 +153,14 @@ func on_enemy_group_eliminated() -> void:
 func on_night_ended() -> void:
 	#%Game.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	if is_combat_phase == false : return
-	Global.nights += 1
 	start_day()
 
 func start_day() -> void:
 	print("day")
+	# progress nights
+	Global.nights += 1
+	check_nights()
+	# start upgrade sequence
 	is_combat_phase = false
 	ui.cards.show()
 	ui.end_turn.show()
@@ -173,3 +205,10 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_released("select"):
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
+
+func check_nights() -> void:
+	if Global.nights % 2 == 0:
+		enemy_parties += 1
+	
+	if Global.nights % 6 == 0:
+		add_house_card()

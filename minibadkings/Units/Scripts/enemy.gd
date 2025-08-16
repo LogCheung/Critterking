@@ -1,6 +1,8 @@
 extends Unit
 class_name Enemy
 
+signal house_destroyed
+
 const GHOST = preload("res://Units/Shaders/ghostHighlight.tres")
 
 const MELEENORMALSE = preload("res://Units/Assets/EnemyMelee/EnemyMeleeNormalSE.png")
@@ -8,16 +10,22 @@ const RANGEDNORMALSE = preload("res://Units/Assets/EnemyRanged/EnemyRangedNormal
 
 var target_in_range : bool
 var is_active : bool = false
+var houses_exist : bool = true
 
 func _ready() -> void:
 	super._ready()
 	match_type()
+	
+	house_destroyed.connect(find_building)
 
 func _process(delta: float) -> void:
 	super._process(delta)
+	
 	if vision.monitoring : target_in_range = vision.has_overlapping_areas()
 	handle_action(delta)
 	handle_approach()
+	check_houses()
+	
 	
 func handle_action(delta) -> void:
 	var distToTarget = global_position.distance_to(nav.target_position)
@@ -100,6 +108,7 @@ func match_type() -> void:
 func find_building() -> void:
 	await get_tree().create_timer(.1).timeout
 	var buildings = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
+	buildings = buildings.filter(func(b):return b.type == Building.TYPE.HOUSE)
 	if buildings.is_empty() : return
 	find_closest(buildings)
 	if target: nav.target_position = target.global_position
@@ -108,6 +117,11 @@ func handle_approach() -> void:
 	if !is_active:
 		z_index = 10
 		sprite_2d.material = GHOST
+
+func check_houses() -> void:
+	var buildings = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
+	buildings = buildings.filter(func(b):return b.type == Building.TYPE.HOUSE)
+	houses_exist = true if !buildings.is_empty() else false
 
 func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> void:
 	match top_action_id:

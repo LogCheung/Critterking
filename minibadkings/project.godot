@@ -41,6 +41,7 @@ BUILDINGSNODE=""
 UI=""
 CARD=""
 BUILDING=""
+ENEMY=""
 
 [input]
 

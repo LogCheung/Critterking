@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://c14eoupysd2xd"]
+[gd_scene load_steps=32 format=3 uid="uid://c14eoupysd2xd"]
 
 [ext_resource type="Script" uid="uid://bvqtdufd1qjrv" path="res://Units/Scripts/enemy.gd" id="2_mh310"]
 [ext_resource type="Texture2D" uid="uid://cbhjhb3oset8l" path="res://Units/Assets/EnemyMelee/EnemyMeleeNormalSE.png" id="3_1flw5"]
@@ -40,6 +40,10 @@ point_count = 2
 
 [sub_resource type="Curve" id="Curve_ubmlb"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.797753), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_7xmed"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_0wncj"]
@@ -173,7 +177,7 @@ size = Vector2(2, 2)
 [sub_resource type="CircleShape2D" id="CircleShape2D_mh310"]
 radius = 128.0
 
-[node name="Enemy" type="CharacterBody2D" groups=["UNIT"]]
+[node name="Enemy" type="CharacterBody2D" groups=["ENEMY", "UNIT"]]
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("2_mh310")
@@ -258,11 +262,22 @@ script = ExtResource("7_7xmed")
 _action_id = "raid"
 metadata/_custom_type_script = "uid://bpvkdlp8jw4sj"
 
-[node name="UtilityAiConsiderationFromNode" type="Node" parent="UtilityAiAgent/raid" node_paths=PackedStringArray("node")]
+[node name="UtilityAiAggregation" type="Node" parent="UtilityAiAgent/raid"]
+script = ExtResource("8_ubmlb")
+metadata/_custom_type_script = "uid://b2f8vq1st70r0"
+
+[node name="is_active" type="Node" parent="UtilityAiAgent/raid/UtilityAiAggregation" node_paths=PackedStringArray("node")]
 script = ExtResource("8_ohg4d")
-node = NodePath("../../..")
+node = NodePath("../../../..")
 property_name = "is_active"
 curve = SubResource("Curve_ubmlb")
+metadata/_custom_type_script = "uid://dojkyt7skh8fh"
+
+[node name="houses_exist" type="Node" parent="UtilityAiAgent/raid/UtilityAiAggregation" node_paths=PackedStringArray("node")]
+script = ExtResource("8_ohg4d")
+node = NodePath("../../../..")
+property_name = "houses_exist"
+curve = SubResource("Curve_7xmed")
 metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
 [node name="strafe" type="Node" parent="UtilityAiAgent"]

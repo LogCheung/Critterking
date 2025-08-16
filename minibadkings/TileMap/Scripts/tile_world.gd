@@ -18,9 +18,6 @@ func _ready() -> void:
 	handle_navigable_cells()
 	limit_colliding_walls()
 
-func _process(delta: float) -> void:
-	hover.show()
-
 func handle_navigable_cells() -> void:
 	# reset 
 	unit_tiles.clear()
@@ -34,7 +31,7 @@ func handle_navigable_cells() -> void:
 		group.tile = ground.local_to_map(group.global_position)
 		unit_tiles.append(group.tile)
 	
-	var buildingsCells = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
+	var buildingsCells = get_tree().get_nodes_in_group("BUILDING")
 	buildingsCells = buildingsCells.filter(func(b: Building):return b.type != b.TYPE.TRAP)
 	buildingsCells = buildingsCells.map(func(b : Building):return b.tile)
 	# change tile data for buildings

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=22 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Texture2D" uid="uid://kf8vcph4uky7" path="res://UI/Assets/menus/cardshow.png" id="2_rbgpe"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bjjg37vgshqt6" path="res://UI/Scenes/card.tscn" id="3_bujes"]
 [ext_resource type="Texture2D" uid="uid://cq8c1lx28bb3u" path="res://UI/Assets/menus/help.png" id="4_pyqth"]
 [ext_resource type="Texture2D" uid="uid://ce2faiksbdbqw" path="res://UI/Assets/menus/settings.png" id="5_kd6an"]
+[ext_resource type="Texture2D" uid="uid://dwseh6hsy3l77" path="res://UI/Assets/menus/gameover.png" id="7_ftqev"]
 [ext_resource type="FontFile" uid="uid://dqt550qq7jmvu" path="res://Units/Debug/PressStart2P.ttf" id="7_titua"]
 [ext_resource type="AudioStream" uid="uid://bmkptsfk4bkc" path="res://Audio/music/crtrpause.wav" id="8_oj6tj"]
 [ext_resource type="AudioStream" uid="uid://bj8clo00ioln7" path="res://Audio/music/crtrover.wav" id="9_ftqev"]
@@ -311,8 +312,38 @@ offset_bottom = 654.0
 scale = Vector2(3, 3)
 step = 0.001
 
+[node name="gameover" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="over" type="Sprite2D" parent="gameover"]
+scale = Vector2(6, 6)
+texture = ExtResource("7_ftqev")
+offset = Vector2(160, 90)
+
+[node name="newgame" type="Button" parent="gameover/over"]
+offset_left = 3.0
+offset_top = 147.0
+offset_right = 97.0
+offset_bottom = 178.0
+focus_mode = 0
+flat = true
+
+[node name="title" type="Button" parent="gameover/over"]
+offset_left = 242.0
+offset_top = 147.0
+offset_right = 318.0
+offset_bottom = 178.0
+focus_mode = 0
+flat = true
+
 [node name="EndTurn" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
@@ -397,4 +428,6 @@ stream = ExtResource("15_8g5lr")
 [connection signal="pressed" from="mainmenu/main/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="Help/help/Backhelp" to="." method="_on_backhelp_pressed"]
 [connection signal="pressed" from="Settings/settings/settingsback" to="." method="_on_settingsback_pressed"]
+[connection signal="pressed" from="gameover/over/newgame" to="." method="_on_newgame_pressed"]
+[connection signal="pressed" from="gameover/over/title" to="." method="_on_title_pressed"]
 [connection signal="pressed" from="EndTurn/endturn" to="." method="_on_endturn_pressed"]

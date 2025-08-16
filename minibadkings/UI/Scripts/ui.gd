@@ -1,6 +1,8 @@
 extends CanvasLayer
 class_name UI
 
+signal game_over
+
 @onready var cards: Control = %Cards
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var hand: Control = %Hand
@@ -9,6 +11,8 @@ class_name UI
 @onready var settings: Control = %Settings
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
 @onready var end_turn: Control = %EndTurn
+@onready var gameover: Control = %gameover
+
 
 func _process(delta: float) -> void:
 	Global.cardsInHand = hand.get_child(0).get_children()
@@ -17,9 +21,7 @@ func _process(delta: float) -> void:
 		%crtrOver.stop()
 		%crtrDay.stop()
 		%crtrNight.stop()
-		#if %crtrMenu.is_playing:return
 		%crtrMenu.play()
-		print("ok")
 	elif settings.visible and !%crtrPause.playing:
 		%crtrMenu.stop()
 		%crtrOver.stop()
@@ -47,6 +49,9 @@ func _process(delta: float) -> void:
 		
 		
 func _ready() -> void:
+	# connect signals
+	game_over.connect(on_game_over)
+	# hide all but show main menu
 	for c in get_children():
 		if !c is Control: continue
 		c.hide()
@@ -66,14 +71,22 @@ func display_cards(display : bool) -> void:
 		card.randomize_type()
 		card.visible = display
 func show_hand() -> void:
+	if world.starting_roll:
+		cards.show()
+		world.starting_roll = false
+		return
 	cards.hide()
 	hand.show()
 	var container = %Hand.get_child(0) # Hboxcontainer
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(.5).timeout
 	for c : Card in container.get_children():
 		c.set_up()
 	#for card : Card in Global.cardsInHand:
 		#container.add_child(card)
+
+func on_game_over() -> void:
+	gameover.show()
+
 func _on_show_pressed() -> void:
 	$Shuffle
 	%Shuffle.play()
@@ -116,15 +129,20 @@ func _on_settingsback_pressed() -> void:
 
 func _on_endturn_pressed() -> void:
 	# check if house is not placed
+	%Button.play()
 	for card : Card in Global.cardsInHand:
-		print(card.type)
 		if card.type == Card.CARDTYPE.HOUSE: 
 			%noHouse.show()
 			return
-	%Button.play()
 	world.night_started.emit()
-	
+	%noHouse.hide()
 
-	
-	
-	
+func _on_newgame_pressed() -> void:
+	print("ok")
+	gameover.hide()
+	world.new_game()
+	world.start_day()
+
+func _on_title_pressed() -> void:
+	gameover.hide()
+	mainmenu.show()

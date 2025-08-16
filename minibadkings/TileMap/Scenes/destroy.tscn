@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://chd7ep0osr0l3"]
+
+[ext_resource type="Script" uid="uid://bf12ijtnudn3f" path="res://TileMap/Scripts/destroy.gd" id="1_u202p"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u202p"]
+
+[node name="destroy" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_u202p")
+script = ExtResource("1_u202p")

@@ -136,5 +136,6 @@ func on_hurt_box_land(area : Area2D) -> void:
 			hurtbox_cd.start()
 func on_hurt_box_building_land(body : Node2D):
 	if body is Building:
-		body.health -= damage
+		if body.type == Building.TYPE.HOUSE:
+			body.health -= damage
 	pass

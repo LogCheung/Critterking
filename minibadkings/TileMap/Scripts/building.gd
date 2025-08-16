@@ -24,6 +24,7 @@ enum TYPE {
 @onready var bar: TextureProgressBar = $TextureProgressBar
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var anim: AnimationPlayer = $AnimationPlayer
+@onready var ui : UI = get_tree().get_first_node_in_group("UI")
 
 var tile : Vector2i
 var doorstepTile : Vector2i
@@ -71,12 +72,28 @@ func match_type() -> void:
 			z_index = 0
 
 func on_destroyed() -> void:
+	if type == TYPE.RUINS : return
+	# Change appearance and play destroy
+	anim.play("destroy")
 	type = TYPE.RUINS
+	match_type()
+	
+	# alert enemies
+	var enemies = get_tree().get_nodes_in_group("ENEMY")
+	for enemy : Enemy in enemies:
+		enemy.house_destroyed.emit()
+	
+	# check if final house destroyed and if player lost
 	var buildings = get_tree().get_nodes_in_group("BUILDING")
 	buildings = buildings.filter(func(b):return b.type == Building.TYPE.HOUSE)
 	if buildings.is_empty():
-		queue_free()
+		ui.game_over.emit()
 		# lose screen
+	
+func remove() -> void:
+	tileWorld.ground.set_cell(tile,0,Vector2(0,0),1)
+	tileWorld.handle_navigable_cells()
+	queue_free()
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if area.owner is Unit:

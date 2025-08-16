@@ -44,5 +44,6 @@ func _on_area_entered(area: Area2D) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Building:
-		body.health -= damage
+		if body.type == Building.TYPE.HOUSE:
+			body.health -= damage
 	queue_free()
