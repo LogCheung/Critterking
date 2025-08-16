@@ -31,6 +31,9 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @onready var vision: Area2D = $Vision
 @onready var hurtbox_cd: Timer = $HurtboxCD
 @onready var hit_box: Area2D = %HitBox
+@onready var death: AudioStreamPlayer = %Death
+@onready var hurt: AudioStreamPlayer = %Hurt
+
 
 var action : ACTION = ACTION.NONE
 var in_formation : bool = false

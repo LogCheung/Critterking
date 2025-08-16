@@ -89,6 +89,10 @@ func on_destroyed() -> void:
 	if buildings.is_empty():
 		ui.game_over.emit()
 		# lose screen
+		
+	# kill unit inside if group is healing
+	if occupants_inside():
+		occupant.terminate()
 	
 func remove() -> void:
 	tileWorld.ground.set_cell(tile,0,Vector2(0,0),1)
@@ -96,11 +100,14 @@ func remove() -> void:
 	queue_free()
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
+	if !type == TYPE.TRAP : return
 	if area.owner is Unit:
 		var enemy : Unit = area.owner
 		enemy.health -= 1
+		enemy.hurt.play()
 		if enemy.health <= 0:
 			var enemyGroup = enemy.group.unitsArray
 			if enemyGroup.find(enemy) != -1 : enemyGroup.remove_at(enemyGroup.find(enemy))
 			enemy.group.unit_died.emit()
+			enemy.death.play()
 			enemy.queue_free()
