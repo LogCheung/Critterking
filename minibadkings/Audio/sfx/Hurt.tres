@@ -1,0 +1,10 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=3 format=3 uid="uid://b7scm4fug5tje"]
+
+[ext_resource type="AudioStream" uid="uid://dnn872wx0txfs" path="res://Audio/sfx/Hurt1.wav" id="1_1teog"]
+[ext_resource type="AudioStream" uid="uid://cyj7cx2prt3el" path="res://Audio/sfx/Hurt2.wav" id="2_v0ks6"]
+
+[resource]
+playback_mode = 1
+streams_count = 2
+stream_0/stream = ExtResource("1_1teog")
+stream_1/stream = ExtResource("2_v0ks6")

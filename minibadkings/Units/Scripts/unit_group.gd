@@ -55,6 +55,7 @@ func _on_select_area_input_event(viewport: Node, event: InputEvent, shape_idx: i
 		if is_under_mouse:
 			selected = !selected
 			if selected: 
+				%Select.play()
 				highlight_houses()
 				Engine.time_scale = .1
 				_on_select_area_mouse_exited()

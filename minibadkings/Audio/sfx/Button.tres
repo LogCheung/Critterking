@@ -1,0 +1,10 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=3 format=3 uid="uid://bxpbo04dxxuf4"]
+
+[ext_resource type="AudioStream" uid="uid://d13hg15ccnkm0" path="res://Audio/sfx/Button1.wav" id="1_lbxbw"]
+[ext_resource type="AudioStream" uid="uid://b7ls7vrr8exfj" path="res://Audio/sfx/Button2.wav" id="2_x6wpj"]
+
+[resource]
+playback_mode = 1
+streams_count = 2
+stream_0/stream = ExtResource("1_lbxbw")
+stream_1/stream = ExtResource("2_x6wpj")

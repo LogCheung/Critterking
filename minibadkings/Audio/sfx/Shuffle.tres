@@ -1,0 +1,10 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=3 format=3 uid="uid://cwx4hw05ceroc"]
+
+[ext_resource type="AudioStream" uid="uid://cf4bs3a8gvnho" path="res://Audio/sfx/Shuffle1.wav" id="1_cx5oe"]
+[ext_resource type="AudioStream" uid="uid://cf8qels1gtws8" path="res://Audio/sfx/Shuffle2.wav" id="2_m6k6b"]
+
+[resource]
+playback_mode = 1
+streams_count = 2
+stream_0/stream = ExtResource("1_cx5oe")
+stream_1/stream = ExtResource("2_m6k6b")
