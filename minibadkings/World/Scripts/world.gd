@@ -38,9 +38,10 @@ func new_game() -> void:
 	Global.cardsInHand.clear()
 	
 	# add house card
-	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-	hCard.type = Card.CARDTYPE.HOUSE
-	ui.hand.get_child(0).add_child(hCard)
+	for i in range(2):
+		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.TRAPS
+		ui.hand.get_child(0).add_child(hCard)
 func clear_perimeters() -> void:
 	# clear children
 	outerFollow = null
@@ -128,7 +129,6 @@ func on_night_ended() -> void:
 
 func start_day() -> void:
 	print("day")
-	tileWorld.handle_navigable_cells()
 	is_combat_phase = false
 	ui.cards.show()
 	ui.end_turn.show()
@@ -143,11 +143,13 @@ func start_day() -> void:
 		newCard.for_show = false
 		
 		g.terminate()
-		
+	
 	# repair buildings
 	var buildings = get_tree().get_nodes_in_group("BUILDINGS")
 	for b : Building in buildings:
 		b.health = b.max_health
+	
+	tileWorld.handle_navigable_cells()
 
 func _on_spawn_timer_timeout() -> void:
 	spawn_enemy()
