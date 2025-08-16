@@ -10,6 +10,9 @@ class_name UI
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
 @onready var end_turn: Control = %EndTurn
 
+func _process(delta: float) -> void:
+	Global.cardsInHand = hand.get_child(0).get_children()
+
 func _ready() -> void:
 	for c in get_children():
 		if !c is Control: continue
@@ -61,6 +64,7 @@ func _on_settingsback_pressed() -> void:
 func _on_endturn_pressed() -> void:
 	# check if house is not placed
 	for card : Card in Global.cardsInHand:
+		print(card.type)
 		if card.type == Card.CARDTYPE.HOUSE: 
 			%noHouse.show()
 			return

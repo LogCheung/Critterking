@@ -6,12 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://bv3jqqow41vyp" path="res://UI/Assets/HealingOver.png" id="4_5rqce"]
 [ext_resource type="Texture2D" uid="uid://ba2e2y1w34bcg" path="res://UI/Assets/HealingProgress.png" id="5_j1jnl"]
 
-[node name="Building" type="StaticBody2D"]
+[node name="Building" type="StaticBody2D" groups=["BUILDING"]]
 z_index = 1
 z_as_relative = false
 y_sort_enabled = true
-collision_layer = 0
+collision_layer = 2
 script = ExtResource("1_mpr6t")
+type = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_452cs")

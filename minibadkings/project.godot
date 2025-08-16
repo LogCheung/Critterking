@@ -40,6 +40,7 @@ ENEMYGRPNODE=""
 BUILDINGSNODE=""
 UI=""
 CARD=""
+BUILDING=""
 
 [input]
 

@@ -34,6 +34,12 @@ func new_game() -> void:
 	create_enemy_perimeter(11 + Global.expansions, false)
 	Global.nights = 0
 	Global.expansions = 0
+	Global.cardsInHand.clear()
+	
+	# add house card
+	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+	hCard.type = Card.CARDTYPE.HOUSE
+	ui.hand.get_child(0).add_child(hCard)
 func clear_perimeters() -> void:
 	# clear children
 	outerFollow = null
@@ -136,6 +142,11 @@ func start_day() -> void:
 		newCard.for_show = false
 		
 		g.terminate()
+		
+	# repair buildings
+	var buildings = get_tree().get_nodes_in_group("BUILDINGS")
+	for b : Building in buildings:
+		b.health = b.max_health
 
 func _on_spawn_timer_timeout() -> void:
 	spawn_enemy()
