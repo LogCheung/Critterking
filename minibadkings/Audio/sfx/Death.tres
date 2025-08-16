@@ -1,0 +1,10 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=3 format=3 uid="uid://w5s7eos7mc1q"]
+
+[ext_resource type="AudioStream" uid="uid://bguljydm8uyuy" path="res://Audio/sfx/Death1.wav" id="1_fgi0k"]
+[ext_resource type="AudioStream" uid="uid://bn67jq2yyv06n" path="res://Audio/sfx/Death2.wav" id="2_frkyw"]
+
+[resource]
+playback_mode = 1
+streams_count = 2
+stream_0/stream = ExtResource("1_fgi0k")
+stream_1/stream = ExtResource("2_frkyw")

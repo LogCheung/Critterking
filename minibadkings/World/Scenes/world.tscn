@@ -67,7 +67,6 @@ wait_time = 10.0
 
 [node name="Building" parent="Game/BuidlingsNode" instance=ExtResource("6_t7din")]
 position = Vector2(319, 128)
-type = 1
 
 [node name="UI" parent="." groups=["UI"] instance=ExtResource("6_7qq3u")]
 unique_name_in_owner = true

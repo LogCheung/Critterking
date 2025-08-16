@@ -23,8 +23,9 @@ var innerFollow : PathFollow2D
 var spawned_parties : int = 0
 
 func _ready() -> void:
-	Engine.time_scale = 8
+	Engine.time_scale = 1
 	new_game()
+	
 func new_game() -> void:
 	night_started.connect(on_night_started)
 	night_ended.connect(on_night_ended)
