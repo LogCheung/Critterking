@@ -5,11 +5,12 @@ extends Area2D
 @export var DIRECTION : Vector2
 @export var damage : int
 @export var is_enemy : bool
-
+const ENEMYPROJ = preload("res://Units/Assets/EnemyProjectile.png")
 var travelled_distance = 0
 
 func _ready() -> void:
 	if is_enemy:
+		$Sprite2D.texture = ENEMYPROJ
 		set_collision_mask_value(2,true)
 	else:
 		set_collision_mask_value(3, true)
