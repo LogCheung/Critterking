@@ -125,13 +125,11 @@ func on_hurt_box_land(area : Area2D) -> void:
 	if hurtbox_cd.time_left > 0 : return
 	if area.owner is Unit:
 		var enemy : Unit = area.owner
-		%Hurt.play()
 		enemy.health -= damage
 		if enemy.health <= 0:
 			var enemyGroup = enemy.group.unitsArray
 			if enemyGroup.find(enemy) != -1 : enemyGroup.remove_at(enemyGroup.find(enemy))
 			enemy.group.unit_died.emit()
-			%Death.play()
 			enemy.queue_free()
 			hurtbox_cd.start()
 func on_hurt_box_building_land(body : Node2D):

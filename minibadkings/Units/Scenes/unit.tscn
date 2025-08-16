@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://dkqw1dmj0wkgb"]
+[gd_scene load_steps=31 format=3 uid="uid://dkqw1dmj0wkgb"]
 
 [ext_resource type="PackedScene" uid="uid://ddc6mf0gqftb" path="res://Units/Scenes/hit_box.tscn" id="1_pm8qt"]
 [ext_resource type="Script" uid="uid://13y7jtc01ydv" path="res://Units/Scripts/ally.gd" id="1_q458e"]
@@ -9,10 +9,6 @@
 [ext_resource type="Script" uid="uid://dojkyt7skh8fh" path="res://addons/utility_ai/considerations/consideration_from_node.gd" id="7_m88pn"]
 [ext_resource type="Script" uid="uid://b2f8vq1st70r0" path="res://addons/utility_ai/considerations/aggregation.gd" id="9_daau3"]
 [ext_resource type="Script" uid="uid://c4w8b5x2jd5q3" path="res://Units/Scenes/considerType.gd" id="9_jqc0h"]
-[ext_resource type="AudioStream" uid="uid://51wb2nkn3yoe" path="res://Audio/sfx/Attack.tres" id="10_t5nd1"]
-[ext_resource type="AudioStream" uid="uid://b7scm4fug5tje" path="res://Audio/sfx/Hurt.tres" id="11_amxnv"]
-[ext_resource type="AudioStream" uid="uid://bmrvq8a3r1mcb" path="res://Audio/sfx/Shoot.tres" id="12_iqrsy"]
-[ext_resource type="AudioStream" uid="uid://w5s7eos7mc1q" path="res://Audio/sfx/Death.tres" id="13_esq2s"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_daau3"]
 radius = 2.0
@@ -394,26 +390,6 @@ one_shot = true
 
 [node name="HurtboxCD" type="Timer" parent="."]
 one_shot = true
-
-[node name="Attack" type="AudioStreamPlayer" parent="."]
-unique_name_in_owner = true
-stream = ExtResource("10_t5nd1")
-bus = &"SFX"
-
-[node name="Hurt" type="AudioStreamPlayer" parent="."]
-unique_name_in_owner = true
-stream = ExtResource("11_amxnv")
-bus = &"SFX"
-
-[node name="Shoot" type="AudioStreamPlayer" parent="."]
-unique_name_in_owner = true
-stream = ExtResource("12_iqrsy")
-bus = &"SFX"
-
-[node name="Death" type="AudioStreamPlayer" parent="."]
-unique_name_in_owner = true
-stream = ExtResource("13_esq2s")
-bus = &"SFX"
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

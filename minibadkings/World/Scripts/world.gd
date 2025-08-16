@@ -23,7 +23,7 @@ var innerFollow : PathFollow2D
 var spawned_parties : int = 0
 
 func _ready() -> void:
-	Engine.time_scale = 1
+	Engine.time_scale = 8
 	new_game()
 	
 func new_game() -> void:

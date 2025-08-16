@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://bytyqloqmpx5r"]
+[gd_scene load_steps=3 format=3 uid="uid://bytyqloqmpx5r"]
 
 [ext_resource type="Script" uid="uid://ckgu67whte16x" path="res://Units/Scripts/unit_group.gd" id="1_onkey"]
-[ext_resource type="AudioStream" uid="uid://dcqngsl7y76w1" path="res://Audio/sfx/Select.tres" id="2_x7lgr"]
 
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_onkey"]
 points = PackedVector2Array(0, -16, 32, 0, 0, 16, -32, 0)
@@ -18,11 +17,6 @@ unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SelectArea"]
 shape = SubResource("ConvexPolygonShape2D_onkey")
-
-[node name="Select" type="AudioStreamPlayer" parent="."]
-unique_name_in_owner = true
-stream = ExtResource("2_x7lgr")
-bus = &"SFX"
 
 [connection signal="input_event" from="SelectArea" to="." method="_on_select_area_input_event"]
 [connection signal="mouse_entered" from="SelectArea" to="." method="_on_select_area_mouse_entered"]

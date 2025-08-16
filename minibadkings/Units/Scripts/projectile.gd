@@ -32,13 +32,11 @@ func _on_area_entered(area: Area2D) -> void:
 			#if rand % 2 == 0: 
 			target.health -= damage - 1
 		else:
-			%Hurt.play()
 			target.health -= damage 
 		if target.health <= 0:
 			var group = target.group.unitsArray
 			if group.find(target) != - 1: group.remove_at(group.find(target))
 			target.group.unit_died.emit()
-			%Death.play()
 			target.queue_free()
 		queue_free()
 

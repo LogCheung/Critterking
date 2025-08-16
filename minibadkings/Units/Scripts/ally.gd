@@ -77,10 +77,6 @@ func handle_action(delta) -> void:
 				too_close = false
 				
 				anim.play("attack")
-				if type== TYPE.RANGED:
-					%Shoot.play()
-				else:
-					%Attack.play()
 				
 				await anim.animation_finished
 				attack_cd.start()
