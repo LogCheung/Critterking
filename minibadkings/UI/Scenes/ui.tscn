@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=31 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Texture2D" uid="uid://kf8vcph4uky7" path="res://UI/Assets/menus/cardshow.png" id="2_rbgpe"]
@@ -11,12 +11,17 @@
 [ext_resource type="FontFile" uid="uid://dqt550qq7jmvu" path="res://Units/Debug/PressStart2P.ttf" id="7_titua"]
 [ext_resource type="AudioStream" uid="uid://bmkptsfk4bkc" path="res://Audio/music/crtrpause.wav" id="8_oj6tj"]
 [ext_resource type="AudioStream" uid="uid://bj8clo00ioln7" path="res://Audio/music/crtrover.wav" id="9_ftqev"]
+[ext_resource type="Texture2D" uid="uid://dmgylqdp2munp" path="res://UI/Assets/endday.png" id="10_6dw6b"]
 [ext_resource type="AudioStream" uid="uid://wctmm4dlcbix" path="res://Audio/music/crtrmenu.wav" id="10_n2q0n"]
 [ext_resource type="AudioStream" uid="uid://cwx4hw05ceroc" path="res://Audio/sfx/Shuffle.tres" id="11_6dw6b"]
+[ext_resource type="Texture2D" uid="uid://b6kejcvarih2b" path="res://UI/Assets/nightcount.png" id="11_yqd36"]
 [ext_resource type="AudioStream" uid="uid://bdq1nbxdckl0r" path="res://Audio/sfx/Card.tres" id="12_yqd36"]
 [ext_resource type="AudioStream" uid="uid://cqs4ssc2g47ia" path="res://Audio/music/crtrnight1.wav" id="13_oemsu"]
 [ext_resource type="AudioStream" uid="uid://cbsqcafyluqad" path="res://Audio/music/crtrday1.wav" id="14_gu1s8"]
 [ext_resource type="AudioStream" uid="uid://bxpbo04dxxuf4" path="res://Audio/sfx/Button.tres" id="15_8g5lr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_yqd36"]
+font = ExtResource("7_titua")
 
 [sub_resource type="LabelSettings" id="LabelSettings_ftqev"]
 font = ExtResource("7_titua")
@@ -326,6 +331,29 @@ _data = {
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_44q3l")
 
+[node name="NightCounter" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Sprite2D" type="Sprite2D" parent="NightCounter"]
+position = Vector2(96, 48)
+scale = Vector2(3, 3)
+texture = ExtResource("11_yqd36")
+
+[node name="DayNight" type="Label" parent="NightCounter/Sprite2D"]
+unique_name_in_owner = true
+offset_left = -11.5
+offset_top = -11.25
+offset_right = 28.5
+offset_bottom = 11.75
+text = "1"
+label_settings = SubResource("LabelSettings_yqd36")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Cards" type="Control" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -614,29 +642,31 @@ vertical_alignment = 1
 
 [node name="EndTurn" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1081.0
 mouse_filter = 2
 
-[node name="endturn" type="Button" parent="EndTurn"]
-layout_mode = 1
+[node name="Sprite2D" type="Sprite2D" parent="EndTurn"]
+position = Vector2(1824, 1031)
+scale = Vector2(3, 3)
+texture = ExtResource("10_6dw6b")
+
+[node name="endturn" type="Button" parent="EndTurn/Sprite2D"]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -171.0
-offset_top = -78.0
-offset_right = -93.0
-offset_bottom = -47.0
+offset_left = -96.0
+offset_top = -48.0
+offset_right = -32.0
+offset_bottom = -16.0
 grow_horizontal = 0
 grow_vertical = 0
-scale = Vector2(2, 2)
 focus_mode = 0
-text = "End Turn"
+flat = true
 
 [node name="noHouse" type="Label" parent="EndTurn"]
 unique_name_in_owner = true
@@ -705,4 +735,4 @@ stream = ExtResource("15_8g5lr")
 [connection signal="pressed" from="Settings/settings/settingsback" to="." method="_on_settingsback_pressed"]
 [connection signal="pressed" from="gameover/over/newgame" to="." method="_on_newgame_pressed"]
 [connection signal="pressed" from="gameover/over/title" to="." method="_on_title_pressed"]
-[connection signal="pressed" from="EndTurn/endturn" to="." method="_on_endturn_pressed"]
+[connection signal="pressed" from="EndTurn/Sprite2D/endturn" to="." method="_on_endturn_pressed"]

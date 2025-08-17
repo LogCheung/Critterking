@@ -1,5 +1,7 @@
 extends Unit
 class_name Ally
+signal speedchange
+signal healthchange
 
 const MELEENORMALSE = preload("res://Units/Assets/AllyMelee/AllyMeleeNormalSE.png")
 const RANGEDNORMALSE = preload("res://Units/Assets/AllyRanged/AllyRangedNormalSE.png")
@@ -21,13 +23,15 @@ var healing : bool
 func _ready() -> void:
 	allyGroup = group
 	if upgraded: 
-		max_health = max_health + 1
+		max_health = max_health + 0.5
 		health = max_health
-		damage = damage + 1
+		damage = damage + 0.5
 		
 	
 	super._ready()
 	selected.connect(on_selected)
+	healthchange.connect(on_health_change)
+	speedchange.connect(on_speed_change)
 	unselected.connect(on_unselected)
 	match_type()
 	
@@ -135,6 +139,7 @@ func match_type() -> void:
 		TYPE.RANGED:
 			sprite_2d.texture = RANGEDNORMALSE
 			health = 2
+			damage = 1.5
 			attackRange = 100
 			var visionShape : CollisionShape2D = vision.get_child(0)
 			visionShape.shape.radius = 120
@@ -155,6 +160,22 @@ func match_sprite() -> void:
 			pass
 		TYPE.SHIELDED:
 			pass
+
+func on_health_change() -> void:
+	var farms = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
+	farms = farms.filter(func(b : Building):return b.type == Building.TYPE.FARM)
+	for f : Building in farms:
+		print("yum")
+		max_health = max_health + 0.5
+		health = max_health
+		
+func on_speed_change() -> void:
+	var saps = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
+	saps = saps.filter(func(b : Building):return b.type == Building.TYPE.SAPSTORE)
+	for s : Building in saps:
+		print("sugar")
+		speed = speed + 2.5
+
 
 func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> void:
 	match top_action_id:

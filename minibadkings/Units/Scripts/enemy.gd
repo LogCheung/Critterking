@@ -7,6 +7,7 @@ const GHOST = preload("res://Units/Shaders/ghostHighlight.tres")
 
 const MELEENORMALSE = preload("res://Units/Assets/EnemyMelee/EnemyMeleeNormalSE.png")
 const RANGEDNORMALSE = preload("res://Units/Assets/EnemyRanged/EnemyRangedNormalSE.png")
+const SHIELDEDNORMALSE = preload("res://Units/Assets/EnemyShield/EnemyShieldNormalSE.png")
 
 var target_in_range : bool
 var is_active : bool = false
@@ -101,17 +102,20 @@ func match_type() -> void:
 		TYPE.RANGED:
 			sprite_2d.texture = RANGEDNORMALSE
 			health = 2
+			damage = 1.5
 			attackRange = 100
 			var visionShape : CollisionShape2D = vision.get_child(0)
 			visionShape.shape.radius = 120
 			attack_cd.wait_time = 4
 		TYPE.SHIELDED:
+			sprite_2d.texture = SHIELDEDNORMALSE
 			damage = 1
 
 func find_building() -> void:
 	await get_tree().create_timer(.1).timeout
 	var buildings = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
-	buildings = buildings.filter(func(b):return b.type == Building.TYPE.HOUSE)
+	buildings = buildings.filter(func(b):return b.type != Building.TYPE.TRAP)
+	buildings = buildings.filter(func(b):return b.type != Building.TYPE.RUINS)
 	if buildings.is_empty() : return
 	find_closest(buildings)
 	if target: nav.target_position = target.global_position

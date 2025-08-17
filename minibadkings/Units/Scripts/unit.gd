@@ -13,9 +13,9 @@ signal unselected
 
 const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 
-@export var health : int = 4
-@export var max_health : int = 4
-@export var damage : int = 2
+@export var health : float = 4
+@export var max_health : float = 4
+@export var damage : float = 2
 @export var speed : float = 30
 @export var attackRange : float = 10
 @export var formation_position : Node2D 
@@ -144,6 +144,6 @@ func on_hurt_box_land(area : Area2D) -> void:
 			enemy.queue_free()
 func on_hurt_box_building_land(body : Node2D):
 	if body is Building:
-		if body.type == Building.TYPE.HOUSE:
+		if body.type != Building.TYPE.TRAP or body.type != Building.TYPE.RUINS:
 			body.health -= damage
 	pass

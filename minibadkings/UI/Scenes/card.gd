@@ -5,7 +5,7 @@ const GROUP = preload("res://Units/Scenes/unit_group.tscn")
 const BUILDING = preload("res://TileMap/Scenes/building.tscn")
 
 enum CARDTYPE {
-	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3, TRAPS = 4,DESTROY = 5, HOUSE = 6
+	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3, TRAPS = 4,DESTROY = 5, HOUSE = 6, CARE = 7, FARM = 8, SAPSTORE = 9
 }
 enum ROLLTYPE {
 	GENERAL, UNIT, BUILDING
@@ -40,6 +40,7 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("select") and !selected:
 		if Rect2(Vector2(), size).has_point(get_local_mouse_position()):
 			selected = true
+			print("in card: " + str(type))
 	if Input.is_action_pressed("select") and selected:
 		sprite_2d.scale = Vector2(.4,.4)
 		global_position = get_global_mouse_position()
@@ -107,6 +108,19 @@ func plop_building() -> void:
 				position = default_position
 				selected = false
 				return
+		CARDTYPE.CARE:
+			building.type = Building.TYPE.CARE
+			if check_if_blocking(tile):
+				print("notok")
+				sprite_2d.scale = Vector2(1.0,1.0)
+				position = default_position
+				selected = false
+				return
+		CARDTYPE.FARM:
+			building.type = Building.TYPE.FARM
+		CARDTYPE.SAPSTORE:
+			building.type = Building.TYPE.SAPSTORE
+			
 	building.global_position = tileWorld.ground.map_to_local(tile)
 	buildingNode.add_child(building)
 	
@@ -151,7 +165,7 @@ func check_if_merge(plopTile : Vector2) -> bool:
 		if !g.tile == plopTile : continue
 		targetGroup = g
 	
-	if is_instance_valid(targetGroup):
+	if is_instance_valid(targetGroup) and type==targetGroup.type:
 		targetGroup.being_upgraded.emit()
 		return true
 	
@@ -160,7 +174,7 @@ func check_if_merge(plopTile : Vector2) -> bool:
 func randomize_type() -> void:
 	match rolltype:
 		ROLLTYPE.GENERAL:
-			type = (randi() % CARDTYPE.size() - 1) + 1
+			type = randi_range(1,CARDTYPE.size()-1)
 	if type == CARDTYPE.HOUSE : randomize_type()
 	
 	# check if not same as other card
@@ -187,6 +201,12 @@ func match_type() -> void:
 			sprite_2d.texture = preload("res://UI/Assets/cards/houseCard.png")
 		CARDTYPE.DESTROY:
 			sprite_2d.texture = preload("res://UI/Assets/cards/destroy.png")
+		CARDTYPE.CARE:
+			sprite_2d.texture = preload("res://UI/Assets/cards/careCard.png")
+		CARDTYPE.FARM:
+			sprite_2d.texture = preload("res://UI/Assets/cards/farmCard.png")
+		CARDTYPE.SAPSTORE:
+			sprite_2d.texture = preload("res://UI/Assets/cards/sapCard.png")
 
 func _on_selected_pressed() -> void:
 	if choice_picked : return
