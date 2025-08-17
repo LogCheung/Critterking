@@ -377,7 +377,6 @@ for_show = true
 
 [node name="Hand" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
@@ -392,16 +391,16 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -860.0
-offset_top = -270.0
-offset_right = 100.0
-offset_bottom = 2.0
+offset_left = -915.0
+offset_top = -239.0
+offset_right = 367.0
+offset_bottom = 33.0
 grow_horizontal = 2
 grow_vertical = 0
-scale = Vector2(2, 2)
+scale = Vector2(1.5, 1.5)
 pivot_offset = Vector2(100, 0)
 mouse_filter = 2
-theme_override_constants/separation = -5
+theme_override_constants/separation = 15
 alignment = 1
 
 [node name="HandOrigin" type="Node2D" parent="Hand"]
