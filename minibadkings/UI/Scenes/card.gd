@@ -146,6 +146,7 @@ func check_destroy(plopTile : Vector2) -> bool:
 	return false
 
 func check_if_merge(plopTile : Vector2) -> bool:
+	if type > 3: return false
 	var groups = get_tree().get_nodes_in_group("ALLYGROUP")
 	var targetGroup : AllyGroup
 	# Identify group that is going to be upgraded

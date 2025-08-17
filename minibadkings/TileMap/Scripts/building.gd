@@ -11,7 +11,7 @@ const TRAPB = preload("res://TileMap/Assets/trapB.png")
 const RUIN = preload("res://TileMap/Assets/ruinBreak.png")
 
 enum TYPE {
-	NONE, HOUSE, TRAP, NURSERY, STORAGE, FARM, SAPSTORE, RUINS
+	NONE, HOUSE, TRAP, NURSERY, STORAGE, FARM, SAPSTORE, RUINS, CARE
 }
 
 @export var type : TYPE
@@ -59,6 +59,7 @@ func _process(delta: float) -> void:
 		bar.visible = false
 func occupants_inside() -> bool:
 	if !occupant : return false
+	if type != TYPE.HOUSE or type != TYPE.CARE : return false
 	for unit in occupant.unitsArray:
 		if unit.visible == true:
 			return false

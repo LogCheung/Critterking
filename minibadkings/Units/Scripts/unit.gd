@@ -131,12 +131,17 @@ func on_hurt_box_land(area : Area2D) -> void:
 		%Hurt.play()
 		enemy.health -= damage
 		if enemy.health <= 0:
+			# trigger death anim
+			hurtbox_cd.start()
+			enemy.process_mode = Node.PROCESS_MODE_DISABLED
+			enemy.anim.play("death")
+			await enemy.anim.animation_finished
+			
 			var enemyGroup = enemy.group.unitsArray
 			if enemyGroup.find(enemy) != -1 : enemyGroup.remove_at(enemyGroup.find(enemy))
 			enemy.group.unit_died.emit()
 			%Death.play()
 			enemy.queue_free()
-			hurtbox_cd.start()
 func on_hurt_box_building_land(body : Node2D):
 	if body is Building:
 		if body.type == Building.TYPE.HOUSE:
