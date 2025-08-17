@@ -11,6 +11,7 @@ signal mouse_clicked
 
 @export var is_combat_phase : bool = false
 @export var enemy_parties : int = 4
+@export var upgraded_parties : int = 0
 
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var enemy_perimeters: Node = %EnemyPerimeters
@@ -45,8 +46,11 @@ func new_game() -> void:
 	
 	# add house card
 	starting_roll = true
-	for i in range(1):
-		add_house_card()
+	for i in range(3):
+		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.PLATED
+		ui.hand.get_child(0).add_child(hCard)
+	add_house_card()
 func add_house_card() -> void:
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
@@ -134,6 +138,7 @@ func spawn_enemy() -> void:
 			closest = tile
 	enemGroup.global_position = closest 
 	# set groupPos to target and the units within the group will follow
+	spawned_parties += 1
 
 func on_night_started() -> void:
 	tileWorld.handle_navigable_cells()
@@ -170,11 +175,9 @@ func start_day() -> void:
 	# convert units to cards
 	var unitsGroups = get_tree().get_first_node_in_group("GROUPSNODE")
 	for g : Group in unitsGroups.get_children():
-		var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
-		newCard = match_unit_to_card(newCard,g.type)
-		Global.cardsInHand.append(newCard)
-		ui.hand.get_child(0).add_child(newCard)
-		newCard.for_show = false
+		unit_to_card(g)
+		if g.upgraded: unit_to_card(g)
+		if g.max_size >= 12 : unit_to_card(g)
 		
 		g.terminate()
 	
@@ -186,9 +189,16 @@ func start_day() -> void:
 	
 	tileWorld.handle_navigable_cells()
 
+func unit_to_card(g : Group) -> void:
+	var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
+	newCard = match_unit_to_card(newCard,g.type)
+	Global.cardsInHand.append(newCard)
+	ui.hand.get_child(0).add_child(newCard)
+	newCard.for_show = false
+
 func _on_spawn_timer_timeout() -> void:
 	spawn_enemy()
-	spawned_parties += 1
+	await get_tree().create_timer(.5).timeout
 	if spawned_parties >= enemy_parties:
 		%SpawnTimer.stop()
 	
@@ -215,3 +225,7 @@ func check_nights() -> void:
 	
 	if Global.nights % 6 == 0:
 		add_house_card()
+		expand()
+
+func expand() -> void:
+	pass
