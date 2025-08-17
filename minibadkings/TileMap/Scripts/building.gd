@@ -59,7 +59,7 @@ func _process(delta: float) -> void:
 		bar.visible = false
 func occupants_inside() -> bool:
 	if !occupant : return false
-	if type != TYPE.HOUSE or type != TYPE.CARE : return false
+	if type != TYPE.HOUSE : return false
 	for unit in occupant.unitsArray:
 		if unit.visible == true:
 			return false

@@ -12,9 +12,8 @@ var unit_tiles : Array
 var outskirt_tiles : Array
 
 func _ready() -> void:
-	find_outskirt_tiles()
 	await get_tree().create_timer(.2).timeout
-	wall_tiles = wall.get_used_cells()
+	find_outskirt_tiles()
 	handle_navigable_cells()
 	limit_colliding_walls()
 
@@ -40,7 +39,7 @@ func handle_navigable_cells() -> void:
 		#ground.set_cell(cell,0,Vector2(0,0),2)
 		
 	
-	
+	# set hover cells for unit navigation
 	var navCells : Array = ground.get_used_cells_by_id(0,Vector2(0,0),0)
 	navCells.append_array(ground.get_used_cells_by_id(0,Vector2(0,0),1))
 	for tile in navCells:
@@ -51,6 +50,7 @@ func handle_navigable_cells() -> void:
 	
 	
 func replace_transparent_walls() -> void:
+	wall_tiles = wall.get_used_cells()
 	var units = get_tree().get_nodes_in_group("UNIT")
 	var trans_walls = units.map(func(u : Unit):return u.wall_tile)
 	trans_walls = trans_walls.filter(func(e):return e != null)
@@ -75,22 +75,54 @@ func has_surrounding_ground_cells(tile : Vector2i) -> bool:
 	return false
 
 func find_outskirt_tiles() -> void:
+	# clear old outskirt
+	outskirt_tiles.clear()
+	for tile in ground.get_used_cells_by_id(0,Vector2(0,0),4):
+		ground.set_cell(tile,-1)
+	
 	var rect : Rect2i = ground.get_used_rect()
 	var end : Vector2i = rect.end
 	var pos : Vector2i = rect.position
-	for y in range(pos.y,end.y):
+	for y in range(pos.y,end.y + 1):
 		outskirt_tiles.append(Vector2i(pos.x - 1,y))
 		outskirt_tiles.append(Vector2i(end.x ,y))
-	for x in range(pos.x ,end.x):
+	for x in range(pos.x - 1,end.x + 1):
 		outskirt_tiles.append(Vector2i(x,end.y))
 		outskirt_tiles.append(Vector2i(x,pos.y - 1))
 	for tile in outskirt_tiles:
 		ground.set_cell(tile,0,Vector2(0,0),4)
 
 func draw_build_area() -> void:
-	var start = Vector2i(6,-2)
-	var end = Vector2i(11,3)
+	await get_tree().create_timer(.05).timeout
 	var extra = Global.expansions
-	for x in range(start.x - extra, end.x + extra):
-		for y in range(start.y - extra, end.y + extra):
+	# clear outskirt tiles
+	for tile in ground.get_used_cells_by_id(0,Vector2(0,0),4):
+		ground.set_cell(tile,-1)
+	print(ground.get_used_cells_by_id(0,Vector2(0,0),4))
+	
+	# Battlefield
+	wall_tiles = wall.get_used_cells()
+	var bStart = Vector2i(4,-4) - Vector2i(extra,extra)
+	var bEnd = Vector2i(13,5) +  Vector2i(extra,extra)
+	for x in range(bStart.x , bEnd.x + 1):
+		for y in range(bStart.y , bEnd.y + 1):
+			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),0)
+			if wall_tiles.has(Vector2i(x,y)): wall.set_cell(Vector2i(x,y),-1)
+	
+	# Building area
+	var start = Vector2i(6,-2) - Vector2i(extra,extra)
+	var end = Vector2i(11,3) +  Vector2i(extra,extra)
+	for x in range(start.x , end.x + 1):
+		for y in range(start.y , end.y + 1):
 			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),1)
+	
+	# make check for existing buildings/units
+	var unitTiles = get_tree().get_nodes_in_group("ALLYGROUP")
+	unitTiles = unitTiles.map(func(g : AllyGroup):return g.tile)
+	var buildTiles = get_tree().get_nodes_in_group("BUILDING")
+	buildTiles = buildTiles.map(func(b : Building):return b.tile)
+	for tile in buildTiles:
+		ground.set_cell(tile,0,Vector2(0,0),2)
+	find_outskirt_tiles()
+	handle_navigable_cells()
+	limit_colliding_walls()
