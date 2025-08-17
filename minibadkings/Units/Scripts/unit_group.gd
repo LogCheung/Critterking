@@ -11,7 +11,7 @@ func _ready() -> void:
 	super._ready()
 	tile = tileWorld.ground.local_to_map(global_position)
 	create_formation(UNIT)
-
+	%Place.play()
 func respawn_units() -> void:
 	create_formation(UNIT)
 	for unit in unitsArray:

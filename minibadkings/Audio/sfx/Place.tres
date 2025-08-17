@@ -1,0 +1,10 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=3 format=3 uid="uid://cutrpc1r2tugc"]
+
+[ext_resource type="AudioStream" uid="uid://cvklr05kxugtm" path="res://Audio/sfx/Place1.wav" id="1_tkbkx"]
+[ext_resource type="AudioStream" uid="uid://doaml4kwt4og0" path="res://Audio/sfx/Place2.wav" id="2_mbt8s"]
+
+[resource]
+playback_mode = 1
+streams_count = 2
+stream_0/stream = ExtResource("1_tkbkx")
+stream_1/stream = ExtResource("2_mbt8s")
