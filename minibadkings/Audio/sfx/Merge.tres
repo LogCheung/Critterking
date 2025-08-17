@@ -1,0 +1,10 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=3 format=3 uid="uid://iffhigsoh7po"]
+
+[ext_resource type="AudioStream" uid="uid://bl0wg4qvg5tpk" path="res://Audio/sfx/Merge1.wav" id="1_udplx"]
+[ext_resource type="AudioStream" uid="uid://b3p4noqx82isy" path="res://Audio/sfx/Merge2.wav" id="2_y20uf"]
+
+[resource]
+playback_mode = 1
+streams_count = 2
+stream_0/stream = ExtResource("1_udplx")
+stream_1/stream = ExtResource("2_y20uf")

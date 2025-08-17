@@ -14,7 +14,7 @@ func _ready() -> void:
 	being_upgraded.connect(on_being_upgraded)
 	tile = tileWorld.ground.local_to_map(global_position)
 	create_formation(UNIT)
-
+	%Place.play()
 func respawn_units() -> void:
 	create_formation(UNIT)
 	for unit in unitsArray:

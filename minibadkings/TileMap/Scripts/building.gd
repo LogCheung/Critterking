@@ -34,6 +34,7 @@ func _ready() -> void:
 	tile = tileWorld.ground.local_to_map(global_position)
 	tileWorld.ground.set_cell(tile,0,Vector2(0,0),2)
 	doorstepTile = tile + Vector2i(1,0)
+	%Build.play()
 	anim.play("build")
 
 func _process(delta: float) -> void:
@@ -75,6 +76,7 @@ func match_type() -> void:
 func on_destroyed() -> void:
 	if type == TYPE.RUINS : return
 	# Change appearance and play destroy
+	%Break.play()
 	anim.play("destroy")
 	type = TYPE.RUINS
 	match_type()
