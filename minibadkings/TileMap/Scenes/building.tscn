@@ -1,10 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://cct0mtgpy7ut6"]
+[gd_scene load_steps=12 format=3 uid="uid://cct0mtgpy7ut6"]
 
 [ext_resource type="Script" uid="uid://dpq0gk0d460fx" path="res://TileMap/Scripts/building.gd" id="1_mpr6t"]
 [ext_resource type="Texture2D" uid="uid://cleioq81r06k4" path="res://TileMap/Assets/trapA.png" id="2_i4c7k"]
 [ext_resource type="Texture2D" uid="uid://du3cwfifspbnp" path="res://UI/Assets/HealingUnder.png" id="3_i4c7k"]
 [ext_resource type="Texture2D" uid="uid://bv3jqqow41vyp" path="res://UI/Assets/HealingOver.png" id="4_5rqce"]
 [ext_resource type="Texture2D" uid="uid://ba2e2y1w34bcg" path="res://UI/Assets/HealingProgress.png" id="5_j1jnl"]
+[ext_resource type="AudioStream" uid="uid://chfwyfove6ddc" path="res://Audio/sfx/Build.tres" id="6_j1jnl"]
+[ext_resource type="AudioStream" uid="uid://drnq56jfobvk6" path="res://Audio/sfx/Break.tres" id="7_cb372"]
 
 [sub_resource type="Animation" id="Animation_5rqce"]
 length = 0.001
@@ -108,5 +110,13 @@ collision_mask = 6
 unique_name_in_owner = true
 visible = false
 polygon = PackedVector2Array(0, -15, -31, 0, 0, 15, 31, 0)
+
+[node name="Build" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("6_j1jnl")
+
+[node name="Break" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("7_cb372")
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
