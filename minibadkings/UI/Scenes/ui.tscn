@@ -1,5 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bhln07v3h2elp"]
-
+[gd_scene load_steps=32 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Texture2D" uid="uid://kf8vcph4uky7" path="res://UI/Assets/menus/cardshow.png" id="2_rbgpe"]
