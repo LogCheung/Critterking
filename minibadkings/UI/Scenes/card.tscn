@@ -55,7 +55,6 @@ offset_right = -219.68
 offset_bottom = -544.24
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(3, 3)
 mouse_filter = 2
 script = ExtResource("2_e2s86")
 
