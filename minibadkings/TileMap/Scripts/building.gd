@@ -45,16 +45,10 @@ func _process(delta: float) -> void:
 	else:
 		sprite_2d.modulate.v = 1
 	if occupants_inside():
+		%Timer.start()
 		bar.visible = true
-		bar.value += .16666 #if occupant.max_size <= 9 else .12345
-		if bar.value >= bar.max_value:
-			occupant.global_position = tileWorld.ground.map_to_local(doorstepTile)
-			occupant.respawn_units()
-			for unit : Ally in occupant.unitsArray:
-				unit.healing = false
-				unit.visible = true
-			occupant = null
 	else:
+		%Timer.stop()
 		bar.value = 0
 		bar.visible = false
 func occupants_inside() -> bool:
@@ -123,3 +117,15 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 			enemy.group.unit_died.emit()
 			enemy.death.play()
 			enemy.queue_free()
+
+
+func _on_timer_timeout() -> void:
+	bar.value += .16666 #if occupant.max_size <= 9 else .12345
+	if bar.value >= bar.max_value:
+		occupant.global_position = tileWorld.ground.map_to_local(doorstepTile)
+		occupant.respawn_units()
+		for unit : Ally in occupant.unitsArray:
+			unit.healing = false
+			unit.visible = true
+			occupant = null
+		%Timer.stop()

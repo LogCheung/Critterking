@@ -34,6 +34,7 @@ func _ready() -> void:
 	Engine.time_scale = 1
 	
 func new_game() -> void:
+	await get_tree().create_timer(.5).timeout
 	%SpawnTimer.stop()
 	Global.nights = 0
 	Global.expansions = 0
@@ -48,11 +49,8 @@ func new_game() -> void:
 	
 	# add house card
 	starting_roll = true
-	for i in range(3):
+	for i in range(1):
 		add_house_card()
-	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-	hCard.type = Card.CARDTYPE.DESTROY
-	ui.hand.get_child(0).add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
@@ -242,6 +240,13 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_released("select"):
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
+	if event.is_action_pressed("pause"):
+		if ui.pausemenu.visible:
+			%Game.process_mode = Node.PROCESS_MODE_PAUSABLE
+			ui.pausemenu.hide()
+			return
+		%Game.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+		ui.pausemenu.show()
 
 func check_nights() -> void:
 	if Global.nights % 2 == 0:
@@ -255,3 +260,17 @@ func check_nights() -> void:
 func expand() -> void:
 	Global.expansions += 1
 	tileWorld.draw_build_area()
+
+
+func _on_timer_timeout() -> void:
+	if !is_combat_phase: return
+	var enemies = get_tree().get_nodes_in_group("ENEMY")
+	if spawned_parties == enemy_parties:
+		if enemies.is_empty(): 
+			night_ended.emit()
+			return
+	elif spawned_parties < enemy_parties:
+		if %SpawnTimer.time_left > 0:
+			return
+		else:
+			spawn_enemy()

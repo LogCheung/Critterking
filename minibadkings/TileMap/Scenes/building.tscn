@@ -119,4 +119,9 @@ stream = ExtResource("6_j1jnl")
 unique_name_in_owner = true
 stream = ExtResource("7_cb372")
 
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.166
+
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
