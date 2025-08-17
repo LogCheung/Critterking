@@ -31,8 +31,7 @@ func _ready() -> void:
 	night_ended.connect(on_night_ended)
 	enemy_group_eliminated.connect(on_enemy_group_eliminated)
 	
-	Engine.time_scale = 8
-	new_game()
+	Engine.time_scale = 1
 	
 func new_game() -> void:
 	%SpawnTimer.stop()

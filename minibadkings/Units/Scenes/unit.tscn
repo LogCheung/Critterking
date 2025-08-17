@@ -394,6 +394,7 @@ curve = SubResource("Curve_tcpyn")
 metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
 [node name="utility_debug" parent="." node_paths=PackedStringArray("utility_agent") instance=ExtResource("5_yd6on")]
+visible = false
 scale = Vector2(0.125, 0.125)
 utility_agent = NodePath("../UtilityAiAgent")
 
