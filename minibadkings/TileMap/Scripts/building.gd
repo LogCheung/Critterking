@@ -32,6 +32,7 @@ var doorstepTile : Vector2i
 func _ready() -> void:
 	match_type()
 	tile = tileWorld.ground.local_to_map(global_position)
+	tileWorld.ground.set_cell(tile,0,Vector2(0,0),2)
 	doorstepTile = tile + Vector2i(1,0)
 	anim.play("build")
 
@@ -95,9 +96,17 @@ func on_destroyed() -> void:
 		occupant.terminate()
 	
 func remove() -> void:
+	type = TYPE.RUINS
+	if type == TYPE.HOUSE:
+		var buildings = get_tree().get_nodes_in_group("BUILDING")
+		buildings = buildings.filter(func(b):return b.type == Building.TYPE.HOUSE)
+		if buildings.is_empty():
+			ui.game_over.emit()
+	
 	tileWorld.ground.set_cell(tile,0,Vector2(0,0),1)
-	tileWorld.handle_navigable_cells()
 	queue_free()
+	tileWorld.handle_navigable_cells()
+	
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if !type == TYPE.TRAP : return

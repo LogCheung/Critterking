@@ -60,9 +60,9 @@ func plop() -> void:
 	tile = world.tile2
 	var ploppableTiles = tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),1)
 	var hoverTiles = tileWorld.hover.get_used_cells()
-	#var occupiedTiles = tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),3)
 	ploppableTiles = ploppableTiles.filter(func(t):return hoverTiles.has(t))
 	var groupNode = get_tree().get_first_node_in_group("GROUPSNODE")
+	
 	if ploppableTiles.has(tile):
 		if type > 3:
 			plop_building()
@@ -74,16 +74,20 @@ func plop() -> void:
 		await get_tree().create_timer(.2).timeout
 		groupNode.add_child(group)
 		
-		# remove self
-		selected = false
-		Global.cardsInHand.remove_at(Global.cardsInHand.find(self))
-		refresh_positions()
-		queue_free()
+		remove_self()
 	else:
+		if check_if_merge(tile) : remove_self()
+		if check_destroy(tile): remove_self()
 		sprite_2d.scale = Vector2(1.0,1.0)
 		position = default_position
 		selected = false
 	tileWorld.handle_navigable_cells()
+
+func remove_self() -> void:
+	selected = false
+	Global.cardsInHand.remove_at(Global.cardsInHand.find(self))
+	refresh_positions()
+	queue_free()
 func plop_building() -> void:
 	var buildingNode = get_tree().get_first_node_in_group("BUILDINGSNODE")
 	var building = BUILDING.instantiate()
@@ -117,6 +121,37 @@ func check_if_blocking(plopTile : Vector2) -> bool:
 		takenTiles.append(Vector2i(t.x+1,t.y))
 		takenTiles.append(Vector2i(t.x-1,t.y))
 	if takenTiles.has(Vector2i(plopTile)): return true
+	return false
+
+func check_destroy(plopTile : Vector2) -> bool:
+	var buildTiles = tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),2)
+	if type != CARDTYPE.DESTROY : return false
+	if !buildTiles.has(Vector2i(plopTile)): return false
+	# tile is showing tilemap coords
+	var buildings = get_tree().get_nodes_in_group("BUILDING")
+	
+	# create destruction
+	var des = preload("res://TileMap/Scenes/destroy.tscn").instantiate()
+	des.global_position = tileWorld.ground.map_to_local(plopTile)
+	world.add_child(des)
+	for b : Building in buildings:
+		if b.tile == Vector2i(plopTile): 
+			b.remove()
+			return true
+	return false
+
+func check_if_merge(plopTile : Vector2) -> bool:
+	var groups = get_tree().get_nodes_in_group("ALLYGROUP")
+	var targetGroup : AllyGroup
+	# Identify group that is going to be upgraded
+	for g : AllyGroup in groups:
+		if !g.tile == plopTile : continue
+		targetGroup = g
+	
+	if is_instance_valid(targetGroup):
+		targetGroup.being_upgraded.emit()
+		return true
+	
 	return false
 
 func randomize_type() -> void:

@@ -43,6 +43,7 @@ func create_formation(unit_type : PackedScene) -> void:
 			var unit : Unit = unit_type.instantiate()
 			unit.position = last_pos + Vector2(x_sep,y_sep)
 			unit.rotation -= rotation
+			unit.upgraded = upgraded
 			unit.group = self
 			unit.type = type
 			
@@ -73,4 +74,4 @@ func terminate() -> void:
 	for unit in unitsArray:
 		unit.queue_free()
 	queue_free()
-		
+	

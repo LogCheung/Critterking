@@ -1,9 +1,75 @@
-[gd_scene load_steps=3 format=3 uid="uid://chd7ep0osr0l3"]
+[gd_scene load_steps=12 format=3 uid="uid://chd7ep0osr0l3"]
 
+[ext_resource type="Texture2D" uid="uid://dlhx4lxoeh06y" path="res://TileMap/Assets/ruinBreak.png" id="1_nsf1k"]
 [ext_resource type="Script" uid="uid://bf12ijtnudn3f" path="res://TileMap/Scripts/destroy.gd" id="1_u202p"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_5etl2"]
+atlas = ExtResource("1_nsf1k")
+region = Rect2(0, 0, 67, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cpfib"]
+atlas = ExtResource("1_nsf1k")
+region = Rect2(67, 0, 67, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idj0c"]
+atlas = ExtResource("1_nsf1k")
+region = Rect2(134, 0, 67, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cys4n"]
+atlas = ExtResource("1_nsf1k")
+region = Rect2(201, 0, 67, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x5q18"]
+atlas = ExtResource("1_nsf1k")
+region = Rect2(268, 0, 67, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ox00v"]
+atlas = ExtResource("1_nsf1k")
+region = Rect2(335, 0, 67, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wnu8d"]
+atlas = ExtResource("1_nsf1k")
+region = Rect2(402, 0, 67, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2rrs"]
+atlas = ExtResource("1_nsf1k")
+region = Rect2(469, 0, 67, 44)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_u202p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5etl2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cpfib")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idj0c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cys4n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x5q18")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ox00v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wnu8d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u2rrs")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="destroy" type="AnimatedSprite2D"]
+z_index = 4096
 sprite_frames = SubResource("SpriteFrames_u202p")
+frame = 7
+frame_progress = 1.0
 script = ExtResource("1_u202p")

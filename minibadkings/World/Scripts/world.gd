@@ -32,6 +32,7 @@ func _ready() -> void:
 	new_game()
 	
 func new_game() -> void:
+	%SpawnTimer.stop()
 	Global.nights = 0
 	Global.expansions = 0
 	Global.cardsInHand.clear()
@@ -58,6 +59,7 @@ func clear_perimeters() -> void:
 		path.queue_free()
 
 func clear_world() -> void:
+	tileWorld.draw_build_area()
 	# groups
 	for group : Group in groupNode.get_children():
 		group.terminate()
@@ -179,6 +181,7 @@ func start_day() -> void:
 	# repair buildings
 	var buildings = get_tree().get_nodes_in_group("BUILDINGS")
 	for b : Building in buildings:
+		if !b.type == Building.TYPE.HOUSE: continue
 		b.health = b.max_health
 	
 	tileWorld.handle_navigable_cells()

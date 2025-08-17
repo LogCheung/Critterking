@@ -32,11 +32,14 @@ func handle_navigable_cells() -> void:
 		unit_tiles.append(group.tile)
 	
 	var buildingsCells = get_tree().get_nodes_in_group("BUILDING")
+	#var buildings = buildingsCells
 	buildingsCells = buildingsCells.filter(func(b: Building):return b.type != b.TYPE.TRAP)
 	buildingsCells = buildingsCells.map(func(b : Building):return b.tile)
-	# change tile data for buildings
-	for cell in buildingsCells:
-		ground.set_cell(cell,0,Vector2(0,0),2)
+	# change tile data for buildings is done in building ready script
+	#for cell in buildingsCells:
+		#ground.set_cell(cell,0,Vector2(0,0),2)
+		
+	
 	
 	var navCells : Array = ground.get_used_cells_by_id(0,Vector2(0,0),0)
 	navCells.append_array(ground.get_used_cells_by_id(0,Vector2(0,0),1))
@@ -83,3 +86,11 @@ func find_outskirt_tiles() -> void:
 		outskirt_tiles.append(Vector2i(x,pos.y - 1))
 	for tile in outskirt_tiles:
 		ground.set_cell(tile,0,Vector2(0,0),4)
+
+func draw_build_area() -> void:
+	var start = Vector2i(6,-2)
+	var end = Vector2i(11,3)
+	var extra = Global.expansions
+	for x in range(start.x - extra, end.x + extra):
+		for y in range(start.y - extra, end.y + extra):
+			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),1)
