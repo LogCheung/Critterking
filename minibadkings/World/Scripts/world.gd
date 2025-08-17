@@ -10,8 +10,8 @@ signal night_ended
 signal mouse_clicked
 
 @export var is_combat_phase : bool = false
-@export var enemy_parties : int = 4
-@export var upgraded_parties : int = 0
+@export var enemy_parties : int = 3
+@export var upgraded_parties : int = 3
 
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var enemy_perimeters: Node = %EnemyPerimeters
@@ -22,6 +22,8 @@ var outerFollow : PathFollow2D
 var innerFollow : PathFollow2D
 
 var spawned_parties : int = 0
+var upgrades_given : int = 0
+var upgrade_nums : Array = [2]
 var starting_roll : bool = true
 
 func _ready() -> void:
@@ -38,6 +40,7 @@ func new_game() -> void:
 	Global.expansions = 0
 	Global.cardsInHand.clear()
 	
+	tileWorld.draw_build_area()
 	clear_world()
 	
 	ui.cards.show()
@@ -46,10 +49,6 @@ func new_game() -> void:
 	
 	# add house card
 	starting_roll = true
-	for i in range(3):
-		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.PLATED
-		ui.hand.get_child(0).add_child(hCard)
 	add_house_card()
 func add_house_card() -> void:
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
@@ -63,7 +62,6 @@ func clear_perimeters() -> void:
 		path.queue_free()
 
 func clear_world() -> void:
-	tileWorld.draw_build_area()
 	# groups
 	for group : Group in groupNode.get_children():
 		group.terminate()
@@ -125,8 +123,12 @@ func spawn_enemy() -> void:
 	var enemGroup = ENEMYGROUP.instantiate()
 	enemGroup.global_position = follow.global_position
 	enemGroup.size = randi_range(3,6)
+	if upgrade_nums.has(spawned_parties):
+		enemGroup.upgraded = true
+	
 	var enemyGroupNode = get_tree().get_first_node_in_group("ENEMYGRPNODE")
 	enemyGroupNode.add_child(enemGroup)
+	
 	# let units approach player borders before activation
 	var targetTiles = tileWorld.outskirt_tiles
 	targetTiles = targetTiles.map(func(t):return tileWorld.ground.map_to_local(t))
@@ -139,13 +141,22 @@ func spawn_enemy() -> void:
 	enemGroup.global_position = closest 
 	# set groupPos to target and the units within the group will follow
 	spawned_parties += 1
+	
 
 func on_night_started() -> void:
+	# start game and hide menus
 	tileWorld.handle_navigable_cells()
 	is_combat_phase = true
 	spawned_parties = 0
 	%Game.process_mode = Node.PROCESS_MODE_PAUSABLE
 	%SpawnTimer.start()
+	# set upgrade number
+	upgrade_nums.clear()
+	for i in range(upgraded_parties):
+		var rand = randi_range(0,enemy_parties - 1)
+		while upgrade_nums.has(rand):
+			rand = randi_range(0,enemy_parties - 1)
+		upgrade_nums.append(rand)
 	
 	for c in ui.get_children():
 		if !c is Control: continue
@@ -184,7 +195,6 @@ func start_day() -> void:
 	# repair buildings
 	var buildings = get_tree().get_nodes_in_group("BUILDINGS")
 	for b : Building in buildings:
-		if !b.type == Building.TYPE.HOUSE: continue
 		b.health = b.max_health
 	
 	tileWorld.handle_navigable_cells()
@@ -198,6 +208,13 @@ func unit_to_card(g : Group) -> void:
 
 func _on_spawn_timer_timeout() -> void:
 	spawn_enemy()
+	# chance for double
+	var rand = randi() % 4
+	if rand == 1:
+		var parties = Global.nights / 3
+		for i in range(parties):
+			spawn_enemy()
+	
 	await get_tree().create_timer(.5).timeout
 	if spawned_parties >= enemy_parties:
 		%SpawnTimer.stop()
@@ -218,6 +235,8 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_released("select"):
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
+	if event.is_action_pressed("ui_accept"):
+		expand()
 
 func check_nights() -> void:
 	if Global.nights % 2 == 0:
@@ -226,6 +245,8 @@ func check_nights() -> void:
 	if Global.nights % 6 == 0:
 		add_house_card()
 		expand()
+		upgraded_parties += 1
 
 func expand() -> void:
-	pass
+	Global.expansions += 1
+	tileWorld.draw_build_area()

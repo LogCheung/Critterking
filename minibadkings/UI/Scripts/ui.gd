@@ -106,7 +106,9 @@ func _on_play_pressed() -> void:
 	%Button.play()
 	mainmenu.hide()
 	%crtrMenu.stop()
+	world.new_game()
 	world.start_day()
+
 
 func _on_help_pressed() -> void:
 	%Button.play()

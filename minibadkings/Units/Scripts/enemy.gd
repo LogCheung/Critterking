@@ -15,7 +15,10 @@ var houses_exist : bool = true
 func _ready() -> void:
 	super._ready()
 	match_type()
-	
+	if upgraded: 
+		max_health = max_health + 1
+		health = max_health
+		damage = damage + 1
 	house_destroyed.connect(find_building)
 
 func _process(delta: float) -> void:
