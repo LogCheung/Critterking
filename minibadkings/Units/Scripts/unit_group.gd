@@ -86,6 +86,7 @@ func highlight_houses(highlight : bool = true) -> void:
 		h.sprite_2d.material = h.HIGHLIGHT if highlight else null
 
 func on_being_upgraded() -> void:
+	%Merge.play()
 	if !upgraded:
 		upgraded = true
 	elif upgraded:

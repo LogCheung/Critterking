@@ -13,6 +13,8 @@ signal game_over
 @onready var end_turn: Control = %EndTurn
 @onready var gameover: Control = %gameover
 @onready var pausemenu: Control = %pausemenu
+@onready var crtr_day: AudioStreamPlayer = %crtrDay
+@onready var crtr_night: AudioStreamPlayer = %crtrNight
 
 
 func _process(delta: float) -> void:
@@ -88,6 +90,11 @@ func show_hand() -> void:
 
 func on_game_over() -> void:
 	gameover.show()
+	$AnimationPlayer.play("Lose")
+	await anim.animation_finished
+	%crtrNight.stop()
+	%crtrDay.stop()
+	%crtrOver.play()
 	%nights.text = str(Global.nights)
 
 func _on_show_pressed() -> void:
@@ -104,21 +111,29 @@ func _on_show_pressed() -> void:
 
 func _on_play_pressed() -> void:
 	%Button.play()
-	mainmenu.hide()
+	$AnimationPlayer.play("MainToGame")
+	await anim.animation_finished
 	%crtrMenu.stop()
+	mainmenu.hide()
 	world.start_day()
+	%crtrDay.play()
+	$AnimationPlayer.play("RESET")
 
 func _on_help_pressed() -> void:
 	%Button.play()
 	%crtrPause.play()
+	%crtrMenu.stop()
 	help.show()
+	mainmenu.hide()
 	pass # Replace with function body.
 
 
 func _on_settings_pressed() -> void:
 	%Button.play()
 	%crtrPause.play()
+	%crtrMenu.stop()
 	settings.show()
+	mainmenu.hide()
 	pass # Replace with function body.
 
 
@@ -128,16 +143,24 @@ func _on_quit_pressed() -> void:
 
 func _on_backhelp_pressed() -> void:
 	%Button.play()
-	if !%crtrPause.playing:
-		%crtrPause.play()
 	help.hide()
+	mainmenu.show()
+	if !%crtrPause.playing and pausemenu.visible:
+		%crtrPause.play()
+	else: 
+		%crtrPause.stop()
+		%crtrMenu.play()
 	pass # Replace with function body.
 
 func _on_settingsback_pressed() -> void:
 	%Button.play()
-	if !%crtrPause.playing:
-		%crtrPause.play()
 	settings.hide()
+	mainmenu.show()
+	if !%crtrPause.playing and pausemenu.visible:
+		%crtrPause.play()
+	else: 
+		%crtrPause.stop()
+		%crtrMenu.play()
 	pass # Replace with function body.
 
 func _on_endturn_pressed() -> void:
@@ -152,13 +175,24 @@ func _on_endturn_pressed() -> void:
 
 func _on_newgame_pressed() -> void:
 	print("ok")
+	$AnimationPlayer.play("playAgain")
+	await anim.animation_finished
+	%crtrOver.stop()
 	gameover.hide()
 	world.new_game()
 	world.start_day()
+	%crtrDay.play()
+	$AnimationPlayer.play("RESET")
 
 func _on_title_pressed() -> void:
-	gameover.hide()
+	%Button.play()
 	mainmenu.show()
+	$AnimationPlayer.play("LoseToTitle")
+	await anim.animation_finished
+	%crtrOver.stop()
+	gameover.hide()
+	%crtrMenu.play()
+	$AnimationPlayer.play("RESET")
 
 
 func _on_continue_pressed() -> void:

@@ -29,7 +29,7 @@ func _ready() -> void:
 	night_ended.connect(on_night_ended)
 	enemy_group_eliminated.connect(on_enemy_group_eliminated)
 	
-	Engine.time_scale = 1
+	Engine.time_scale = 8
 	new_game()
 	
 func new_game() -> void:
@@ -164,6 +164,8 @@ func on_night_ended() -> void:
 
 func start_day() -> void:
 	print("day")
+	ui.crtr_night.stop()
+	ui.crtr_day.play()
 	# progress nights
 	Global.nights += 1
 	check_nights()
