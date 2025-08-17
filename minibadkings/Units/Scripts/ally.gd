@@ -4,15 +4,32 @@ class_name Ally
 const MELEENORMALSE = preload("res://Units/Assets/AllyMelee/AllyMeleeNormalSE.png")
 const RANGEDNORMALSE = preload("res://Units/Assets/AllyRanged/AllyRangedNormalSE.png")
 const SHIELDEDNORMALSE = preload("res://Units/Assets/AllyShield/AllyShieldNormalSE.png")
+const MELEENORMALNW = preload("res://Units/Assets/AllyMelee/AllyMeleeNormalNW.png")
+const RANGEDNORMALNW = preload("res://Units/Assets/AllyRanged/AllyRangedNormalNW.png")
+const SHIELDEDNORMALNW = preload("res://Units/Assets/AllyShield/AllyShieldNormalNW.png")
+
+const UPMELEENORMALSE = preload("res://Units/Assets/AllyMelee/AllyMeleeUpgradedSE.png")
+const UPRANGEDNORMALSE = preload("res://Units/Assets/AllyRanged/AllyRangedUpgradedSE.png")
+const UPSHIELDEDNORMALSE = preload("res://Units/Assets/AllyShield/AllyShieldUpgradedSE.png")
+const UPMELEENORMALNW = preload("res://Units/Assets/AllyMelee/AllyMeleeUpgradedNW.png")
+const UPRANGEDNORMALNW = preload("res://Units/Assets/AllyRanged/AllyRangedUpgradedNW.png")
+const UPSHIELDEDNORMALNW = preload("res://Units/Assets/AllyShield/AllyShieldUpgradedNW.png")
+
 var allyGroup : AllyGroup
 var healing : bool
 
 func _ready() -> void:
 	allyGroup = group
+	if upgraded: 
+		max_health = max_health + 1
+		health = max_health
+		damage = damage + 1
+	
 	super._ready()
 	selected.connect(on_selected)
 	unselected.connect(on_unselected)
 	match_type()
+	
 	await get_tree().create_timer(.5).timeout
 	set_collision_layer_value(1,true)
 
@@ -122,6 +139,15 @@ func match_type() -> void:
 		TYPE.SHIELDED:
 			sprite_2d.texture = SHIELDEDNORMALSE
 			damage = 1
+
+func match_sprite() -> void:
+	match type:
+		TYPE.MELEE:
+			pass
+		TYPE.RANGED:
+			pass
+		TYPE.SHIELDED:
+			pass
 
 func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> void:
 	match top_action_id:

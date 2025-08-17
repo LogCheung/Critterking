@@ -6,7 +6,7 @@
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_onkey"]
 points = PackedVector2Array(0, -16, 32, 0, 0, 16, -32, 0)
 
-[node name="UnitGroup" type="Node2D"]
+[node name="UnitGroup" type="Node2D" groups=["ALLYGROUP"]]
 z_index = 1
 z_as_relative = false
 script = ExtResource("1_onkey")

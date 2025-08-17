@@ -329,18 +329,18 @@ texture = ExtResource("7_ftqev")
 offset = Vector2(960, 540)
 
 [node name="newgame" type="Button" parent="gameover/over"]
-offset_left = 3.0
-offset_top = 147.0
-offset_right = 97.0
-offset_bottom = 178.0
+offset_left = 13.0
+offset_top = 877.0
+offset_right = 587.0
+offset_bottom = 1076.0
 focus_mode = 0
 flat = true
 
 [node name="title" type="Button" parent="gameover/over"]
-offset_left = 242.0
-offset_top = 147.0
-offset_right = 318.0
-offset_bottom = 178.0
+offset_left = 1460.0
+offset_top = 875.0
+offset_right = 1912.0
+offset_bottom = 1076.0
 focus_mode = 0
 flat = true
 

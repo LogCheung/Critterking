@@ -89,6 +89,12 @@ func on_game_over() -> void:
 	%nights.text = str(Global.nights)
 
 func _on_show_pressed() -> void:
+	if anim.is_playing():return
+	var cardSprites = get_tree().get_nodes_in_group("CARD")
+	
+	for card : Card in cardSprites:
+		if !card.for_show : continue
+		if card.visible: return
 	$Shuffle
 	%Shuffle.play()
 	anim.play("cardshow")

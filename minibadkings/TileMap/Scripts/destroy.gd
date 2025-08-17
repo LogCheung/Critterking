@@ -1,4 +1,6 @@
 extends AnimatedSprite2D
 
 func _ready() -> void:
-	pass
+	play("default")
+	await animation_finished
+	queue_free()

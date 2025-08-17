@@ -1,6 +1,8 @@
 extends Group
 class_name AllyGroup
 
+signal being_upgraded
+
 const UNIT : PackedScene = preload("res://Units/Scenes/unit.tscn")
 
 @export var house : Building
@@ -9,6 +11,7 @@ const UNIT : PackedScene = preload("res://Units/Scenes/unit.tscn")
 
 func _ready() -> void:
 	super._ready()
+	being_upgraded.connect(on_being_upgraded)
 	tile = tileWorld.ground.local_to_map(global_position)
 	create_formation(UNIT)
 
@@ -81,3 +84,11 @@ func highlight_houses(highlight : bool = true) -> void:
 	for h : Building in houses:
 		if h.occupant != null: continue
 		h.sprite_2d.material = h.HIGHLIGHT if highlight else null
+
+func on_being_upgraded() -> void:
+	if !upgraded:
+		upgraded = true
+	elif upgraded:
+		max_size = 12
+	create_formation(UNIT)
+	pass

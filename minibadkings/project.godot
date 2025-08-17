@@ -42,6 +42,7 @@ UI=""
 CARD=""
 BUILDING=""
 ENEMY=""
+ALLYGROUP=""
 
 [input]
 
