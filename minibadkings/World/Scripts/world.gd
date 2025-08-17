@@ -11,6 +11,7 @@ signal mouse_clicked
 
 @export var is_combat_phase : bool = false
 @export var enemy_parties : int = 4
+@export var upgraded_parties : int = 0
 
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var enemy_perimeters: Node = %EnemyPerimeters
@@ -137,6 +138,7 @@ func spawn_enemy() -> void:
 			closest = tile
 	enemGroup.global_position = closest 
 	# set groupPos to target and the units within the group will follow
+	spawned_parties += 1
 
 func on_night_started() -> void:
 	tileWorld.handle_navigable_cells()
@@ -196,7 +198,7 @@ func unit_to_card(g : Group) -> void:
 
 func _on_spawn_timer_timeout() -> void:
 	spawn_enemy()
-	spawned_parties += 1
+	await get_tree().create_timer(.5).timeout
 	if spawned_parties >= enemy_parties:
 		%SpawnTimer.stop()
 	
@@ -223,6 +225,7 @@ func check_nights() -> void:
 	
 	if Global.nights % 6 == 0:
 		add_house_card()
+		expand()
 
 func expand() -> void:
 	pass
