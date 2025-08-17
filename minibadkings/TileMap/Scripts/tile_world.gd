@@ -8,11 +8,13 @@ class_name TileWorld
 @onready var unit_groups : Array
 
 var wall_tiles : Array
+var start_wall_tiles : Array
 var unit_tiles : Array
 var outskirt_tiles : Array
 
 func _ready() -> void:
 	await get_tree().create_timer(.2).timeout
+	start_wall_tiles = wall.get_used_cells()
 	find_outskirt_tiles()
 	handle_navigable_cells()
 	limit_colliding_walls()
@@ -95,10 +97,11 @@ func find_outskirt_tiles() -> void:
 func draw_build_area() -> void:
 	await get_tree().create_timer(.05).timeout
 	var extra = Global.expansions
-	# clear outskirt tiles
-	for tile in ground.get_used_cells_by_id(0,Vector2(0,0),4):
+	# clear all ground tiles
+	for tile in start_wall_tiles:
+		wall.set_cell(tile,0,Vector2(0,2))
+	for tile in ground.get_used_cells():
 		ground.set_cell(tile,-1)
-	print(ground.get_used_cells_by_id(0,Vector2(0,0),4))
 	
 	# Battlefield
 	wall_tiles = wall.get_used_cells()

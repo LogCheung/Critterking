@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=29 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Texture2D" uid="uid://kf8vcph4uky7" path="res://UI/Assets/menus/cardshow.png" id="2_rbgpe"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bfqdqavdl2kr3" path="res://UI/Assets/menus/pause.png" id="5_n2q0n"]
 [ext_resource type="Texture2D" uid="uid://dwseh6hsy3l77" path="res://UI/Assets/menus/gameover.png" id="7_ftqev"]
 [ext_resource type="FontFile" uid="uid://dqt550qq7jmvu" path="res://Units/Debug/PressStart2P.ttf" id="7_titua"]
+[ext_resource type="Script" uid="uid://dn5w3jfm4dcjv" path="res://UI/Scenes/slider.gd" id="8_6dw6b"]
 [ext_resource type="AudioStream" uid="uid://bmkptsfk4bkc" path="res://Audio/music/crtrpause.wav" id="8_oj6tj"]
 [ext_resource type="AudioStream" uid="uid://bj8clo00ioln7" path="res://Audio/music/crtrover.wav" id="9_ftqev"]
 [ext_resource type="AudioStream" uid="uid://wctmm4dlcbix" path="res://Audio/music/crtrmenu.wav" id="10_n2q0n"]
@@ -377,7 +378,6 @@ for_show = true
 
 [node name="Hand" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
@@ -392,16 +392,16 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -860.0
-offset_top = -270.0
-offset_right = 100.0
-offset_bottom = 2.0
+offset_left = -915.0
+offset_top = -239.0
+offset_right = 367.0
+offset_bottom = 33.0
 grow_horizontal = 2
 grow_vertical = 0
-scale = Vector2(2, 2)
+scale = Vector2(1.5, 1.5)
 pivot_offset = Vector2(100, 0)
 mouse_filter = 2
-theme_override_constants/separation = -5
+theme_override_constants/separation = 15
 alignment = 1
 
 [node name="HandOrigin" type="Node2D" parent="Hand"]
@@ -551,7 +551,10 @@ offset_top = 447.0
 offset_right = 1046.0
 offset_bottom = 463.0
 scale = Vector2(3, 3)
+max_value = 1.0
 step = 0.001
+script = ExtResource("8_6dw6b")
+bus_name = "Master"
 
 [node name="Music" type="HSlider" parent="Settings"]
 layout_mode = 0
@@ -560,7 +563,10 @@ offset_top = 543.0
 offset_right = 1046.0
 offset_bottom = 559.0
 scale = Vector2(3, 3)
+max_value = 1.0
 step = 0.001
+script = ExtResource("8_6dw6b")
+bus_name = "Music"
 
 [node name="SFX" type="HSlider" parent="Settings"]
 layout_mode = 0
@@ -569,7 +575,10 @@ offset_top = 638.0
 offset_right = 1046.0
 offset_bottom = 654.0
 scale = Vector2(3, 3)
+max_value = 1.0
 step = 0.001
+script = ExtResource("8_6dw6b")
+bus_name = "SFX"
 
 [node name="gameover" type="Control" parent="."]
 unique_name_in_owner = true

@@ -25,6 +25,10 @@ enum ROLLTYPE {
 var default_position : Vector2
 var setting_up : bool = true
 var choice_picked : bool = false
+var refreshing : bool = false
+
+func _ready() -> void:
+	if for_show: scale = Vector2(3,3)
 
 func set_up() -> void:
 	match_type()
@@ -35,8 +39,12 @@ var selected : bool = false
 var tile : Vector2i
 func _process(delta: float) -> void:
 	if setting_up : return
+	if refreshing : 
+		await get_tree().create_timer(.3).timeout
+		default_position = position
+		refreshing = false
+		return
 	if for_show: return
-	scale = Vector2(.75,.75)
 	if Input.is_action_just_pressed("select") and !selected:
 		if Rect2(Vector2(), size).has_point(get_local_mouse_position()):
 			selected = true
@@ -86,10 +94,14 @@ func plop() -> void:
 	tileWorld.handle_navigable_cells()
 
 func remove_self() -> void:
+	var cards = ui.hand.get_child(0).get_children()
+	for c : Card in cards:
+		c.refreshing = true
 	selected = false
 	Global.cardsInHand.remove_at(Global.cardsInHand.find(self))
 	queue_free()
 	refresh_positions()
+	
 func plop_building() -> void:
 	if type == CARDTYPE.DESTROY : 
 		if check_destroy(tile) : remove_self()
@@ -138,6 +150,7 @@ func check_destroy(plopTile : Vector2) -> bool:
 	world.add_child(des)
 	for b : Building in buildings:
 		if b.tile == Vector2i(plopTile): 
+			b.on_destroyed()
 			b.remove()
 			return true
 	return false
@@ -158,9 +171,12 @@ func check_if_merge(plopTile : Vector2) -> bool:
 	return false
 
 func randomize_type() -> void:
+	if !for_show : return
 	match rolltype:
 		ROLLTYPE.GENERAL:
 			type = (randi() % CARDTYPE.size() - 1) + 1
+		ROLLTYPE.UNIT:
+			type = randi_range(CARDTYPE.BITER,CARDTYPE.SPITTER)
 	if type == CARDTYPE.HOUSE : randomize_type()
 	
 	# check if not same as other card
@@ -200,15 +216,10 @@ func _on_selected_pressed() -> void:
 	for c : Card in cards:
 		c.choice_picked = true
 func refresh_positions() -> void:
-	await get_tree().create_timer(1).timeout
-	print("ok")
 	var cards = ui.hand.get_child(0).get_children()
-	var newCards = cards.duplicate()
 	for c : Card in cards:
-		c.queue_free()
-	for c : Card in newCards:
-		ui.hand.get_child(0).add_child(c)
 		c.set_up()
+	
 
 func add_card_to_hand() -> void:
 	var dupe : Card = preload("res://UI/Scenes/card.tscn").instantiate()

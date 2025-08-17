@@ -16,6 +16,8 @@ signal game_over
 @onready var crtr_day: AudioStreamPlayer = %crtrDay
 @onready var crtr_night: AudioStreamPlayer = %crtrNight
 
+var second_roll : bool = false
+
 
 func _process(delta: float) -> void:
 	Global.cardsInHand = hand.get_child(0).get_children()
@@ -71,14 +73,22 @@ func display_cards(display : bool) -> void:
 	
 	for card : Card in cardSprites:
 		if !card.for_show : continue
+		if world.starting_roll or second_roll:
+			card.rolltype = Card.ROLLTYPE.UNIT
+		else:
+			card.rolltype = Card.ROLLTYPE.GENERAL
 		card.randomize_type()
 		card.visible = display
 		card.choice_picked = !display
+		print(card.rolltype)
 func show_hand() -> void:
 	if world.starting_roll:
 		cards.show()
 		world.starting_roll = false
+		second_roll = true
 		return
+	if second_roll:
+		second_roll = false
 	cards.hide()
 	hand.show()
 	var container = %Hand.get_child(0) # Hboxcontainer
@@ -176,7 +186,6 @@ func _on_endturn_pressed() -> void:
 	%noHouse.hide()
 
 func _on_newgame_pressed() -> void:
-	print("ok")
 	$AnimationPlayer.play("playAgain")
 	await anim.animation_finished
 	%crtrOver.stop()
