@@ -11,7 +11,7 @@ signal mouse_clicked
 
 @export var is_combat_phase : bool = false
 @export var enemy_parties : int = 3
-@export var upgraded_parties : int = 3
+@export var upgraded_parties : int = 0
 
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var enemy_perimeters: Node = %EnemyPerimeters
