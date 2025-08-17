@@ -115,9 +115,11 @@ func _on_play_pressed() -> void:
 	await anim.animation_finished
 	%crtrMenu.stop()
 	mainmenu.hide()
+	world.new_game()
 	world.start_day()
 	%crtrDay.play()
 	$AnimationPlayer.play("RESET")
+
 
 func _on_help_pressed() -> void:
 	%Button.play()
