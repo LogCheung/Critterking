@@ -235,8 +235,6 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_released("select"):
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
-	if event.is_action_pressed("ui_accept"):
-		expand()
 
 func check_nights() -> void:
 	if Global.nights % 2 == 0:
