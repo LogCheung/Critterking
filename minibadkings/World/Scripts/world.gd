@@ -32,6 +32,7 @@ func _ready() -> void:
 	enemy_group_eliminated.connect(on_enemy_group_eliminated)
 	
 	Engine.time_scale = 1
+	new_game()
 	
 func new_game() -> void:
 	%SpawnTimer.stop()
