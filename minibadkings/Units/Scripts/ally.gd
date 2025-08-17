@@ -24,6 +24,7 @@ func _ready() -> void:
 		max_health = max_health + 1
 		health = max_health
 		damage = damage + 1
+		
 	
 	super._ready()
 	selected.connect(on_selected)
@@ -128,6 +129,8 @@ func on_unselected() -> void:
 func match_type() -> void:
 	match type:
 		TYPE.MELEE:
+			if upgraded:
+				sprite_2d.texture = UPMELEENORMALSE
 			return
 		TYPE.RANGED:
 			sprite_2d.texture = RANGEDNORMALSE
@@ -136,9 +139,13 @@ func match_type() -> void:
 			var visionShape : CollisionShape2D = vision.get_child(0)
 			visionShape.shape.radius = 120
 			attack_cd.wait_time = 4
+			if upgraded:
+				sprite_2d.texture = UPRANGEDNORMALSE
 		TYPE.SHIELDED:
 			sprite_2d.texture = SHIELDEDNORMALSE
 			damage = 1
+			if upgraded:
+				sprite_2d.texture = UPSHIELDEDNORMALSE
 
 func match_sprite() -> void:
 	match type:
