@@ -68,7 +68,7 @@ func _on_select_area_input_event(viewport: Node, event: InputEvent, shape_idx: i
 func check_on_house(mousePos : Vector2) -> void:
 	if size == max_size : return
 	var houses = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
-	houses = houses.filter(func(b : Building):return b.type == Building.TYPE.HOUSE )
+	houses = houses.filter(func(b : Building):return b.type == Building.TYPE.HOUSE or b.type == Building.TYPE.CARE)
 	for h : Building in houses:
 		if h.occupant != null : continue
 		h.sprite_2d.material = null
@@ -81,7 +81,7 @@ func check_on_house(mousePos : Vector2) -> void:
 func highlight_houses(highlight : bool = true) -> void:
 	if size == max_size : return
 	var houses = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
-	houses = houses.filter(func(b : Building):return b.type == Building.TYPE.HOUSE )
+	houses = houses.filter(func(b : Building):return b.type == Building.TYPE.HOUSE or b.type == Building.TYPE.CARE)
 	for h : Building in houses:
 		if h.occupant != null: continue
 		h.sprite_2d.material = h.HIGHLIGHT if highlight else null

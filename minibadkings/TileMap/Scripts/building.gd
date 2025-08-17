@@ -9,9 +9,12 @@ const HOUSEB = preload("res://TileMap/Assets/houseB.png")
 const TRAPA = preload("res://TileMap/Assets/trapA.png")
 const TRAPB = preload("res://TileMap/Assets/trapB.png")
 const RUIN = preload("res://TileMap/Assets/ruinBreak.png")
+const FARM = preload("res://TileMap/Assets/farmBuild.png")
+const SAPSTORE = preload("res://TileMap/Assets/sapBuild.png")
+const CARE = preload("res://TileMap/Assets/careBuild.png")
 
 enum TYPE {
-	NONE, HOUSE, TRAP, NURSERY, STORAGE, FARM, SAPSTORE, RUINS, CARE
+	NONE, HOUSE, TRAP, FARM, SAPSTORE, RUINS, CARE
 }
 
 @export var type : TYPE
@@ -53,7 +56,7 @@ func _process(delta: float) -> void:
 		bar.visible = false
 func occupants_inside() -> bool:
 	if !occupant : return false
-	if type != TYPE.HOUSE : return false
+	#if type != TYPE.HOUSE || type != TYPE.CARE : return false
 	for unit in occupant.unitsArray:
 		if unit.visible == true:
 			return false
@@ -67,18 +70,35 @@ func match_type() -> void:
 			sprite_2d.texture = TRAPA if randi() % 2 == 0 else TRAPB
 			sprite_2d.offset = Vector2.ZERO
 			z_index = 0
+		TYPE.CARE:
+			sprite_2d.texture = CARE
+			sprite_2d.offset = Vector2(1,-9)
+		TYPE.SAPSTORE:
+			sprite_2d.texture = SAPSTORE
+			sprite_2d.offset = Vector2(0,-6)
+		TYPE.FARM:
+			sprite_2d.texture = FARM
+			sprite_2d.offset = Vector2(20,-4)
+		TYPE.RUINS:
+			sprite_2d.texture = HOUSEA
+			sprite_2d.frame = 1
+			sprite_2d.offset = Vector2(0,-12)
 
 func on_destroyed() -> void:
 	if type == TYPE.RUINS : return
 	# Change appearance and play destroy
 	%Break.play()
 	anim.play("destroy")
+	await anim.animation_finished
+	print("animdone")
 	type = TYPE.RUINS
 	match_type()
 	
 	# alert enemies
 	var enemies = get_tree().get_nodes_in_group("ENEMY")
+	#if type == TYPE.HOUSE:
 	for enemy : Enemy in enemies:
+		print("swaptarget")
 		enemy.house_destroyed.emit()
 	
 	# check if final house destroyed and if player lost

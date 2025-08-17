@@ -51,7 +51,8 @@ func _process(delta: float) -> void:
 		%crtrNight.stop()
 		%crtrPause.stop()
 		%crtrDay.play()
-		
+	%NightCounter.show()
+	%DayNight.text = str(Global.nights)
 		
 func _ready() -> void:
 	# connect signals
@@ -182,6 +183,10 @@ func _on_endturn_pressed() -> void:
 		if card.type == Card.CARDTYPE.HOUSE: 
 			%noHouse.show()
 			return
+	var units = get_tree().get_nodes_in_group("UNIT")
+	for u:Ally in units:
+		u.healthchange.emit()
+		u.speedchange.emit()
 	world.night_started.emit()
 	%noHouse.hide()
 
