@@ -48,7 +48,8 @@ func new_game() -> void:
 	
 	# add house card
 	starting_roll = true
-	add_house_card()
+	for i in range(8):
+		add_house_card()
 func add_house_card() -> void:
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
@@ -196,7 +197,9 @@ func start_day() -> void:
 	# repair buildings
 	var buildings = get_tree().get_nodes_in_group("BUILDINGS")
 	for b : Building in buildings:
+		b.process_mode = Node.PROCESS_MODE_ALWAYS
 		b.health = b.max_health
+		b.process_mode = Node.PROCESS_MODE_DISABLED
 	
 	tileWorld.handle_navigable_cells()
 

@@ -88,8 +88,8 @@ func plop() -> void:
 func remove_self() -> void:
 	selected = false
 	Global.cardsInHand.remove_at(Global.cardsInHand.find(self))
-	refresh_positions()
 	queue_free()
+	refresh_positions()
 func plop_building() -> void:
 	if type == CARDTYPE.DESTROY : 
 		if check_destroy(tile) : remove_self()
@@ -111,10 +111,7 @@ func plop_building() -> void:
 	buildingNode.add_child(building)
 	
 	# remove self
-	selected = false
-	Global.cardsInHand.remove_at(Global.cardsInHand.find(self))
-	refresh_positions()
-	queue_free()
+	remove_self()
 
 func check_if_blocking(plopTile : Vector2) -> bool:
 	# tile is showing tilemap coords
@@ -204,8 +201,13 @@ func _on_selected_pressed() -> void:
 		c.choice_picked = true
 func refresh_positions() -> void:
 	await get_tree().create_timer(1).timeout
-	var cards = get_tree().get_nodes_in_group("CARD")
+	print("ok")
+	var cards = ui.hand.get_child(0).get_children()
+	var newCards = cards.duplicate()
 	for c : Card in cards:
+		c.queue_free()
+	for c : Card in newCards:
+		ui.hand.get_child(0).add_child(c)
 		c.set_up()
 
 func add_card_to_hand() -> void:
