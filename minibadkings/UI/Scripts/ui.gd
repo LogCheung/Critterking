@@ -70,6 +70,7 @@ func display_cards(display : bool) -> void:
 		if !card.for_show : continue
 		card.randomize_type()
 		card.visible = display
+		card.choice_picked = !display
 func show_hand() -> void:
 	if world.starting_roll:
 		cards.show()
@@ -78,7 +79,7 @@ func show_hand() -> void:
 	cards.hide()
 	hand.show()
 	var container = %Hand.get_child(0) # Hboxcontainer
-	await get_tree().create_timer(.5).timeout
+	await get_tree().create_timer(.05).timeout
 	for c : Card in container.get_children():
 		c.set_up()
 	#for card : Card in Global.cardsInHand:

@@ -5,7 +5,7 @@ const GROUP = preload("res://Units/Scenes/unit_group.tscn")
 const BUILDING = preload("res://TileMap/Scenes/building.tscn")
 
 enum CARDTYPE {
-	NONE, BITER,PLATED,SPITTER, TRAPS,DESTROY, HOUSE
+	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3, TRAPS = 4,DESTROY = 5, HOUSE = 6
 }
 enum ROLLTYPE {
 	GENERAL, UNIT, BUILDING
@@ -20,9 +20,11 @@ enum ROLLTYPE {
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
+@onready var button: Button = $Selected
 
 var default_position : Vector2
 var setting_up : bool = true
+var choice_picked : bool = false
 
 func set_up() -> void:
 	match_type()
@@ -89,6 +91,9 @@ func remove_self() -> void:
 	refresh_positions()
 	queue_free()
 func plop_building() -> void:
+	if type == CARDTYPE.DESTROY : 
+		if check_destroy(tile) : remove_self()
+		return
 	var buildingNode = get_tree().get_first_node_in_group("BUILDINGSNODE")
 	var building = BUILDING.instantiate()
 	match type:
@@ -186,10 +191,16 @@ func match_type() -> void:
 			sprite_2d.texture = preload("res://UI/Assets/cards/destroy.png")
 
 func _on_selected_pressed() -> void:
+	if choice_picked : return
 	if for_show:
+		choice_picked = true
 		ui.anim.play("cardhide")
 		add_card_to_hand()
-	pass # Replace with function body.
+		
+	var cards = get_tree().get_nodes_in_group("CARD")
+	cards = cards.filter(func(c):return c.for_show)
+	for c : Card in cards:
+		c.choice_picked = true
 func refresh_positions() -> void:
 	await get_tree().create_timer(1).timeout
 	var cards = get_tree().get_nodes_in_group("CARD")

@@ -45,8 +45,11 @@ func new_game() -> void:
 	
 	# add house card
 	starting_roll = true
-	for i in range(1):
-		add_house_card()
+	for i in range(3):
+		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.PLATED
+		ui.hand.get_child(0).add_child(hCard)
+	add_house_card()
 func add_house_card() -> void:
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
@@ -170,11 +173,9 @@ func start_day() -> void:
 	# convert units to cards
 	var unitsGroups = get_tree().get_first_node_in_group("GROUPSNODE")
 	for g : Group in unitsGroups.get_children():
-		var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
-		newCard = match_unit_to_card(newCard,g.type)
-		Global.cardsInHand.append(newCard)
-		ui.hand.get_child(0).add_child(newCard)
-		newCard.for_show = false
+		unit_to_card(g)
+		if g.upgraded: unit_to_card(g)
+		if g.max_size >= 12 : unit_to_card(g)
 		
 		g.terminate()
 	
@@ -185,6 +186,13 @@ func start_day() -> void:
 		b.health = b.max_health
 	
 	tileWorld.handle_navigable_cells()
+
+func unit_to_card(g : Group) -> void:
+	var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
+	newCard = match_unit_to_card(newCard,g.type)
+	Global.cardsInHand.append(newCard)
+	ui.hand.get_child(0).add_child(newCard)
+	newCard.for_show = false
 
 func _on_spawn_timer_timeout() -> void:
 	spawn_enemy()
@@ -215,3 +223,6 @@ func check_nights() -> void:
 	
 	if Global.nights % 6 == 0:
 		add_house_card()
+
+func expand() -> void:
+	pass
