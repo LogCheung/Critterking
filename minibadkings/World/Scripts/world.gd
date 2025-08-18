@@ -31,7 +31,7 @@ func _ready() -> void:
 	night_ended.connect(on_night_ended)
 	enemy_group_eliminated.connect(on_enemy_group_eliminated)
 	
-	Engine.time_scale = 1
+	Engine.time_scale = 8
 	
 func new_game() -> void:
 	await get_tree().create_timer(.5).timeout
@@ -241,12 +241,19 @@ func _input(event: InputEvent) -> void:
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("pause"):
+		if ui.mainmenu.visible or ui.gameover.visible or ui.help.visible or ui.settings.visible : return
 		if ui.pausemenu.visible:
 			%Game.process_mode = Node.PROCESS_MODE_PAUSABLE
+			ui.crtr_pause.stop()
 			ui.pausemenu.hide()
+			if is_combat_phase == false: ui.end_turn.show()
+			if is_combat_phase == true: ui.crtr_night.play()
 			return
 		%Game.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 		ui.pausemenu.show()
+		ui.end_turn.hide()
+		get_tree().call_group("MUSIC", "stop")
+		ui.crtr_pause.play()
 
 func check_nights() -> void:
 	if Global.nights % 2 == 0:

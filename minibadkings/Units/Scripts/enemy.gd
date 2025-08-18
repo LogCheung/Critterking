@@ -53,7 +53,7 @@ func handle_action(delta) -> void:
 			if target == null: target_in_range = false
 			if distToTarget <= attackRange :
 				if !attack_cd.time_left <= 0 : return
-				if type == TYPE.RANGED and distToTarget < 15: 
+				if type == TYPE.RANGED and distToTarget < 12: 
 					too_close = true
 					return
 				too_close = false
@@ -106,7 +106,7 @@ func match_type() -> void:
 			attackRange = 100
 			var visionShape : CollisionShape2D = vision.get_child(0)
 			visionShape.shape.radius = 120
-			attack_cd.wait_time = 4
+			attack_cd.wait_time = 2
 		TYPE.SHIELDED:
 			sprite_2d.texture = SHIELDEDNORMALSE
 			damage = 1
