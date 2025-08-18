@@ -9,6 +9,10 @@ const MELEENORMALSE = preload("res://Units/Assets/EnemyMelee/EnemyMeleeNormalSE.
 const RANGEDNORMALSE = preload("res://Units/Assets/EnemyRanged/EnemyRangedNormalSE.png")
 const SHIELDEDNORMALSE = preload("res://Units/Assets/EnemyShield/EnemyShieldNormalSE.png")
 
+const UPMELEENORMALSE = preload("res://Units/Assets/EnemyMelee/EnemyMeleeUpgradedSE.png")
+const UPRANGEDNORMALSE = preload("res://Units/Assets/EnemyRanged/EnemyRangedUpgradedSE.png")
+const UPSHIELDEDNORMALSE = preload("res://Units/Assets/EnemyShield/EnemyShieldUpgradedSE.png")
+
 var target_in_range : bool
 var is_active : bool = false
 var houses_exist : bool = true
@@ -98,9 +102,11 @@ func become_active() -> void:
 func match_type() -> void:
 	match type:
 		TYPE.MELEE:
-			sprite_2d.texture = MELEENORMALSE
+			if upgraded: sprite_2d.texture = UPMELEENORMALSE
+			else: sprite_2d.texture = MELEENORMALSE
 		TYPE.RANGED:
-			sprite_2d.texture = RANGEDNORMALSE
+			if upgraded: sprite_2d.texture = UPRANGEDNORMALSE
+			else: sprite_2d.texture = RANGEDNORMALSE
 			health = 2
 			damage = 1.5
 			attackRange = 100
@@ -108,7 +114,8 @@ func match_type() -> void:
 			visionShape.shape.radius = 120
 			attack_cd.wait_time = 2
 		TYPE.SHIELDED:
-			sprite_2d.texture = SHIELDEDNORMALSE
+			if upgraded: sprite_2d.texture = UPSHIELDEDNORMALSE
+			else: sprite_2d.texture = SHIELDEDNORMALSE
 			damage = 1
 
 func find_building() -> void:
