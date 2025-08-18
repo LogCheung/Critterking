@@ -48,7 +48,8 @@ func _process(delta: float) -> void:
 	else:
 		sprite_2d.modulate.v = 1
 	if occupants_inside():
-		%Timer.start()
+		if %Timer.time_left <= 0:
+			%Timer.start()
 		bar.visible = true
 	else:
 		%Timer.stop()
@@ -78,7 +79,7 @@ func match_type() -> void:
 			sprite_2d.offset = Vector2(0,-6)
 		TYPE.FARM:
 			sprite_2d.texture = FARM
-			sprite_2d.offset = Vector2(20,-4)
+			sprite_2d.offset = Vector2(0,-4)
 		TYPE.RUINS:
 			sprite_2d.texture = HOUSEA
 			sprite_2d.frame = 1
@@ -140,7 +141,7 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 
 
 func _on_timer_timeout() -> void:
-	bar.value += .16666 #if occupant.max_size <= 9 else .12345
+	bar.value += .166667 #if occupant.max_size <= 9 else .12345
 	if bar.value >= bar.max_value:
 		occupant.global_position = tileWorld.ground.map_to_local(doorstepTile)
 		occupant.respawn_units()

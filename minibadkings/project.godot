@@ -47,6 +47,7 @@ CARD=""
 BUILDING=""
 ENEMY=""
 ALLYGROUP=""
+MUSIC=""
 
 [input]
 

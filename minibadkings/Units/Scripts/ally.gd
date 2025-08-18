@@ -93,7 +93,7 @@ func handle_action(delta) -> void:
 			if distToTarget <= attackRange :
 				if !attack_cd.time_left <= 0 : return
 				if anim.is_playing() : return
-				if type == TYPE.RANGED and distToTarget < 15: 
+				if type == TYPE.RANGED and distToTarget < 12: 
 					too_close = true
 					return
 				too_close = false
@@ -119,7 +119,7 @@ func handle_action(delta) -> void:
 			anim.play("walk")
 		ACTION.HEAL:
 			anim.play("walk")
-			if distToTarget < 5:
+			if distToTarget < 8:
 				visible = false
 				return
 	
@@ -143,7 +143,7 @@ func match_type() -> void:
 			attackRange = 100
 			var visionShape : CollisionShape2D = vision.get_child(0)
 			visionShape.shape.radius = 120
-			attack_cd.wait_time = 4
+			attack_cd.wait_time = 2
 			if upgraded:
 				sprite_2d.texture = UPRANGEDNORMALSE
 		TYPE.SHIELDED:
@@ -174,7 +174,7 @@ func on_speed_change() -> void:
 	saps = saps.filter(func(b : Building):return b.type == Building.TYPE.SAPSTORE)
 	for s : Building in saps:
 		print("sugar")
-		speed = speed + 2.5
+		speed = speed + 3
 
 
 func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> void:

@@ -15,6 +15,7 @@ signal game_over
 @onready var pausemenu: Control = %pausemenu
 @onready var crtr_day: AudioStreamPlayer = %crtrDay
 @onready var crtr_night: AudioStreamPlayer = %crtrNight
+@onready var crtr_pause: AudioStreamPlayer = %crtrPause
 
 var second_roll : bool = false
 
@@ -39,18 +40,18 @@ func _process(delta: float) -> void:
 		%crtrDay.stop()
 		%crtrNight.stop()
 		%crtrPause.play()
-	elif world.is_combat_phase == true and !%crtrNight.playing and !control_is_visible():
-		%crtrMenu.stop()
-		%crtrOver.stop()
-		%crtrDay.stop()
-		%crtrPause.stop()
-		%crtrNight.play()
-	elif world.is_combat_phase == false and !%crtrDay.playing and !control_is_visible():
+	elif end_turn.visible and !%crtrDay.playing:
 		%crtrMenu.stop()
 		%crtrOver.stop()
 		%crtrNight.stop()
 		%crtrPause.stop()
 		%crtrDay.play()
+	elif !end_turn.visible and !%crtrNight.playing and !control_is_visible():
+		%crtrMenu.stop()
+		%crtrOver.stop()
+		%crtrDay.stop()
+		%crtrPause.stop()
+		%crtrNight.play()
 	%NightCounter.show()
 	%DayNight.text = str(Global.nights)
 		
@@ -134,7 +135,8 @@ func _on_play_pressed() -> void:
 
 func _on_help_pressed() -> void:
 	%Button.play()
-	%crtrPause.play()
+	if !%crtrPause.playing:
+		%crtrPause.play()
 	%crtrMenu.stop()
 	help.show()
 	mainmenu.hide()
@@ -143,7 +145,8 @@ func _on_help_pressed() -> void:
 
 func _on_settings_pressed() -> void:
 	%Button.play()
-	%crtrPause.play()
+	if !%crtrPause.playing:
+		%crtrPause.play()
 	%crtrMenu.stop()
 	settings.show()
 	mainmenu.hide()
@@ -157,23 +160,15 @@ func _on_quit_pressed() -> void:
 func _on_backhelp_pressed() -> void:
 	%Button.play()
 	help.hide()
-	mainmenu.show()
-	if !%crtrPause.playing and pausemenu.visible:
-		%crtrPause.play()
-	else: 
-		%crtrPause.stop()
-		%crtrMenu.play()
+	if !pausemenu.visible:
+		mainmenu.show()
 	pass # Replace with function body.
 
 func _on_settingsback_pressed() -> void:
 	%Button.play()
 	settings.hide()
-	mainmenu.show()
-	if !%crtrPause.playing and pausemenu.visible:
-		%crtrPause.play()
-	else: 
-		%crtrPause.stop()
-		%crtrMenu.play()
+	if !pausemenu.visible:
+		mainmenu.show()
 	pass # Replace with function body.
 
 func _on_endturn_pressed() -> void:
@@ -212,4 +207,5 @@ func _on_title_pressed() -> void:
 
 
 func _on_continue_pressed() -> void:
+	if world.is_combat_phase == false: end_turn.show()
 	pausemenu.hide()
