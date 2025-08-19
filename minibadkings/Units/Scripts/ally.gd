@@ -133,6 +133,7 @@ func on_unselected() -> void:
 func match_type() -> void:
 	match type:
 		TYPE.MELEE:
+			sprite_2d.texture = MELEENORMALSE
 			if upgraded:
 				sprite_2d.texture = UPMELEENORMALSE
 			return
