@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7h62ll2lqahn"
-path="res://.godot/imported/spitter.png-8935b59fe8870fd522d5b976ae12ae67.ctex"
+uid="uid://0dsuk7fy0l0k"
+path="res://.godot/imported/EnemyCrazedNormalSE.png-7654a2887124694027dbe3226de0bea9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/Assets/cards/spitter.png"
-dest_files=["res://.godot/imported/spitter.png-8935b59fe8870fd522d5b976ae12ae67.ctex"]
+source_file="res://Units/Assets/EnemyCrazed/EnemyCrazedNormalSE.png"
+dest_files=["res://.godot/imported/EnemyCrazedNormalSE.png-7654a2887124694027dbe3226de0bea9.ctex"]
 
 [params]
 

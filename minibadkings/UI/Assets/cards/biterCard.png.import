@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chrawh6hns4w3"
-path="res://.godot/imported/traps.png-2aa85eb1f67768ea6216db5f3449e272.ctex"
+uid="uid://f768reu1yll7"
+path="res://.godot/imported/biterCard.png-c3880e5fba2f028a7d62f1b1260cd74b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/Assets/cards/traps.png"
-dest_files=["res://.godot/imported/traps.png-2aa85eb1f67768ea6216db5f3449e272.ctex"]
+source_file="res://UI/Assets/cards/biterCard.png"
+dest_files=["res://.godot/imported/biterCard.png-c3880e5fba2f028a7d62f1b1260cd74b.ctex"]
 
 [params]
 

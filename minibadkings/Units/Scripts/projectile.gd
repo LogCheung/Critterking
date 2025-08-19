@@ -33,6 +33,7 @@ func _on_area_entered(area: Area2D) -> void:
 			#if rand % 2 == 0: 
 			%Hurt.play()
 			target.health -= damage - .75
+			
 		else:
 			%Hurt.play()
 			target.health -= damage 

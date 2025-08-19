@@ -10,7 +10,7 @@ var approaching : bool = true
 
 func _ready() -> void:
 	super._ready()
-	type = randi() % Unit.TYPE.size()
+	type = randi_range(1,4)
 	tile = tileWorld.ground.local_to_map(global_position)
 	create_formation(ENEMY)
 	at_border.connect(activate_units)

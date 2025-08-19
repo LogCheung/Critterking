@@ -233,6 +233,8 @@ func match_unit_to_card(card : Card,unitType : Unit.TYPE) -> Card:
 			card.type = Card.CARDTYPE.SPITTER
 		Unit.TYPE.SHIELDED:
 			card.type = Card.CARDTYPE.PLATED
+		Unit.TYPE.CRAZED:
+			card.type = Card.CARDTYPE.CRAZED
 	return card
 
 var tile2
