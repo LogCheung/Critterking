@@ -46,12 +46,12 @@ func _input(event: InputEvent) -> void:
 			selected = false
 			check_on_house(mouse_pos)
 			_on_select_area_mouse_exited()
-			return
-		highlight_houses(false)
-		tile = pos
-		pos = tileWorld.ground.map_to_local(pos) # now local map cord
-		global_position = pos
-		tileWorld.handle_navigable_cells()
+		else:
+			highlight_houses(false)
+			tile = pos
+			pos = tileWorld.ground.map_to_local(pos) # now local map cord
+			global_position = pos
+			tileWorld.handle_navigable_cells()
 func _on_select_area_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if !world.is_combat_phase: return
 	if event.is_action_pressed("select"):
@@ -77,7 +77,8 @@ func check_on_house(mousePos : Vector2) -> void:
 			house = h
 			for unit : Ally in unitsArray:
 				unit.healing = true
-			pass
+			highlight_houses(false)
+			return
 func highlight_houses(highlight : bool = true) -> void:
 	if size == max_size : return
 	var houses = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()

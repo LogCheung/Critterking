@@ -207,5 +207,22 @@ func _on_title_pressed() -> void:
 
 
 func _on_continue_pressed() -> void:
-	if world.is_combat_phase == false: end_turn.show()
-	pausemenu.hide()
+	handle_pause()
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause"):
+		handle_pause()
+func handle_pause() -> void:
+	if mainmenu.visible or gameover.visible or help.visible or settings.visible : return
+	if pausemenu.visible:
+		%Game.process_mode = Node.PROCESS_MODE_PAUSABLE
+		crtr_pause.stop()
+		pausemenu.hide()
+		if world.is_combat_phase == false: end_turn.show()
+		if world.is_combat_phase == true: crtr_night.play()
+		return
+	%Game.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+	pausemenu.show()
+	end_turn.hide()
+	get_tree().call_group("MUSIC", "stop")
+	crtr_pause.play()

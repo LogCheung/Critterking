@@ -49,8 +49,11 @@ func new_game() -> void:
 	
 	# add house card
 	starting_roll = true
-	for i in range(1):
+	for i in range(2):
 		add_house_card()
+		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.BITER
+		ui.hand.get_child(0).add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
@@ -200,6 +203,7 @@ func start_day() -> void:
 	for b : Building in buildings:
 		b.process_mode = Node.PROCESS_MODE_ALWAYS
 		b.health = b.max_health
+		b._process(get_process_delta_time())
 		b.process_mode = Node.PROCESS_MODE_DISABLED
 	
 	tileWorld.handle_navigable_cells()
@@ -240,20 +244,6 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_released("select"):
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
-	if event.is_action_pressed("pause"):
-		if ui.mainmenu.visible or ui.gameover.visible or ui.help.visible or ui.settings.visible : return
-		if ui.pausemenu.visible:
-			%Game.process_mode = Node.PROCESS_MODE_PAUSABLE
-			ui.crtr_pause.stop()
-			ui.pausemenu.hide()
-			if is_combat_phase == false: ui.end_turn.show()
-			if is_combat_phase == true: ui.crtr_night.play()
-			return
-		%Game.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
-		ui.pausemenu.show()
-		ui.end_turn.hide()
-		get_tree().call_group("MUSIC", "stop")
-		ui.crtr_pause.play()
 
 func check_nights() -> void:
 	if Global.nights % 2 == 0:

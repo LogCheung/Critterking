@@ -91,7 +91,6 @@ func on_destroyed() -> void:
 	%Break.play()
 	anim.play("destroy")
 	await anim.animation_finished
-	print("animdone")
 	type = TYPE.RUINS
 	match_type()
 	
@@ -99,7 +98,6 @@ func on_destroyed() -> void:
 	var enemies = get_tree().get_nodes_in_group("ENEMY")
 	#if type == TYPE.HOUSE:
 	for enemy : Enemy in enemies:
-		print("swaptarget")
 		enemy.house_destroyed.emit()
 	
 	# check if final house destroyed and if player lost
@@ -130,7 +128,7 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if !type == TYPE.TRAP : return
 	if area.owner is Unit:
 		var enemy : Unit = area.owner
-		enemy.health -= 1
+		enemy.health -= 1.5
 		enemy.hurt.play()
 		if enemy.health <= 0:
 			var enemyGroup = enemy.group.unitsArray

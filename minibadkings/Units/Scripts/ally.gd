@@ -46,7 +46,6 @@ func _process(delta: float) -> void:
 		handle_behind_wall()
 	if vision.has_overlapping_areas(): # inside sight of ally
 		for area in vision.get_overlapping_areas(): # not dead and not in walls
-			print(area.owner)
 			in_combat = is_instance_valid(area.owner) and area.owner.is_active
 	else:
 		in_combat = false
@@ -149,7 +148,6 @@ func set_up_vision() -> void:
 
 
 func match_type() -> void:
-	print(type)
 	match type:
 		TYPE.MELEE:
 			visionRange = 32
@@ -177,7 +175,6 @@ func on_health_change() -> void:
 	var farms = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
 	farms = farms.filter(func(b : Building):return b.type == Building.TYPE.FARM)
 	for f : Building in farms:
-		print("yum")
 		max_health = max_health + 0.5
 		health = max_health
 		
@@ -185,7 +182,6 @@ func on_speed_change() -> void:
 	var saps = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
 	saps = saps.filter(func(b : Building):return b.type == Building.TYPE.SAPSTORE)
 	for s : Building in saps:
-		print("sugar")
 		speed = speed + 3
 
 
