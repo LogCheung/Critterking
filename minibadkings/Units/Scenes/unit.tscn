@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://dkqw1dmj0wkgb"]
+[gd_scene load_steps=38 format=3 uid="uid://dkqw1dmj0wkgb"]
 
 [ext_resource type="PackedScene" uid="uid://ddc6mf0gqftb" path="res://Units/Scenes/hit_box.tscn" id="1_pm8qt"]
 [ext_resource type="Script" uid="uid://13y7jtc01ydv" path="res://Units/Scripts/ally.gd" id="1_q458e"]
@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://bpvkdlp8jw4sj" path="res://addons/utility_ai/actions/action.gd" id="6_m88pn"]
 [ext_resource type="Script" uid="uid://dojkyt7skh8fh" path="res://addons/utility_ai/considerations/consideration_from_node.gd" id="7_m88pn"]
 [ext_resource type="Script" uid="uid://b2f8vq1st70r0" path="res://addons/utility_ai/considerations/aggregation.gd" id="9_daau3"]
-[ext_resource type="Script" uid="uid://c4w8b5x2jd5q3" path="res://Units/Scenes/considerType.gd" id="9_jqc0h"]
+[ext_resource type="Script" uid="uid://c4w8b5x2jd5q3" path="res://Units/Scripts/considerType.gd" id="9_jqc0h"]
 [ext_resource type="AudioStream" uid="uid://51wb2nkn3yoe" path="res://Audio/sfx/Attack.tres" id="10_t5nd1"]
 [ext_resource type="AudioStream" uid="uid://b7scm4fug5tje" path="res://Audio/sfx/Hurt.tres" id="11_amxnv"]
 [ext_resource type="AudioStream" uid="uid://bmrvq8a3r1mcb" path="res://Audio/sfx/Shoot.tres" id="12_iqrsy"]
@@ -28,8 +28,21 @@ size = Vector2(5, 7)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yd6on"]
 size = Vector2(2, 2)
 
+[sub_resource type="GDScript" id="GDScript_amxnv"]
+script/source = "extends Area2D
+class_name VisionShape
+
+@export var range : float
+
+@onready var vision_shape: CollisionShape2D = %VisionShape
+
+
+func set_range(radius : float = range) -> void:
+	vision_shape.shape.radius = range
+"
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_yd6on"]
-radius = 25.0
+radius = 32.0
 
 [sub_resource type="Curve" id="Curve_yd6on"]
 _limits = [0.0, 1.1, 0.0, 1.0]
@@ -260,8 +273,10 @@ shape = SubResource("RectangleShape2D_yd6on")
 [node name="Vision" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 4
+script = SubResource("GDScript_amxnv")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
+[node name="VisionShape" type="CollisionShape2D" parent="Vision"]
+unique_name_in_owner = true
 shape = SubResource("CircleShape2D_yd6on")
 debug_color = Color(0, 0.6, 0.701961, 0.141176)
 

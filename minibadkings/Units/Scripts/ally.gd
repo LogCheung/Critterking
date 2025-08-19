@@ -20,6 +20,8 @@ const UPSHIELDEDNORMALNW = preload("res://Units/Assets/AllyShield/AllyShieldUpgr
 var allyGroup : AllyGroup
 var healing : bool
 
+
+
 func _ready() -> void:
 	allyGroup = group
 	if upgraded: 
@@ -44,11 +46,13 @@ func _process(delta: float) -> void:
 		handle_behind_wall()
 	if vision.has_overlapping_areas(): # inside sight of ally
 		for area in vision.get_overlapping_areas(): # not dead and not in walls
+			print(area.owner)
 			in_combat = is_instance_valid(area.owner) and area.owner.is_active
 	else:
 		in_combat = false
 	
 	handle_action(delta)
+	#print(str(visionRange) + " is " + str(type))
 
 func handle_behind_wall() -> void:
 	is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
@@ -130,37 +134,44 @@ func on_selected() -> void:
 func on_unselected() -> void:
 	sprite_2d.material = null
 
+func set_up_vision() -> void:
+	var newVision = Area2D.new()
+	var col = CollisionShape2D.new()
+	var shape = CircleShape2D.new()
+	shape.radius = visionRange
+	col.shape = shape
+	newVision.set_collision_layer_value(1,false)
+	newVision.set_collision_mask_value(1,false)
+	newVision.set_collision_mask_value(3,true)
+	add_child(newVision)
+	newVision.add_child(col)
+	vision = newVision
+
+
 func match_type() -> void:
+	print(type)
 	match type:
 		TYPE.MELEE:
+			visionRange = 32
 			sprite_2d.texture = MELEENORMALSE
 			if upgraded:
 				sprite_2d.texture = UPMELEENORMALSE
-			return
 		TYPE.RANGED:
 			sprite_2d.texture = RANGEDNORMALSE
 			health = 2
 			damage = 1.5
 			attackRange = 100
-			var visionShape : CollisionShape2D = vision.get_child(0)
-			visionShape.shape.radius = 120
+			visionRange = 120
 			attack_cd.wait_time = 2
 			if upgraded:
 				sprite_2d.texture = UPRANGEDNORMALSE
 		TYPE.SHIELDED:
+			visionRange = 32
 			sprite_2d.texture = SHIELDEDNORMALSE
 			damage = 1
 			if upgraded:
 				sprite_2d.texture = UPSHIELDEDNORMALSE
-
-func match_sprite() -> void:
-	match type:
-		TYPE.MELEE:
-			pass
-		TYPE.RANGED:
-			pass
-		TYPE.SHIELDED:
-			pass
+	set_up_vision()
 
 func on_health_change() -> void:
 	var farms = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
