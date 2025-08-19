@@ -6,6 +6,7 @@ signal healthchange
 const MELEENORMALSE = preload("res://Units/Assets/AllyMelee/AllyMeleeNormalSE.png")
 const RANGEDNORMALSE = preload("res://Units/Assets/AllyRanged/AllyRangedNormalSE.png")
 const SHIELDEDNORMALSE = preload("res://Units/Assets/AllyShield/AllyShieldNormalSE.png")
+const CRAZEDNORMALSE = preload("res://Units/Assets/AllyCrazed/AllyCrazedNormalSE.png")
 const MELEENORMALNW = preload("res://Units/Assets/AllyMelee/AllyMeleeNormalNW.png")
 const RANGEDNORMALNW = preload("res://Units/Assets/AllyRanged/AllyRangedNormalNW.png")
 const SHIELDEDNORMALNW = preload("res://Units/Assets/AllyShield/AllyShieldNormalNW.png")
@@ -13,6 +14,7 @@ const SHIELDEDNORMALNW = preload("res://Units/Assets/AllyShield/AllyShieldNormal
 const UPMELEENORMALSE = preload("res://Units/Assets/AllyMelee/AllyMeleeUpgradedSE.png")
 const UPRANGEDNORMALSE = preload("res://Units/Assets/AllyRanged/AllyRangedUpgradedSE.png")
 const UPSHIELDEDNORMALSE = preload("res://Units/Assets/AllyShield/AllyShieldUpgradedSE.png")
+const UPCRAZEDNORMALSE = preload("res://Units/Assets/AllyCrazed/AllyCrazedUpgradedSE.png")
 const UPMELEENORMALNW = preload("res://Units/Assets/AllyMelee/AllyMeleeUpgradedNW.png")
 const UPRANGEDNORMALNW = preload("res://Units/Assets/AllyRanged/AllyRangedUpgradedNW.png")
 const UPSHIELDEDNORMALNW = preload("res://Units/Assets/AllyShield/AllyShieldUpgradedNW.png")
@@ -169,6 +171,14 @@ func match_type() -> void:
 			damage = 1
 			if upgraded:
 				sprite_2d.texture = UPSHIELDEDNORMALSE
+		TYPE.CRAZED:
+			sprite_2d.texture = CRAZEDNORMALSE
+			health = 0.5
+			damage = 0.5
+			speed = 60
+			attack_cd.wait_time = 1
+			if upgraded:
+				sprite_2d.texture = UPCRAZEDNORMALSE
 	set_up_vision()
 
 func on_health_change() -> void:

@@ -8,10 +8,12 @@ const GHOST = preload("res://Units/Shaders/ghostHighlight.tres")
 const MELEENORMALSE = preload("res://Units/Assets/EnemyMelee/EnemyMeleeNormalSE.png")
 const RANGEDNORMALSE = preload("res://Units/Assets/EnemyRanged/EnemyRangedNormalSE.png")
 const SHIELDEDNORMALSE = preload("res://Units/Assets/EnemyShield/EnemyShieldNormalSE.png")
+const CRAZEDNORMALSE = preload("res://Units/Assets/EnemyCrazed/EnemyCrazedNormalSE.png")
 
 const UPMELEENORMALSE = preload("res://Units/Assets/EnemyMelee/EnemyMeleeUpgradedSE.png")
 const UPRANGEDNORMALSE = preload("res://Units/Assets/EnemyRanged/EnemyRangedUpgradedSE.png")
 const UPSHIELDEDNORMALSE = preload("res://Units/Assets/EnemyShield/EnemyShieldUpgradedSE.png")
+const UPCRAZEDNORMALSE = preload("res://Units/Assets/EnemyCrazed/EnemyCrazedUpgradedSE.png")
 
 var target_in_range : bool
 var is_active : bool = false
@@ -117,6 +119,14 @@ func match_type() -> void:
 			if upgraded: sprite_2d.texture = UPSHIELDEDNORMALSE
 			else: sprite_2d.texture = SHIELDEDNORMALSE
 			damage = 1
+		TYPE.CRAZED:
+			if upgraded: sprite_2d.texture = UPCRAZEDNORMALSE
+			else: sprite_2d.texture = CRAZEDNORMALSE
+			health = 0.5
+			damage = 0.5
+			speed = 60
+			attack_cd.wait_time = 1
+			
 
 func find_building() -> void:
 	await get_tree().create_timer(.1).timeout

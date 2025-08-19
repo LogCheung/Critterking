@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjv30svgegsu5"
-path="res://.godot/imported/biter.png-02182407531cab99ec34a8c278ae0f5e.ctex"
+uid="uid://qwjy520s81vk"
+path="res://.godot/imported/platedCard.png-44d24793d396254b1d7daed2146b88c0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/Assets/cards/biter.png"
-dest_files=["res://.godot/imported/biter.png-02182407531cab99ec34a8c278ae0f5e.ctex"]
+source_file="res://UI/Assets/cards/platedCard.png"
+dest_files=["res://.godot/imported/platedCard.png-44d24793d396254b1d7daed2146b88c0.ctex"]
 
 [params]
 

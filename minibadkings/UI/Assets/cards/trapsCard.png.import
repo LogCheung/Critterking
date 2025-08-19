@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://fs4plru4cufh"
-path="res://.godot/imported/destroy.png-f51ee57716a281a11fe537441b4a34d4.ctex"
+uid="uid://cwvcija1uwiek"
+path="res://.godot/imported/trapsCard.png-cc0654dffd5fa2e76f47e72a5b09fcee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/Assets/cards/destroy.png"
-dest_files=["res://.godot/imported/destroy.png-f51ee57716a281a11fe537441b4a34d4.ctex"]
+source_file="res://UI/Assets/cards/trapsCard.png"
+dest_files=["res://.godot/imported/trapsCard.png-cc0654dffd5fa2e76f47e72a5b09fcee.ctex"]
 
 [params]
 

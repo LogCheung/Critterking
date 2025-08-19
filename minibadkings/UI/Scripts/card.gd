@@ -5,7 +5,7 @@ const GROUP = preload("res://Units/Scenes/unit_group.tscn")
 const BUILDING = preload("res://TileMap/Scenes/building.tscn")
 
 enum CARDTYPE {
-	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3, TRAPS = 4,DESTROY = 5, HOUSE = 6, CARE = 7, FARM = 8, SAPSTORE = 9
+	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3,CRAZED = 4,TRAPS = 5,DESTROY = 6, HOUSE = 7, CARE = 8, FARM = 9, SAPSTORE = 10
 }
 enum ROLLTYPE {
 	GENERAL, UNIT, BUILDING
@@ -75,7 +75,7 @@ func plop() -> void:
 	var groupNode = get_tree().get_first_node_in_group("GROUPSNODE")
 	
 	if ploppableTiles.has(tile):
-		if type > 3:
+		if type > 4:
 			plop_building()
 			return
 		var group = GROUP.instantiate()
@@ -170,7 +170,7 @@ func check_destroy(plopTile : Vector2) -> bool:
 	return false
 
 func check_if_merge(plopTile : Vector2) -> bool:
-	if type > 3: return false
+	if type > 4: return false
 	var groups = get_tree().get_nodes_in_group("ALLYGROUP")
 	var targetGroup : AllyGroup
 	# Identify group that is going to be upgraded
@@ -190,7 +190,7 @@ func randomize_type() -> void:
 		ROLLTYPE.GENERAL:
 			type = randi_range(1,CARDTYPE.size()-1)
 		ROLLTYPE.UNIT:
-			type = randi_range(CARDTYPE.BITER,CARDTYPE.SPITTER)
+			type = randi_range(CARDTYPE.BITER,CARDTYPE.CRAZED)
 	if type == CARDTYPE.HOUSE : randomize_type()
 	
 	# check if not same as other card
@@ -206,17 +206,19 @@ func randomize_type() -> void:
 func match_type() -> void:
 	match type:
 		CARDTYPE.BITER:
-			sprite_2d.texture = preload("res://UI/Assets/cards/biter.png")
+			sprite_2d.texture = preload("res://UI/Assets/cards/biterCard.png")
 		CARDTYPE.PLATED:
-			sprite_2d.texture = preload("res://UI/Assets/cards/plated.png")
+			sprite_2d.texture = preload("res://UI/Assets/cards/platedCard.png")
 		CARDTYPE.SPITTER:
-			sprite_2d.texture = preload("res://UI/Assets/cards/spitter.png")
+			sprite_2d.texture = preload("res://UI/Assets/cards/spitterCard.png")
+		CARDTYPE.CRAZED:
+			sprite_2d.texture = preload("res://UI/Assets/cards/crazedCard.png")
 		CARDTYPE.TRAPS:
-			sprite_2d.texture = preload("res://UI/Assets/cards/traps.png")
+			sprite_2d.texture = preload("res://UI/Assets/cards/trapsCard.png")
 		CARDTYPE.HOUSE:
 			sprite_2d.texture = preload("res://UI/Assets/cards/houseCard.png")
 		CARDTYPE.DESTROY:
-			sprite_2d.texture = preload("res://UI/Assets/cards/destroy.png")
+			sprite_2d.texture = preload("res://UI/Assets/cards/destroyCard.png")
 		CARDTYPE.CARE:
 			sprite_2d.texture = preload("res://UI/Assets/cards/careCard.png")
 		CARDTYPE.FARM:
