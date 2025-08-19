@@ -18,6 +18,7 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @export var damage : float = 2
 @export var speed : float = 30
 @export var attackRange : float = 10
+@export var visionRange : float = 32
 @export var formation_position : Node2D 
 @export var group : Group
 @export var type : TYPE = TYPE.MELEE
@@ -28,7 +29,7 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var attack_cd: Timer = $AttackCD
-@onready var vision: Area2D = $Vision
+@onready var vision: Area2D = $Vision if self is Enemy else null
 @onready var hurtbox_cd: Timer = $HurtboxCD
 @onready var hit_box: Area2D = %HitBox
 @onready var death: AudioStreamPlayer = %Death

@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bjjg37vgshqt6"]
 
 [ext_resource type="Texture2D" uid="uid://bjv30svgegsu5" path="res://UI/Assets/cards/biter.png" id="1_yyl3s"]
-[ext_resource type="Script" uid="uid://dp28vuy42urfg" path="res://UI/Scenes/card.gd" id="2_e2s86"]
+[ext_resource type="Script" uid="uid://dp28vuy42urfg" path="res://UI/Scripts/card.gd" id="2_e2s86"]
 
 [sub_resource type="Animation" id="Animation_o5kma"]
 length = 0.001

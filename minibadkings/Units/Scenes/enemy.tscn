@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://dojkyt7skh8fh" path="res://addons/utility_ai/considerations/consideration_from_node.gd" id="8_ohg4d"]
 [ext_resource type="Script" uid="uid://b2f8vq1st70r0" path="res://addons/utility_ai/considerations/aggregation.gd" id="8_ubmlb"]
 [ext_resource type="AudioStream" uid="uid://51wb2nkn3yoe" path="res://Audio/sfx/Attack.tres" id="10_0wncj"]
-[ext_resource type="Script" uid="uid://c4w8b5x2jd5q3" path="res://Units/Scenes/considerType.gd" id="10_1flw5"]
+[ext_resource type="Script" uid="uid://c4w8b5x2jd5q3" path="res://Units/Scripts/considerType.gd" id="10_1flw5"]
 [ext_resource type="AudioStream" uid="uid://b7scm4fug5tje" path="res://Audio/sfx/Hurt.tres" id="11_8inca"]
 [ext_resource type="AudioStream" uid="uid://bmrvq8a3r1mcb" path="res://Audio/sfx/Shoot.tres" id="12_7xmed"]
 [ext_resource type="AudioStream" uid="uid://w5s7eos7mc1q" path="res://Audio/sfx/Death.tres" id="13_ohg4d"]
@@ -359,7 +359,7 @@ collision_layer = 0
 collision_mask = 2
 monitoring = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
+[node name="VisionShape" type="CollisionShape2D" parent="Vision"]
 shape = SubResource("CircleShape2D_mh310")
 
 [node name="AttackCD" type="Timer" parent="."]

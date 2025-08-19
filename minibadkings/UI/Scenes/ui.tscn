@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bfqdqavdl2kr3" path="res://UI/Assets/menus/pause.png" id="5_n2q0n"]
 [ext_resource type="Texture2D" uid="uid://dwseh6hsy3l77" path="res://UI/Assets/menus/gameover.png" id="7_ftqev"]
 [ext_resource type="FontFile" uid="uid://dqt550qq7jmvu" path="res://Units/Debug/PressStart2P.ttf" id="7_titua"]
-[ext_resource type="Script" uid="uid://dn5w3jfm4dcjv" path="res://UI/Scenes/slider.gd" id="8_6dw6b"]
+[ext_resource type="Script" uid="uid://dn5w3jfm4dcjv" path="res://UI/Scripts/slider.gd" id="8_6dw6b"]
 [ext_resource type="AudioStream" uid="uid://bmkptsfk4bkc" path="res://Audio/music/crtrpause.wav" id="8_oj6tj"]
 [ext_resource type="AudioStream" uid="uid://bj8clo00ioln7" path="res://Audio/music/crtrover.wav" id="9_ftqev"]
 [ext_resource type="Texture2D" uid="uid://dmgylqdp2munp" path="res://UI/Assets/endday.png" id="10_6dw6b"]
