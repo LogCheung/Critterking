@@ -36,8 +36,12 @@ func _on_area_entered(area: Area2D) -> void:
 			
 		else:
 			%Hurt.play()
-			target.health -= damage 
+			target.health -= damage if target.dodge < (randi() % 100 + 1) else 0
 		if target.health <= 0:
+			target.process_mode = Node.PROCESS_MODE_DISABLED
+			target.anim.play("death")
+			await target.anim.animation_finished
+			
 			var group = target.group.unitsArray
 			if group.find(target) != - 1: group.remove_at(group.find(target))
 			target.group.unit_died.emit()
@@ -47,6 +51,6 @@ func _on_area_entered(area: Area2D) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Building:
-		if body.type == Building.TYPE.HOUSE:
+		if body.type != Building.TYPE.TRAP or body.type != Building.TYPE.RUINS:
 			body.health -= damage
 	queue_free()

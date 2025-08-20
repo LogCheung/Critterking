@@ -19,6 +19,7 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @export var speed : float = 30
 @export var attackRange : float = 10
 @export var visionRange : float = 32
+@export var dodge : int = 0
 @export var formation_position : Node2D 
 @export var group : Group
 @export var type : TYPE = TYPE.MELEE
@@ -130,7 +131,7 @@ func on_hurt_box_land(area : Area2D) -> void:
 	if area.owner is Unit:
 		var enemy : Unit = area.owner
 		%Hurt.play()
-		enemy.health -= damage
+		enemy.health -= damage if enemy.dodge < (randi() % 100 + 1) else 0
 		if enemy.health <= 0:
 			# trigger death anim
 			hurtbox_cd.start()

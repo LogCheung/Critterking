@@ -131,6 +131,10 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 		enemy.health -= 1.5
 		enemy.hurt.play()
 		if enemy.health <= 0:
+			enemy.process_mode = Node.PROCESS_MODE_DISABLED
+			enemy.anim.play("death")
+			await enemy.anim.animation_finished
+			
 			var enemyGroup = enemy.group.unitsArray
 			if enemyGroup.find(enemy) != -1 : enemyGroup.remove_at(enemyGroup.find(enemy))
 			enemy.group.unit_died.emit()
@@ -139,7 +143,7 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 
 
 func _on_timer_timeout() -> void:
-	bar.value += .166667 #if occupant.max_size <= 9 else .12345
+	bar.value += 1.25 #if occupant.max_size <= 9 else .12345
 	if bar.value >= bar.max_value:
 		occupant.global_position = tileWorld.ground.map_to_local(doorstepTile)
 		occupant.respawn_units()

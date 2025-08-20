@@ -1,9 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://bxqxjbkdfqn0q"]
+[gd_scene load_steps=6 format=3 uid="uid://bxqxjbkdfqn0q"]
 
 [ext_resource type="Script" uid="uid://dvsiuovo1wgp" path="res://World/Scripts/world.gd" id="1_fdxdb"]
 [ext_resource type="PackedScene" uid="uid://y0ju1mi4ih78" path="res://TileMap/Scenes/tile_world.tscn" id="1_jamle"]
 [ext_resource type="Script" uid="uid://bjiaogu16dctd" path="res://World/Scripts/camera_2d.gd" id="2_yw7h8"]
 [ext_resource type="PackedScene" uid="uid://bhln07v3h2elp" path="res://UI/Scenes/ui.tscn" id="6_7qq3u"]
+
+[sub_resource type="Environment" id="Environment_fdxdb"]
+background_mode = 3
+ambient_light_energy = 16.0
+glow_enabled = true
+glow_normalized = true
 
 [node name="World" type="Node2D" groups=["WORLD"]]
 y_sort_enabled = true
@@ -28,6 +34,8 @@ limit_left = -300
 limit_top = -120
 limit_right = 1000
 limit_bottom = 600
+position_smoothing_enabled = true
+position_smoothing_speed = 2.0
 editor_draw_limits = true
 script = ExtResource("2_yw7h8")
 min_zoom = 3.0
@@ -47,6 +55,9 @@ wait_time = 10.0
 
 [node name="BuidlingsNode" type="Node2D" parent="Game" groups=["BUILDINGSNODE"]]
 y_sort_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Game"]
+environment = SubResource("Environment_fdxdb")
 
 [node name="UI" parent="." groups=["UI"] instance=ExtResource("6_7qq3u")]
 unique_name_in_owner = true

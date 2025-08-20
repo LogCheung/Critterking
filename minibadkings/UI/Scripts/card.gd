@@ -48,7 +48,6 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("select") and !selected:
 		if Rect2(Vector2(), size).has_point(get_local_mouse_position()):
 			selected = true
-			print("in card: " + str(type))
 	if Input.is_action_pressed("select") and selected:
 		sprite_2d.scale = Vector2(.4,.4)
 		global_position = get_global_mouse_position()
@@ -80,7 +79,6 @@ func plop() -> void:
 			return
 		var group = GROUP.instantiate()
 		group.type = type
-		print("in card: " + str(type))
 		group.global_position = tileWorld.ground.map_to_local(tile)
 		await get_tree().create_timer(.2).timeout
 		groupNode.add_child(group)
@@ -115,7 +113,6 @@ func plop_building() -> void:
 		CARDTYPE.HOUSE:
 			building.type = Building.TYPE.HOUSE
 			if check_if_blocking(tile):
-				print("ok")
 				sprite_2d.scale = Vector2(1.0,1.0)
 				position = default_position
 				selected = false
@@ -123,7 +120,6 @@ func plop_building() -> void:
 		CARDTYPE.CARE:
 			building.type = Building.TYPE.CARE
 			if check_if_blocking(tile):
-				print("notok")
 				sprite_2d.scale = Vector2(1.0,1.0)
 				position = default_position
 				selected = false

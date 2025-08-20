@@ -53,8 +53,6 @@ func _process(delta: float) -> void:
 		in_combat = false
 	
 	handle_action(delta)
-	#print(str(visionRange) + " is " + str(type))
-
 func handle_behind_wall() -> void:
 	is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
 	# not liking but looks for closest tile by going all wall tiles and makes transparent
@@ -147,6 +145,7 @@ func set_up_vision() -> void:
 	add_child(newVision)
 	newVision.add_child(col)
 	vision = newVision
+	vision.visible = false
 
 
 func match_type() -> void:
@@ -176,7 +175,7 @@ func match_type() -> void:
 			health = 0.5
 			damage = 0.5
 			speed = 60
-			attack_cd.wait_time = 1
+			attack_cd.wait_time = .5
 			if upgraded:
 				sprite_2d.texture = UPCRAZEDNORMALSE
 	set_up_vision()

@@ -82,7 +82,6 @@ func display_cards(display : bool) -> void:
 		card.randomize_type()
 		card.visible = display
 		card.choice_picked = !display
-		print(card.rolltype)
 func show_hand() -> void:
 	if world.starting_roll:
 		cards.show()
