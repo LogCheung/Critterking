@@ -266,10 +266,12 @@ func _on_timer_timeout() -> void:
 	var enemies = get_tree().get_nodes_in_group("ENEMY")
 	if spawned_parties == enemy_parties:
 		if enemies.is_empty(): 
+			print("empty")
 			night_ended.emit()
 			return
 	elif spawned_parties < enemy_parties:
 		if %SpawnTimer.time_left > 0:
 			return
 		else:
+			print("whattt")
 			spawn_enemy()

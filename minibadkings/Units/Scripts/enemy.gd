@@ -99,7 +99,7 @@ func become_active() -> void:
 	vision.monitoring = true
 	sprite_2d.material = null
 	z_index = 0
-	nav.set_navigation_layer_value(2,false)
+	#nav.set_navigation_layer_value(2,false)
 
 func match_type() -> void:
 	match type:

@@ -68,4 +68,3 @@ wait_time = 30.0
 autostart = true
 
 [connection signal="timeout" from="Game/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

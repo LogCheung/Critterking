@@ -194,7 +194,7 @@ size = Vector2(2, 2)
 [sub_resource type="CircleShape2D" id="CircleShape2D_mh310"]
 radius = 128.0
 
-[node name="Enemy" type="CharacterBody2D" groups=["ENEMY", "UNIT"]]
+[node name="Enemy" type="CharacterBody2D" groups=["ENEMY"]]
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("2_mh310")
@@ -384,6 +384,11 @@ stream = ExtResource("12_7xmed")
 unique_name_in_owner = true
 stream = ExtResource("13_ohg4d")
 
+[node name="CheckIfDead" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
 [connection signal="top_score_action_changed" from="UtilityAiAgent" to="." method="_on_utility_ai_agent_top_score_action_changed"]
+[connection signal="timeout" from="CheckIfDead" to="." method="_on_check_if_dead_timeout"]
 
 [editable path="HitBox"]

@@ -69,7 +69,7 @@ point_count = 2
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="Curve" id="Curve_lx5cy"]
+[sub_resource type="Curve" id="Curve_esq2s"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
@@ -78,12 +78,12 @@ _limits = [0.0, 1.5, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1.5), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="Curve" id="Curve_iqrsy"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+[sub_resource type="Curve" id="Curve_lx5cy"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="Curve" id="Curve_esq2s"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+[sub_resource type="Curve" id="Curve_iqrsy"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_tcpyn"]
@@ -230,6 +230,7 @@ script = ExtResource("1_q458e")
 position = Vector2(-0.5, 1)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_daau3")
+disabled = true
 
 [node name="Flip" type="Node2D" parent="."]
 
@@ -365,11 +366,11 @@ metadata/_custom_type_script = "uid://bpvkdlp8jw4sj"
 script = ExtResource("9_daau3")
 metadata/_custom_type_script = "uid://b2f8vq1st70r0"
 
-[node name="enemies_in_range_in_combat2" type="Node" parent="UtilityAiAgent/strafe/UtilityAiAggregation2" node_paths=PackedStringArray("node")]
+[node name="too_close" type="Node" parent="UtilityAiAgent/strafe/UtilityAiAggregation2" node_paths=PackedStringArray("node")]
 script = ExtResource("7_m88pn")
 node = NodePath("../../../..")
-property_name = "in_combat"
-curve = SubResource("Curve_lx5cy")
+property_name = "too_close"
+curve = SubResource("Curve_esq2s")
 metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
 [node name="is_ranged" type="Node" parent="UtilityAiAgent/strafe/UtilityAiAggregation2"]
@@ -383,18 +384,18 @@ script = ExtResource("9_daau3")
 aggregation_type = 3
 metadata/_custom_type_script = "uid://b2f8vq1st70r0"
 
+[node name="enemies_in_range_in_combat2" type="Node" parent="UtilityAiAgent/strafe/UtilityAiAggregation2/UtilityAiAggregation" node_paths=PackedStringArray("node")]
+script = ExtResource("7_m88pn")
+node = NodePath("../../../../..")
+property_name = "in_combat"
+curve = SubResource("Curve_lx5cy")
+metadata/_custom_type_script = "uid://dojkyt7skh8fh"
+
 [node name="reloading" type="Node" parent="UtilityAiAgent/strafe/UtilityAiAggregation2/UtilityAiAggregation" node_paths=PackedStringArray("node")]
 script = ExtResource("7_m88pn")
 node = NodePath("../../../../..")
 property_name = "attack_ready"
 curve = SubResource("Curve_iqrsy")
-metadata/_custom_type_script = "uid://dojkyt7skh8fh"
-
-[node name="UtilityAiConsiderationFromNode" type="Node" parent="UtilityAiAgent/strafe/UtilityAiAggregation2/UtilityAiAggregation" node_paths=PackedStringArray("node")]
-script = ExtResource("7_m88pn")
-node = NodePath("../../../../..")
-property_name = "too_close"
-curve = SubResource("Curve_esq2s")
 metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
 [node name="heal" type="Node" parent="UtilityAiAgent"]
@@ -447,6 +448,8 @@ stream = ExtResource("12_iqrsy")
 [node name="Death" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("13_esq2s")
+
+[node name="CheckIfDead" type="Timer" parent="."]
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

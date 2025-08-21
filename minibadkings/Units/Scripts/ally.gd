@@ -21,7 +21,7 @@ const UPSHIELDEDNORMALNW = preload("res://Units/Assets/AllyShield/AllyShieldUpgr
 
 var allyGroup : AllyGroup
 var healing : bool
-
+var ranged_buffer : float = 20
 
 
 func _ready() -> void:
@@ -96,7 +96,7 @@ func handle_action(delta) -> void:
 			if distToTarget <= attackRange :
 				if !attack_cd.time_left <= 0 : return
 				if anim.is_playing() : return
-				if type == TYPE.RANGED and distToTarget < 12: 
+				if type == TYPE.RANGED and distToTarget < ranged_buffer: 
 					too_close = true
 					return
 				too_close = false

@@ -63,6 +63,10 @@ script = ExtResource("2_e2s86")
 texture = ExtResource("2_o5kma")
 offset = Vector2(64, 136)
 
+[node name="Upgrade1" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(64, 136)
+texture = ExtResource("3_o5kma")
+
 [node name="Selected" type="Button" parent="."]
 layout_mode = 0
 offset_left = 7.66667
@@ -76,9 +80,5 @@ flat = true
 libraries = {
 &"": SubResource("AnimationLibrary_o5kma")
 }
-
-[node name="Upgrade1" type="Sprite2D" parent="."]
-position = Vector2(64, 136)
-texture = ExtResource("3_o5kma")
 
 [connection signal="pressed" from="Selected" to="." method="_on_selected_pressed"]

@@ -35,6 +35,7 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @onready var hit_box: Area2D = %HitBox
 @onready var death: AudioStreamPlayer = %Death
 @onready var hurt: AudioStreamPlayer = %Hurt
+@onready var check_if_dead: Timer = $CheckIfDead
 
 
 var action : ACTION = ACTION.NONE
@@ -54,6 +55,7 @@ var too_close : bool
 
 func _ready() -> void:
 	nav.velocity_computed.connect(_on_navigation_agent_2d_velocity_computed)
+	check_if_dead.timeout.connect(_on_check_if_dead_timeout)
 	%HurtBox.area_entered.connect(on_hurt_box_land)
 	%HurtBox.body_entered.connect(on_hurt_box_building_land)
 	pass
@@ -149,3 +151,10 @@ func on_hurt_box_building_land(body : Node2D):
 		if body.type != Building.TYPE.TRAP or body.type != Building.TYPE.RUINS:
 			body.health -= damage
 	pass
+
+func _on_check_if_dead_timeout() -> void:
+	if health <= 0:
+		if group.unitsArray.find(self) != -1 : group.unitsArray.remove_at(group.unitsArray.find(self))
+		group.unit_died.emit()
+		queue_free()
+		print("im dead")

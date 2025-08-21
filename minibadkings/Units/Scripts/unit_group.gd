@@ -15,6 +15,9 @@ func _ready() -> void:
 	tile = tileWorld.ground.local_to_map(global_position)
 	create_formation(UNIT)
 	%Place.play()
+	selected = false
+	_on_select_area_mouse_exited()
+	
 func respawn_units() -> void:
 	create_formation(UNIT)
 	for unit in unitsArray:

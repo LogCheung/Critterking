@@ -184,7 +184,7 @@ func randomize_type() -> void:
 	if !for_show : return
 	match rolltype:
 		ROLLTYPE.GENERAL:
-			type = randi_range(1,CARDTYPE.size()-1)
+			type = randi_range(CARDTYPE.BITER,CARDTYPE.size()-1)
 		ROLLTYPE.UNIT:
 			type = randi_range(CARDTYPE.BITER,CARDTYPE.CRAZED)
 	if type == CARDTYPE.HOUSE : randomize_type()
