@@ -127,11 +127,8 @@ func find_closest(nodeArray : Array) -> void:
 	target = closest
 
 func on_hurt_box_land(area : Area2D) -> void:
-	if hurtbox_cd.time_left > 0 :
-		print("pause")
-		return
+	if hurtbox_cd.time_left > 0 : return
 	if area.owner is Unit:
-		print("oh no")
 		var enemy : Unit = area.owner
 		%Hurt.play()
 		enemy.health -= damage if enemy.dodge < (randi() % 100 + 1) else 0

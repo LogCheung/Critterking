@@ -18,6 +18,9 @@ signal game_over
 @onready var crtr_pause: AudioStreamPlayer = %crtrPause
 
 var second_roll : bool = false
+var rolltype : Card.ROLLTYPE
+var extraRolls : int = 0
+var rollingExtraTime : bool = false
 
 
 func _process(delta: float) -> void:
@@ -78,10 +81,14 @@ func display_cards(display : bool) -> void:
 		if world.starting_roll or second_roll:
 			card.rolltype = Card.ROLLTYPE.UNIT
 		else:
-			card.rolltype = Card.ROLLTYPE.GENERAL
+			card.rolltype = rolltype
 		card.randomize_type()
 		card.visible = display
 		card.choice_picked = !display
+		
+	if rollingExtraTime:
+		extraRolls -= 1
+		
 func show_hand() -> void:
 	if world.starting_roll:
 		cards.show()
@@ -90,6 +97,11 @@ func show_hand() -> void:
 		return
 	if second_roll:
 		second_roll = false
+	if extraRolls > 0:
+		rollingExtraTime = true
+		return
+	
+	rollingExtraTime = false
 	cards.hide()
 	hand.show()
 	var container = %Hand.get_child(0) # Hboxcontainer

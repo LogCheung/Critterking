@@ -51,9 +51,10 @@ func new_game() -> void:
 	starting_roll = true
 	for i in range(1):
 		add_house_card()
-		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.SPITTER
-		ui.hand.get_child(0).add_child(hCard)
+	#for i in range(4):
+		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.NURSERY
+		#ui.hand.get_child(0).add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
@@ -187,6 +188,7 @@ func start_day() -> void:
 	check_nights()
 	# start upgrade sequence
 	is_combat_phase = false
+	ui.rolltype = Card.ROLLTYPE.GENERAL
 	ui.cards.show()
 	ui.end_turn.show()
 	
@@ -201,6 +203,13 @@ func start_day() -> void:
 	
 	# repair buildings
 	# jk we don't do that anymore
+	# run chance for extra roll
+	var buildings = get_tree().get_nodes_in_group("BUILDING")
+	var nursuries = buildings.filter(func(b : Building): return b.type == Building.TYPE.NURSERY)
+	var storages = buildings.filter(func(b : Building): return b.type == Building.TYPE.STORAGE)
+	check_extra_roll(Card.ROLLTYPE.UNIT,nursuries,25)
+	check_extra_roll(Card.ROLLTYPE.BUILDING,storages,25)
+	
 	tileWorld.handle_navigable_cells()
 
 func unit_to_card(g : Group) -> void:
@@ -209,6 +218,18 @@ func unit_to_card(g : Group) -> void:
 	Global.cardsInHand.append(newCard)
 	ui.hand.get_child(0).add_child(newCard)
 	newCard.for_show = false
+
+func check_extra_roll(extraRolltype : Card.ROLLTYPE,buildingArray : Array, chance : float) -> void:
+	var extraChance = chance * buildingArray.size()
+	while extraChance > 0:
+		var rand = randi_range(1,100)
+		if extraChance > rand:
+			ui.rolltype = extraRolltype
+			ui.cards.show()
+			ui.extraRolls += 1
+			pass
+		extraChance -= 100
+	pass
 
 func _on_spawn_timer_timeout() -> void:
 	spawn_enemy()

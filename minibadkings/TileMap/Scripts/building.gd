@@ -14,7 +14,7 @@ const SAPSTORE = preload("res://TileMap/Assets/sapBuild.png")
 const CARE = preload("res://TileMap/Assets/careBuild.png")
 
 enum TYPE {
-	NONE, HOUSE, TRAP, FARM, SAPSTORE, RUINS, CARE
+	NONE, HOUSE, TRAP, FARM, SAPSTORE, RUINS, CARE, NURSERY, STORAGE
 }
 
 @export var type : TYPE

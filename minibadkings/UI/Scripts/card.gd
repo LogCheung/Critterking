@@ -5,7 +5,8 @@ const GROUP = preload("res://Units/Scenes/unit_group.tscn")
 const BUILDING = preload("res://TileMap/Scenes/building.tscn")
 
 enum CARDTYPE {
-	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3,CRAZED = 4,TRAPS ,DESTROY , HOUSE, CARE , FARM , SAPSTORE
+	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3,CRAZED = 4,TRAPS ,DESTROY , 
+	HOUSE, CARE , FARM , SAPSTORE, NURSERY, STORAGE
 }
 enum ROLLTYPE {
 	GENERAL, UNIT, BUILDING
@@ -31,7 +32,7 @@ func _ready() -> void:
 	if for_show: scale = Vector2(3,3)
 
 func set_up() -> void:
-	match_type()
+	match_sprite_type()
 	default_position = position
 	setting_up = false
 
@@ -107,28 +108,7 @@ func plop_building() -> void:
 		return
 	var buildingNode = get_tree().get_first_node_in_group("BUILDINGSNODE")
 	var building = BUILDING.instantiate()
-	match type:
-		CARDTYPE.TRAPS:
-			building.type = Building.TYPE.TRAP
-		CARDTYPE.HOUSE:
-			building.type = Building.TYPE.HOUSE
-			if check_if_blocking(tile):
-				sprite_2d.scale = Vector2(1.0,1.0)
-				position = default_position
-				selected = false
-				return
-		CARDTYPE.CARE:
-			building.type = Building.TYPE.CARE
-			if check_if_blocking(tile):
-				sprite_2d.scale = Vector2(1.0,1.0)
-				position = default_position
-				selected = false
-				return
-		CARDTYPE.FARM:
-			building.type = Building.TYPE.FARM
-		CARDTYPE.SAPSTORE:
-			building.type = Building.TYPE.SAPSTORE
-			
+	building = match_building_type(building)
 	building.global_position = tileWorld.ground.map_to_local(tile)
 	buildingNode.add_child(building)
 	
@@ -199,9 +179,22 @@ func randomize_type() -> void:
 		if card.type == type:
 			randomize_type()
 			return
-	match_type()
+	match_sprite_type()
 
-func match_type() -> void:
+func refresh_positions() -> void:
+	var cards = ui.hand.get_child(0).get_children()
+	for c : Card in cards:
+		c.set_up()
+	
+
+func add_card_to_hand() -> void:
+	var dupe : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+	dupe.type = type
+	Global.cardsInHand.append(dupe)
+	dupe.for_show = false
+	ui.hand.get_child(0).add_child(dupe) # container
+
+func match_sprite_type() -> void:
 	match type:
 		CARDTYPE.BITER:
 			sprite_2d.texture = preload("res://UI/Assets/cards/biterCard.png")
@@ -223,6 +216,35 @@ func match_type() -> void:
 			sprite_2d.texture = preload("res://UI/Assets/cards/farmCard.png")
 		CARDTYPE.SAPSTORE:
 			sprite_2d.texture = preload("res://UI/Assets/cards/sapCard.png")
+		CARDTYPE.NURSERY:
+			sprite_2d.texture = preload("res://UI/Assets/cards/nurseryCard.png")
+		CARDTYPE.STORAGE:
+			sprite_2d.texture = preload("res://UI/Assets/cards/storageCard.png")
+func match_building_type(building : Building) -> Building:
+	match type:
+		CARDTYPE.TRAPS:
+			building.type = Building.TYPE.TRAP
+		CARDTYPE.HOUSE:
+			building.type = Building.TYPE.HOUSE
+			if check_if_blocking(tile):
+				sprite_2d.scale = Vector2(1.0,1.0)
+				position = default_position
+				selected = false
+		CARDTYPE.CARE:
+			building.type = Building.TYPE.CARE
+			if check_if_blocking(tile):
+				sprite_2d.scale = Vector2(1.0,1.0)
+				position = default_position
+				selected = false
+		CARDTYPE.FARM:
+			building.type = Building.TYPE.FARM
+		CARDTYPE.SAPSTORE:
+			building.type = Building.TYPE.SAPSTORE
+		CARDTYPE.NURSERY:
+			building.type = Building.TYPE.NURSERY
+		CARDTYPE.STORAGE:
+			building.type = Building.TYPE.STORAGE
+	return building
 
 func _on_selected_pressed() -> void:
 	if choice_picked : return
@@ -235,15 +257,3 @@ func _on_selected_pressed() -> void:
 	cards = cards.filter(func(c):return c.for_show)
 	for c : Card in cards:
 		c.choice_picked = true
-func refresh_positions() -> void:
-	var cards = ui.hand.get_child(0).get_children()
-	for c : Card in cards:
-		c.set_up()
-	
-
-func add_card_to_hand() -> void:
-	var dupe : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-	dupe.type = type
-	Global.cardsInHand.append(dupe)
-	dupe.for_show = false
-	ui.hand.get_child(0).add_child(dupe) # container
