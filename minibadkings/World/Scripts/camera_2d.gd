@@ -1,6 +1,6 @@
 extends Camera2D
 
-@export var move_speed: float = 200.0
+@export var move_speed: float = 10
 @export var zoom_speed: float = 0.125
 @export var min_zoom: float = 1
 @export var max_zoom: float = 3
@@ -24,8 +24,8 @@ func _process(delta):
 
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * base_speed
-
-	position += velocity * delta
+	
+	position += velocity
 	
 		# Handle Zoom
 	if Input.is_action_just_pressed("camera_zoom_in"):

@@ -48,6 +48,7 @@ BUILDING=""
 ENEMY=""
 ALLYGROUP=""
 MUSIC=""
+CAMERA=""
 
 [input]
 

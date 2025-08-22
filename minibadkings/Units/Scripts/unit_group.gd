@@ -37,6 +37,9 @@ func _on_select_area_mouse_exited() -> void:
 	if selected:
 		return
 	for unit : Ally in unitsArray:
+		if unit.under_mouse:
+			_on_select_area_mouse_entered()
+			return
 		unit.unselected.emit()
 func _input(event: InputEvent) -> void:
 	if !world.is_combat_phase: return
@@ -61,12 +64,18 @@ func _on_select_area_input_event(viewport: Node, event: InputEvent, shape_idx: i
 		if is_under_mouse:
 			selected = !selected
 			if selected: 
-				tileWorld.handle_navigable_cells()
-				%Select.play()
-				highlight_houses()
-				Engine.time_scale = .1
-				_on_select_area_mouse_exited()
-				tileWorld.hover.visible = true
+				on_selected()
+func on_selected() -> void:
+	# zoom camera
+	var cam : Camera2D = get_tree().get_first_node_in_group("CAMERA")
+	cam.zoom += Vector2(0.075,0.075)
+	# show navigable area
+	tileWorld.handle_navigable_cells()
+	%Select.play()
+	highlight_houses()
+	Engine.time_scale = .1
+	_on_select_area_mouse_exited()
+	tileWorld.hover.visible = true
 
 func check_on_house(mousePos : Vector2) -> void:
 	if size == max_size : return

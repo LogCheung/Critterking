@@ -52,7 +52,7 @@ func new_game() -> void:
 	for i in range(1):
 		add_house_card()
 		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.CRAZED
+		hCard.type = Card.CARDTYPE.SPITTER
 		ui.hand.get_child(0).add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
@@ -167,6 +167,7 @@ func on_night_started() -> void:
 		c.hide()
 
 func on_enemy_group_eliminated() -> void:
+	if spawned_parties < enemy_parties : return
 	await get_tree().create_timer(.05).timeout
 	var enemyGroupNode = get_tree().get_first_node_in_group("ENEMYGRPNODE")
 	if enemyGroupNode.get_children().is_empty():
@@ -199,13 +200,7 @@ func start_day() -> void:
 		g.terminate()
 	
 	# repair buildings
-	var buildings = get_tree().get_nodes_in_group("BUILDINGS")
-	for b : Building in buildings:
-		b.process_mode = Node.PROCESS_MODE_ALWAYS
-		b.health = b.max_health
-		b._process(get_process_delta_time())
-		b.process_mode = Node.PROCESS_MODE_DISABLED
-	
+	# jk we don't do that anymore
 	tileWorld.handle_navigable_cells()
 
 func unit_to_card(g : Group) -> void:
@@ -264,7 +259,7 @@ func expand() -> void:
 func _on_timer_timeout() -> void:
 	if !is_combat_phase: return
 	var enemies = get_tree().get_nodes_in_group("ENEMY")
-	if spawned_parties == enemy_parties:
+	if spawned_parties >= enemy_parties:
 		if enemies.is_empty(): 
 			print("empty")
 			night_ended.emit()

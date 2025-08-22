@@ -33,6 +33,7 @@ var tile : Vector2i
 var doorstepTile : Vector2i
 
 func _ready() -> void:
+	# set up position and blocking navigation
 	match_type()
 	tile = tileWorld.ground.local_to_map(global_position)
 	tileWorld.ground.set_cell(tile,0,Vector2(0,0),2)
@@ -122,7 +123,6 @@ func remove() -> void:
 	tileWorld.ground.set_cell(tile,0,Vector2(0,0),1)
 	queue_free()
 	tileWorld.handle_navigable_cells()
-	
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if !type == TYPE.TRAP : return

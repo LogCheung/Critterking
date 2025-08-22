@@ -5,7 +5,7 @@ const GROUP = preload("res://Units/Scenes/unit_group.tscn")
 const BUILDING = preload("res://TileMap/Scenes/building.tscn")
 
 enum CARDTYPE {
-	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3,CRAZED = 4,TRAPS = 5,DESTROY = 6, HOUSE = 7, CARE = 8, FARM = 9, SAPSTORE = 10
+	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3,CRAZED = 4,TRAPS ,DESTROY , HOUSE, CARE , FARM , SAPSTORE
 }
 enum ROLLTYPE {
 	GENERAL, UNIT, BUILDING
@@ -187,6 +187,8 @@ func randomize_type() -> void:
 			type = randi_range(CARDTYPE.BITER,CARDTYPE.size()-1)
 		ROLLTYPE.UNIT:
 			type = randi_range(CARDTYPE.BITER,CARDTYPE.CRAZED)
+		ROLLTYPE.BUILDING:
+			type = randi_range(CARDTYPE.TRAPS,CARDTYPE.size()-1)
 	if type == CARDTYPE.HOUSE : randomize_type()
 	
 	# check if not same as other card

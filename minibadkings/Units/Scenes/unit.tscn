@@ -26,7 +26,7 @@ size = Vector2(10, 15)
 size = Vector2(5, 7)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yd6on"]
-size = Vector2(2, 2)
+size = Vector2(12, 13)
 
 [sub_resource type="GDScript" id="GDScript_amxnv"]
 script/source = "extends Area2D
@@ -256,6 +256,7 @@ debug_color = Color(0.793403, 0.426364, 1.92523e-07, 0.42)
 
 [node name="HitBox" parent="." instance=ExtResource("1_pm8qt")]
 unique_name_in_owner = true
+visible = false
 position = Vector2(-2, -7)
 collision_layer = 2
 
@@ -264,7 +265,7 @@ position = Vector2(1.5, 8.5)
 shape = SubResource("RectangleShape2D_pm8qt")
 
 [node name="behindWall" type="Area2D" parent="."]
-visible = false
+z_index = 4096
 collision_layer = 16
 collision_mask = 16
 
@@ -449,10 +450,9 @@ stream = ExtResource("12_iqrsy")
 unique_name_in_owner = true
 stream = ExtResource("13_esq2s")
 
-[node name="CheckIfDead" type="Timer" parent="."]
-
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="input_event" from="behindWall" to="." method="_on_behind_wall_input_event"]
+[connection signal="mouse_entered" from="behindWall" to="." method="_on_behind_wall_mouse_entered"]
+[connection signal="mouse_exited" from="behindWall" to="." method="_on_behind_wall_mouse_exited"]
 [connection signal="top_score_action_changed" from="UtilityAiAgent" to="." method="_on_utility_ai_agent_top_score_action_changed"]
 
 [editable path="HitBox"]

@@ -367,6 +367,7 @@ wait_time = 2.0
 one_shot = true
 
 [node name="HurtboxCD" type="Timer" parent="."]
+one_shot = true
 
 [node name="Attack" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
@@ -384,11 +385,6 @@ stream = ExtResource("12_7xmed")
 unique_name_in_owner = true
 stream = ExtResource("13_ohg4d")
 
-[node name="CheckIfDead" type="Timer" parent="."]
-wait_time = 5.0
-autostart = true
-
 [connection signal="top_score_action_changed" from="UtilityAiAgent" to="." method="_on_utility_ai_agent_top_score_action_changed"]
-[connection signal="timeout" from="CheckIfDead" to="." method="_on_check_if_dead_timeout"]
 
 [editable path="HitBox"]
