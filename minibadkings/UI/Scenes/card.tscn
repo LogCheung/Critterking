@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bjjg37vgshqt6"]
+[gd_scene load_steps=8 format=3 uid="uid://bjjg37vgshqt6"]
 
 [ext_resource type="Script" uid="uid://dp28vuy42urfg" path="res://UI/Scripts/card.gd" id="2_e2s86"]
-[ext_resource type="Texture2D" uid="uid://f768reu1yll7" path="res://UI/Assets/cards/biterCard.png" id="2_o5kma"]
+[ext_resource type="Texture2D" uid="uid://cvb51gn4bb805" path="res://UI/Assets/cards/farmCard.png" id="2_o5kma"]
 [ext_resource type="Texture2D" uid="uid://b5ks3m4v4jjkw" path="res://UI/Assets/cards/upgrade1.png" id="3_o5kma"]
+[ext_resource type="Texture2D" uid="uid://djc2ycppgts1n" path="res://UI/Assets/cards/upgrade2.png" id="4_dryym"]
 
 [sub_resource type="Animation" id="Animation_o5kma"]
 length = 0.001
@@ -64,8 +65,14 @@ texture = ExtResource("2_o5kma")
 offset = Vector2(64, 136)
 
 [node name="Upgrade1" type="Sprite2D" parent="Sprite2D"]
+unique_name_in_owner = true
 position = Vector2(64, 136)
 texture = ExtResource("3_o5kma")
+
+[node name="Upgrade2" type="Sprite2D" parent="Sprite2D"]
+unique_name_in_owner = true
+position = Vector2(64, 136)
+texture = ExtResource("4_dryym")
 
 [node name="Selected" type="Button" parent="."]
 layout_mode = 0

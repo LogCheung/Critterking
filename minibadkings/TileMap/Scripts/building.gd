@@ -12,6 +12,8 @@ const RUIN = preload("res://TileMap/Assets/ruinBreak.png")
 const FARM = preload("res://TileMap/Assets/farmBuild.png")
 const SAPSTORE = preload("res://TileMap/Assets/sapBuild.png")
 const CARE = preload("res://TileMap/Assets/careBuild.png")
+const NURSERY = preload("res://TileMap/Assets/nurseryBuild.png")
+const STORAGE = preload("res://TileMap/Assets/storageBuild.png")
 
 enum TYPE {
 	NONE, HOUSE, TRAP, FARM, SAPSTORE, RUINS, CARE, NURSERY, STORAGE
@@ -85,6 +87,12 @@ func match_type() -> void:
 			sprite_2d.texture = HOUSEA
 			sprite_2d.frame = 1
 			sprite_2d.offset = Vector2(0,-12)
+		TYPE.NURSERY:
+			sprite_2d.texture = NURSERY
+			sprite_2d.offset = Vector2(0,-2)
+		TYPE.STORAGE:
+			sprite_2d.texture = STORAGE
+			sprite_2d.flip_h = true
 
 func on_destroyed() -> void:
 	if type == TYPE.RUINS : return

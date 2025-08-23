@@ -51,10 +51,10 @@ func new_game() -> void:
 	starting_roll = true
 	for i in range(1):
 		add_house_card()
-	#for i in range(4):
-		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.NURSERY
-		#ui.hand.get_child(0).add_child(hCard)
+	for i in range(3):
+		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.PLATED
+		ui.hand.get_child(0).add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
@@ -196,9 +196,6 @@ func start_day() -> void:
 	var unitsGroups = get_tree().get_first_node_in_group("GROUPSNODE")
 	for g : Group in unitsGroups.get_children():
 		unit_to_card(g)
-		if g.upgraded: unit_to_card(g)
-		if g.max_size >= 12 : unit_to_card(g)
-		
 		g.terminate()
 	
 	# repair buildings
@@ -213,8 +210,13 @@ func start_day() -> void:
 	tileWorld.handle_navigable_cells()
 
 func unit_to_card(g : Group) -> void:
+	# create card of group
 	var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
 	newCard = match_unit_to_card(newCard,g.type)
+	if g.max_size == 12: newCard.level = 2
+	elif g.upgraded: newCard.level = 1
+	
+	# add card to hand
 	Global.cardsInHand.append(newCard)
 	ui.hand.get_child(0).add_child(newCard)
 	newCard.for_show = false

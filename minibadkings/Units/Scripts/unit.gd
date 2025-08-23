@@ -132,9 +132,9 @@ func on_hurt_box_land(area : Area2D) -> void:
 		var enemy : Unit = area.owner
 		%Hurt.play()
 		enemy.health -= damage if enemy.dodge < (randi() % 100 + 1) else 0
+		hurtbox_cd.start()
 		if enemy.health <= 0:
 			# trigger death anim
-			hurtbox_cd.start()
 			enemy.process_mode = Node.PROCESS_MODE_DISABLED
 			enemy.anim.play("death")
 			await enemy.anim.animation_finished

@@ -15,6 +15,7 @@ enum ROLLTYPE {
 @export var type : CARDTYPE
 @export var rolltype : ROLLTYPE
 @export var for_show : bool  = false
+@export var level : int = 0
 
 @onready var ui : UI = get_tree().get_first_node_in_group("UI")
 @onready var sprite_2d: Sprite2D = $Sprite2D
@@ -80,6 +81,8 @@ func plop() -> void:
 			return
 		var group = GROUP.instantiate()
 		group.type = type
+		group.upgraded = level > 0
+		group.max_size = 12 if level == 2 else 9
 		group.global_position = tileWorld.ground.map_to_local(tile)
 		await get_tree().create_timer(.2).timeout
 		groupNode.add_child(group)
@@ -109,6 +112,8 @@ func plop_building() -> void:
 	var buildingNode = get_tree().get_first_node_in_group("BUILDINGSNODE")
 	var building = BUILDING.instantiate()
 	building = match_building_type(building)
+	if building == null : return # checking if was invalid spot, then match type would return null
+	
 	building.global_position = tileWorld.ground.map_to_local(tile)
 	buildingNode.add_child(building)
 	
@@ -220,6 +225,10 @@ func match_sprite_type() -> void:
 			sprite_2d.texture = preload("res://UI/Assets/cards/nurseryCard.png")
 		CARDTYPE.STORAGE:
 			sprite_2d.texture = preload("res://UI/Assets/cards/storageCard.png")
+	
+	%Upgrade1.visible = level == 1
+	%Upgrade2.visible = level == 2
+	
 func match_building_type(building : Building) -> Building:
 	match type:
 		CARDTYPE.TRAPS:
@@ -230,12 +239,14 @@ func match_building_type(building : Building) -> Building:
 				sprite_2d.scale = Vector2(1.0,1.0)
 				position = default_position
 				selected = false
+				building = null
 		CARDTYPE.CARE:
 			building.type = Building.TYPE.CARE
 			if check_if_blocking(tile):
 				sprite_2d.scale = Vector2(1.0,1.0)
 				position = default_position
 				selected = false
+				building = null
 		CARDTYPE.FARM:
 			building.type = Building.TYPE.FARM
 		CARDTYPE.SAPSTORE:
