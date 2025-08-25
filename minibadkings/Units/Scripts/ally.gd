@@ -10,6 +10,7 @@ const CRAZEDNORMALSE = preload("res://Units/Assets/AllyCrazed/AllyCrazedNormalSE
 const MELEENORMALNW = preload("res://Units/Assets/AllyMelee/AllyMeleeNormalNW.png")
 const RANGEDNORMALNW = preload("res://Units/Assets/AllyRanged/AllyRangedNormalNW.png")
 const SHIELDEDNORMALNW = preload("res://Units/Assets/AllyShield/AllyShieldNormalNW.png")
+const BOMBERNORMALSE = preload("res://Units/Assets/AllyBombardier/AllyBombardierSE.png")
 
 const UPMELEENORMALSE = preload("res://Units/Assets/AllyMelee/AllyMeleeUpgradedSE.png")
 const UPRANGEDNORMALSE = preload("res://Units/Assets/AllyRanged/AllyRangedUpgradedSE.png")
@@ -18,6 +19,7 @@ const UPCRAZEDNORMALSE = preload("res://Units/Assets/AllyCrazed/AllyCrazedUpgrad
 const UPMELEENORMALNW = preload("res://Units/Assets/AllyMelee/AllyMeleeUpgradedNW.png")
 const UPRANGEDNORMALNW = preload("res://Units/Assets/AllyRanged/AllyRangedUpgradedNW.png")
 const UPSHIELDEDNORMALNW = preload("res://Units/Assets/AllyShield/AllyShieldUpgradedNW.png")
+const UPBOMBERNORMALSE = preload("res://Units/Assets/AllyBombardier/AllyBombardierUpgradedSE.png")
 
 var allyGroup : AllyGroup
 var healing : bool
@@ -96,8 +98,8 @@ func handle_action(delta) -> void:
 			if distToTarget <= attackRange :
 				if !attack_cd.time_left <= 0 : return
 				if anim.is_playing() : return
-				if type == TYPE.RANGED and distToTarget < ranged_buffer: 
-					too_close = true
+				if type == TYPE.RANGED or type == TYPE.BOMBER:
+					too_close = distToTarget < ranged_buffer
 					return
 				too_close = false
 				
@@ -152,32 +154,31 @@ func match_type() -> void:
 	match type:
 		TYPE.MELEE:
 			visionRange = 32
-			sprite_2d.texture = MELEENORMALSE
-			if upgraded:
-				sprite_2d.texture = UPMELEENORMALSE
+			sprite_2d.texture = MELEENORMALSE if !upgraded else UPMELEENORMALSE
 		TYPE.RANGED:
-			sprite_2d.texture = RANGEDNORMALSE
+			sprite_2d.texture = RANGEDNORMALSE if !upgraded else UPRANGEDNORMALSE
 			health = 2
 			damage = 1.5
 			attackRange = 100
 			visionRange = 120
 			attack_cd.wait_time = 2
-			if upgraded:
-				sprite_2d.texture = UPRANGEDNORMALSE
 		TYPE.SHIELDED:
 			visionRange = 32
-			sprite_2d.texture = SHIELDEDNORMALSE
 			damage = 1
-			if upgraded:
-				sprite_2d.texture = UPSHIELDEDNORMALSE
+			sprite_2d.texture = SHIELDEDNORMALSE if !upgraded else UPSHIELDEDNORMALSE
 		TYPE.CRAZED:
-			sprite_2d.texture = CRAZEDNORMALSE
+			sprite_2d.texture = CRAZEDNORMALSE if !upgraded else UPCRAZEDNORMALSE
 			health = 0.5
 			damage = 0.5
 			speed = 60
 			attack_cd.wait_time = .5
-			if upgraded:
-				sprite_2d.texture = UPCRAZEDNORMALSE
+		TYPE.BOMBER:
+			sprite_2d.texture = BOMBERNORMALSE if !upgraded else UPBOMBERNORMALSE
+			health = 2
+			damage = 1
+			attackRange = 120
+			visionRange = 140
+			attack_cd.wait_time = 3
 	set_up_vision()
 
 func on_health_change() -> void:

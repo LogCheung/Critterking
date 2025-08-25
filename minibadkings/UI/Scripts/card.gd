@@ -5,7 +5,7 @@ const GROUP = preload("res://Units/Scenes/unit_group.tscn")
 const BUILDING = preload("res://TileMap/Scenes/building.tscn")
 
 enum CARDTYPE {
-	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3,CRAZED = 4,TRAPS ,DESTROY , 
+	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3,BOMBARDIER, FLYING ,CRAZED,TRAPS ,DESTROY , 
 	HOUSE, CARE , FARM , SAPSTORE, NURSERY, STORAGE
 }
 enum ROLLTYPE {

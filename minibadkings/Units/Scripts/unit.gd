@@ -5,7 +5,7 @@ enum ACTION {
 	NONE,FORM, FIGHT, RAID, STRAFE, HEAL
 }
 enum TYPE {
-	NONE, MELEE, SHIELDED, RANGED, CRAZED, FLYING, BOMBER
+	NONE, MELEE, SHIELDED, RANGED,BOMBER,FLYING,CRAZED,  
 }
 
 signal selected
@@ -98,12 +98,13 @@ func attack_finished() -> void:
 	attacking = false
 	# Shooting after animation finished
 	if !target : return
-	if type == TYPE.RANGED:
+	if type == TYPE.RANGED or type == TYPE.BOMBER:
 		var proj = preload("res://Units/Scenes/projectile.tscn").instantiate()
 		proj.DIRECTION = global_position.direction_to(target.global_position)
 		proj.global_position = global_position
 		proj.damage = damage
 		proj.is_enemy = self is Enemy
+		proj.is_bombard = type == TYPE.BOMBER
 		get_tree().get_first_node_in_group("WORLD").add_child(proj)
 
 func find_target() -> void:
