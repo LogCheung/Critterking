@@ -5,7 +5,6 @@ extends Area2D
 @export var DIRECTION : Vector2
 @export var damage : int
 @export var is_enemy : bool
-@export var is_bombard : bool
 
 const ENEMYPROJ = preload("res://Units/Assets/EnemyProjectile.png")
 var travelled_distance = 0
@@ -22,17 +21,11 @@ func _ready() -> void:
 		set_collision_mask_value(3, true)
 
 func _process(delta):
-	if !is_bombard:
-		position += DIRECTION * SPEED * delta
-		
-		travelled_distance += SPEED * delta
-		if travelled_distance > RANGE:
-			queue_free()
-	elif is_bombard:
-		position.x += DIRECTION.x * SPEED * delta * cos(des_angle) 
-		position.y += DIRECTION.x * curYSpeed * delta * sin(des_angle)
-		curYSpeed -= gravity
-		pass
+	position += DIRECTION * SPEED * delta
+	
+	travelled_distance += SPEED * delta
+	if travelled_distance > RANGE:
+		queue_free()
 
 
 func _on_area_entered(area: Area2D) -> void:

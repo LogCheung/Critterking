@@ -100,11 +100,9 @@ func handle_action(delta) -> void:
 				if anim.is_playing() : return
 				if type == TYPE.RANGED or type == TYPE.BOMBER:
 					too_close = distToTarget < ranged_buffer
-					return
-				too_close = false
 				
 				anim.play("attack")
-				if type== TYPE.RANGED:
+				if type== TYPE.RANGED or type == TYPE.BOMBER:
 					%Shoot.play()
 				else:
 					%Attack.play()
@@ -173,6 +171,7 @@ func match_type() -> void:
 			speed = 60
 			attack_cd.wait_time = .5
 		TYPE.BOMBER:
+			print(type)
 			sprite_2d.texture = BOMBERNORMALSE if !upgraded else UPBOMBERNORMALSE
 			health = 2
 			damage = 1

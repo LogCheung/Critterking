@@ -95,18 +95,27 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 	velocity = safe_velocity
 # Attacking
 func attack_finished() -> void:
+	print("ok finished")
+	print(type)
 	attacking = false
 	# Shooting after animation finished
-	if !target : return
-	if type == TYPE.RANGED or type == TYPE.BOMBER:
+	if !target : 
+		print("why")
+		return
+	if type == TYPE.RANGED:
 		var proj = preload("res://Units/Scenes/projectile.tscn").instantiate()
 		proj.DIRECTION = global_position.direction_to(target.global_position)
 		proj.global_position = global_position
 		proj.damage = damage
 		proj.is_enemy = self is Enemy
-		proj.is_bombard = type == TYPE.BOMBER
 		get_tree().get_first_node_in_group("WORLD").add_child(proj)
-
+	elif type == TYPE.BOMBER:
+		print("yes good")
+		var proj = preload("res://Units/Scenes/bombard.tscn").instantiate()
+		proj.global_position = global_position
+		proj._target = target.global_position
+		proj.is_enemy = self is Enemy
+		get_tree().get_first_node_in_group("WORLD").add_child(proj)
 func find_target() -> void:
 	target = null
 	if !vision.monitoring: return
