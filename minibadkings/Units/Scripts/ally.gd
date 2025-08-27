@@ -11,6 +11,7 @@ const MELEENORMALNW = preload("res://Units/Assets/AllyMelee/AllyMeleeNormalNW.pn
 const RANGEDNORMALNW = preload("res://Units/Assets/AllyRanged/AllyRangedNormalNW.png")
 const SHIELDEDNORMALNW = preload("res://Units/Assets/AllyShield/AllyShieldNormalNW.png")
 const BOMBERNORMALSE = preload("res://Units/Assets/AllyBombardier/AllyBombardierSE.png")
+const FLYINGNORMALSE = preload("res://Units/Assets/AllyFlying/AllyFlyingSE.png")
 
 const UPMELEENORMALSE = preload("res://Units/Assets/AllyMelee/AllyMeleeUpgradedSE.png")
 const UPRANGEDNORMALSE = preload("res://Units/Assets/AllyRanged/AllyRangedUpgradedSE.png")
@@ -20,6 +21,7 @@ const UPMELEENORMALNW = preload("res://Units/Assets/AllyMelee/AllyMeleeUpgradedN
 const UPRANGEDNORMALNW = preload("res://Units/Assets/AllyRanged/AllyRangedUpgradedNW.png")
 const UPSHIELDEDNORMALNW = preload("res://Units/Assets/AllyShield/AllyShieldUpgradedNW.png")
 const UPBOMBERNORMALSE = preload("res://Units/Assets/AllyBombardier/AllyBombardierUpgradedSE.png")
+const UPFLYINGNORMALSE = preload("res://Units/Assets/AllyFlying/AllyFlyingUpgradedSE.png")
 
 var allyGroup : AllyGroup
 var healing : bool
@@ -76,6 +78,12 @@ func handle_behind_wall() -> void:
 
 func handle_action(delta) -> void:
 	var distToTarget = global_position.distance_to(nav.target_position)
+	if dashing:
+		if !target : find_target()
+		var dir = global_position.direction_to(target.global_position)
+		move_to(dir,delta)
+		return
+	
 	match action:
 		ACTION.NONE:
 			anim.play("idle")
@@ -93,7 +101,7 @@ func handle_action(delta) -> void:
 				anim.stop()
 				return
 		ACTION.FIGHT:
-			if attacking : return
+			if attacking: return
 			find_target()
 			if distToTarget <= attackRange :
 				if !attack_cd.time_left <= 0 : return
@@ -102,14 +110,17 @@ func handle_action(delta) -> void:
 					too_close = distToTarget < ranged_buffer
 				
 				anim.play("attack")
+				dashing = type == TYPE.FLYING
 				if type== TYPE.RANGED or type == TYPE.BOMBER:
 					%Shoot.play()
 				else:
 					%Attack.play()
 				
+				
 				await anim.animation_finished
+				velocity = Vector2.ZERO
 				attack_cd.start()
-				attacking = true
+				#attacking = true
 				return
 		ACTION.STRAFE:
 			find_target()
@@ -171,13 +182,22 @@ func match_type() -> void:
 			speed = 60
 			attack_cd.wait_time = .5
 		TYPE.BOMBER:
-			print(type)
 			sprite_2d.texture = BOMBERNORMALSE if !upgraded else UPBOMBERNORMALSE
 			health = 2
 			damage = 1
 			attackRange = 120
 			visionRange = 140
 			attack_cd.wait_time = 3
+		TYPE.FLYING:
+			sprite_2d.texture = FLYINGNORMALSE if !upgraded else UPFLYINGNORMALSE
+			speed = 40
+			health = 3
+			damage = 1.5
+			attackRange = 50
+			visionRange = 70
+			attack_cd.wait_time = 2
+			%HurtShape.shape.size = Vector2(15,15)
+			%HurtShape.position = Vector2(6.5,1.5)
 	set_up_vision()
 
 func on_health_change() -> void:

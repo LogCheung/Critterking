@@ -20,7 +20,7 @@ radius = 2.0
 height = 4.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_daau3"]
-size = Vector2(10, 15)
+size = Vector2(15, 15)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm8qt"]
 size = Vector2(5, 7)
@@ -108,7 +108,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Flip/HurtBox/CollisionShape2D:disabled")
+tracks/1/path = NodePath("Flip/HurtBox/HurtShape:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -151,7 +151,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Flip/HurtBox/CollisionShape2D:disabled")
+tracks/2/path = NodePath("Flip/HurtBox/HurtShape:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -244,12 +244,12 @@ frame = 1
 
 [node name="HurtBox" type="Area2D" parent="Flip"]
 unique_name_in_owner = true
-visible = false
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Flip/HurtBox"]
-position = Vector2(4, 1.5)
+[node name="HurtShape" type="CollisionShape2D" parent="Flip/HurtBox"]
+unique_name_in_owner = true
+position = Vector2(6.5, 1.5)
 shape = SubResource("RectangleShape2D_daau3")
 disabled = true
 debug_color = Color(0.793403, 0.426364, 1.92523e-07, 0.42)
@@ -265,6 +265,7 @@ position = Vector2(1.5, 8.5)
 shape = SubResource("RectangleShape2D_pm8qt")
 
 [node name="behindWall" type="Area2D" parent="."]
+visible = false
 z_index = 4096
 collision_layer = 16
 collision_mask = 16

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnd5aps4g4bww"
-path="res://.godot/imported/AllyBombardierSE.png-448fe923621b09ec78f061c913bdd3d6.ctex"
+uid="uid://c5qcbshiyfnp"
+path="res://.godot/imported/AllyFlyingSE.png-50c14b19071311357ea8bb115782287a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Units/Assets/AllyCrazed/AllyBombardier/AllyBombardierSE.png"
-dest_files=["res://.godot/imported/AllyBombardierSE.png-448fe923621b09ec78f061c913bdd3d6.ctex"]
+source_file="res://Units/Assets/AllyFlying/AllyFlyingSE.png"
+dest_files=["res://.godot/imported/AllyFlyingSE.png-50c14b19071311357ea8bb115782287a.ctex"]
 
 [params]
 

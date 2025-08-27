@@ -28,13 +28,11 @@ func calculate_trajectory(_start,_end) -> void:
 	
 	for point in num_of_points:
 		var time = total_time * (point/num_of_points)
-		print(time)
 		var dx = time * x_comp
 		var dy = -1.0 * (time * y_comp + .5 * gravity * time * time)
 		#
 		points.append(Vector2(dx,dy))
 		new_curve.add_point(Vector2(dx,dy))
-	print(points)
 	#for p in points:
 		#new_curve.add_point(p)
 	curve = new_curve

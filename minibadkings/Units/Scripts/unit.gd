@@ -2,7 +2,7 @@ extends CharacterBody2D
 class_name Unit
 
 enum ACTION {
-	NONE,FORM, FIGHT, RAID, STRAFE, HEAL
+	NONE,FORM, FIGHT, RAID, STRAFE, HEAL,
 }
 enum TYPE {
 	NONE, MELEE, SHIELDED, RANGED,BOMBER,FLYING,CRAZED,  
@@ -50,6 +50,7 @@ var attacking : bool
 var distance_from_form : float = 0.0
 var attack_ready : bool
 var too_close : bool
+var dashing : bool
 
 
 func _ready() -> void:
@@ -83,6 +84,8 @@ func move_to(direction, _delta):
 	velocity = new_velocity
 	if action == ACTION.STRAFE:
 		velocity /= 4
+	if dashing:
+		velocity *= 2.5
 	
 	if nav.avoidance_enabled:
 		nav.set_velocity(new_velocity)
@@ -96,10 +99,9 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 # Attacking
 func attack_finished() -> void:
 	attacking = false
-	# Shooting after animation finished
-	if !target : 
-		print("why")
-		return
+	dashing = false
+	# Custom attacks such as ranged or dash attacks
+	if !target : return
 	if type == TYPE.RANGED:
 		var proj = preload("res://Units/Scenes/projectile.tscn").instantiate()
 		proj.DIRECTION = global_position.direction_to(target.global_position)
@@ -108,12 +110,13 @@ func attack_finished() -> void:
 		proj.is_enemy = self is Enemy
 		get_tree().get_first_node_in_group("WORLD").add_child(proj)
 	elif type == TYPE.BOMBER:
-		print("yes good")
 		var proj = preload("res://Units/Scenes/bombard.tscn").instantiate()
 		proj.global_position = global_position
 		proj._target = target.global_position
 		proj.is_enemy = self is Enemy
 		get_tree().get_first_node_in_group("WORLD").add_child(proj)
+		
+		pass
 func find_target() -> void:
 	target = null
 	if !vision.monitoring: return

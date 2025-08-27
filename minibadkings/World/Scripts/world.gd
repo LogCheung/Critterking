@@ -53,7 +53,7 @@ func new_game() -> void:
 		add_house_card()
 	for i in range(1):
 		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.BOMBARDIER
+		hCard.type = Card.CARDTYPE.FLYING
 		ui.hand.get_child(0).add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()

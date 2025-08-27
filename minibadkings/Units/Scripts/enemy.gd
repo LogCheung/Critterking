@@ -9,11 +9,15 @@ const MELEENORMALSE = preload("res://Units/Assets/EnemyMelee/EnemyMeleeNormalSE.
 const RANGEDNORMALSE = preload("res://Units/Assets/EnemyRanged/EnemyRangedNormalSE.png")
 const SHIELDEDNORMALSE = preload("res://Units/Assets/EnemyShield/EnemyShieldNormalSE.png")
 const CRAZEDNORMALSE = preload("res://Units/Assets/EnemyCrazed/EnemyCrazedNormalSE.png")
+const BOMBERNORMALSE = preload("res://Units/Assets/EnemyBombardier/EnemyBombardierSE.png")
+const FLYINGNORMALSE = preload("res://Units/Assets/EnemyFlying/EnemyFlyingSE.png")
 
 const UPMELEENORMALSE = preload("res://Units/Assets/EnemyMelee/EnemyMeleeUpgradedSE.png")
 const UPRANGEDNORMALSE = preload("res://Units/Assets/EnemyRanged/EnemyRangedUpgradedSE.png")
 const UPSHIELDEDNORMALSE = preload("res://Units/Assets/EnemyShield/EnemyShieldUpgradedSE.png")
 const UPCRAZEDNORMALSE = preload("res://Units/Assets/EnemyCrazed/EnemyCrazedUpgradedSE.png")
+const UPBOMBERNORMALSE = preload("res://Units/Assets/EnemyBombardier/EnemyBombardierUpgradedSE.png")
+const UPFLYINGNORMALSE = preload("res://Units/Assets/EnemyFlying/EnemyFlyingUpgradedSE.png")
 
 var target_in_range : bool
 var is_active : bool = false
@@ -126,6 +130,20 @@ func match_type() -> void:
 			damage = 0.5
 			speed = 60
 			attack_cd.wait_time = 1
+		TYPE.BOMBER:
+			sprite_2d.texture = BOMBERNORMALSE if !upgraded else UPBOMBERNORMALSE
+			health = 2
+			damage = 1
+			attackRange = 120
+			visionRange = 140
+			attack_cd.wait_time = 3
+		TYPE.FLYING:
+			sprite_2d.texture = FLYINGNORMALSE if !upgraded else UPFLYINGNORMALSE
+			health = 3
+			damage = 1.5
+			attackRange = 30
+			visionRange = 60
+			attack_cd.wait_time = 2
 			
 
 func find_building() -> void:
