@@ -68,6 +68,7 @@ func _process(delta: float) -> void:
 		position = default_position
 		selected = false
 func plop() -> void:
+	print("is type : " + str(type))
 	tileWorld.handle_navigable_cells()
 	tile = world.tile2
 	var ploppableTiles = tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),1)
@@ -76,7 +77,7 @@ func plop() -> void:
 	var groupNode = get_tree().get_first_node_in_group("GROUPSNODE")
 	
 	if ploppableTiles.has(tile):
-		if type > 4:
+		if type > 6:
 			plop_building()
 			return
 		var group = GROUP.instantiate()

@@ -95,8 +95,6 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 	velocity = safe_velocity
 # Attacking
 func attack_finished() -> void:
-	print("ok finished")
-	print(type)
 	attacking = false
 	# Shooting after animation finished
 	if !target : 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cg6xxglor1wup"]
 
 [ext_resource type="Script" uid="uid://1u7s8yxiymhc" path="res://Units/Scripts/bombard.gd" id="1_oai4r"]
-[ext_resource type="Texture2D" uid="uid://mjdslnm8s23a" path="res://Units/Assets/AllyProjectile.png" id="2_xnkvy"]
+[ext_resource type="Texture2D" uid="uid://dadb0e4qcag4d" path="res://Units/Assets/bombard.png" id="2_xnkvy"]
 
 [sub_resource type="Curve2D" id="Curve2D_xnkvy"]
 
@@ -13,5 +13,6 @@ script = ExtResource("1_oai4r")
 unique_name_in_owner = true
 
 [node name="Sprite2D" type="Sprite2D" parent="PathFollow2D"]
-modulate = Color(0.0664307, 0.581018, 1, 1)
+z_index = 4096
+rotation = 1.0472
 texture = ExtResource("2_xnkvy")
