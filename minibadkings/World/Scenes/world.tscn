@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bxqxjbkdfqn0q"]
+[gd_scene load_steps=7 format=3 uid="uid://bxqxjbkdfqn0q"]
 
 [ext_resource type="Script" uid="uid://dvsiuovo1wgp" path="res://World/Scripts/world.gd" id="1_fdxdb"]
 [ext_resource type="PackedScene" uid="uid://y0ju1mi4ih78" path="res://TileMap/Scenes/tile_world.tscn" id="1_jamle"]
 [ext_resource type="Script" uid="uid://bjiaogu16dctd" path="res://World/Scripts/camera_2d.gd" id="2_yw7h8"]
+[ext_resource type="PackedScene" uid="uid://cg6xxglor1wup" path="res://Units/Scenes/bombard.tscn" id="5_xvb7p"]
 [ext_resource type="PackedScene" uid="uid://bhln07v3h2elp" path="res://UI/Scenes/ui.tscn" id="6_7qq3u"]
 
 [sub_resource type="Environment" id="Environment_fdxdb"]
@@ -65,5 +66,8 @@ process_mode = 3
 [node name="Timer" type="Timer" parent="."]
 wait_time = 30.0
 autostart = true
+
+[node name="bombard" parent="." instance=ExtResource("5_xvb7p")]
+position = Vector2(31, 141)
 
 [connection signal="timeout" from="Game/SpawnTimer" to="." method="_on_spawn_timer_timeout"]

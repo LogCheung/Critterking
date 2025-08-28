@@ -1,11 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://cg6xxglor1wup"]
+[gd_scene load_steps=7 format=3 uid="uid://cg6xxglor1wup"]
 
 [ext_resource type="Script" uid="uid://1u7s8yxiymhc" path="res://Units/Scripts/bombard.gd" id="1_oai4r"]
 [ext_resource type="Texture2D" uid="uid://dadb0e4qcag4d" path="res://Units/Assets/bombard.png" id="2_xnkvy"]
+[ext_resource type="AudioStream" uid="uid://b7scm4fug5tje" path="res://Audio/sfx/Hurt.tres" id="3_thnri"]
+[ext_resource type="AudioStream" uid="uid://w5s7eos7mc1q" path="res://Audio/sfx/Death.tres" id="4_cp5rl"]
 
 [sub_resource type="Curve2D" id="Curve2D_xnkvy"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_xnkvy"]
+radius = 24.0
+
 [node name="bombard" type="Path2D"]
+z_index = 4096
 curve = SubResource("Curve2D_xnkvy")
 script = ExtResource("1_oai4r")
 
@@ -13,6 +19,23 @@ script = ExtResource("1_oai4r")
 unique_name_in_owner = true
 
 [node name="Sprite2D" type="Sprite2D" parent="PathFollow2D"]
-z_index = 4096
+unique_name_in_owner = true
 rotation = 1.0472
 texture = ExtResource("2_xnkvy")
+
+[node name="HurtBox" type="Area2D" parent="PathFollow2D/Sprite2D"]
+unique_name_in_owner = true
+rotation = -1.0472
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/Sprite2D/HurtBox"]
+shape = SubResource("CircleShape2D_xnkvy")
+
+[node name="Hurt" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("3_thnri")
+
+[node name="Death" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("4_cp5rl")

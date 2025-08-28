@@ -184,7 +184,7 @@ func match_type() -> void:
 		TYPE.BOMBER:
 			sprite_2d.texture = BOMBERNORMALSE if !upgraded else UPBOMBERNORMALSE
 			health = 2
-			damage = 1
+			damage = .5
 			attackRange = 120
 			visionRange = 140
 			attack_cd.wait_time = 3

@@ -113,6 +113,7 @@ func attack_finished() -> void:
 		var proj = preload("res://Units/Scenes/bombard.tscn").instantiate()
 		proj.global_position = global_position
 		proj._target = target.global_position
+		proj.damage = damage
 		proj.is_enemy = self is Enemy
 		get_tree().get_first_node_in_group("WORLD").add_child(proj)
 		

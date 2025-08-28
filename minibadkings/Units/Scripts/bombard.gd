@@ -3,13 +3,18 @@ extends Path2D
 @export var damage : float
 @export var is_enemy : bool
 
+@onready var hurt_box: Area2D = %HurtBox
+
 var num_of_points : float = 30.0
 var gravity : float = -9.8
 var _target : Vector2
 
 func _ready() -> void:
+	if is_enemy:
+		hurt_box.set_collision_mask_value(2,true)
+	else:
+		hurt_box.set_collision_mask_value(3, true)
 	calculate_trajectory(global_position,_target)
-	pass
 
 func calculate_trajectory(_start,_end) -> void:
 	var DOT = Vector2(1,0).dot((_end - _start).normalized())
@@ -42,5 +47,26 @@ func calculate_trajectory(_start,_end) -> void:
 	tween.play()
 	
 	await tween.finished
+	%Sprite2D.visible = false
+	check_aoe()
+
+func check_aoe() -> void:
+	var areas = hurt_box.get_overlapping_areas()
+	print(areas)
+	for area in areas:
+		if !area or !area.owner is Unit: continue
+		var enemy = area.owner
+		%Hurt.play()
+		enemy.health -= damage if enemy.dodge < (randi() % 100 + 1) else 0
+		if enemy.health <= 0:
+			# trigger death anim
+			enemy.process_mode = Node.PROCESS_MODE_DISABLED
+			enemy.anim.play("death")
+			await enemy.anim.animation_finished
+			
+			var enemyGroup = enemy.group.unitsArray
+			if enemyGroup.find(enemy) != -1 : enemyGroup.remove_at(enemyGroup.find(enemy))
+			enemy.group.unit_died.emit()
+			%Death.play()
+			enemy.queue_free()
 	queue_free()
-	
