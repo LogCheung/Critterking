@@ -52,7 +52,6 @@ func calculate_trajectory(_start,_end) -> void:
 
 func check_aoe() -> void:
 	var areas = hurt_box.get_overlapping_areas()
-	print(areas)
 	for area in areas:
 		if !area or !area.owner is Unit: continue
 		var enemy = area.owner
@@ -63,7 +62,7 @@ func check_aoe() -> void:
 			enemy.process_mode = Node.PROCESS_MODE_DISABLED
 			enemy.anim.play("death")
 			await enemy.anim.animation_finished
-			
+			if !is_instance_valid(enemy) : return	
 			var enemyGroup = enemy.group.unitsArray
 			if enemyGroup.find(enemy) != -1 : enemyGroup.remove_at(enemyGroup.find(enemy))
 			enemy.group.unit_died.emit()

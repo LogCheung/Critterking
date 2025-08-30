@@ -43,6 +43,14 @@ func _process(delta: float) -> void:
 	
 func handle_action(delta) -> void:
 	var distToTarget = global_position.distance_to(nav.target_position)
+	if dashing:
+		if !target : 
+			find_target()
+			return
+		var dir = global_position.direction_to(target.global_position)
+		move_to(dir,delta)
+		
+		return
 	match action:
 		ACTION.FORM:
 			nav.target_position = formation_position.global_position
@@ -63,11 +71,11 @@ func handle_action(delta) -> void:
 			if target == null: target_in_range = false
 			if distToTarget <= attackRange :
 				if !attack_cd.time_left <= 0 : return
-				if type == TYPE.RANGED and distToTarget < 12: 
-					too_close = true
-					return
-				too_close = false
+				if type == TYPE.RANGED or type == TYPE.BOMBER:
+					too_close = distToTarget < ranged_buffer
+				
 				anim.play("attack")
+				dashing = type == TYPE.FLYING
 				if type== TYPE.RANGED:
 					%Shoot.play()
 				else:

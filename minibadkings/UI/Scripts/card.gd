@@ -5,8 +5,8 @@ const GROUP = preload("res://Units/Scenes/unit_group.tscn")
 const BUILDING = preload("res://TileMap/Scenes/building.tscn")
 
 enum CARDTYPE {
-	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3,BOMBARDIER, FLYING ,CRAZED,TRAPS ,DESTROY , 
-	HOUSE, CARE , FARM , SAPSTORE, NURSERY, STORAGE
+	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3,BOMBARDIER = 4, FLYING = 5 ,CRAZED = 6,
+	TRAPS ,DESTROY , HOUSE, CARE , FARM , SAPSTORE, NURSERY, STORAGE
 }
 enum ROLLTYPE {
 	GENERAL, UNIT, BUILDING
@@ -77,7 +77,7 @@ func plop() -> void:
 	var groupNode = get_tree().get_first_node_in_group("GROUPSNODE")
 	
 	if ploppableTiles.has(tile):
-		if type > 6:
+		if type > Unit.TYPE.CRAZED:
 			plop_building()
 			return
 		var group = GROUP.instantiate()
@@ -152,7 +152,7 @@ func check_destroy(plopTile : Vector2) -> bool:
 	return false
 
 func check_if_merge(plopTile : Vector2) -> bool:
-	if type > 4: return false
+	if type > Unit.TYPE.CRAZED: return false
 	var groups = get_tree().get_nodes_in_group("ALLYGROUP")
 	var targetGroup : AllyGroup
 	# Identify group that is going to be upgraded
@@ -208,6 +208,10 @@ func match_sprite_type() -> void:
 			sprite_2d.texture = preload("res://UI/Assets/cards/platedCard.png")
 		CARDTYPE.SPITTER:
 			sprite_2d.texture = preload("res://UI/Assets/cards/spitterCard.png")
+		CARDTYPE.BOMBARDIER:
+			sprite_2d.texture = preload("res://UI/Assets/cards/bomberCard.png")
+		CARDTYPE.FLYING:
+			sprite_2d.texture = preload("res://UI/Assets/cards/flyingCard.png")
 		CARDTYPE.CRAZED:
 			sprite_2d.texture = preload("res://UI/Assets/cards/crazedCard.png")
 		CARDTYPE.TRAPS:

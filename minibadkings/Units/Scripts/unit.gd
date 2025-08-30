@@ -41,6 +41,7 @@ var action : ACTION = ACTION.NONE
 var in_formation : bool = false
 var in_combat : bool = false
 var path_points : Array
+var ranged_buffer : float = 20
 
 var is_behind_wall : bool
 var wall_tile

@@ -25,7 +25,6 @@ const UPFLYINGNORMALSE = preload("res://Units/Assets/AllyFlying/AllyFlyingUpgrad
 
 var allyGroup : AllyGroup
 var healing : bool
-var ranged_buffer : float = 20
 
 
 func _ready() -> void:
@@ -79,7 +78,9 @@ func handle_behind_wall() -> void:
 func handle_action(delta) -> void:
 	var distToTarget = global_position.distance_to(nav.target_position)
 	if dashing:
-		if !target : find_target()
+		if !target : 
+			find_target()
+			return
 		var dir = global_position.direction_to(target.global_position)
 		move_to(dir,delta)
 		return

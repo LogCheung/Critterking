@@ -10,7 +10,7 @@ signal night_ended
 signal mouse_clicked
 
 @export var is_combat_phase : bool = false
-@export var enemy_parties : int = 3
+@export var enemy_parties : int = 6
 @export var upgraded_parties : int = 0
 
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
@@ -26,6 +26,7 @@ var upgrades_given : int = 0
 var upgrade_nums : Array = [2]
 var starting_roll : bool = true
 
+var night_is_expansion: bool = true
 func _ready() -> void:
 	night_started.connect(on_night_started)
 	night_ended.connect(on_night_ended)
@@ -51,9 +52,9 @@ func new_game() -> void:
 	starting_roll = true
 	for i in range(1):
 		add_house_card()
-	for i in range(2):
+	for i in range(3):
 		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.BOMBARDIER
+		hCard.type = Card.CARDTYPE.FLYING
 		ui.hand.get_child(0).add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
@@ -149,6 +150,11 @@ func spawn_enemy() -> void:
 	
 
 func on_night_started() -> void:
+	if night_is_expansion:
+		print("mpre")
+		%SpawnTimer.wait_time = 7.5
+		enemy_parties += 4
+	print(enemy_parties)
 	# start game and hide menus
 	tileWorld.handle_navigable_cells()
 	is_combat_phase = true
@@ -175,12 +181,16 @@ func on_enemy_group_eliminated() -> void:
 		night_ended.emit()
 		
 func on_night_ended() -> void:
-	#%Game.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+	# Reset after swarm of expansion
+	if night_is_expansion:
+		night_is_expansion = false
+		enemy_parties -= 4
+		%SpawnTimer.wait_time = 7.5
+		
 	if is_combat_phase == false : return
 	start_day()
 
 func start_day() -> void:
-	print("day")
 	ui.crtr_night.stop()
 	ui.crtr_day.play()
 	# progress nights
@@ -257,6 +267,10 @@ func match_unit_to_card(card : Card,unitType : Unit.TYPE) -> Card:
 			card.type = Card.CARDTYPE.PLATED
 		Unit.TYPE.CRAZED:
 			card.type = Card.CARDTYPE.CRAZED
+		Unit.TYPE.BOMBER:
+			card.type = Card.CARDTYPE.BOMBARDIER
+		Unit.TYPE.FLYING:
+			card.type = Card.CARDTYPE.FLYING
 	return card
 
 var tile2
@@ -264,12 +278,17 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_released("select"):
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
+	if event.is_action_pressed("ui_accept"):
+		Engine.time_scale = 8
 
 func check_nights() -> void:
+	night_is_expansion = true
 	if Global.nights % 2 == 0:
 		enemy_parties += 1
 	
 	if Global.nights % 6 == 0:
+		night_is_expansion = true
+		print("swarm now")
 		add_house_card()
 		expand()
 		upgraded_parties += 1
