@@ -22,19 +22,23 @@ enum ROLLTYPE {
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
-@onready var button: Button = $Selected
+@onready var button: Button = %Selected
 
 var default_position : Vector2
+var default_custom_min : Vector2
+
 var setting_up : bool = true
 var choice_picked : bool = false
 var refreshing : bool = false
 
+var is_under_mouse : bool = false
 func _ready() -> void:
 	if for_show: scale = Vector2(3,3)
 
 func set_up() -> void:
 	match_sprite_type()
 	default_position = position
+	default_custom_min = custom_minimum_size
 	setting_up = false
 
 var selected : bool = false
@@ -47,8 +51,11 @@ func _process(delta: float) -> void:
 		refreshing = false
 		return
 	if for_show: return
+	
+	# dragging and plopping
 	if Input.is_action_just_pressed("select") and !selected:
 		if Rect2(Vector2(), size).has_point(get_local_mouse_position()):
+			set_to_default()
 			selected = true
 	if Input.is_action_pressed("select") and selected:
 		sprite_2d.scale = Vector2(.4,.4)
@@ -56,17 +63,26 @@ func _process(delta: float) -> void:
 	elif Input.is_action_just_released("select") and selected:
 		plop()
 	elif selected:
-		sprite_2d.scale = Vector2(1.0,1.0)
-		position = default_position
-		selected = false
+		is_under_mouse = false
+		set_to_default()
 	else:
-		sprite_2d.scale = Vector2(1.0,1.0)
-		position = default_position
-		selected = false
+		if is_under_mouse : return
+		set_to_default()
+	
 	if Input.is_action_just_pressed("cancel"):
-		sprite_2d.scale = Vector2(1.0,1.0)
-		position = default_position
-		selected = false
+		set_to_default()
+
+func set_to_default() -> void:
+	sprite_2d.scale = Vector2(1.0,1.0)
+	sprite_2d.position.y = default_position.y
+	
+	z_index = 0
+	custom_minimum_size = default_custom_min
+	position = default_position
+	
+	selected = false
+	is_under_mouse = false
+
 func plop() -> void:
 	print("is type : " + str(type))
 	tileWorld.handle_navigable_cells()
@@ -273,3 +289,16 @@ func _on_selected_pressed() -> void:
 	cards = cards.filter(func(c):return c.for_show)
 	for c : Card in cards:
 		c.choice_picked = true
+
+func _on_selected_mouse_entered() -> void:
+	if for_show : return
+	if selected : return
+	sprite_2d.scale = Vector2(1.5,1.5)
+	sprite_2d.position.y = default_position.y - (custom_minimum_size.y / 1.5) - 32
+	custom_minimum_size.x = default_custom_min.x * 1.5
+	is_under_mouse = true
+	z_index = 4096
+func _on_selected_mouse_exited() -> void:
+	if for_show : return
+	if selected : return
+	set_to_default()

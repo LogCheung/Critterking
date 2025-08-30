@@ -74,6 +74,7 @@ func control_is_visible() -> bool:
 	return false
 	
 func display_cards(display : bool) -> void:
+	# when deck of cards is clicked
 	var cardSprites = get_tree().get_nodes_in_group("CARD")
 	
 	for card : Card in cardSprites:
@@ -90,6 +91,7 @@ func display_cards(display : bool) -> void:
 		extraRolls -= 1
 		
 func show_hand() -> void:
+	# when card is chosen from deck of cards
 	if world.starting_roll:
 		cards.show()
 		world.starting_roll = false

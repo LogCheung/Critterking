@@ -26,7 +26,7 @@ size = Vector2(15, 15)
 size = Vector2(5, 7)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yd6on"]
-size = Vector2(12, 13)
+size = Vector2(15, 15)
 
 [sub_resource type="GDScript" id="GDScript_amxnv"]
 script/source = "extends Area2D
@@ -265,7 +265,6 @@ position = Vector2(1.5, 8.5)
 shape = SubResource("RectangleShape2D_pm8qt")
 
 [node name="behindWall" type="Area2D" parent="."]
-visible = false
 z_index = 4096
 collision_layer = 16
 collision_mask = 16

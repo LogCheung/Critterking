@@ -10,7 +10,7 @@ signal night_ended
 signal mouse_clicked
 
 @export var is_combat_phase : bool = false
-@export var enemy_parties : int = 6
+@export var enemy_parties : int = 3
 @export var upgraded_parties : int = 0
 
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
@@ -26,13 +26,15 @@ var upgrades_given : int = 0
 var upgrade_nums : Array = [2]
 var starting_roll : bool = true
 
-var night_is_expansion: bool = true
+
+
+var night_is_expansion: bool = false
 func _ready() -> void:
 	night_started.connect(on_night_started)
 	night_ended.connect(on_night_ended)
 	enemy_group_eliminated.connect(on_enemy_group_eliminated)
 	
-	Engine.time_scale = 8
+	Engine.time_scale = 1
 	
 func new_game() -> void:
 	await get_tree().create_timer(.5).timeout
@@ -52,10 +54,10 @@ func new_game() -> void:
 	starting_roll = true
 	for i in range(1):
 		add_house_card()
-	for i in range(3):
-		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.FLYING
-		ui.hand.get_child(0).add_child(hCard)
+	#for i in range(3):
+		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.FLYING
+		#ui.hand.get_child(0).add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
@@ -150,9 +152,10 @@ func spawn_enemy() -> void:
 	
 
 func on_night_started() -> void:
+	ui.hand.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	if night_is_expansion:
 		print("mpre")
-		%SpawnTimer.wait_time = 7.5
+		%SpawnTimer.wait_time = 6
 		enemy_parties += 4
 	print(enemy_parties)
 	# start game and hide menus
@@ -191,6 +194,7 @@ func on_night_ended() -> void:
 	start_day()
 
 func start_day() -> void:
+	ui.hand.process_mode = Node.PROCESS_MODE_PAUSABLE
 	ui.crtr_night.stop()
 	ui.crtr_day.play()
 	# progress nights
@@ -282,7 +286,6 @@ func _input(event: InputEvent) -> void:
 		Engine.time_scale = 8
 
 func check_nights() -> void:
-	night_is_expansion = true
 	if Global.nights % 2 == 0:
 		enemy_parties += 1
 	

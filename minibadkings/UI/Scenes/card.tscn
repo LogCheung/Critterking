@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bjjg37vgshqt6"]
 
+[ext_resource type="Texture2D" uid="uid://f768reu1yll7" path="res://UI/Assets/cards/biterCard.png" id="2_dryym"]
 [ext_resource type="Script" uid="uid://dp28vuy42urfg" path="res://UI/Scripts/card.gd" id="2_e2s86"]
-[ext_resource type="Texture2D" uid="uid://cvb51gn4bb805" path="res://UI/Assets/cards/farmCard.png" id="2_o5kma"]
 [ext_resource type="Texture2D" uid="uid://b5ks3m4v4jjkw" path="res://UI/Assets/cards/upgrade1.png" id="3_o5kma"]
 [ext_resource type="Texture2D" uid="uid://djc2ycppgts1n" path="res://UI/Assets/cards/upgrade2.png" id="4_dryym"]
 
@@ -51,31 +51,32 @@ anchor_left = -0.102
 anchor_top = -0.378
 anchor_right = 0.079
 anchor_bottom = 0.378
-offset_left = -0.159988
-offset_top = 0.240021
-offset_right = -219.68
-offset_bottom = -544.24
+offset_left = 195.84
+offset_top = 408.24
+offset_right = -23.68
+offset_bottom = -136.24
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 script = ExtResource("2_e2s86")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_o5kma")
+texture = ExtResource("2_dryym")
 offset = Vector2(64, 136)
 
 [node name="Upgrade1" type="Sprite2D" parent="Sprite2D"]
 unique_name_in_owner = true
+visible = false
 position = Vector2(64, 136)
 texture = ExtResource("3_o5kma")
 
 [node name="Upgrade2" type="Sprite2D" parent="Sprite2D"]
 unique_name_in_owner = true
+visible = false
 position = Vector2(64, 136)
 texture = ExtResource("4_dryym")
 
-[node name="Selected" type="Button" parent="."]
-layout_mode = 0
+[node name="Selected" type="Button" parent="Sprite2D"]
+unique_name_in_owner = true
 offset_left = 7.66667
 offset_top = 2.66666
 offset_right = 120.667
@@ -88,4 +89,6 @@ libraries = {
 &"": SubResource("AnimationLibrary_o5kma")
 }
 
-[connection signal="pressed" from="Selected" to="." method="_on_selected_pressed"]
+[connection signal="mouse_entered" from="Sprite2D/Selected" to="." method="_on_selected_mouse_entered"]
+[connection signal="mouse_exited" from="Sprite2D/Selected" to="." method="_on_selected_mouse_exited"]
+[connection signal="pressed" from="Sprite2D/Selected" to="." method="_on_selected_pressed"]

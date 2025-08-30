@@ -477,6 +477,15 @@ mouse_filter = 2
 theme_override_constants/separation = 15
 alignment = 1
 
+[node name="Card" parent="Hand/HBoxContainer" instance=ExtResource("3_bujes")]
+layout_mode = 2
+
+[node name="Card2" parent="Hand/HBoxContainer" instance=ExtResource("3_bujes")]
+layout_mode = 2
+
+[node name="Card3" parent="Hand/HBoxContainer" instance=ExtResource("3_bujes")]
+layout_mode = 2
+
 [node name="HandOrigin" type="Node2D" parent="Hand"]
 unique_name_in_owner = true
 position = Vector2(964, 1080)
