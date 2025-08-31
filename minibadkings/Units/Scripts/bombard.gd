@@ -11,8 +11,10 @@ var _target : Vector2
 
 func _ready() -> void:
 	if is_enemy:
+		%Splash.texture = preload("res://Units/Assets/EnemySplash.png")
 		hurt_box.set_collision_mask_value(2,true)
 	else:
+		# default texture is splash texture
 		hurt_box.set_collision_mask_value(3, true)
 	calculate_trajectory(global_position,_target)
 
@@ -47,10 +49,12 @@ func calculate_trajectory(_start,_end) -> void:
 	tween.play()
 	
 	await tween.finished
-	%Sprite2D.visible = false
 	check_aoe()
 
 func check_aoe() -> void:
+	%Splash.global_position = %Node2D.global_position
+	%Anim.play("splash")
+	%Sprite2D.visible = false
 	var areas = hurt_box.get_overlapping_areas()
 	for area in areas:
 		if !area or !area.owner is Unit: continue
@@ -68,4 +72,5 @@ func check_aoe() -> void:
 			enemy.group.unit_died.emit()
 			%Death.play()
 			enemy.queue_free()
+	await %Anim.animation_finished
 	queue_free()

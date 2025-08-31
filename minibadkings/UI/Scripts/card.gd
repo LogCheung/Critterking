@@ -293,6 +293,7 @@ func _on_selected_pressed() -> void:
 func _on_selected_mouse_entered() -> void:
 	if for_show : return
 	if selected : return
+	if refreshing : return
 	sprite_2d.scale = Vector2(1.5,1.5)
 	sprite_2d.position.y = default_position.y - (custom_minimum_size.y / 1.5) - 32
 	custom_minimum_size.x = default_custom_min.x * 1.5
@@ -301,4 +302,5 @@ func _on_selected_mouse_entered() -> void:
 func _on_selected_mouse_exited() -> void:
 	if for_show : return
 	if selected : return
+	if refreshing : return
 	set_to_default()
