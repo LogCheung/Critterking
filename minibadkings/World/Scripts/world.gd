@@ -194,7 +194,6 @@ func on_night_ended() -> void:
 	start_day()
 
 func start_day() -> void:
-	ui.hand.process_mode = Node.PROCESS_MODE_PAUSABLE
 	ui.crtr_night.stop()
 	ui.crtr_day.play()
 	# progress nights

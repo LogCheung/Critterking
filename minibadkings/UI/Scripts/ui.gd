@@ -110,8 +110,6 @@ func show_hand() -> void:
 	await get_tree().create_timer(.05).timeout
 	for c : Card in container.get_children():
 		c.set_up()
-	#for card : Card in Global.cardsInHand:
-		#container.add_child(card)
 
 func on_game_over() -> void:
 	gameover.show()
