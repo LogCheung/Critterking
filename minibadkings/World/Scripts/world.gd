@@ -213,6 +213,10 @@ func start_day() -> void:
 	for g : Group in unitsGroups.get_children():
 		unit_to_card(g)
 		g.terminate()
+		
+	for card in Global.cardsDispatched:
+		ui.hand.get_child(0).add_child(card)
+		Global.cardsDispatched.remove_at(Global.cardsDispatched.find(card))
 	
 	# repair buildings
 	# jk we don't do that anymore

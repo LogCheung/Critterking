@@ -103,6 +103,7 @@ libraries = {
 
 [node name="Splash" type="Sprite2D" parent="."]
 unique_name_in_owner = true
+visible = false
 z_index = 1
 texture = ExtResource("3_cp5rl")
 hframes = 8

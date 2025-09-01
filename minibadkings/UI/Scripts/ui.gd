@@ -228,6 +228,14 @@ func _on_continue_pressed() -> void:
 
 func _on_dispatch_end_pressed() -> void:
 	dispatch.hide()
+	
+	var cards = get_tree().get_nodes_in_group("CARD")
+	for c : Card in cards:
+		print(c.dispatchSelected)
+		if c.dispatchSelected:
+			print(c)
+			Global.cardsDispatched.append(c)
+			c.queue_free()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
