@@ -26,7 +26,7 @@ font = ExtResource("7_titua")
 
 [sub_resource type="LabelSettings" id="LabelSettings_bujes"]
 font = ExtResource("7_titua")
-font_size = 32
+font_size = 24
 font_color = Color(0.863436, 5.31845e-06, 7.70092e-07, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ftqev"]
@@ -357,6 +357,7 @@ vertical_alignment = 1
 
 [node name="EndTurn" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
@@ -397,6 +398,60 @@ offset_bottom = 86.0
 grow_horizontal = 2
 scale = Vector2(1.5, 1.5)
 text = "Please place house!"
+label_settings = SubResource("LabelSettings_bujes")
+horizontal_alignment = 1
+
+[node name="Dispatch" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1081.0
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="Dispatch"]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.0352941, 0.0392157, 0.0784314, 0.490196)
+
+[node name="Sprite2D" type="Sprite2D" parent="Dispatch"]
+self_modulate = Color(1, 1, 1, 0)
+position = Vector2(1824, 1031)
+scale = Vector2(3, 3)
+texture = ExtResource("10_6dw6b")
+
+[node name="dispatchEnd" type="Button" parent="Dispatch/Sprite2D"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -96.0
+offset_top = -48.0
+offset_right = -32.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 0
+focus_mode = 0
+text = "continue"
+flat = true
+
+[node name="dispatchText" type="Label" parent="Dispatch"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -549.0
+offset_top = 41.0
+offset_right = 243.0
+offset_bottom = 119.0
+grow_horizontal = 2
+scale = Vector2(1.5, 1.5)
+text = "Dispatch unit to look for charms.
+Select 0 to 1 units 
+"
 label_settings = SubResource("LabelSettings_bujes")
 horizontal_alignment = 1
 
@@ -740,6 +795,7 @@ stream = ExtResource("15_8g5lr")
 bus = &"SFX"
 
 [connection signal="pressed" from="EndTurn/Sprite2D/endturn" to="." method="_on_endturn_pressed"]
+[connection signal="pressed" from="Dispatch/Sprite2D/dispatchEnd" to="." method="_on_dispatch_end_pressed"]
 [connection signal="pressed" from="Cards/CardShow/Show" to="." method="_on_show_pressed"]
 [connection signal="pressed" from="mainmenu/main/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="mainmenu/main/Help" to="." method="_on_help_pressed"]

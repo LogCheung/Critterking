@@ -1,5 +1,6 @@
 extends Unit
 class_name Ally
+
 signal speedchange
 signal healthchange
 

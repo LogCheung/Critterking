@@ -26,7 +26,7 @@ var upgrades_given : int = 0
 var upgrade_nums : Array = [2]
 var starting_roll : bool = true
 
-
+var dispatchDay : bool = true
 
 var night_is_expansion: bool = false
 func _ready() -> void:
@@ -184,6 +184,10 @@ func on_enemy_group_eliminated() -> void:
 		night_ended.emit()
 		
 func on_night_ended() -> void:
+	# Reset after dispatch day
+	if dispatchDay:
+		dispatchDay = false
+	
 	# Reset after swarm of expansion
 	if night_is_expansion:
 		night_is_expansion = false
@@ -203,7 +207,6 @@ func start_day() -> void:
 	is_combat_phase = false
 	ui.rolltype = Card.ROLLTYPE.GENERAL
 	ui.cards.show()
-	ui.end_turn.show()
 	
 	# convert units to cards
 	var unitsGroups = get_tree().get_first_node_in_group("GROUPSNODE")
@@ -287,6 +290,9 @@ func _input(event: InputEvent) -> void:
 func check_nights() -> void:
 	if Global.nights % 2 == 0:
 		enemy_parties += 1
+	
+	if Global.nights % 3 == 0:
+		dispatchDay = true
 	
 	if Global.nights % 6 == 0:
 		night_is_expansion = true

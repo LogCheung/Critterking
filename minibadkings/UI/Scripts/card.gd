@@ -31,6 +31,8 @@ var setting_up : bool = true
 var choice_picked : bool = false
 var refreshing : bool = false
 
+var dispatchSelected : bool = false
+
 var is_under_mouse : bool = false
 func _ready() -> void:
 	if for_show: scale = Vector2(3,3)
@@ -45,6 +47,9 @@ var selected : bool = false
 var tile : Vector2i
 func _process(delta: float) -> void:
 	if setting_up : return
+	handle_drag()
+	
+func handle_drag() -> void:
 	if refreshing : 
 		await get_tree().create_timer(.3).timeout
 		default_position = position
@@ -55,12 +60,28 @@ func _process(delta: float) -> void:
 	# dragging and plopping
 	if Input.is_action_just_pressed("select") and !selected:
 		if Rect2(Vector2(), size).has_point(get_local_mouse_position()):
+			# check if selecting for dispatch
+			if ui.dispatch.visible and ui.dispatchAmt < ui.dispatchLimit:
+				ui.dispatchAmt += 1
+				dispatchSelected = true
+				sprite_2d.material = preload("res://Units/Shaders/cardHighlight.tres")
+				return
+			elif dispatchSelected:
+				ui.dispatchAmt -= 1
+				dispatchSelected = false
+				sprite_2d.material = null
+			else:
+				dispatchSelected = false
+				sprite_2d.material = null
 			set_to_default()
 			selected = true
 	if Input.is_action_pressed("select") and selected:
 		sprite_2d.scale = Vector2(.4,.4)
 		global_position = get_global_mouse_position()
 	elif Input.is_action_just_released("select") and selected:
+		if ui.dispatch.visible : 
+			set_to_default() 
+			return
 		plop()
 	elif selected:
 		is_under_mouse = false
@@ -75,6 +96,7 @@ func _process(delta: float) -> void:
 func set_to_default() -> void:
 	sprite_2d.scale = Vector2(1.0,1.0)
 	sprite_2d.position.y = default_position.y
+	if !dispatchSelected : sprite_2d.material = null
 	
 	z_index = 0
 	custom_minimum_size = default_custom_min

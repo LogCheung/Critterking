@@ -16,11 +16,15 @@ signal game_over
 @onready var crtr_day: AudioStreamPlayer = %crtrDay
 @onready var crtr_night: AudioStreamPlayer = %crtrNight
 @onready var crtr_pause: AudioStreamPlayer = %crtrPause
+@onready var dispatch: Control = %Dispatch
 
 var second_roll : bool = false
 var rolltype : Card.ROLLTYPE
 var extraRolls : int = 0
 var rollingExtraTime : bool = false
+
+var dispatchAmt = 0
+var dispatchLimit = 1
 
 
 func _process(delta: float) -> void:
@@ -102,14 +106,15 @@ func show_hand() -> void:
 	if extraRolls > 0:
 		rollingExtraTime = true
 		return
-	
 	rollingExtraTime = false
 	cards.hide()
 	hand.show()
+	end_turn.show()
 	var container = %Hand.get_child(0) # Hboxcontainer
 	await get_tree().create_timer(.05).timeout
 	for c : Card in container.get_children():
 		c.set_up()
+	if world.dispatchDay: dispatch.show()
 
 func on_game_over() -> void:
 	gameover.show()
@@ -218,7 +223,11 @@ func _on_title_pressed() -> void:
 
 
 func _on_continue_pressed() -> void:
+	%Button.play()
 	handle_pause()
+
+func _on_dispatch_end_pressed() -> void:
+	dispatch.hide()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
