@@ -62,6 +62,7 @@ func handle_drag() -> void:
 		if Rect2(Vector2(), size).has_point(get_local_mouse_position()):
 			# check if selecting for dispatch
 			if ui.dispatch.visible and ui.dispatchAmt < ui.dispatchLimit:
+				if type > CARDTYPE.CRAZED : return
 				ui.dispatchAmt += 1
 				dispatchSelected = true
 				sprite_2d.material = preload("res://Units/Shaders/cardHighlight.tres")

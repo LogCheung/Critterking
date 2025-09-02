@@ -50,11 +50,19 @@ func _process(delta: float) -> void:
 	super._process(delta)
 	if action != ACTION.NONE:
 		handle_behind_wall()
+		
+	# Check if in combat
 	if vision.has_overlapping_areas(): # inside sight of ally
 		for area in vision.get_overlapping_areas(): # not dead and not in walls
 			in_combat = is_instance_valid(area.owner) and area.owner.is_active
 	else:
 		in_combat = false
+	
+	# check if enemy is too close
+	if type == TYPE.RANGED or type == TYPE.BOMBER:
+		if is_instance_valid(target):
+			var distToTarget = global_position.distance_to(target.global_position)
+			too_close = distToTarget < ranged_buffer
 	
 	handle_action(delta)
 func handle_behind_wall() -> void:
@@ -108,8 +116,6 @@ func handle_action(delta) -> void:
 			if distToTarget <= attackRange :
 				if !attack_cd.time_left <= 0 : return
 				if anim.is_playing() : return
-				if type == TYPE.RANGED or type == TYPE.BOMBER:
-					too_close = distToTarget < ranged_buffer
 				
 				anim.play("attack")
 				dashing = type == TYPE.FLYING

@@ -231,10 +231,11 @@ func _on_dispatch_end_pressed() -> void:
 	
 	var cards = get_tree().get_nodes_in_group("CARD")
 	for c : Card in cards:
-		print(c.dispatchSelected)
 		if c.dispatchSelected:
-			print(c)
-			Global.cardsDispatched.append(c)
+			var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
+			newCard.type = c.type
+			newCard.level = c.level
+			Global.cardsDispatched.append(newCard)
 			c.queue_free()
 
 func _input(event: InputEvent) -> void:

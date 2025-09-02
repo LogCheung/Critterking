@@ -142,8 +142,8 @@ func match_type() -> void:
 			sprite_2d.texture = BOMBERNORMALSE if !upgraded else UPBOMBERNORMALSE
 			health = 2
 			damage = .5
-			attackRange = 120
-			visionRange = 140
+			attackRange = 80
+			visionRange = 100
 			attack_cd.wait_time = 3
 		TYPE.FLYING:
 			sprite_2d.texture = FLYINGNORMALSE if !upgraded else UPFLYINGNORMALSE

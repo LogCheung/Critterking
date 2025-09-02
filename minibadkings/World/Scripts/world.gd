@@ -56,7 +56,7 @@ func new_game() -> void:
 		add_house_card()
 	for i in range(1):
 		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.BOMBARDIER
+		hCard.type = Card.CARDTYPE.FLYING
 		ui.hand.get_child(0).add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
@@ -214,8 +214,14 @@ func start_day() -> void:
 		unit_to_card(g)
 		g.terminate()
 		
-	for card in Global.cardsDispatched:
-		ui.hand.get_child(0).add_child(card)
+	for card : Card in Global.cardsDispatched:
+		var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
+		newCard.type = card.type
+		newCard.level = card.level
+		
+		Global.cardsInHand.append(newCard)
+		ui.hand.get_child(0).add_child(newCard)
+		newCard.for_show = false
 		Global.cardsDispatched.remove_at(Global.cardsDispatched.find(card))
 	
 	# repair buildings

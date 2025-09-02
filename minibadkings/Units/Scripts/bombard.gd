@@ -52,6 +52,7 @@ func calculate_trajectory(_start,_end) -> void:
 	check_aoe()
 
 func check_aoe() -> void:
+	$Timer.start()
 	%Splash.global_position = %Node2D.global_position
 	%Anim.play("splash")
 	%Sprite2D.visible = false
@@ -66,11 +67,13 @@ func check_aoe() -> void:
 			enemy.process_mode = Node.PROCESS_MODE_DISABLED
 			enemy.anim.play("death")
 			await enemy.anim.animation_finished
-			if !is_instance_valid(enemy) : return	
+			
 			var enemyGroup = enemy.group.unitsArray
 			if enemyGroup.find(enemy) != -1 : enemyGroup.remove_at(enemyGroup.find(enemy))
 			enemy.group.unit_died.emit()
 			%Death.play()
 			enemy.queue_free()
-	await %Anim.animation_finished
+
+
+func _on_timer_timeout() -> void:
 	queue_free()
