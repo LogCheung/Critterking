@@ -10,7 +10,7 @@ signal night_ended
 signal mouse_clicked
 
 @export var is_combat_phase : bool = false
-@export var enemy_parties : int = 3
+@export var enemy_parties : int = 1
 @export var upgraded_parties : int = 0
 
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
@@ -24,7 +24,6 @@ var innerFollow : PathFollow2D
 var spawned_parties : int = 0
 var upgrades_given : int = 0
 var upgrade_nums : Array = [2]
-var starting_roll : bool = true
 
 var dispatchDay : bool = true
 
@@ -37,7 +36,7 @@ func _ready() -> void:
 	Engine.time_scale = 1
 	
 func new_game() -> void:
-	await get_tree().create_timer(.5).timeout
+	await get_tree().create_timer(.125).timeout
 	%SpawnTimer.stop()
 	Global.nights = 0
 	Global.expansions = 0
@@ -51,12 +50,17 @@ func new_game() -> void:
 	create_enemy_perimeter(11 + Global.expansions, false)
 	
 	# add house card
-	starting_roll = true
+	ui.rollArray.append(Card.ROLLTYPE.UNIT)
+	
 	for i in range(1):
 		add_house_card()
 	for i in range(1):
 		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.FLYING
+		hCard.type = Card.CARDTYPE.BOMBARDIER
+		ui.hand.get_child(0).add_child(hCard)
+	for i in range(1):
+		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.BOMBARDIER
 		ui.hand.get_child(0).add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
@@ -195,17 +199,18 @@ func on_night_ended() -> void:
 		%SpawnTimer.wait_time = 7.5
 		
 	if is_combat_phase == false : return
+	ui.rollArray.append(Card.ROLLTYPE.GENERAL)
 	start_day()
 
 func start_day() -> void:
 	ui.crtr_night.stop()
 	ui.crtr_day.play()
+	ui.hand.process_mode = Node.PROCESS_MODE_PAUSABLE
 	# progress nights
 	Global.nights += 1
 	check_nights()
 	# start upgrade sequence
 	is_combat_phase = false
-	ui.rolltype = Card.ROLLTYPE.GENERAL
 	ui.cards.show()
 	
 	# convert units to cards
@@ -223,6 +228,8 @@ func start_day() -> void:
 		ui.hand.get_child(0).add_child(newCard)
 		newCard.for_show = false
 		Global.cardsDispatched.remove_at(Global.cardsDispatched.find(card))
+		
+		ui.rollArray.append(Card.ROLLTYPE.CHARM)
 	
 	# repair buildings
 	# jk we don't do that anymore
@@ -230,8 +237,8 @@ func start_day() -> void:
 	var buildings = get_tree().get_nodes_in_group("BUILDING")
 	var nursuries = buildings.filter(func(b : Building): return b.type == Building.TYPE.NURSERY)
 	var storages = buildings.filter(func(b : Building): return b.type == Building.TYPE.STORAGE)
-	check_extra_roll(Card.ROLLTYPE.UNIT,nursuries,25)
-	check_extra_roll(Card.ROLLTYPE.BUILDING,storages,25)
+	check_extra_roll(Card.ROLLTYPE.UNIT,nursuries,100)
+	check_extra_roll(Card.ROLLTYPE.BUILDING,storages,100)
 	
 	tileWorld.handle_navigable_cells()
 
@@ -254,10 +261,8 @@ func check_extra_roll(extraRolltype : Card.ROLLTYPE,buildingArray : Array, chanc
 		if extraChance > rand:
 			ui.rolltype = extraRolltype
 			ui.cards.show()
-			ui.extraRolls += 1
-			pass
+			ui.rollArray.append(extraRolltype)
 		extraChance -= 100
-	pass
 
 func _on_spawn_timer_timeout() -> void:
 	spawn_enemy()

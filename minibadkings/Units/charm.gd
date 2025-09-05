@@ -1,0 +1,6 @@
+extends Sprite2D
+class_name Charm
+
+enum TYPE {
+	HEARTLOCKET, RING, SWORD, FLAG, SODA, ROLLERSKATE, MEDKIT, GLASSES, NAIL
+}

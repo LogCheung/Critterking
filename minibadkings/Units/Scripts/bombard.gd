@@ -66,7 +66,7 @@ func check_aoe() -> void:
 			# trigger death anim
 			enemy.process_mode = Node.PROCESS_MODE_DISABLED
 			enemy.anim.play("death")
-			await enemy.anim.animation_finished
+			#await enemy.anim.animation_finished
 			
 			var enemyGroup = enemy.group.unitsArray
 			if enemyGroup.find(enemy) != -1 : enemyGroup.remove_at(enemyGroup.find(enemy))

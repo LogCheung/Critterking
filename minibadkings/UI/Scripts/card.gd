@@ -4,12 +4,16 @@ class_name Card
 const GROUP = preload("res://Units/Scenes/unit_group.tscn")
 const BUILDING = preload("res://TileMap/Scenes/building.tscn")
 
+# Crazed is border for units, Biter is start
+# Storage is border for buildings, TRAPS is start
+# Nail is border for charms, Heartlocket is start
 enum CARDTYPE {
 	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3,BOMBARDIER = 4, FLYING = 5 ,CRAZED = 6,
-	TRAPS ,DESTROY , HOUSE, CARE , FARM , SAPSTORE, NURSERY, STORAGE
+	TRAPS ,DESTROY , HOUSE, CARE , FARM , SAPSTORE, NURSERY, STORAGE, 
+	HEARTLOCKET, RING, SWORD, FLAG, SODA, ROLLERSKATE, MEDKIT, GLASSES, NAIL
 }
 enum ROLLTYPE {
-	GENERAL, UNIT, BUILDING
+	GENERAL, UNIT, BUILDING, CHARM
 }
 
 @export var type : CARDTYPE
@@ -23,6 +27,7 @@ enum ROLLTYPE {
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
 @onready var button: Button = %Selected
+@onready var charm_pos: Node2D = $CharmPos
 
 var default_position : Vector2
 var default_custom_min : Vector2
@@ -209,11 +214,13 @@ func randomize_type() -> void:
 	if !for_show : return
 	match rolltype:
 		ROLLTYPE.GENERAL:
-			type = randi_range(CARDTYPE.BITER,CARDTYPE.size()-1)
+			type = randi_range(CARDTYPE.BITER,CARDTYPE.STORAGE)
 		ROLLTYPE.UNIT:
 			type = randi_range(CARDTYPE.BITER,CARDTYPE.CRAZED)
 		ROLLTYPE.BUILDING:
-			type = randi_range(CARDTYPE.TRAPS,CARDTYPE.size()-1)
+			type = randi_range(CARDTYPE.TRAPS,CARDTYPE.STORAGE)
+		ROLLTYPE.CHARM:
+			type = randi_range(CARDTYPE.HEARTLOCKET,CARDTYPE.NAIL)
 	if type == CARDTYPE.HOUSE : randomize_type()
 	
 	# check if not same as other card

@@ -18,7 +18,8 @@ signal game_over
 @onready var crtr_pause: AudioStreamPlayer = %crtrPause
 @onready var dispatch: Control = %Dispatch
 
-var second_roll : bool = false
+@export var rollArray : Array
+
 var rolltype : Card.ROLLTYPE
 var extraRolls : int = 0
 var rollingExtraTime : bool = false
@@ -80,13 +81,11 @@ func control_is_visible() -> bool:
 func display_cards(display : bool) -> void:
 	# when deck of cards is clicked
 	var cardSprites = get_tree().get_nodes_in_group("CARD")
-	
+	rolltype = rollArray.front()
+	print(rolltype)
 	for card : Card in cardSprites:
 		if !card.for_show : continue
-		if world.starting_roll or second_roll:
-			card.rolltype = Card.ROLLTYPE.UNIT
-		else:
-			card.rolltype = rolltype
+		card.rolltype = rolltype
 		card.randomize_type()
 		card.visible = display
 		card.choice_picked = !display
@@ -96,17 +95,11 @@ func display_cards(display : bool) -> void:
 		
 func show_hand() -> void:
 	# when card is chosen from deck of cards
-	if world.starting_roll:
+	rollArray.pop_front()
+	if rollArray.size() > 0:
 		cards.show()
-		world.starting_roll = false
-		second_roll = true
 		return
-	if second_roll:
-		second_roll = false
-	if extraRolls > 0:
-		rollingExtraTime = true
-		return
-	rollingExtraTime = false
+	
 	cards.hide()
 	hand.show()
 	end_turn.show()

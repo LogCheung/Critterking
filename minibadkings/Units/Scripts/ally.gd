@@ -128,7 +128,7 @@ func handle_action(delta) -> void:
 				await anim.animation_finished
 				velocity = Vector2.ZERO
 				attack_cd.start()
-				#attacking = true
+				attacking = true
 				return
 		ACTION.STRAFE:
 			find_target()
