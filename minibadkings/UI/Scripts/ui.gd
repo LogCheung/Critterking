@@ -81,7 +81,6 @@ func control_is_visible() -> bool:
 func display_cards(display : bool) -> void:
 	# after deck of cards is clicked and frame 18 of the anim
 	var cardSprites = get_tree().get_nodes_in_group("CARD")
-	rolltype = rollArray.front()
 	print(rolltype)
 	for card : Card in cardSprites:
 		if !card.for_show : continue
@@ -118,11 +117,14 @@ func on_game_over() -> void:
 func _on_show_pressed() -> void:
 	# when deck of cards is clicked, show anim will play
 	if anim.is_playing():return
-	var cardSprites = get_tree().get_nodes_in_group("CARD")
-	
-	
+	rolltype = rollArray.front()
 	$Shuffle
 	%Shuffle.play()
+	
+	if rolltype == Card.ROLLTYPE.CHARM:
+		%CardShow.texture = preload("res://UI/Assets/menus/discoveryshow.png")
+	else:
+		%CardShow.texture = preload("res://UI/Assets/menus/cardshow.png")
 	anim.play("cardshow")
 
 
@@ -145,8 +147,6 @@ func _on_help_pressed() -> void:
 	%crtrMenu.stop()
 	help.show()
 	mainmenu.hide()
-	pass # Replace with function body.
-
 
 func _on_settings_pressed() -> void:
 	%Button.play()
