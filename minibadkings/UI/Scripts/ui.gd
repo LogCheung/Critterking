@@ -79,7 +79,7 @@ func control_is_visible() -> bool:
 	return false
 	
 func display_cards(display : bool) -> void:
-	# when deck of cards is clicked
+	# after deck of cards is clicked and frame 18 of the anim
 	var cardSprites = get_tree().get_nodes_in_group("CARD")
 	rolltype = rollArray.front()
 	print(rolltype)
@@ -89,9 +89,6 @@ func display_cards(display : bool) -> void:
 		card.randomize_type()
 		card.visible = display
 		card.choice_picked = !display
-		
-	if rollingExtraTime:
-		extraRolls -= 1
 		
 func show_hand() -> void:
 	# when card is chosen from deck of cards
@@ -119,12 +116,11 @@ func on_game_over() -> void:
 	%nights.text = str(Global.nights)
 
 func _on_show_pressed() -> void:
+	# when deck of cards is clicked, show anim will play
 	if anim.is_playing():return
 	var cardSprites = get_tree().get_nodes_in_group("CARD")
 	
-	for card : Card in cardSprites:
-		if !card.for_show : continue
-		if card.visible: return
+	
 	$Shuffle
 	%Shuffle.play()
 	anim.play("cardshow")
