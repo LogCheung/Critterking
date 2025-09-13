@@ -4,3 +4,5 @@ class_name Charm
 enum TYPE {
 	HEARTLOCKET, RING, SWORD, FLAG, SODA, ROLLERSKATE, MEDKIT, GLASSES, NAIL
 }
+
+@export var type : TYPE

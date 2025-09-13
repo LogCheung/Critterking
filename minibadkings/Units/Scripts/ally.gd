@@ -185,7 +185,7 @@ func match_type() -> void:
 			sprite_2d.texture = SHIELDEDNORMALSE if !upgraded else UPSHIELDEDNORMALSE
 		TYPE.CRAZED:
 			sprite_2d.texture = CRAZEDNORMALSE if !upgraded else UPCRAZEDNORMALSE
-			health = 0.5
+			health = 2
 			damage = 0.5
 			speed = 60
 			attack_cd.wait_time = .5
@@ -203,7 +203,7 @@ func match_type() -> void:
 			damage = 1.5
 			attackRange = 50
 			visionRange = 70
-			attack_cd.wait_time = 2
+			attack_cd.wait_time = 2.5
 			%HurtShape.shape.size = Vector2(15,15)
 			%HurtShape.position = Vector2(6.5,1.5)
 	set_up_vision()

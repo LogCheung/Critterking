@@ -20,6 +20,8 @@ enum ROLLTYPE {
 @export var rolltype : ROLLTYPE
 @export var for_show : bool  = false
 @export var level : int = 0
+@export var being_charmed : bool
+@export var charm : Charm 
 
 @onready var ui : UI = get_tree().get_first_node_in_group("UI")
 @onready var sprite_2d: Sprite2D = $Sprite2D
@@ -212,6 +214,7 @@ func check_if_merge(plopTile : Vector2) -> bool:
 
 func randomize_type() -> void:
 	if !for_show : return
+	if being_charmed : return
 	match rolltype:
 		ROLLTYPE.GENERAL:
 			type = randi_range(CARDTYPE.BITER,CARDTYPE.STORAGE)
@@ -240,6 +243,24 @@ func refresh_positions() -> void:
 	
 
 func add_card_to_hand() -> void:
+	if ui.rolltype == ROLLTYPE.CHARM:
+		print('yes charm')
+		var card : Card = Global.cardsDispatched.front()
+		var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
+		newCard.type = Global.cardsDispatched.front().type
+		newCard.level = card.level
+		
+		var newCharm = preload("res://Units/Scenes/charm.tscn").instantiate()
+		newCharm.type = type - CARDTYPE.HEARTLOCKET
+		newCard.charm = newCharm
+		
+		print("is now : " + str(newCard.type))
+		Global.cardsInHand.append(newCard)
+		ui.hand.get_child(0).add_child(newCard)
+		newCard.for_show = false
+		Global.cardsDispatched.remove_at(Global.cardsDispatched.find(card))
+		return
+		
 	var dupe : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 	dupe.type = type
 	Global.cardsInHand.append(dupe)
@@ -310,6 +331,7 @@ func match_building_type(building : Building) -> Building:
 
 func _on_selected_pressed() -> void:
 	if choice_picked : return
+	if being_charmed : return
 	if for_show:
 		choice_picked = true
 		ui.anim.play("cardhide")

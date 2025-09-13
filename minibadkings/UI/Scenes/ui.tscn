@@ -1,12 +1,12 @@
 [gd_scene load_steps=32 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
-[ext_resource type="Texture2D" uid="uid://kf8vcph4uky7" path="res://UI/Assets/menus/cardshow.png" id="2_rbgpe"]
 [ext_resource type="Texture2D" uid="uid://luuqbnbqgyao" path="res://UI/Assets/menus/mainmenu.png" id="3_2fejo"]
 [ext_resource type="PackedScene" uid="uid://bjjg37vgshqt6" path="res://UI/Scenes/card.tscn" id="3_bujes"]
 [ext_resource type="Texture2D" uid="uid://cq8c1lx28bb3u" path="res://UI/Assets/menus/help.png" id="4_pyqth"]
 [ext_resource type="Texture2D" uid="uid://ce2faiksbdbqw" path="res://UI/Assets/menus/settings.png" id="5_kd6an"]
 [ext_resource type="Texture2D" uid="uid://bfqdqavdl2kr3" path="res://UI/Assets/menus/pause.png" id="5_n2q0n"]
+[ext_resource type="Texture2D" uid="uid://drytwq44nae6t" path="res://UI/Assets/menus/discoveryshow.png" id="5_oemsu"]
 [ext_resource type="Texture2D" uid="uid://dwseh6hsy3l77" path="res://UI/Assets/menus/gameover.png" id="7_ftqev"]
 [ext_resource type="FontFile" uid="uid://dqt550qq7jmvu" path="res://Units/Debug/PressStart2P.ttf" id="7_titua"]
 [ext_resource type="Script" uid="uid://dn5w3jfm4dcjv" path="res://UI/Scripts/slider.gd" id="8_6dw6b"]
@@ -457,7 +457,6 @@ horizontal_alignment = 1
 
 [node name="Cards" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -468,9 +467,9 @@ metadata/_edit_use_anchors_ = true
 [node name="CardShow" type="Sprite2D" parent="Cards"]
 unique_name_in_owner = true
 scale = Vector2(3, 3)
-texture = ExtResource("2_rbgpe")
+texture = ExtResource("5_oemsu")
 offset = Vector2(320, 180)
-hframes = 20
+hframes = 40
 
 [node name="Show" type="Button" parent="Cards/CardShow"]
 anchors_preset = -1
@@ -489,23 +488,38 @@ metadata/_edit_use_anchors_ = true
 [node name="Card" parent="Cards" instance=ExtResource("3_bujes")]
 visible = false
 layout_mode = 1
-offset_left = 288.0
-offset_top = 45.0
-offset_right = 376.0
-offset_bottom = 277.0
+offset_left = 291.62
+offset_top = 60.12
+offset_right = 412.38
+offset_bottom = 301.88
+scale = Vector2(3, 3)
 for_show = true
 
 [node name="Card2" parent="Cards" instance=ExtResource("3_bujes")]
 visible = false
 layout_mode = 1
-offset_left = 1248.0
-offset_top = 45.0
-offset_right = 1336.0
-offset_bottom = 277.0
+offset_left = 1251.62
+offset_top = 60.12
+offset_right = 1372.38
+offset_bottom = 301.88
+scale = Vector2(3, 3)
 for_show = true
+
+[node name="Card3" parent="Cards" instance=ExtResource("3_bujes")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+offset_left = 772.08
+offset_top = 291.12
+offset_right = 892.84
+offset_bottom = 532.88
+scale = Vector2(3, 3)
+for_show = true
+being_charmed = true
 
 [node name="Hand" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0

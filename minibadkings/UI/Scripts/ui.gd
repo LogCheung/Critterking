@@ -18,7 +18,7 @@ signal game_over
 @onready var crtr_pause: AudioStreamPlayer = %crtrPause
 @onready var dispatch: Control = %Dispatch
 
-@export var rollArray : Array
+@export var rollArray : Array = []
 
 var rolltype : Card.ROLLTYPE
 var extraRolls : int = 0
@@ -81,13 +81,14 @@ func control_is_visible() -> bool:
 func display_cards(display : bool) -> void:
 	# after deck of cards is clicked and frame 18 of the anim
 	var cardSprites = get_tree().get_nodes_in_group("CARD")
-	print(rolltype)
 	for card : Card in cardSprites:
 		if !card.for_show : continue
 		card.rolltype = rolltype
 		card.randomize_type()
 		card.visible = display
 		card.choice_picked = !display
+	
+	%Card3.visible = rolltype == Card.ROLLTYPE.CHARM and display
 		
 func show_hand() -> void:
 	# when card is chosen from deck of cards
@@ -123,8 +124,12 @@ func _on_show_pressed() -> void:
 	
 	if rolltype == Card.ROLLTYPE.CHARM:
 		%CardShow.texture = preload("res://UI/Assets/menus/discoveryshow.png")
+		%CardShow.hframes = 40
+		%Card3.type = Global.cardsDispatched.front().type
+		%Card3.match_sprite_type()
 	else:
 		%CardShow.texture = preload("res://UI/Assets/menus/cardshow.png")
+		%CardShow.hframes = 20
 	anim.play("cardshow")
 
 
@@ -226,6 +231,8 @@ func _on_dispatch_end_pressed() -> void:
 			newCard.level = c.level
 			Global.cardsDispatched.append(newCard)
 			c.queue_free()
+			
+	print("is dis : "  + str(Global.cardsDispatched.front().type))
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):

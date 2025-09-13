@@ -23,7 +23,7 @@ var innerFollow : PathFollow2D
 
 var spawned_parties : int = 0
 var upgrades_given : int = 0
-var upgrade_nums : Array = [2]
+var upgrade_nums : Array = []
 
 var dispatchDay : bool = true
 
@@ -34,7 +34,7 @@ func _ready() -> void:
 	enemy_group_eliminated.connect(on_enemy_group_eliminated)
 	
 	Engine.time_scale = 1
-	
+
 func new_game() -> void:
 	await get_tree().create_timer(.125).timeout
 	%SpawnTimer.stop()
@@ -127,6 +127,8 @@ func create_enemy_perimeter(dist : int, outer : bool) -> void:
 		innerFollow = follow
 
 func spawn_enemy() -> void:
+	if spawned_parties >= enemy_parties:
+		return
 	# random positon along perimeter of player base
 	var rand = randf()
 	var follow = innerFollow if randi() % 2 == 0 else outerFollow
@@ -162,12 +164,15 @@ func on_night_started() -> void:
 		%SpawnTimer.wait_time = 6
 		enemy_parties += 4
 	print(enemy_parties)
+	
 	# start game and hide menus
 	tileWorld.handle_navigable_cells()
 	is_combat_phase = true
 	spawned_parties = 0
+	spawn_enemy()
 	%Game.process_mode = Node.PROCESS_MODE_PAUSABLE
 	%SpawnTimer.start()
+	
 	# set upgrade number
 	upgrade_nums.clear()
 	for i in range(upgraded_parties):
@@ -220,15 +225,6 @@ func start_day() -> void:
 		g.terminate()
 		
 	for card : Card in Global.cardsDispatched:
-		var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
-		newCard.type = card.type
-		newCard.level = card.level
-		
-		Global.cardsInHand.append(newCard)
-		ui.hand.get_child(0).add_child(newCard)
-		newCard.for_show = false
-		Global.cardsDispatched.remove_at(Global.cardsDispatched.find(card))
-		
 		ui.rollArray.append(Card.ROLLTYPE.CHARM)
 	
 	# repair buildings
@@ -272,11 +268,9 @@ func _on_spawn_timer_timeout() -> void:
 		var parties = Global.nights / 3
 		for i in range(parties):
 			spawn_enemy()
-	
 	await get_tree().create_timer(.5).timeout
 	if spawned_parties >= enemy_parties:
 		%SpawnTimer.stop()
-	
 
 func match_unit_to_card(card : Card,unitType : Unit.TYPE) -> Card:
 	match unitType:
@@ -311,7 +305,6 @@ func check_nights() -> void:
 	
 	if Global.nights % 6 == 0:
 		night_is_expansion = true
-		print("swarm now")
 		add_house_card()
 		expand()
 		upgraded_parties += 1
