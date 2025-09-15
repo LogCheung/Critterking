@@ -225,7 +225,7 @@ func randomize_type() -> void:
 		ROLLTYPE.BUILDING:
 			type = randi_range(CARDTYPE.TRAPS,CARDTYPE.STORAGE)
 		ROLLTYPE.CHARM:
-			type = randi_range(CARDTYPE.HEARTLOCKET,CARDTYPE.NAIL)
+			type = randi_range(CARDTYPE.SWORD,CARDTYPE.FLAG) #randi_range(CARDTYPE.HEARTLOCKET,CARDTYPE.NAIL)
 	if type == CARDTYPE.HOUSE : randomize_type()
 	
 	# check if not same as other card

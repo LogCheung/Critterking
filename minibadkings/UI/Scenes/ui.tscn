@@ -517,8 +517,14 @@ scale = Vector2(3, 3)
 for_show = true
 being_charmed = true
 
+[node name="Discoveryshow" type="Sprite2D" parent="Cards"]
+visible = false
+position = Vector2(591, 633)
+texture = ExtResource("5_oemsu")
+
 [node name="Hand" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0

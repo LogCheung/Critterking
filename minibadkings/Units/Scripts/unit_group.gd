@@ -13,7 +13,9 @@ func _ready() -> void:
 	super._ready()
 	being_upgraded.connect(on_being_upgraded)
 	tile = tileWorld.ground.local_to_map(global_position)
+	
 	create_formation(UNIT)
+	apply_charm()
 	%Place.play()
 	selected = false
 	_on_select_area_mouse_exited()
@@ -107,3 +109,31 @@ func on_being_upgraded() -> void:
 		max_size = 12
 	create_formation(UNIT)
 	pass
+	
+func apply_charm() -> void:
+	if !is_instance_valid(charm) or !charm: return
+	for unit : Ally in unitsArray:
+		match charm.type:
+			Charm.TYPE.HEARTLOCKET:
+				unit.max_health += 1
+				unit.health = unit.max_health
+			Charm.TYPE.RING:
+				unit.attack_cd.wait_time -= .5
+			Charm.TYPE.SWORD:
+				unit.damage += .5
+			Charm.TYPE.FLAG:
+				max_size += 1
+				create_formation(UNIT)
+			Charm.TYPE.SODA:
+				unit.speed += 10
+			Charm.TYPE.ROLLERSKATE:
+				unit.dodge += 20
+			Charm.TYPE.MEDKIT:
+				pass # recovery speed
+			Charm.TYPE.GLASSES:
+				unit.visionRange += 20
+				unit.vision.queue_free()
+				unit.set_up_vision()
+			Charm.TYPE.NAIL:
+				pass # allow for stun
+		
