@@ -84,13 +84,14 @@ offset_bottom = 252.667
 focus_mode = 0
 flat = true
 
+[node name="CharmPos" type="Node2D" parent="Sprite2D"]
+unique_name_in_owner = true
+position = Vector2(64, 241)
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_o5kma")
 }
-
-[node name="CharmPos" type="Node2D" parent="."]
-position = Vector2(64, 242)
 
 [connection signal="mouse_entered" from="Sprite2D/Selected" to="." method="_on_selected_mouse_entered"]
 [connection signal="mouse_exited" from="Sprite2D/Selected" to="." method="_on_selected_mouse_exited"]

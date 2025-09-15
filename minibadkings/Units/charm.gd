@@ -6,3 +6,24 @@ enum TYPE {
 }
 
 @export var type : TYPE
+
+func _ready() -> void:
+	match type:
+		TYPE.HEARTLOCKET:
+			texture = preload("res://UI/Assets/charms/locketIcon.png")
+		TYPE.RING:
+			texture = preload("res://UI/Assets/charms/ringIcon.png")
+		TYPE.SWORD:
+			texture = preload("res://UI/Assets/charms/swordIcon.png")
+		TYPE.FLAG:
+			texture = preload("res://UI/Assets/charms/flagIcon.png")
+		TYPE.SODA:
+			texture = preload("res://UI/Assets/charms/sodaIcon.png")
+		TYPE.ROLLERSKATE:
+			texture = preload("res://UI/Assets/charms/skateIcon.png")
+		TYPE.MEDKIT:
+			texture = preload("res://UI/Assets/charms/medkitIcon.png")
+		TYPE.GLASSES:
+			texture = preload("res://UI/Assets/charms/glassesIcon.png")
+		TYPE.NAIL:
+			texture = preload("res://UI/Assets/charms/nailsIcon.png")

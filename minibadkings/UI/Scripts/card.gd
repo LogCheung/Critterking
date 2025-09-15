@@ -29,7 +29,7 @@ enum ROLLTYPE {
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
 @onready var button: Button = %Selected
-@onready var charm_pos: Node2D = $CharmPos
+@onready var charm_pos: Node2D = %CharmPos
 
 var default_position : Vector2
 var default_custom_min : Vector2
@@ -128,9 +128,11 @@ func plop() -> void:
 			return
 		var group = GROUP.instantiate()
 		group.type = type
+		group.charm = charm
 		group.upgraded = level > 0
 		group.max_size = 12 if level == 2 else 9
 		group.global_position = tileWorld.ground.map_to_local(tile)
+		group.charm
 		await get_tree().create_timer(.2).timeout
 		groupNode.add_child(group)
 		
@@ -252,13 +254,16 @@ func add_card_to_hand() -> void:
 		
 		var newCharm = preload("res://Units/Scenes/charm.tscn").instantiate()
 		newCharm.type = type - CARDTYPE.HEARTLOCKET
-		newCard.charm = newCharm
 		
 		print("is now : " + str(newCard.type))
 		Global.cardsInHand.append(newCard)
 		ui.hand.get_child(0).add_child(newCard)
-		newCard.for_show = false
 		Global.cardsDispatched.remove_at(Global.cardsDispatched.find(card))
+		
+		newCard.for_show = false
+		newCard.charm_pos.add_child(newCharm)
+		newCard.charm = newCharm
+		
 		return
 		
 	var dupe : Card = preload("res://UI/Scenes/card.tscn").instantiate()
@@ -266,40 +271,6 @@ func add_card_to_hand() -> void:
 	Global.cardsInHand.append(dupe)
 	dupe.for_show = false
 	ui.hand.get_child(0).add_child(dupe) # container
-
-func match_sprite_type() -> void:
-	match type:
-		CARDTYPE.BITER:
-			sprite_2d.texture = preload("res://UI/Assets/cards/biterCard.png")
-		CARDTYPE.PLATED:
-			sprite_2d.texture = preload("res://UI/Assets/cards/platedCard.png")
-		CARDTYPE.SPITTER:
-			sprite_2d.texture = preload("res://UI/Assets/cards/spitterCard.png")
-		CARDTYPE.BOMBARDIER:
-			sprite_2d.texture = preload("res://UI/Assets/cards/bomberCard.png")
-		CARDTYPE.FLYING:
-			sprite_2d.texture = preload("res://UI/Assets/cards/flyingCard.png")
-		CARDTYPE.CRAZED:
-			sprite_2d.texture = preload("res://UI/Assets/cards/crazedCard.png")
-		CARDTYPE.TRAPS:
-			sprite_2d.texture = preload("res://UI/Assets/cards/trapsCard.png")
-		CARDTYPE.HOUSE:
-			sprite_2d.texture = preload("res://UI/Assets/cards/houseCard.png")
-		CARDTYPE.DESTROY:
-			sprite_2d.texture = preload("res://UI/Assets/cards/destroyCard.png")
-		CARDTYPE.CARE:
-			sprite_2d.texture = preload("res://UI/Assets/cards/careCard.png")
-		CARDTYPE.FARM:
-			sprite_2d.texture = preload("res://UI/Assets/cards/farmCard.png")
-		CARDTYPE.SAPSTORE:
-			sprite_2d.texture = preload("res://UI/Assets/cards/sapCard.png")
-		CARDTYPE.NURSERY:
-			sprite_2d.texture = preload("res://UI/Assets/cards/nurseryCard.png")
-		CARDTYPE.STORAGE:
-			sprite_2d.texture = preload("res://UI/Assets/cards/storageCard.png")
-	
-	%Upgrade1.visible = level == 1
-	%Upgrade2.visible = level == 2
 	
 func match_building_type(building : Building) -> Building:
 	match type:
@@ -358,3 +329,55 @@ func _on_selected_mouse_exited() -> void:
 	if refreshing : return
 	if setting_up : return
 	set_to_default()
+
+func match_sprite_type() -> void:
+	match type:
+		CARDTYPE.BITER:
+			sprite_2d.texture = preload("res://UI/Assets/cards/biterCard.png")
+		CARDTYPE.PLATED:
+			sprite_2d.texture = preload("res://UI/Assets/cards/platedCard.png")
+		CARDTYPE.SPITTER:
+			sprite_2d.texture = preload("res://UI/Assets/cards/spitterCard.png")
+		CARDTYPE.BOMBARDIER:
+			sprite_2d.texture = preload("res://UI/Assets/cards/bomberCard.png")
+		CARDTYPE.FLYING:
+			sprite_2d.texture = preload("res://UI/Assets/cards/flyingCard.png")
+		CARDTYPE.CRAZED:
+			sprite_2d.texture = preload("res://UI/Assets/cards/crazedCard.png")
+		CARDTYPE.TRAPS:
+			sprite_2d.texture = preload("res://UI/Assets/cards/trapsCard.png")
+		CARDTYPE.HOUSE:
+			sprite_2d.texture = preload("res://UI/Assets/cards/houseCard.png")
+		CARDTYPE.DESTROY:
+			sprite_2d.texture = preload("res://UI/Assets/cards/destroyCard.png")
+		CARDTYPE.CARE:
+			sprite_2d.texture = preload("res://UI/Assets/cards/careCard.png")
+		CARDTYPE.FARM:
+			sprite_2d.texture = preload("res://UI/Assets/cards/farmCard.png")
+		CARDTYPE.SAPSTORE:
+			sprite_2d.texture = preload("res://UI/Assets/cards/sapCard.png")
+		CARDTYPE.NURSERY:
+			sprite_2d.texture = preload("res://UI/Assets/cards/nurseryCard.png")
+		CARDTYPE.STORAGE:
+			sprite_2d.texture = preload("res://UI/Assets/cards/storageCard.png")
+		CARDTYPE.HEARTLOCKET:
+			sprite_2d.texture = preload("res://UI/Assets/cards/locketCard.png")
+		CARDTYPE.RING:
+			sprite_2d.texture = preload("res://UI/Assets/cards/ringCard.png")
+		CARDTYPE.SWORD:
+			sprite_2d.texture = preload("res://UI/Assets/cards/swordCard.png")
+		CARDTYPE.FLAG:
+			sprite_2d.texture = preload("res://UI/Assets/cards/flagCard.png")
+		CARDTYPE.SODA:
+			sprite_2d.texture = preload("res://UI/Assets/cards/sodaCard.png")
+		CARDTYPE.ROLLERSKATE:
+			sprite_2d.texture = preload("res://UI/Assets/cards/skateCard.png")
+		CARDTYPE.MEDKIT:
+			sprite_2d.texture = preload("res://UI/Assets/cards/medkitCard.png")
+		CARDTYPE.GLASSES:
+			sprite_2d.texture = preload("res://UI/Assets/cards/glassesCard.png")
+		CARDTYPE.NAIL:
+			sprite_2d.texture = preload("res://UI/Assets/cards/nailsCard.png")
+	
+	%Upgrade1.visible = level == 1
+	%Upgrade2.visible = level == 2
