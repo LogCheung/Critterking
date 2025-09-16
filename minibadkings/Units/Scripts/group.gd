@@ -38,7 +38,11 @@ func create_formation(unit_type : PackedScene) -> void:
 	var new_row_margin = -(x_sep)
 	var vertical_off = -16 if max_size <= 9 else -18
 	var last_pos : Vector2 = Vector2(new_row_margin,vertical_off) 
+	
 	for r in range(rows):
+		# check row is not creating extra units
+		if r == rows - 1 and max_size % columns != 0:
+			columns = max_size - size
 		for c in range(columns):
 			# add unit
 			var unit : Unit = unit_type.instantiate()
@@ -59,6 +63,7 @@ func create_formation(unit_type : PackedScene) -> void:
 			unit.formation_position = formation_pos
 			
 			unit.global_position += global_position # for global offset
+			
 		last_pos += Vector2(abs(x_sep) * 2.75,-y_sep) # add margin for next row
 		last_pos -= Vector2(x_sep,y_sep) # new row margin
 

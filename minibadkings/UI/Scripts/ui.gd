@@ -232,8 +232,6 @@ func _on_dispatch_end_pressed() -> void:
 			Global.cardsDispatched.append(newCard)
 			c.queue_free()
 			
-	print("is dis : "  + str(Global.cardsDispatched.front().type))
-
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		handle_pause()

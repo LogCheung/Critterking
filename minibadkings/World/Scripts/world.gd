@@ -160,10 +160,8 @@ func spawn_enemy() -> void:
 func on_night_started() -> void:
 	ui.hand.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	if night_is_expansion:
-		print("mpre")
 		%SpawnTimer.wait_time = 6
 		enemy_parties += 4
-	print(enemy_parties)
 	
 	# start game and hide menus
 	tileWorld.handle_navigable_cells()
@@ -233,8 +231,8 @@ func start_day() -> void:
 	var buildings = get_tree().get_nodes_in_group("BUILDING")
 	var nursuries = buildings.filter(func(b : Building): return b.type == Building.TYPE.NURSERY)
 	var storages = buildings.filter(func(b : Building): return b.type == Building.TYPE.STORAGE)
-	check_extra_roll(Card.ROLLTYPE.UNIT,nursuries,100)
-	check_extra_roll(Card.ROLLTYPE.BUILDING,storages,100)
+	check_extra_roll(Card.ROLLTYPE.UNIT,nursuries,25)
+	check_extra_roll(Card.ROLLTYPE.BUILDING,storages,25)
 	
 	tileWorld.handle_navigable_cells()
 
@@ -242,12 +240,14 @@ func unit_to_card(g : Group) -> void:
 	# create card of group
 	var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
 	newCard = match_unit_to_card(newCard,g.type)
+	if g.charm : newCard = preserve_charm_in_card(newCard,g.charm.type)
 	if g.max_size == 12: newCard.level = 2
 	elif g.upgraded: newCard.level = 1
 	
 	# add card to hand
 	Global.cardsInHand.append(newCard)
 	ui.hand.get_child(0).add_child(newCard)
+	if newCard.charm : newCard.charm_pos.add_child(newCard.charm)
 	newCard.for_show = false
 
 func check_extra_roll(extraRolltype : Card.ROLLTYPE,buildingArray : Array, chance : float) -> void:
@@ -287,6 +287,12 @@ func match_unit_to_card(card : Card,unitType : Unit.TYPE) -> Card:
 		Unit.TYPE.FLYING:
 			card.type = Card.CARDTYPE.FLYING
 	return card
+func preserve_charm_in_card(card : Card, charmType : Charm.TYPE) -> Card:
+	var dupeCharm : Charm = preload("res://Units/Scenes/charm.tscn").instantiate()
+	dupeCharm.type = charmType
+	
+	card.charm = dupeCharm
+	return card
 
 var tile2
 func _input(event: InputEvent) -> void:
@@ -319,12 +325,10 @@ func _on_timer_timeout() -> void:
 	var enemies = get_tree().get_nodes_in_group("ENEMY")
 	if spawned_parties >= enemy_parties:
 		if enemies.is_empty(): 
-			print("empty")
 			night_ended.emit()
 			return
 	elif spawned_parties < enemy_parties:
 		if %SpawnTimer.time_left > 0:
 			return
 		else:
-			print("whattt")
 			spawn_enemy()

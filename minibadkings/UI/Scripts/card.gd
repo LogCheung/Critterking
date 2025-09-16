@@ -114,7 +114,6 @@ func set_to_default() -> void:
 	is_under_mouse = false
 
 func plop() -> void:
-	print("is type : " + str(type))
 	tileWorld.handle_navigable_cells()
 	tile = world.tile2
 	var ploppableTiles = tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),1)
@@ -132,7 +131,6 @@ func plop() -> void:
 		group.upgraded = level > 0
 		group.max_size = 12 if level == 2 else 9
 		group.global_position = tileWorld.ground.map_to_local(tile)
-		group.charm
 		await get_tree().create_timer(.2).timeout
 		groupNode.add_child(group)
 		
@@ -246,7 +244,6 @@ func refresh_positions() -> void:
 
 func add_card_to_hand() -> void:
 	if ui.rolltype == ROLLTYPE.CHARM:
-		print('yes charm')
 		var card : Card = Global.cardsDispatched.front()
 		var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
 		newCard.type = Global.cardsDispatched.front().type
@@ -255,7 +252,6 @@ func add_card_to_hand() -> void:
 		var newCharm = preload("res://Units/Scenes/charm.tscn").instantiate()
 		newCharm.type = type - CARDTYPE.HEARTLOCKET
 		
-		print("is now : " + str(newCard.type))
 		Global.cardsInHand.append(newCard)
 		ui.hand.get_child(0).add_child(newCard)
 		Global.cardsDispatched.remove_at(Global.cardsDispatched.find(card))

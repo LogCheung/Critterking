@@ -112,6 +112,12 @@ func on_being_upgraded() -> void:
 	
 func apply_charm() -> void:
 	if !is_instance_valid(charm) or !charm: return
+	var nCharm = preload("res://Units/Scenes/charm.tscn").instantiate()
+	nCharm.type = charm.type
+	nCharm.visible = false
+	add_child(nCharm)
+	charm = nCharm
+	
 	for unit : Ally in unitsArray:
 		match charm.type:
 			Charm.TYPE.HEARTLOCKET:
@@ -124,6 +130,7 @@ func apply_charm() -> void:
 			Charm.TYPE.FLAG:
 				max_size += 1
 				create_formation(UNIT)
+				return
 			Charm.TYPE.SODA:
 				unit.speed += 10
 			Charm.TYPE.ROLLERSKATE:
