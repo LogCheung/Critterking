@@ -1,3 +1,4 @@
+@tool
 extends UtilityAiConsideration
 
 @export var type : Unit.TYPE

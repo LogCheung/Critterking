@@ -43,15 +43,7 @@ func _on_area_entered(area: Area2D) -> void:
 			%Hurt.play()
 			target.health -= damage if target.dodge < (randi() % 100 + 1) else 0
 		if target.health <= 0:
-			var group = target.group.unitsArray
-			if group.find(target) != - 1: group.remove_at(group.find(target))
-			target.group.unit_died.emit()
-			%Death.play()
-			# play death anim
-			target.process_mode = Node.PROCESS_MODE_DISABLED
-			target.anim.play("death")
-			await target.anim.animation_finished
-			target.queue_free()
+			target.start_death()
 		queue_free()
 
 func _on_body_entered(body: Node2D) -> void:

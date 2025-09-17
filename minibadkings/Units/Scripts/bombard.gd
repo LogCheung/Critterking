@@ -12,6 +12,7 @@ var _target : Vector2
 func _ready() -> void:
 	if is_enemy:
 		%Splash.texture = preload("res://Units/Assets/EnemySplash.png")
+		%Sprite2D.texture = preload("res://Units/Assets/enemyBombard.png")
 		hurt_box.set_collision_mask_value(2,true)
 	else:
 		# default texture is splash texture
@@ -59,20 +60,12 @@ func check_aoe() -> void:
 	var areas = hurt_box.get_overlapping_areas()
 	for area in areas:
 		if !area or !area.owner is Unit: continue
-		var enemy = area.owner
+		var enemy : Unit = area.owner
 		%Hurt.play()
-		enemy.health -= damage if enemy.dodge < (randi() % 100 + 1) else 0
+		enemy.health -= damage if enemy.dodge < (randi() % 100 + 1) else 0.0
 		if enemy.health <= 0:
 			# trigger death anim
-			enemy.process_mode = Node.PROCESS_MODE_DISABLED
-			enemy.anim.play("death")
-			#await enemy.anim.animation_finished
-			
-			var enemyGroup = enemy.group.unitsArray
-			if enemyGroup.find(enemy) != -1 : enemyGroup.remove_at(enemyGroup.find(enemy))
-			enemy.group.unit_died.emit()
-			%Death.play()
-			enemy.queue_free()
+			enemy.start_death()
 
 
 func _on_timer_timeout() -> void:

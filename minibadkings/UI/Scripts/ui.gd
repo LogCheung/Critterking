@@ -104,7 +104,15 @@ func show_hand() -> void:
 	await get_tree().create_timer(.05).timeout
 	for c : Card in container.get_children():
 		c.set_up()
+		c.refreshing = true
+		
 	if world.dispatchDay: dispatch.show()
+	
+	# Add and remove dummy card to refresh positions
+	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+	container.add_child(hCard)
+	hCard.set_up()
+	hCard.remove_self()
 
 func on_game_over() -> void:
 	gameover.show()
@@ -119,7 +127,6 @@ func _on_show_pressed() -> void:
 	# when deck of cards is clicked, show anim will play
 	if anim.is_playing():return
 	rolltype = rollArray.front()
-	$Shuffle
 	%Shuffle.play()
 	
 	if rolltype == Card.ROLLTYPE.CHARM:
@@ -134,6 +141,7 @@ func _on_show_pressed() -> void:
 
 
 func _on_play_pressed() -> void:
+	if anim.is_playing() : return
 	%Button.play()
 	$AnimationPlayer.play("MainToGame")
 	await anim.animation_finished
@@ -222,6 +230,7 @@ func _on_continue_pressed() -> void:
 
 func _on_dispatch_end_pressed() -> void:
 	dispatch.hide()
+	dispatchAmt = 0
 	
 	var cards = get_tree().get_nodes_in_group("CARD")
 	for c : Card in cards:
@@ -232,6 +241,10 @@ func _on_dispatch_end_pressed() -> void:
 			Global.cardsDispatched.append(newCard)
 			c.queue_free()
 			
+func refresh_positions() -> void:
+	var cardsInHand = hand.get_child(0).get_children()
+	for c : Card in cardsInHand:
+		c.set_up()
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		handle_pause()

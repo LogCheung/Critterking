@@ -9,6 +9,7 @@ signal unit_died
 @export var selected : bool = false
 @export var unitsArray : Array[Unit]
 @export var upgraded : bool = false
+@export var level : int = 1
 @export var charm : Charm
 
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")

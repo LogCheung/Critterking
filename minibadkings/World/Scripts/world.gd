@@ -25,7 +25,7 @@ var spawned_parties : int = 0
 var upgrades_given : int = 0
 var upgrade_nums : Array = []
 
-var dispatchDay : bool = true
+var dispatchDay : bool = false
 
 var night_is_expansion: bool = false
 func _ready() -> void:
@@ -51,17 +51,18 @@ func new_game() -> void:
 	
 	# add house card
 	ui.rollArray.append(Card.ROLLTYPE.UNIT)
+	ui.rollArray.append(Card.ROLLTYPE.UNIT)
 	
 	for i in range(1):
 		add_house_card()
-	for i in range(1):
+	for i in range(4):
 		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 		hCard.type = Card.CARDTYPE.BOMBARDIER
 		ui.hand.get_child(0).add_child(hCard)
-	for i in range(1):
-		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.BOMBARDIER
-		ui.hand.get_child(0).add_child(hCard)
+	#for i in range(1):
+		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.BOMBARDIER
+		#ui.hand.get_child(0).add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
@@ -232,7 +233,7 @@ func start_day() -> void:
 	var nursuries = buildings.filter(func(b : Building): return b.type == Building.TYPE.NURSERY)
 	var storages = buildings.filter(func(b : Building): return b.type == Building.TYPE.STORAGE)
 	check_extra_roll(Card.ROLLTYPE.UNIT,nursuries,25)
-	check_extra_roll(Card.ROLLTYPE.BUILDING,storages,25)
+	check_extra_roll(Card.ROLLTYPE.BUILDINGS,storages,25)
 	
 	tileWorld.handle_navigable_cells()
 
@@ -241,8 +242,8 @@ func unit_to_card(g : Group) -> void:
 	var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
 	newCard = match_unit_to_card(newCard,g.type)
 	if g.charm : newCard = preserve_charm_in_card(newCard,g.charm.type)
-	if g.max_size == 12: newCard.level = 2
-	elif g.upgraded: newCard.level = 1
+	if g.max_size == 12: newCard.level = 3
+	elif g.upgraded: newCard.level = 2
 	
 	# add card to hand
 	Global.cardsInHand.append(newCard)

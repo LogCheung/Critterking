@@ -30,7 +30,7 @@ var healing : bool
 
 func _ready() -> void:
 	allyGroup = group
-	if upgraded: 
+	if level > 1: 
 		max_health = max_health + 0.5
 		health = max_health
 		damage = damage + 0.5

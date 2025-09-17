@@ -29,6 +29,7 @@ func respawn_units() -> void:
 var is_under_mouse : bool = false
 
 func _on_select_area_mouse_entered() -> void:
+	if !world.is_combat_phase: return
 	is_under_mouse = true
 	for unit : Ally in unitsArray:
 		if unit.sprite_2d.material != null:
@@ -101,14 +102,16 @@ func highlight_houses(highlight : bool = true) -> void:
 		if h.occupant != null: continue
 		h.sprite_2d.material = h.HIGHLIGHT if highlight else null
 
-func on_being_upgraded() -> void:
+func on_being_upgraded(incLevel : int) -> void:
 	%Merge.play()
-	if !upgraded:
-		upgraded = true
-	elif upgraded:
-		max_size = 12
+	level = level + incLevel
+	match level:
+		2:
+			upgraded = true
+		3:
+			upgraded = true
+			max_size = 12
 	create_formation(UNIT)
-	pass
 	
 func apply_charm() -> void:
 	if !is_instance_valid(charm) or !charm: return

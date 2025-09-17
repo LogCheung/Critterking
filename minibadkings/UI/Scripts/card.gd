@@ -10,16 +10,17 @@ const BUILDING = preload("res://TileMap/Scenes/building.tscn")
 enum CARDTYPE {
 	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3,BOMBARDIER = 4, FLYING = 5 ,CRAZED = 6,
 	TRAPS ,DESTROY , HOUSE, CARE , FARM , SAPSTORE, NURSERY, STORAGE, 
-	HEARTLOCKET, RING, SWORD, FLAG, SODA, ROLLERSKATE, MEDKIT, GLASSES, NAIL
+	HEARTLOCKET, RING, SWORD, FLAG, SODA, ROLLERSKATE, MEDKIT, GLASSES, NAIL,
+	INSPIRATION, DECARE, RECON, DEFENSE, RENOVATE, WAR, CONSCRIPTION, MASTERY, INFLUENCE, CONSTRUCTION
 }
 enum ROLLTYPE {
-	GENERAL, UNIT, BUILDING, CHARM
+	GENERAL, UNIT, BUILDINGS, CHARM, BLESSING
 }
 
 @export var type : CARDTYPE
 @export var rolltype : ROLLTYPE
 @export var for_show : bool  = false
-@export var level : int = 0
+@export var level : int = 1
 @export var being_charmed : bool
 @export var charm : Charm 
 
@@ -30,6 +31,7 @@ enum ROLLTYPE {
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
 @onready var button: Button = %Selected
 @onready var charm_pos: Node2D = %CharmPos
+
 
 var default_position : Vector2
 var default_custom_min : Vector2
@@ -128,7 +130,7 @@ func plop() -> void:
 		var group = GROUP.instantiate()
 		group.type = type
 		group.charm = charm
-		group.upgraded = level > 0
+		group.upgraded = level > 1
 		group.max_size = 12 if level == 2 else 9
 		group.global_position = tileWorld.ground.map_to_local(tile)
 		await get_tree().create_timer(.2).timeout
@@ -150,7 +152,7 @@ func remove_self() -> void:
 	selected = false
 	Global.cardsInHand.remove_at(Global.cardsInHand.find(self))
 	queue_free()
-	refresh_positions()
+	ui.refresh_positions()
 	
 func plop_building() -> void:
 	if type == CARDTYPE.DESTROY : 
@@ -207,7 +209,8 @@ func check_if_merge(plopTile : Vector2) -> bool:
 		targetGroup = g
 	
 	if is_instance_valid(targetGroup) and type==targetGroup.type:
-		targetGroup.being_upgraded.emit()
+		if targetGroup.level + level > 3: return false
+		targetGroup.being_upgraded.emit(level)
 		return true
 	
 	return false
@@ -220,10 +223,12 @@ func randomize_type() -> void:
 			type = randi_range(CARDTYPE.BITER,CARDTYPE.STORAGE)
 		ROLLTYPE.UNIT:
 			type = randi_range(CARDTYPE.BITER,CARDTYPE.CRAZED)
-		ROLLTYPE.BUILDING:
+		ROLLTYPE.BUILDINGS:
 			type = randi_range(CARDTYPE.TRAPS,CARDTYPE.STORAGE)
 		ROLLTYPE.CHARM:
-			type = randi_range(CARDTYPE.SWORD,CARDTYPE.FLAG) #randi_range(CARDTYPE.HEARTLOCKET,CARDTYPE.NAIL)
+			type = randi_range(CARDTYPE.HEARTLOCKET,CARDTYPE.NAIL)#randi_range(CARDTYPE.SWORD,CARDTYPE.FLAG) 
+		ROLLTYPE.BLESSING:
+			type = randi_range(CARDTYPE.INSPIRATION,CARDTYPE.CONSTRUCTION)
 	if type == CARDTYPE.HOUSE : randomize_type()
 	
 	# check if not same as other card
@@ -235,12 +240,6 @@ func randomize_type() -> void:
 			randomize_type()
 			return
 	match_sprite_type()
-
-func refresh_positions() -> void:
-	var cards = ui.hand.get_child(0).get_children()
-	for c : Card in cards:
-		c.set_up()
-	
 
 func add_card_to_hand() -> void:
 	if ui.rolltype == ROLLTYPE.CHARM:
@@ -375,5 +374,5 @@ func match_sprite_type() -> void:
 		CARDTYPE.NAIL:
 			sprite_2d.texture = preload("res://UI/Assets/cards/nailsCard.png")
 	
-	%Upgrade1.visible = level == 1
-	%Upgrade2.visible = level == 2
+	%Upgrade1.visible = level == 2
+	%Upgrade2.visible = level == 3

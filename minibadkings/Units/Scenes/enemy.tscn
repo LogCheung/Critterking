@@ -46,6 +46,10 @@ point_count = 2
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
+[sub_resource type="Curve" id="Curve_8inca"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="Curve" id="Curve_0wncj"]
 _limits = [0.0, 1.5, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1.5), 0.0, 0.0, 0, 0]
@@ -53,10 +57,6 @@ point_count = 2
 
 [sub_resource type="Curve" id="Curve_wh35a"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="Curve" id="Curve_8inca"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Animation" id="Animation_daau3"]
@@ -307,9 +307,17 @@ metadata/_custom_type_script = "uid://bpvkdlp8jw4sj"
 script = ExtResource("8_ubmlb")
 metadata/_custom_type_script = "uid://b2f8vq1st70r0"
 
+[node name="UtilityAiConsiderationFromNode" type="Node" parent="UtilityAiAgent/strafe/UtilityAiAggregation2" node_paths=PackedStringArray("node")]
+script = ExtResource("8_ohg4d")
+node = NodePath("../../../..")
+property_name = "too_close"
+curve = SubResource("Curve_8inca")
+metadata/_custom_type_script = "uid://dojkyt7skh8fh"
+
 [node name="is_ranged" type="Node" parent="UtilityAiAgent/strafe/UtilityAiAggregation2"]
 script = ExtResource("10_1flw5")
 type = 3
+secondType = 4
 curve = SubResource("Curve_0wncj")
 metadata/_custom_type_script = "uid://ds3cm31xh6g85"
 
@@ -323,13 +331,6 @@ script = ExtResource("8_ohg4d")
 node = NodePath("../../../../..")
 property_name = "attack_ready"
 curve = SubResource("Curve_wh35a")
-metadata/_custom_type_script = "uid://dojkyt7skh8fh"
-
-[node name="UtilityAiConsiderationFromNode" type="Node" parent="UtilityAiAgent/strafe/UtilityAiAggregation2/UtilityAiAggregation" node_paths=PackedStringArray("node")]
-script = ExtResource("8_ohg4d")
-node = NodePath("../../../../..")
-property_name = "too_close"
-curve = SubResource("Curve_8inca")
 metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]

@@ -20,6 +20,7 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @export var attackRange : float = 10
 @export var visionRange : float = 32
 @export var dodge : int = 0
+@export var level : int = 1
 @export var formation_position : Node2D 
 @export var group : Group
 @export var type : TYPE = TYPE.MELEE
@@ -63,7 +64,6 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	attack_ready = attack_cd.time_left <= 0
 	distance_from_form = global_position.distance_to(formation_position.global_position)
-	
 	
 	if global_position.distance_to(formation_position.global_position) <= 2:
 		# precheck if it is behind something
@@ -144,21 +144,25 @@ func on_hurt_box_land(area : Area2D) -> void:
 	if area.owner is Unit:
 		var enemy : Unit = area.owner
 		%Hurt.play()
-		enemy.health -= damage if enemy.dodge < (randi() % 100 + 1) else 0
+		enemy.health -= damage if enemy.dodge < (randi() % 100 + 1) else 0.0
 		hurtbox_cd.start()
 		if enemy.health <= 0:
 			# trigger death anim
-			enemy.process_mode = Node.PROCESS_MODE_DISABLED
-			enemy.anim.play("death")
-			await enemy.anim.animation_finished
+			enemy.start_death()
 			
-			var enemyGroup = enemy.group.unitsArray
-			if enemyGroup.find(enemy) != -1 : enemyGroup.remove_at(enemyGroup.find(enemy))
-			enemy.group.unit_died.emit()
-			%Death.play()
-			enemy.queue_free()
 func on_hurt_box_building_land(body : Node2D):
 	if body is Building:
 		if body.type != Building.TYPE.TRAP or body.type != Building.TYPE.RUINS:
 			body.health -= damage
 	pass
+
+func start_death() -> void:
+	process_mode = Node.PROCESS_MODE_DISABLED
+	anim.play("death")
+	await anim.animation_finished
+
+	var unitArr = group.unitsArray
+	if unitArr.find(self) != -1 : unitArr.remove_at(unitArr.find(self))
+	group.unit_died.emit()
+	%Death.play()
+	queue_free()
