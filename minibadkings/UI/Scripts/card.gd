@@ -70,7 +70,7 @@ func handle_drag() -> void:
 	if Input.is_action_just_pressed("select") and !selected:
 		if Rect2(Vector2(), size).has_point(get_local_mouse_position()):
 			# check if selecting for dispatch
-			if ui.dispatch.visible and ui.dispatchAmt < ui.dispatchLimit:
+			if ui.dispatch.visible and ui.dispatchAmt < ui.dispatchLimit and !charm:
 				if type > CARDTYPE.CRAZED : return
 				ui.dispatchAmt += 1
 				dispatchSelected = true
