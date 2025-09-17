@@ -39,6 +39,9 @@ func _on_select_area_mouse_exited() -> void:
 	is_under_mouse = false
 	if selected:
 		return
+	# unzoom camera
+	var cam : Camera2D = get_tree().get_first_node_in_group("CAMERA")
+	cam.zoom -= Vector2(0.075,0.075)
 	for unit : Ally in unitsArray:
 		if unit.under_mouse:
 			_on_select_area_mouse_entered()
