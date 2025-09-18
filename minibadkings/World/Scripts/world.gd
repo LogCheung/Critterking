@@ -38,6 +38,10 @@ func _ready() -> void:
 func new_game() -> void:
 	await get_tree().create_timer(.125).timeout
 	%SpawnTimer.stop()
+	%SpawnTimer.wait_time == 7.5
+	enemy_parties == 4
+	upgraded_parties == 0
+	dispatchDay = false
 	Global.nights = 0
 	Global.expansions = 0
 	Global.cardsInHand.clear()
@@ -161,14 +165,16 @@ func spawn_enemy() -> void:
 func on_night_started() -> void:
 	ui.hand.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	if night_is_expansion:
-		%SpawnTimer.wait_time = 6
+		%SpawnTimer.wait_time -= 1.5
 		enemy_parties += 4
+		upgraded_parties += 2
 	
 	# start game and hide menus
 	tileWorld.handle_navigable_cells()
 	is_combat_phase = true
 	spawned_parties = 0
-	spawn_enemy()
+	for i in range(Global.expansions + 1):
+		spawn_enemy()
 	%Game.process_mode = Node.PROCESS_MODE_PAUSABLE
 	%SpawnTimer.start()
 	
@@ -200,7 +206,8 @@ func on_night_ended() -> void:
 	if night_is_expansion:
 		night_is_expansion = false
 		enemy_parties -= 4
-		%SpawnTimer.wait_time = 7.5
+		upgraded_parties -= 2
+		%SpawnTimer.wait_time += 1.5
 		
 	if is_combat_phase == false : return
 	ui.rollArray.append(Card.ROLLTYPE.GENERAL)
@@ -310,11 +317,16 @@ func check_nights() -> void:
 	if Global.nights % 3 == 0:
 		dispatchDay = true
 	
+	if Global.nights % 4 == 0:
+		upgraded_parties += 1
+	
 	if Global.nights % 6 == 0:
 		night_is_expansion = true
 		add_house_card()
 		expand()
-		upgraded_parties += 1
+		
+	if Global.nights % 10 == 0:
+		%SpawnTimer.wait_time -= 1.5
 
 func expand() -> void:
 	Global.expansions += 1
