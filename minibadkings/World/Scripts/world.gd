@@ -39,6 +39,9 @@ func new_game() -> void:
 	await get_tree().create_timer(.125).timeout
 	%SpawnTimer.stop()
 	%SpawnTimer.wait_time == 7.5
+	enemy_parties == 4
+	upgraded_parties == 0
+	dispatchDay = false
 	Global.nights = 0
 	Global.expansions = 0
 	Global.cardsInHand.clear()
