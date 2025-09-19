@@ -165,6 +165,7 @@ func spawn_enemy() -> void:
 
 func on_night_started() -> void:
 	ui.hand.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+	ui.decrees.process_mode = Node.PROCESS_MODE_PAUSABLE
 	if night_is_expansion:
 		%SpawnTimer.wait_time -= 1.5
 		enemy_parties += 4
@@ -218,6 +219,7 @@ func start_day() -> void:
 	ui.crtr_night.stop()
 	ui.crtr_day.play()
 	ui.hand.process_mode = Node.PROCESS_MODE_PAUSABLE
+	ui.decrees.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	# progress nights
 	Global.nights += 1
 	check_nights()

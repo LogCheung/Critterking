@@ -17,6 +17,7 @@ signal game_over
 @onready var crtr_night: AudioStreamPlayer = %crtrNight
 @onready var crtr_pause: AudioStreamPlayer = %crtrPause
 @onready var dispatch: Control = %Dispatch
+@onready var decrees: Control = %Decrees
 
 @export var rollArray : Array = []
 

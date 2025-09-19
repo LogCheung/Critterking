@@ -4,15 +4,18 @@
 [ext_resource type="Texture2D" uid="uid://sdy5sp6pb1jv" path="res://UI/Assets/decrees/conscriptionIco.png" id="2_l0dgt"]
 
 [node name="Decree" type="Control"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(32, 26)
 layout_mode = 3
 anchors_preset = 0
 offset_left = -16.0
 offset_top = -16.0
 offset_right = 16.0
-offset_bottom = 16.0
+offset_bottom = 10.0
 script = ExtResource("1_e1hmt")
 
 [node name="ConscriptionIco" type="Sprite2D" parent="."]
 texture = ExtResource("2_l0dgt")
 offset = Vector2(16, 16)
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
