@@ -10,7 +10,7 @@ signal night_ended
 signal mouse_clicked
 
 @export var is_combat_phase : bool = false
-@export var enemy_parties : int = 4
+@export var enemy_parties : int = 3
 @export var upgraded_parties : int = 0
 
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
@@ -38,8 +38,8 @@ func _ready() -> void:
 func new_game() -> void:
 	await get_tree().create_timer(.125).timeout
 	%SpawnTimer.stop()
-	%SpawnTimer.wait_time = 7.5
-	enemy_parties = 4
+	%SpawnTimer.wait_time = 10
+	enemy_parties = 3
 	upgraded_parties = 0
 	dispatchDay = false
 	Global.nights = 0

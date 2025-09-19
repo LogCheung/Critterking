@@ -134,9 +134,10 @@ func match_type() -> void:
 		TYPE.CRAZED:
 			if upgraded: sprite_2d.texture = UPCRAZEDNORMALSE
 			else: sprite_2d.texture = CRAZEDNORMALSE
-			health = 0.5
+			health = 2
 			damage = 0.5
 			speed = 60
+			dodge = 25	
 			attack_cd.wait_time = 1
 		TYPE.BOMBER:
 			sprite_2d.texture = BOMBERNORMALSE if !upgraded else UPBOMBERNORMALSE
