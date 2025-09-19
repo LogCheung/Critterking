@@ -27,9 +27,9 @@ func _ready() -> void:
 	super._ready()
 	match_type()
 	if upgraded: 
-		max_health = max_health + 1
+		max_health = max_health + 0.5
 		health = max_health
-		damage = damage + 1
+		damage = damage + 0.5
 	house_destroyed.connect(find_building)
 
 func _process(delta: float) -> void:

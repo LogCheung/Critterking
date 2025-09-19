@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtxo6oppyymjc"]
+
+[ext_resource type="Script" uid="uid://csaqv2adjje2f" path="res://UI/Scripts/decree.gd" id="1_e1hmt"]
+[ext_resource type="Texture2D" uid="uid://sdy5sp6pb1jv" path="res://UI/Assets/decrees/conscriptionIco.png" id="2_l0dgt"]
+
+[node name="Decree" type="Control"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 3
+anchors_preset = 0
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+script = ExtResource("1_e1hmt")
+
+[node name="ConscriptionIco" type="Sprite2D" parent="."]
+texture = ExtResource("2_l0dgt")
+offset = Vector2(16, 16)

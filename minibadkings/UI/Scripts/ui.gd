@@ -100,6 +100,7 @@ func show_hand() -> void:
 	cards.hide()
 	hand.show()
 	end_turn.show()
+	%Decrees.show()
 	var container = %Hand.get_child(0) # Hboxcontainer
 	await get_tree().create_timer(.05).timeout
 	for c : Card in container.get_children():

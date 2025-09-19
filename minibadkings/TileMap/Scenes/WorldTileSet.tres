@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=11 format=3 uid="uid://bxsbqepu6rxgc"]
+[gd_resource type="TileSet" load_steps=12 format=3 uid="uid://bxsbqepu6rxgc"]
 
 [ext_resource type="Texture2D" uid="uid://cx0b0ucjd4cee" path="res://TileMap/Assets/tiles.png" id="1_nbqb2"]
 [ext_resource type="Texture2D" uid="uid://d06rjt2g5bhak" path="res://TileMap/Assets/test.png" id="2_hh4v1"]
@@ -16,6 +16,12 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(0, -16, -32, 0, 0, 16, 
 agent_radius = 0.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_fl1qv"]
+vertices = PackedVector2Array(32, 0, 0, 16, -32, 0, 0, -16)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, -16, -32, 0, 0, 16, 32, 0)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ymfrj"]
 vertices = PackedVector2Array(32, 0, 0, 16, -32, 0, 0, -16)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(0, -16, -32, 0, 0, 16, 32, 0)])
@@ -64,6 +70,7 @@ texture_region_size = Vector2i(64, 64)
 0:0/4 = 4
 0:0/4/texture_origin = Vector2i(0, -16)
 0:0/4/modulate = Color(0.0846899, 0.0846899, 0.0846899, 1)
+0:0/4/navigation_layer_0/polygon = SubResource("NavigationPolygon_ymfrj")
 1:0/0 = 0
 1:0/0/texture_origin = Vector2i(0, 16)
 2:0/0 = 0

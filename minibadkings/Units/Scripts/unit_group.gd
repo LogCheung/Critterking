@@ -39,9 +39,6 @@ func _on_select_area_mouse_exited() -> void:
 	is_under_mouse = false
 	if selected:
 		return
-	# unzoom camera
-	var cam : Camera2D = get_tree().get_first_node_in_group("CAMERA")
-	cam.zoom -= Vector2(0.075,0.075)
 	for unit : Ally in unitsArray:
 		if unit.under_mouse:
 			_on_select_area_mouse_entered()
@@ -53,12 +50,14 @@ func _input(event: InputEvent) -> void:
 		Engine.time_scale = 1
 		var mouse_pos = get_global_mouse_position()
 		var pos = tileWorld.ground.local_to_map(mouse_pos) # now tile cord
-		if !tileWorld.hover.get_used_cells().has(Vector2i(pos)):
+		if !tileWorld.hover.get_used_cells().has(Vector2i(pos)): # can't go to where clicked
 			tileWorld.hover.visible = false
 			selected = false
 			check_on_house(mouse_pos)
 			_on_select_area_mouse_exited()
-		else:
+			unzoom_camera()
+			
+		else: # can go where clicked
 			highlight_houses(false)
 			tile = pos
 			pos = tileWorld.ground.map_to_local(pos) # now local map cord
@@ -71,6 +70,8 @@ func _on_select_area_input_event(viewport: Node, event: InputEvent, shape_idx: i
 			selected = !selected
 			if selected: 
 				on_selected()
+			else:
+				unzoom_camera()
 func on_selected() -> void:
 	# zoom camera
 	var cam : Camera2D = get_tree().get_first_node_in_group("CAMERA")
@@ -82,6 +83,11 @@ func on_selected() -> void:
 	Engine.time_scale = .1
 	_on_select_area_mouse_exited()
 	tileWorld.hover.visible = true
+	
+func unzoom_camera() -> void:
+	# unzoom camera
+	var cam : Camera2D = get_tree().get_first_node_in_group("CAMERA")
+	cam.zoom -= Vector2(0.075,0.075)
 
 func check_on_house(mousePos : Vector2) -> void:
 	if size == max_size : return

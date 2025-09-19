@@ -156,7 +156,7 @@ func _on_timer_timeout() -> void:
 	if bar.value >= bar.max_value:
 		occupant.global_position = tileWorld.ground.map_to_local(doorstepTile)
 		if type == TYPE.CARE:
-			occupant.max_size = round(occupant.max_size * (2/3)  + .5)
+			occupant.max_size = round(occupant.max_size * (2.0/3)  + .4)
 		else:
 			occupant.max_size = 12 if occupant.level == 3 else 9
 		occupant.respawn_units()
