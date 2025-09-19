@@ -190,6 +190,7 @@ func on_night_started() -> void:
 	
 	for c in ui.get_children():
 		if !c is Control: continue
+		if c == ui.night_counter or c == ui.decrees : continue
 		c.hide()
 
 func on_enemy_group_eliminated() -> void:

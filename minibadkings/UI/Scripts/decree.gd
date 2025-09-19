@@ -17,6 +17,8 @@ func _ready() -> void:
 
 func _on_mouse_entered() -> void:
 	under_mouse = true
+	sprite.scale = Vector2(1.5,1.5)
+	custom_minimum_size *= 1.5
 	sprite.material = preload("res://Units/Shaders/houseHighlight.tres")
 	pass # Replace with function body.
 
@@ -24,6 +26,8 @@ func _on_mouse_entered() -> void:
 func _on_mouse_exited() -> void:
 	under_mouse = false
 	sprite.material = null
+	custom_minimum_size /= 1.5
+	sprite.scale = Vector2(1,1)
 	pass # Replace with function body.
 
 func match_sprite() -> void:

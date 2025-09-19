@@ -18,6 +18,7 @@ signal game_over
 @onready var crtr_pause: AudioStreamPlayer = %crtrPause
 @onready var dispatch: Control = %Dispatch
 @onready var decrees: Control = %Decrees
+@onready var night_counter: Control = %NightCounter
 
 @export var rollArray : Array = []
 
@@ -61,7 +62,6 @@ func _process(delta: float) -> void:
 		%crtrDay.stop()
 		%crtrPause.stop()
 		%crtrNight.play()
-	%NightCounter.show()
 	%DayNight.text = str(Global.nights)
 		
 func _ready() -> void:
@@ -101,7 +101,8 @@ func show_hand() -> void:
 	cards.hide()
 	hand.show()
 	end_turn.show()
-	%Decrees.show()
+	decrees.show()
+	night_counter.show()
 	var container = %Hand.get_child(0) # Hboxcontainer
 	await get_tree().create_timer(.05).timeout
 	for c : Card in container.get_children():
@@ -134,7 +135,8 @@ func _on_show_pressed() -> void:
 	if rolltype == Card.ROLLTYPE.CHARM:
 		%CardShow.texture = preload("res://UI/Assets/menus/discoveryshow.png")
 		%CardShow.hframes = 40
-		%Card3.type = Global.cardsDispatched.front().type
+		if !Global.cardsDispatched.is_empty() : 
+			%Card3.type = Global.cardsDispatched.front().type
 		%Card3.match_sprite_type()
 	else:
 		%CardShow.texture = preload("res://UI/Assets/menus/cardshow.png")
