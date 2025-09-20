@@ -38,8 +38,8 @@ func _ready() -> void:
 	
 	super._ready()
 	selected.connect(on_selected)
-	healthchange.connect(on_health_change)
-	speedchange.connect(on_speed_change)
+	#healthchange.connect(on_health_change)
+	#speedchange.connect(on_speed_change)
 	unselected.connect(on_unselected)
 	match_type()
 	
@@ -209,18 +209,18 @@ func match_type() -> void:
 			%HurtShape.position = Vector2(6.5,1.5)
 	set_up_vision()
 
-func on_health_change() -> void:
-	var farms = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
-	farms = farms.filter(func(b : Building):return b.type == Building.TYPE.FARM)
-	for f : Building in farms:
-		max_health = max_health + 0.5
-		health = max_health
-		
-func on_speed_change() -> void:
-	var saps = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
-	saps = saps.filter(func(b : Building):return b.type == Building.TYPE.SAPSTORE)
-	for s : Building in saps:
-		speed = speed + 3
+#func on_health_change() -> void:
+	#var farms = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
+	#farms = farms.filter(func(b : Building):return b.type == Building.TYPE.FARM)
+	#for f : Building in farms:
+		#max_health = max_health + 0.5
+		#health = max_health
+		#
+#func on_speed_change() -> void:
+	#var saps = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
+	#saps = saps.filter(func(b : Building):return b.type == Building.TYPE.SAPSTORE)
+	#for s : Building in saps:
+		#speed = speed + 3
 
 
 func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> void:
