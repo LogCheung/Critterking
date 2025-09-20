@@ -5,6 +5,7 @@ class_name TileWorld
 @onready var hover : TileMapLayer = $Hover
 @onready var wall: TileMapLayer = $wall
 @onready var center: Node2D = $Center
+@onready var active_hover: TileMapLayer = $ActiveHover
 @onready var unit_groups : Array
 
 var wall_tiles : Array
@@ -18,6 +19,11 @@ func _ready() -> void:
 	find_outskirt_tiles()
 	handle_navigable_cells()
 	limit_colliding_walls()
+
+func _process(delta: float) -> void:
+	for cell in active_hover.get_used_cells():
+		active_hover.set_cell(cell,-1)
+	pass
 
 func handle_navigable_cells() -> void:
 	# reset 
