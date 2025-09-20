@@ -124,6 +124,7 @@ collision_layer = 0
 collision_mask = 6
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Orth"]
+visible = false
 position = Vector2(288, 144)
 polygon = PackedVector2Array(-320, -176, -352, -160, -320, -144, -352, -128, -320, -112, -288, -128, -256, -112, -224, -128, -256, -144, -224, -160, -256, -176, -288, -160)
 
