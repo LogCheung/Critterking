@@ -147,6 +147,7 @@ z_index = 1
 tile_set = SubResource("TileSet_c7ucq")
 
 [node name="ActiveHover" type="TileMapLayer" parent="."]
+visible = false
 z_index = 1
 tile_map_data = PackedByteArray("AAAJAAAAAAAAAAEAAAAKAAEAAAAAAAAAAAAJAAEAAAAAAAIAAAAKAAAAAAAAAAMAAAA=")
 tile_set = SubResource("TileSet_jb8ou")

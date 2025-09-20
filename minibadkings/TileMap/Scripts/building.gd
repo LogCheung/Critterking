@@ -30,6 +30,7 @@ enum TYPE {
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var ui : UI = get_tree().get_first_node_in_group("UI")
+@onready var world : World = get_tree().get_first_node_in_group("WORLD")
 
 var tile : Vector2i
 var doorstepTile : Vector2i
@@ -149,6 +150,20 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 			enemy.death.play()
 			enemy.queue_free()
 
+func _on_adj_area_entered(area: Area2D) -> void:
+	if world.is_combat_phase == true: return
+	if area.owner is Ally:
+		var target : Unit = area.owner
+		if type == TYPE.SAPSTORE: target.speed += 3
+		if type == TYPE.RUINS: target.speed -= 6
+
+func _on_orth_area_entered(area: Area2D) -> void:
+	if world.is_combat_phase == true: return
+	if area.owner is Ally:
+		var target : Unit = area.owner
+		if type == TYPE.FARM: 
+			target.max_health = target.max_health + 0.5
+			target.health = target.max_health
 
 func _on_timer_timeout() -> void:
 	bar.value += 1.25 #if occupant.max_size <= 9 else .12345
