@@ -253,8 +253,7 @@ func unit_to_card(g : Group) -> void:
 	var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
 	newCard = match_unit_to_card(newCard,g.type)
 	if g.charm : newCard = preserve_charm_in_card(newCard,g.charm.type)
-	if g.max_size == 12: newCard.level = 3
-	elif g.upgraded: newCard.level = 2
+	newCard.level = g.level
 	
 	# add card to hand
 	Global.cardsInHand.append(newCard)

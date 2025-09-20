@@ -151,7 +151,7 @@ func on_hurt_box_land(area : Area2D) -> void:
 			enemy.start_death()
 			
 func on_hurt_box_building_land(body : Node2D):
-	if body is Building:
+	if body is Building and action == ACTION.RAID:
 		if body.type != Building.TYPE.TRAP or body.type != Building.TYPE.RUINS:
 			body.health -= damage
 	pass

@@ -7,6 +7,7 @@ signal at_border
 const ENEMY : PackedScene = preload("res://Units/Scenes/enemy.tscn")
 
 var approaching : bool = true
+var isActive : bool = false
 
 func _ready() -> void:
 	super._ready()
@@ -23,5 +24,11 @@ func _process(delta: float) -> void:
 	at_border.emit()
 
 func activate_units() -> void:
+	isActive = true
 	for unit : Enemy in unitsArray:
 		unit.become_active()
+
+func _on_timer_timeout() -> void:
+	if !approaching and !isActive :
+		activate_units()
+	pass 

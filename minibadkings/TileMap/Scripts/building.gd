@@ -168,6 +168,7 @@ func _on_orth_area_entered(area: Area2D) -> void:
 func _on_timer_timeout() -> void:
 	bar.value += 1.25 #if occupant.max_size <= 9 else .12345
 	if type == TYPE.CARE: bar.value += .75
+	if occupant.charm and occupant.charm.type == Charm.TYPE.MEDKIT: bar.value += .5
 	if bar.value >= bar.max_value:
 		occupant.global_position = tileWorld.ground.map_to_local(doorstepTile)
 		if type == TYPE.CARE:
