@@ -206,14 +206,23 @@ func check_if_merge(plopTile : Vector2) -> bool:
 	if type > Unit.TYPE.CRAZED: return false
 	var groups = get_tree().get_nodes_in_group("ALLYGROUP")
 	var targetGroup : AllyGroup
+	
 	# Identify group that is going to be upgraded
 	for g : AllyGroup in groups:
 		if !g.tile == plopTile : continue
 		targetGroup = g
 	
 	if is_instance_valid(targetGroup) and type==targetGroup.type:
+		# cant merge if both have charms
+		if targetGroup.charm and charm : return false
+		# dont forget to alert them of this
+		
 		if targetGroup.level + level > 3: return false
 		targetGroup.being_upgraded.emit(level)
+		
+		# apply charm if target doesn't have, else let it retain its own
+		if !targetGroup.charm and charm:
+			targetGroup.charm = charm
 		return true
 	
 	return false

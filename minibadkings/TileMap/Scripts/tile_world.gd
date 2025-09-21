@@ -174,9 +174,52 @@ func handle_decree() -> void:
 	# handle input
 	if using_decree and Input.is_action_just_released("select"):
 		activeDecree = Decree.TYPE.NONE
+		handle_decree_action()
+		
 	
 	if using_decree and Input.is_action_just_released("cancel"):
 		activeDecree = Decree.TYPE.NONE
+
+func handle_decree_action() -> void:
+	# Create affected area
+	var area : Area2D = Area2D.new()
+	var col : CollisionShape2D= CollisionShape2D.new()
+	var shape : ConvexPolygonShape2D = ConvexPolygonShape2D.new()
+	
+	# add points for shape
+	var usedRect = active_hover.get_used_rect()
+	var pointsArr : Array = []
+	var tileSize = Vector2i(32,16)
+	pointsArr.append(Vector2i(-usedRect.size.x,0) * tileSize)
+	pointsArr.append(Vector2i(0,-usedRect.size.y) * tileSize)
+	pointsArr.append(Vector2i(usedRect.size.x,0) * tileSize)
+	pointsArr.append(Vector2i(0,usedRect.size.y) * tileSize)
+	pointsArr.append(Vector2i(-usedRect.size.x,0) * tileSize)
+	shape.points = pointsArr
+	
+	col.shape = shape
+	area.add_child(col)
+	area.global_position = get_global_mouse_position()
+	area.global_position = active_hover.map_to_local(active_hover.local_to_map(area.global_position))
+	area.set_collision_layer_value(1,false)
+	area.set_collision_mask_value(1,false)
+	area.set_collision_mask_value(5,true)
+	area.top_level = true
+	add_child(area)
+	
+	# wait for 5 frames before checking
+	for i in range(5): await get_tree().process_frame 
+	
+	var affectedArray : Array 
+	for a in area.get_overlapping_areas():
+		var unit = a.owner
+		if !unit: continue
+		if unit is Ally : affectedArray.append(unit)
+	
+	match activeDecree:
+		pass
+		
+	area.queue_free()
 
 func add_hover_tiles(from : int, to : int,startPos : Vector2i) -> void:
 	var hoveringTiles : Array

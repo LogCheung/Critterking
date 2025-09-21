@@ -86,6 +86,7 @@ polygon = PackedVector2Array(28, 0, -1, -15, -28, 0, -1, 15)
 position = Vector2(13, 10)
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+visible = false
 z_index = 4096
 offset_left = -16.0
 offset_top = -59.0

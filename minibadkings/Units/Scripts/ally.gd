@@ -24,6 +24,8 @@ const UPSHIELDEDNORMALNW = preload("res://Units/Assets/AllyShield/AllyShieldUpgr
 const UPBOMBERNORMALSE = preload("res://Units/Assets/AllyBombardier/AllyBombardierUpgradedSE.png")
 const UPFLYINGNORMALSE = preload("res://Units/Assets/AllyFlying/AllyFlyingUpgradedSE.png")
 
+@onready var world : World = get_tree().get_first_node_in_group("WORLD")
+
 var allyGroup : AllyGroup
 var healing : bool
 
