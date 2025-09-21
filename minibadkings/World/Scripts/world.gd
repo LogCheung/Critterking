@@ -42,6 +42,7 @@ func new_game() -> void:
 	enemy_parties = 3
 	upgraded_parties = 0
 	dispatchDay = false
+	tileWorld.activeDecree = Decree.TYPE.NONE
 	Global.nights = 0
 	Global.expansions = 0
 	Global.cardsInHand.clear()
@@ -215,6 +216,7 @@ func on_night_ended() -> void:
 	if is_combat_phase == false : return
 	ui.rollArray.append(Card.ROLLTYPE.GENERAL)
 	start_day()
+	tileWorld.activeDecree = Decree.TYPE.NONE
 
 func start_day() -> void:
 	ui.crtr_night.stop()
@@ -226,6 +228,7 @@ func start_day() -> void:
 	check_nights()
 	# start upgrade sequence
 	is_combat_phase = false
+	
 	ui.cards.show()
 	
 	# convert units to cards

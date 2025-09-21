@@ -1,6 +1,8 @@
 extends Node2D
 class_name TileWorld
 
+@export var activeDecree : Decree.TYPE
+
 @onready var ground : TileMapLayer = $Ground
 @onready var hover : TileMapLayer = $Hover
 @onready var wall: TileMapLayer = $wall
@@ -8,6 +10,8 @@ class_name TileWorld
 @onready var active_hover: TileMapLayer = $ActiveHover
 @onready var unit_groups : Array
 
+
+var using_decree : bool
 var wall_tiles : Array
 var start_wall_tiles : Array
 var unit_tiles : Array
@@ -23,7 +27,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	for cell in active_hover.get_used_cells():
 		active_hover.set_cell(cell,-1)
-	pass
+	handle_decree()
+	using_decree = activeDecree != Decree.TYPE.NONE
 
 func handle_navigable_cells() -> void:
 	# reset 
@@ -135,3 +140,48 @@ func draw_build_area() -> void:
 	find_outskirt_tiles()
 	handle_navigable_cells()
 	limit_colliding_walls()
+
+func handle_decree() -> void:
+	# handle size of affected area and action (maybe)
+	var mousePos = get_global_mouse_position()
+	var mouseTile = active_hover.local_to_map(mousePos + Vector2(8,8))
+	var hoveringTiles : Array
+	
+	# preconditons
+	if !ground.get_used_cells().has(mouseTile) : return
+	
+	# handle hover
+	match activeDecree:
+		Decree.TYPE.NONE:
+			return
+		Decree.TYPE.INSPIRATION, Decree.TYPE.CONSTRUCTION:
+			add_hover_tiles(1,2,mouseTile) # 3x3 area
+		Decree.TYPE.DECARE, Decree.TYPE.DEFENSE, Decree.TYPE.WAR, Decree.TYPE.MASTERY:
+			add_hover_tiles(1,1,mouseTile) # 2x2
+		Decree.TYPE.RECON:
+			# Global
+			pass
+		Decree.TYPE.RENOVATE:
+			# highlight buildings, no hover
+			pass
+		Decree.TYPE.CONSCRIPTION:
+			# highlight buildings, no hover
+			pass
+		Decree.TYPE.INFLUENCE:
+			# Highlight enemy units, no hover
+			pass
+	
+	# handle input
+	if using_decree and Input.is_action_just_released("select"):
+		activeDecree = Decree.TYPE.NONE
+	
+	if using_decree and Input.is_action_just_released("cancel"):
+		activeDecree = Decree.TYPE.NONE
+
+func add_hover_tiles(from : int, to : int,startPos : Vector2i) -> void:
+	var hoveringTiles : Array
+	for x in range(startPos.x - from,startPos.x + to ):
+		for y in range(startPos.y - from,startPos.y + to ):
+			hoveringTiles.append(Vector2i(x,y))
+	
+	active_hover.set_cells_terrain_connect(hoveringTiles,0,0)

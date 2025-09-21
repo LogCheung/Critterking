@@ -77,6 +77,7 @@ func _on_unit_died() -> void:
 		queue_free()
 
 func terminate() -> void:
+	if selected == true: Engine.time_scale = 1
 	for unit in unitsArray:
 		unit.process_mode = Node.PROCESS_MODE_DISABLED
 	for unit in unitsArray:

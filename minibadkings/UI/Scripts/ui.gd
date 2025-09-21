@@ -25,6 +25,7 @@ signal game_over
 var rolltype : Card.ROLLTYPE
 var extraRolls : int = 0
 var rollingExtraTime : bool = false
+var displaying_cards : bool = false
 
 var dispatchAmt = 0
 var dispatchLimit = 1
@@ -81,6 +82,7 @@ func control_is_visible() -> bool:
 	
 func display_cards(display : bool) -> void:
 	# after deck of cards is clicked and frame 18 of the anim
+	displaying_cards = true
 	var cardSprites = get_tree().get_nodes_in_group("CARD")
 	for card : Card in cardSprites:
 		if !card.for_show : continue
@@ -96,6 +98,7 @@ func show_hand() -> void:
 	rollArray.pop_front()
 	if rollArray.size() > 0:
 		cards.show()
+		displaying_cards = false
 		return
 	
 	cards.hide()
@@ -103,6 +106,7 @@ func show_hand() -> void:
 	end_turn.show()
 	decrees.show()
 	night_counter.show()
+	displaying_cards = false
 	var container = %Hand.get_child(0) # Hboxcontainer
 	await get_tree().create_timer(.05).timeout
 	for c : Card in container.get_children():
@@ -111,11 +115,7 @@ func show_hand() -> void:
 		
 	if world.dispatchDay: dispatch.show()
 	
-	# Add and remove dummy card to refresh positions
-	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-	container.add_child(hCard)
-	hCard.set_up()
-	hCard.remove_self()
+	refresh_positions()
 
 func on_game_over() -> void:
 	gameover.show()
@@ -128,6 +128,9 @@ func on_game_over() -> void:
 
 func _on_show_pressed() -> void:
 	# when deck of cards is clicked, show anim will play
+	if displaying_cards : return
+	await get_tree().create_timer(.001).timeout
+	
 	if anim.is_playing():return
 	rolltype = rollArray.front()
 	%Shuffle.play()
@@ -246,6 +249,12 @@ func _on_dispatch_end_pressed() -> void:
 			c.queue_free()
 			
 func refresh_positions() -> void:
+	# Add and remove dummy card to refresh positions
+	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+	hand.get_child(0).add_child(hCard)
+	hCard.set_up()
+	hCard.remove_self()
+	
 	var cardsInHand = hand.get_child(0).get_children()
 	for c : Card in cardsInHand:
 		c.set_up()
