@@ -16,3 +16,7 @@ unique_name_in_owner = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1000
 shape = SubResource("ConvexPolygonShape2D_kvufm")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

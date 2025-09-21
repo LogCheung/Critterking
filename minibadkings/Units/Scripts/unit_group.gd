@@ -122,7 +122,7 @@ func on_being_upgraded(incLevel : int) -> void:
 			upgraded = true
 		3:
 			upgraded = true
-			max_size = 12
+			max_size += 3
 	create_formation(UNIT)
 	
 func apply_charm() -> void:
