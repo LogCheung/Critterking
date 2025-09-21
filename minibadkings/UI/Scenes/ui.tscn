@@ -539,6 +539,7 @@ offset_right = -1814.0
 offset_bottom = 188.0
 grow_horizontal = 0
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Decrees"]
 layout_mode = 0
@@ -547,22 +548,11 @@ offset_top = 1.5258789e-05
 offset_right = 34.0
 offset_bottom = 170.00002
 scale = Vector2(2.5, 2.5)
+mouse_filter = 2
 theme_override_constants/separation = 10
 alignment = 1
 
 [node name="Decree" parent="Decrees/VBoxContainer" instance=ExtResource("7_gu1s8")]
-layout_mode = 2
-
-[node name="Decree2" parent="Decrees/VBoxContainer" instance=ExtResource("7_gu1s8")]
-layout_mode = 2
-
-[node name="Decree3" parent="Decrees/VBoxContainer" instance=ExtResource("7_gu1s8")]
-layout_mode = 2
-
-[node name="Decree4" parent="Decrees/VBoxContainer" instance=ExtResource("7_gu1s8")]
-layout_mode = 2
-
-[node name="Decree5" parent="Decrees/VBoxContainer" instance=ExtResource("7_gu1s8")]
 layout_mode = 2
 
 [node name="Hand" type="Control" parent="."]

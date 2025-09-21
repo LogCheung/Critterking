@@ -60,7 +60,7 @@ func _process(delta: float) -> void:
 	
 func handle_drag() -> void:
 	if refreshing : 
-		await get_tree().create_timer(.3).timeout
+		await get_tree().create_timer(.05).timeout
 		default_position = position
 		refreshing = false
 		return
@@ -102,6 +102,7 @@ func handle_drag() -> void:
 	
 	if Input.is_action_just_pressed("cancel"):
 		set_to_default()
+		ui.refresh_positions()
 
 func set_to_default() -> void:
 	sprite_2d.scale = Vector2(1.0,1.0)
@@ -114,6 +115,7 @@ func set_to_default() -> void:
 	
 	selected = false
 	is_under_mouse = false
+	
 
 func plop() -> void:
 	tileWorld.handle_navigable_cells()
@@ -143,6 +145,7 @@ func plop() -> void:
 		sprite_2d.scale = Vector2(1.0,1.0)
 		position = default_position
 		selected = false
+		ui.refresh_positions()
 	tileWorld.handle_navigable_cells()
 
 func remove_self() -> void:
@@ -152,7 +155,6 @@ func remove_self() -> void:
 	selected = false
 	Global.cardsInHand.remove_at(Global.cardsInHand.find(self))
 	queue_free()
-	ui.refresh_positions()
 	
 func plop_building() -> void:
 	if type == CARDTYPE.DESTROY : 
