@@ -163,10 +163,10 @@ func handle_decree() -> void:
 			pass
 		Decree.TYPE.RENOVATE:
 			# highlight buildings, no hover
-			pass
+			highlight_houses(true)
 		Decree.TYPE.CONSCRIPTION:
 			# highlight buildings, no hover
-			pass
+			highlight_houses(true)
 		Decree.TYPE.INFLUENCE:
 			# Highlight enemy units, no hover
 			pass
@@ -228,3 +228,10 @@ func add_hover_tiles(from : int, to : int,startPos : Vector2i) -> void:
 			hoveringTiles.append(Vector2i(x,y))
 	
 	active_hover.set_cells_terrain_connect(hoveringTiles,0,0)
+
+func highlight_houses(highlight : bool) -> void:
+	var houses = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
+	houses = houses.filter(func(b : Building):return b.type == Building.TYPE.HOUSE)
+	for h : Building in houses:
+		if h.occupant != null: continue
+		h.sprite_2d.material = h.HIGHLIGHT if highlight else null
