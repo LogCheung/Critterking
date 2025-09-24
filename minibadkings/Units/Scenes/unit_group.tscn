@@ -17,6 +17,7 @@ script = ExtResource("1_onkey")
 unique_name_in_owner = true
 
 [node name="SelectArea" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SelectArea"]
 shape = SubResource("ConvexPolygonShape2D_onkey")

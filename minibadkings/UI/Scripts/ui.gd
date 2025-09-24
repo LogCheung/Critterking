@@ -203,7 +203,7 @@ func _on_endturn_pressed() -> void:
 		if card.type == Card.CARDTYPE.HOUSE: 
 			%noHouse.show()
 			return
-	var units = get_tree().get_nodes_in_group("UNIT")
+	var units = get_tree().get_nodes_in_group("ALLY")
 	for u:Ally in units:
 		u.healthchange.emit()
 		u.speedchange.emit()

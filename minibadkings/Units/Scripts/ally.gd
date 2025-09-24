@@ -25,6 +25,8 @@ const UPBOMBERNORMALSE = preload("res://Units/Assets/AllyBombardier/AllyBombardi
 const UPFLYINGNORMALSE = preload("res://Units/Assets/AllyFlying/AllyFlyingUpgradedSE.png")
 
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
+@onready var status_sprite: AnimatedSprite2D = %StatusSprite
+
 
 var allyGroup : AllyGroup
 var healing : bool
@@ -32,7 +34,7 @@ var healing : bool
 
 func _ready() -> void:
 	allyGroup = group
-	if level > 1: 
+	if level > 1:  # if upgraded
 		max_health = max_health + 0.5
 		health = max_health
 		damage = damage + 0.5
@@ -174,9 +176,9 @@ func match_type() -> void:
 	match type:
 		TYPE.MELEE:
 			visionRange = 32
-			sprite_2d.texture = MELEENORMALSE if !upgraded else UPMELEENORMALSE
+			sprite_2d.texture = MELEENORMALSE if level < 2 else UPMELEENORMALSE
 		TYPE.RANGED:
-			sprite_2d.texture = RANGEDNORMALSE if !upgraded else UPRANGEDNORMALSE
+			sprite_2d.texture = RANGEDNORMALSE if level < 2 else UPRANGEDNORMALSE
 			health = 2
 			damage = 1.5
 			attackRange = 80
@@ -185,23 +187,23 @@ func match_type() -> void:
 		TYPE.SHIELDED:
 			visionRange = 32
 			damage = 1
-			sprite_2d.texture = SHIELDEDNORMALSE if !upgraded else UPSHIELDEDNORMALSE
+			sprite_2d.texture = SHIELDEDNORMALSE if level < 2 else UPSHIELDEDNORMALSE
 		TYPE.CRAZED:
-			sprite_2d.texture = CRAZEDNORMALSE if !upgraded else UPCRAZEDNORMALSE
+			sprite_2d.texture = CRAZEDNORMALSE if level < 2 else UPCRAZEDNORMALSE
 			health = 2
 			damage = 0.75
 			speed = 60
 			dodge = 25
 			attack_cd.wait_time = .5
 		TYPE.BOMBER:
-			sprite_2d.texture = BOMBERNORMALSE if !upgraded else UPBOMBERNORMALSE
+			sprite_2d.texture = BOMBERNORMALSE if level < 2 else UPBOMBERNORMALSE
 			health = 2
 			damage = .5
 			attackRange = 80
 			visionRange = 100
 			attack_cd.wait_time = 3
 		TYPE.FLYING:
-			sprite_2d.texture = FLYINGNORMALSE if !upgraded else UPFLYINGNORMALSE
+			sprite_2d.texture = FLYINGNORMALSE if level < 2 else UPFLYINGNORMALSE
 			speed = 40
 			health = 3
 			damage = 1.5
@@ -225,6 +227,41 @@ func match_type() -> void:
 	#for s : Building in saps:
 		#speed = speed + 3
 
+func match_decree_status() -> void:
+	match decree:
+		Decree.TYPE.NONE:
+			return
+		Decree.TYPE.INSPIRATION:
+			status_sprite.play("inspiration")
+			damage += .5
+		Decree.TYPE.DECARE:
+			pass
+		Decree.TYPE.RECON:
+			status_sprite.play("recon")
+			visionRange += 10
+			vision.queue_free()
+			set_up_vision()
+		Decree.TYPE.DEFENSE:
+			status_sprite.play("defense")
+		Decree.TYPE.RENOVATE:
+			pass # do nothing
+		Decree.TYPE.WAR:
+			pass # do nothing
+		Decree.TYPE.CONSCRIPTION:
+			pass # do nothing
+		Decree.TYPE.MASTERY:
+			status_sprite.play("mastery")
+			level += 1 if level == 1 else 0
+			vision.queue_free()
+			match_type()
+			max_health = max_health + 0.5
+			health = max_health
+			damage = damage + 0.5
+		Decree.TYPE.INFLUENCE:
+			pass # do nothing
+		Decree.TYPE.CONSTRUCTION:
+			pass # do nothing
+	status_sprite.visible = true 
 
 func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> void:
 	match top_action_id:

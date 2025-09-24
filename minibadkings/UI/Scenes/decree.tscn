@@ -14,7 +14,7 @@ flat = true
 script = ExtResource("1_e1hmt")
 type = 1
 
-[node name="ConscriptionIco" type="Sprite2D" parent="."]
+[node name="Icon" type="Sprite2D" parent="."]
 texture = ExtResource("2_l0dgt")
 offset = Vector2(16, 16)
 

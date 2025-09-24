@@ -3,7 +3,7 @@ extends Area2D
 @export var SPEED : float
 @export var RANGE : float
 @export var DIRECTION : Vector2
-@export var damage : int
+@export var damage : float
 @export var is_enemy : bool
 
 const ENEMYPROJ = preload("res://Units/Assets/EnemyProjectile.png")
@@ -32,16 +32,17 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.owner is Unit:
 		var target : Unit = area.owner
 		# for shielded
+		if target.decree == Decree.TYPE.DEFENSE:
+			damage -= .25
 		if target.type == Unit.TYPE.SHIELDED:
 		 # chance to ignore damage while also having reduced damage
 			#var rand = randi()
 			#if rand % 2 == 0: 
 			%Hurt.play()
-			target.health -= damage - .75
-			
+			target.health -= damage - .75 if target.dodge < (randi() % 100 + 1) else 0.0
 		else:
 			%Hurt.play()
-			target.health -= damage if target.dodge < (randi() % 100 + 1) else 0
+			target.health -= damage if target.dodge < (randi() % 100 + 1) else 0.0
 		if target.health <= 0:
 			target.start_death()
 		queue_free()

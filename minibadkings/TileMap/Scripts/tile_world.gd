@@ -64,7 +64,7 @@ func handle_navigable_cells() -> void:
 	
 func replace_transparent_walls() -> void:
 	wall_tiles = wall.get_used_cells()
-	var units = get_tree().get_nodes_in_group("UNIT")
+	var units = get_tree().get_nodes_in_group("ALLY")
 	var trans_walls = units.map(func(u : Unit):return u.wall_tile)
 	trans_walls = trans_walls.filter(func(e):return e != null)
 	var opaque_cells = wall.get_used_cells_by_id(0,Vector2(0,2),0)
@@ -156,11 +156,16 @@ func handle_decree() -> void:
 			return
 		Decree.TYPE.INSPIRATION, Decree.TYPE.CONSTRUCTION:
 			add_hover_tiles(1,2,mouseTile) # 3x3 area
-		Decree.TYPE.DECARE, Decree.TYPE.DEFENSE, Decree.TYPE.WAR, Decree.TYPE.MASTERY:
+		Decree.TYPE.DECARE, Decree.TYPE.DEFENSE, Decree.TYPE.WAR:
 			add_hover_tiles(1,1,mouseTile) # 2x2
+		Decree.TYPE.MASTERY:
+			add_hover_tiles(0,1,mouseTile)
 		Decree.TYPE.RECON:
 			# Global
-			pass
+			var units = get_tree().get_nodes_in_group("ALLY")
+			for unit in units:
+				unit.decree = activeDecree
+				unit.match_decree_status()
 		Decree.TYPE.RENOVATE:
 			# highlight buildings, no hover
 			highlight_houses(true)
@@ -173,9 +178,10 @@ func handle_decree() -> void:
 	
 	# handle input
 	if using_decree and Input.is_action_just_released("select"):
-		activeDecree = Decree.TYPE.NONE
 		handle_decree_action()
 		
+		await get_tree().create_timer(.1).timeout
+		activeDecree = Decree.TYPE.NONE
 	
 	if using_decree and Input.is_action_just_released("cancel"):
 		activeDecree = Decree.TYPE.NONE
@@ -190,11 +196,11 @@ func handle_decree_action() -> void:
 	var usedRect = active_hover.get_used_rect()
 	var pointsArr : Array = []
 	var tileSize = Vector2i(32,16)
-	pointsArr.append(Vector2i(-usedRect.size.x,0) * tileSize)
-	pointsArr.append(Vector2i(0,-usedRect.size.y) * tileSize)
-	pointsArr.append(Vector2i(usedRect.size.x,0) * tileSize)
-	pointsArr.append(Vector2i(0,usedRect.size.y) * tileSize)
-	pointsArr.append(Vector2i(-usedRect.size.x,0) * tileSize)
+	pointsArr.append(Vector2i(-usedRect.size.x,0) * tileSize + Vector2i(6,0))
+	pointsArr.append(Vector2i(0,-usedRect.size.y) * tileSize + Vector2i(0,6))
+	pointsArr.append(Vector2i(usedRect.size.x,0) * tileSize + Vector2i(-6,0))
+	pointsArr.append(Vector2i(0,usedRect.size.y) * tileSize + Vector2i(0,-6))
+	pointsArr.append(Vector2i(-usedRect.size.x,0) * tileSize + Vector2i(6,0))
 	shape.points = pointsArr
 	
 	col.shape = shape
@@ -214,10 +220,10 @@ func handle_decree_action() -> void:
 	for a in area.get_overlapping_areas():
 		var unit = a.owner
 		if !unit: continue
-		if unit is Ally : affectedArray.append(unit)
-	
-	match activeDecree:
-		pass
+		if unit is Ally : 
+			unit.decree = activeDecree
+			unit.match_decree_status()
+			affectedArray.append(unit)
 		
 	area.queue_free()
 
@@ -233,5 +239,4 @@ func highlight_houses(highlight : bool) -> void:
 	var houses = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
 	houses = houses.filter(func(b : Building):return b.type == Building.TYPE.HOUSE)
 	for h : Building in houses:
-		if h.occupant != null: continue
 		h.sprite_2d.material = h.HIGHLIGHT if highlight else null

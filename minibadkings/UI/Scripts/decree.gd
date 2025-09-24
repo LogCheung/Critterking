@@ -8,7 +8,7 @@ enum TYPE  {
 
 @export var type : TYPE
 
-@onready var sprite: Sprite2D = $ConscriptionIco
+@onready var sprite: Sprite2D = $Icon
 @onready var tile : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 
 var under_mouse : bool = false

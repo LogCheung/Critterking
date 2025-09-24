@@ -2,7 +2,7 @@ extends CharacterBody2D
 class_name Unit
 
 enum ACTION {
-	NONE,FORM, FIGHT, RAID, STRAFE, HEAL,
+	NONE,FORM, FIGHT, RAID, STRAFE, HEAL, STUNNED, DEAD
 }
 enum TYPE {
 	NONE, MELEE, SHIELDED, RANGED,BOMBER,FLYING,CRAZED,  
@@ -24,6 +24,7 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @export var formation_position : Node2D 
 @export var group : Group
 @export var type : TYPE = TYPE.MELEE
+@export var decree : Decree.TYPE
 @export var upgraded : bool = false
 
 @onready var sprite_2d: Sprite2D = %Sprite2D
@@ -149,7 +150,6 @@ func on_hurt_box_land(area : Area2D) -> void:
 		if enemy.health <= 0:
 			# trigger death anim
 			enemy.start_death()
-			
 func on_hurt_box_building_land(body : Node2D):
 	if body is Building and action == ACTION.RAID:
 		if body.type != Building.TYPE.TRAP or body.type != Building.TYPE.RUINS:

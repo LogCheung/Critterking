@@ -176,8 +176,7 @@ func on_night_started() -> void:
 	tileWorld.handle_navigable_cells()
 	is_combat_phase = true
 	spawned_parties = 0
-	for i in range(Global.expansions + 1):
-		spawn_enemy()
+	spawn_enemy()
 	%Game.process_mode = Node.PROCESS_MODE_PAUSABLE
 	%SpawnTimer.start()
 	
@@ -279,7 +278,7 @@ func _on_spawn_timer_timeout() -> void:
 	# chance for double
 	var rand = randi() % 4
 	if rand == 1:
-		var parties = Global.nights / 3
+		var parties = Global.nights / 4
 		for i in range(parties):
 			spawn_enemy()
 	await get_tree().create_timer(.5).timeout
