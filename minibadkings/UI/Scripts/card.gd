@@ -130,12 +130,6 @@ func plop() -> void:
 			plop_building()
 			return
 		var group = load("res://Units/Scenes/unit_group.tscn").instantiate()
-		#var count = 0 
-		#while !is_instance_valid(group):
-			#if count > 50:
-				#break
-			#group = GROUP.instantiate()
-			#count += 1
 		group.type = type
 		group.charm = charm
 		group.upgraded = level > 1

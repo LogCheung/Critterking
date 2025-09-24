@@ -153,7 +153,6 @@ func handle_decree() -> void:
 	# handle hover
 	match activeDecree:
 		Decree.TYPE.NONE:
-			highlight_buildings(false,Building.TYPE.NONE)
 			return
 		Decree.TYPE.INSPIRATION, Decree.TYPE.CONSTRUCTION:
 			add_hover_tiles(1,2,mouseTile) # 3x3 area
@@ -234,6 +233,20 @@ func handle_decree_action(mouseTile : Vector2i) -> void:
 		Decree.TYPE.INFLUENCE:
 			# Highlight enemy units, no hover
 			pass
+		Decree.TYPE.CONSTRUCTION:
+			var usableTiles = ground.get_used_cells_by_id(0,Vector2(0,0),0)
+			usableTiles.append_array(ground.get_used_cells_by_id(0,Vector2(0,0),1))
+			for tile in active_hover.get_used_cells():
+				if !usableTiles.has(tile) : continue
+				var buildingNode = get_tree().get_first_node_in_group("BUILDINGSNODE")
+				var trap : Building = load("res://TileMap/Scenes/building.tscn").instantiate()
+				trap.type = Building.TYPE.TRAP
+				
+				trap.global_position = ground.map_to_local(tile)
+				buildingNode.add_child(trap)
+				
+			
+	highlight_buildings(false,Building.TYPE.NONE)
 	
 func handle_stat_modifying_decree() -> void:
 	# Create affected area

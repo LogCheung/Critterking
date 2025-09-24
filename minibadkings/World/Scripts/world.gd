@@ -65,10 +65,10 @@ func new_game() -> void:
 		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 		#hCard.type = Card.CARDTYPE.BOMBARDIER
 		#ui.hand.get_child(0).add_child(hCard)
-	for i in range(2):
-		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.NURSERY
-		ui.hand.get_child(0).add_child(hCard)
+	#for i in range(2):
+		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.NURSERY
+		#ui.hand.get_child(0).add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
@@ -165,6 +165,7 @@ func spawn_enemy() -> void:
 	
 
 func on_night_started() -> void:
+	print(enemy_parties)
 	ui.hand.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	ui.decrees.process_mode = Node.PROCESS_MODE_PAUSABLE
 	if night_is_expansion:

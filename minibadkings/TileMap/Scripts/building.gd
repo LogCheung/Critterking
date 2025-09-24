@@ -23,6 +23,7 @@ enum TYPE {
 @export var occupant : Group 
 @export var health : int = 20
 @export var max_health : int = 20
+@export var temporary : bool = false
 
 @onready var entrance: Node2D = $Entrance
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
@@ -74,6 +75,7 @@ func match_type() -> void:
 		TYPE.TRAP:
 			sprite_2d.texture = TRAPA if randi() % 2 == 0 else TRAPB
 			sprite_2d.offset = Vector2.ZERO
+			tileWorld.ground.set_cell(tile,0,Vector2(0,0),0)
 			z_index = 0
 		TYPE.CARE:
 			sprite_2d.texture = CARE

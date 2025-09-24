@@ -12,7 +12,7 @@ offset_bottom = 10.0
 focus_mode = 0
 flat = true
 script = ExtResource("1_e1hmt")
-type = 7
+type = 10
 
 [node name="Icon" type="Sprite2D" parent="."]
 texture = ExtResource("2_l0dgt")
