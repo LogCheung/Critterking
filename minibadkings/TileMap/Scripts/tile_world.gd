@@ -153,6 +153,7 @@ func handle_decree() -> void:
 	# handle hover
 	match activeDecree:
 		Decree.TYPE.NONE:
+			highlight_buildings(false,Building.TYPE.NONE)
 			return
 		Decree.TYPE.INSPIRATION, Decree.TYPE.CONSTRUCTION:
 			add_hover_tiles(1,2,mouseTile) # 3x3 area
@@ -168,17 +169,17 @@ func handle_decree() -> void:
 				unit.match_decree_status()
 		Decree.TYPE.RENOVATE:
 			# highlight buildings, no hover
-			highlight_houses(true)
+			highlight_buildings(true,Building.TYPE.NONE)
 		Decree.TYPE.CONSCRIPTION:
 			# highlight buildings, no hover
-			highlight_houses(true)
+			highlight_buildings(true,Building.TYPE.HOUSE)
 		Decree.TYPE.INFLUENCE:
 			# Highlight enemy units, no hover
 			pass
 	
 	# handle input
 	if using_decree and Input.is_action_just_released("select"):
-		handle_decree_action()
+		handle_decree_action(mouseTile)
 		
 		await get_tree().create_timer(.1).timeout
 		activeDecree = Decree.TYPE.NONE
@@ -186,7 +187,55 @@ func handle_decree() -> void:
 	if using_decree and Input.is_action_just_released("cancel"):
 		activeDecree = Decree.TYPE.NONE
 
-func handle_decree_action() -> void:
+func handle_decree_action(mouseTile : Vector2i) -> void:
+	# executed when clicked and decree is being used
+	match activeDecree:
+		Decree.TYPE.NONE:
+			return
+		Decree.TYPE.INSPIRATION, Decree.TYPE.DEFENSE,Decree.TYPE.MASTERY:
+			handle_stat_modifying_decree()
+		Decree.TYPE.DECARE:
+			pass
+		Decree.TYPE.WAR:
+			var bombard = preload("res://TileMap/Scenes/war_bombard.tscn").instantiate()
+			bombard.global_position = active_hover.map_to_local(mouseTile) - Vector2(0,16)
+			add_child(bombard)
+		Decree.TYPE.RECON:
+			pass # do nothing
+		Decree.TYPE.RENOVATE:
+			# highlight buildings, no hover
+			var building = get_clicked_building()
+			if building:
+				building.health = building.max_health
+				highlight_buildings(false,Building.TYPE.NONE)
+		Decree.TYPE.CONSCRIPTION:
+			# highlight buildings, no hover
+			var building = get_clicked_building()
+			if building:
+				# create new unit at building's front door
+				var group : AllyGroup= preload("res://Units/Scenes/unit_group.tscn").instantiate()
+				group.type = randi_range(Unit.TYPE.MELEE,Unit.TYPE.CRAZED)
+				group.tile = building.doorstepTile
+				group.level = 1
+				group.global_position = ground.map_to_local(group.tile)
+				
+				group.conscripted = true
+				
+				var groupsNode = get_tree().get_first_node_in_group("GROUPSNODE")
+				groupsNode.add_child(group) # group ready is then called
+				
+				# stage them coming from building
+				for u in group.unitsArray:
+					u.global_position = building.entrance.global_position
+					#u.visible = false
+				
+				
+				highlight_buildings(false,Building.TYPE.NONE)
+		Decree.TYPE.INFLUENCE:
+			# Highlight enemy units, no hover
+			pass
+	
+func handle_stat_modifying_decree() -> void:
 	# Create affected area
 	var area : Area2D = Area2D.new()
 	var col : CollisionShape2D= CollisionShape2D.new()
@@ -235,8 +284,16 @@ func add_hover_tiles(from : int, to : int,startPos : Vector2i) -> void:
 	
 	active_hover.set_cells_terrain_connect(hoveringTiles,0,0)
 
-func highlight_houses(highlight : bool) -> void:
-	var houses = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
-	houses = houses.filter(func(b : Building):return b.type == Building.TYPE.HOUSE)
-	for h : Building in houses:
-		h.sprite_2d.material = h.HIGHLIGHT if highlight else null
+func highlight_buildings(highlight : bool, type : Building.TYPE) -> void:
+	var buildings = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
+	if type != Building.TYPE.NONE:
+		buildings = buildings.filter(func(bu : Building):return bu.type == type)
+	for b : Building in buildings:
+		b.sprite_2d.material = b.HIGHLIGHT if highlight else null
+
+func get_clicked_building() -> Building:
+	var buildings = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
+	for b : Building in buildings:
+		if get_global_mouse_position().distance_to(b.global_position) < 32:
+			return b
+	return null

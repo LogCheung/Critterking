@@ -129,10 +129,17 @@ func plop() -> void:
 		if type > Unit.TYPE.CRAZED:
 			plop_building()
 			return
-		var group = GROUP.instantiate()
+		var group = load("res://Units/Scenes/unit_group.tscn").instantiate()
+		#var count = 0 
+		#while !is_instance_valid(group):
+			#if count > 50:
+				#break
+			#group = GROUP.instantiate()
+			#count += 1
 		group.type = type
 		group.charm = charm
 		group.upgraded = level > 1
+		group.level = level
 		group.max_size = 12 if level == 3 else 9
 		if charm and charm.type == Charm.TYPE.FLAG : group.max_size += 1
 		group.global_position = tileWorld.ground.map_to_local(tile)

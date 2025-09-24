@@ -5,7 +5,6 @@ extends AnimatedSprite2D
 @onready var hurt_box: Area2D = %hurtBox
 
 func _ready() -> void:
-	await get_tree().create_timer(2).timeout
 	play("default")
 	await animation_finished
 	check_aoe()

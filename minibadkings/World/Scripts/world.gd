@@ -65,10 +65,10 @@ func new_game() -> void:
 		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 		#hCard.type = Card.CARDTYPE.BOMBARDIER
 		#ui.hand.get_child(0).add_child(hCard)
-	#for i in range(1):
-		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.BOMBARDIER
-		#ui.hand.get_child(0).add_child(hCard)
+	for i in range(2):
+		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.NURSERY
+		ui.hand.get_child(0).add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
@@ -233,6 +233,9 @@ func start_day() -> void:
 	# convert units to cards
 	var unitsGroups = get_tree().get_first_node_in_group("GROUPSNODE")
 	for g : Group in unitsGroups.get_children():
+		if g.conscripted :
+			g.terminate()
+			continue
 		unit_to_card(g)
 		g.terminate()
 		

@@ -1,7 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://b7gegybq07w8i"]
+[gd_scene load_steps=15 format=3 uid="uid://b7gegybq07w8i"]
 
 [ext_resource type="Texture2D" uid="uid://djhd7y1n2cuac" path="res://TileMap/Assets/warBombard.png" id="1_lvful"]
 [ext_resource type="Script" uid="uid://cdh3lmrd5i16j" path="res://TileMap/Scenes/war_bombard.gd" id="2_hyro4"]
+[ext_resource type="AudioStream" uid="uid://b7scm4fug5tje" path="res://Audio/sfx/Hurt.tres" id="3_g5cnw"]
+[ext_resource type="AudioStream" uid="uid://w5s7eos7mc1q" path="res://Audio/sfx/Death.tres" id="4_smkej"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m6sk8"]
 atlas = ExtResource("1_lvful")
@@ -72,15 +74,15 @@ points = PackedVector2Array(0, -26, 52, 0, 0, 26, -52, 0, 0, -26)
 
 [node name="warBombard" type="AnimatedSprite2D"]
 top_level = true
-position = Vector2(-8, -24)
 sprite_frames = SubResource("SpriteFrames_ee73g")
 frame = 7
 frame_progress = 1.0
+offset = Vector2(-8, -24)
 script = ExtResource("2_hyro4")
+damage = 8.0
 
 [node name="hurtBox" type="Area2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(8, 24)
 collision_layer = 0
 collision_mask = 4
 
@@ -89,5 +91,13 @@ shape = SubResource("ConvexPolygonShape2D_hbi3d")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.25
+
+[node name="Hurt" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("3_g5cnw")
+
+[node name="Death" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("4_smkej")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

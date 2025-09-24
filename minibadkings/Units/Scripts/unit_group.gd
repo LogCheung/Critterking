@@ -6,6 +6,7 @@ signal being_upgraded
 const UNIT : PackedScene = preload("res://Units/Scenes/unit.tscn")
 
 @export var house : Building
+@export var conscripted : bool
 
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
 

@@ -38,6 +38,7 @@ func _ready() -> void:
 		max_health = max_health + 0.5
 		health = max_health
 		damage = damage + 0.5
+		upgraded = true
 		
 	
 	super._ready()
@@ -101,6 +102,7 @@ func handle_action(delta) -> void:
 	match action:
 		ACTION.NONE:
 			anim.play("idle")
+			visible = true
 			return
 		ACTION.FORM:
 			anim.play("walk")
