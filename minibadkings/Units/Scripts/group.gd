@@ -8,6 +8,7 @@ signal unit_died
 @export var max_size : int = 9
 @export var selected : bool = false
 @export var unitsArray : Array[Unit]
+@export var deadUnitsArray : Array[Unit]
 @export var upgraded : bool = false
 @export var level : int = 1
 @export var charm : Charm
@@ -82,6 +83,8 @@ func terminate() -> void:
 	for unit in unitsArray:
 		unit.process_mode = Node.PROCESS_MODE_DISABLED
 	for unit in unitsArray:
+		unit.queue_free()
+	for unit in deadUnitsArray:
 		unit.queue_free()
 	queue_free()
 	

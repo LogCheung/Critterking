@@ -55,6 +55,7 @@ var attack_ready : bool
 var too_close : bool
 var dashing : bool
 
+var dead : bool
 
 func _ready() -> void:
 	nav.velocity_computed.connect(_on_navigation_agent_2d_velocity_computed)
@@ -75,6 +76,24 @@ func _process(_delta: float) -> void:
 	else:
 		in_formation = false
 	
+func handle_behind_wall() -> void:
+	is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
+	# not liking but looks for closest tile by going all wall tiles and makes transparent
+	if is_behind_wall:
+		var walls = tileWorld.wall.get_used_cells_by_id(0,Vector2(0,2),2)
+		walls.append_array(tileWorld.wall.get_used_cells_by_id(0,Vector2(0,2),1))
+		
+		wall_tile = walls.front()
+		for w in walls:
+			
+			var w_local_pos = tileWorld.wall.map_to_local(w)
+			var wall_tile_local_pos = tileWorld.wall.map_to_local(wall_tile)
+			var cur_dist = global_position.distance_to(wall_tile_local_pos)
+			var next_dist = global_position.distance_to(w_local_pos)
+			if next_dist < cur_dist :
+				wall_tile = w
+		
+		tileWorld.wall.set_cell(wall_tile,0,Vector2(0,2),1)
 
 func move_to(direction, _delta):
 	if direction.x > 0:
@@ -124,6 +143,7 @@ func find_target() -> void:
 	target = null
 	if !vision.monitoring: return
 	var enemies = vision.get_overlapping_areas().map(func(a):return a.owner)
+	enemies = enemies.filter(func(e : Unit):return !e.dead)
 	find_closest(enemies)
 	if !target : return 
 	nav.target_position = target.global_position
@@ -160,9 +180,14 @@ func start_death() -> void:
 	process_mode = Node.PROCESS_MODE_DISABLED
 	anim.play("death")
 	await anim.animation_finished
-
+	
+	dead = true
+	z_index = 0
+	modulate.a8 = 200
+	group.deadUnitsArray.append(self)
+	
 	var unitArr = group.unitsArray
 	if unitArr.find(self) != -1 : unitArr.remove_at(unitArr.find(self))
 	group.unit_died.emit()
 	%Death.play()
-	queue_free()
+	#queue_free()

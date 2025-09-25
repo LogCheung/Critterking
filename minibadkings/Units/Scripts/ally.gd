@@ -27,10 +27,8 @@ const UPFLYINGNORMALSE = preload("res://Units/Assets/AllyFlying/AllyFlyingUpgrad
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
 @onready var status_sprite: AnimatedSprite2D = %StatusSprite
 
-
 var allyGroup : AllyGroup
 var healing : bool
-
 
 func _ready() -> void:
 	allyGroup = group
@@ -70,24 +68,6 @@ func _process(delta: float) -> void:
 			too_close = distToTarget < ranged_buffer
 	
 	handle_action(delta)
-func handle_behind_wall() -> void:
-	is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
-	# not liking but looks for closest tile by going all wall tiles and makes transparent
-	if is_behind_wall:
-		var walls = tileWorld.wall.get_used_cells_by_id(0,Vector2(0,2),2)
-		walls.append_array(tileWorld.wall.get_used_cells_by_id(0,Vector2(0,2),1))
-		
-		wall_tile = walls.front()
-		for w in walls:
-			
-			var w_local_pos = tileWorld.wall.map_to_local(w)
-			var wall_tile_local_pos = tileWorld.wall.map_to_local(wall_tile)
-			var cur_dist = global_position.distance_to(wall_tile_local_pos)
-			var next_dist = global_position.distance_to(w_local_pos)
-			if next_dist < cur_dist :
-				wall_tile = w
-		
-		tileWorld.wall.set_cell(wall_tile,0,Vector2(0,2),1)
 
 func handle_action(delta) -> void:
 	var distToTarget = global_position.distance_to(nav.target_position)
@@ -151,10 +131,13 @@ func handle_action(delta) -> void:
 			if distToTarget < 8:
 				visible = false
 				return
+		ACTION.DEAD:
+			return
 	
 	move_to(self.global_position.direction_to(nav.get_next_path_position()), delta)
 
 func on_selected() -> void:
+	if dead : return
 	sprite_2d.material = HIGHLIGHT
 func on_unselected() -> void:
 	sprite_2d.material = null
@@ -237,7 +220,14 @@ func match_decree_status() -> void:
 			status_sprite.play("inspiration")
 			damage += .5
 		Decree.TYPE.DECARE:
-			pass
+			if !dead : return
+			process_mode = Node.PROCESS_MODE_PAUSABLE
+			modulate.a8 = 255
+			anim.play_backwards("death")
+			group.deadUnitsArray.remove_at(group.deadUnitsArray.find(self))
+			group.unitsArray.append(self)
+			dead = false
+			health = max_health
 		Decree.TYPE.RECON:
 			status_sprite.play("recon")
 			visionRange += 10
@@ -283,6 +273,8 @@ func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> vo
 			nav.target_position = allyGroup.house.entrance.global_position
 			set_collision_layer_value(1,false)
 			hit_box.set_collision_layer_value(2,false)
+		"dead":
+			action = ACTION.DEAD
 
 
 # select unit to select whole group of unit

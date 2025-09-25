@@ -123,6 +123,7 @@ pause={
 2d_physics/layer_2="allies get hurt/detected, enemies do damage"
 2d_physics/layer_3="enemies get hurt/detected, allies do damage"
 2d_physics/layer_5="behind wall detector layer"
+2d_physics/layer_6="enemy behind wall detector layer"
 
 [rendering]
 

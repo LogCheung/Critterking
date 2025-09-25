@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://c14eoupysd2xd"]
+[gd_scene load_steps=34 format=3 uid="uid://c14eoupysd2xd"]
 
 [ext_resource type="Script" uid="uid://bvqtdufd1qjrv" path="res://Units/Scripts/enemy.gd" id="2_mh310"]
 [ext_resource type="Texture2D" uid="uid://cbhjhb3oset8l" path="res://Units/Assets/EnemyMelee/EnemyMeleeNormalSE.png" id="3_1flw5"]
@@ -57,6 +57,11 @@ point_count = 2
 
 [sub_resource type="Curve" id="Curve_wh35a"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_ohg4d"]
+_limits = [0.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 2), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Animation" id="Animation_daau3"]
@@ -131,6 +136,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_8inca"]
 resource_name = "death"
+length = 0.5
 step = 0.125
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -195,6 +201,7 @@ size = Vector2(2, 2)
 radius = 128.0
 
 [node name="Enemy" type="CharacterBody2D" groups=["ENEMY"]]
+z_index = 1
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("2_mh310")
@@ -333,6 +340,18 @@ property_name = "attack_ready"
 curve = SubResource("Curve_wh35a")
 metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
+[node name="dead" type="Node" parent="UtilityAiAgent"]
+script = ExtResource("7_7xmed")
+_action_id = "dead"
+metadata/_custom_type_script = "uid://bpvkdlp8jw4sj"
+
+[node name="is_dead" type="Node" parent="UtilityAiAgent/dead" node_paths=PackedStringArray("node")]
+script = ExtResource("8_ohg4d")
+node = NodePath("../../..")
+property_name = "dead"
+curve = SubResource("Curve_ohg4d")
+metadata/_custom_type_script = "uid://dojkyt7skh8fh"
+
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 navigation_layers = 3
 path_postprocessing = 1
@@ -347,8 +366,8 @@ libraries = {
 }
 
 [node name="behindWall" type="Area2D" parent="."]
-collision_layer = 16
-collision_mask = 16
+collision_layer = 32
+collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="behindWall"]
 position = Vector2(0, 1)

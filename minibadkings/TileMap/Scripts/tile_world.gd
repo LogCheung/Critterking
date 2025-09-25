@@ -194,7 +194,7 @@ func handle_decree_action(mouseTile : Vector2i) -> void:
 		Decree.TYPE.INSPIRATION, Decree.TYPE.DEFENSE,Decree.TYPE.MASTERY:
 			handle_stat_modifying_decree()
 		Decree.TYPE.DECARE:
-			pass
+			handle_stat_modifying_decree()
 		Decree.TYPE.WAR:
 			var bombard = preload("res://TileMap/Scenes/war_bombard.tscn").instantiate()
 			bombard.global_position = active_hover.map_to_local(mouseTile) - Vector2(0,16)
@@ -258,11 +258,11 @@ func handle_stat_modifying_decree() -> void:
 	var usedRect = active_hover.get_used_rect()
 	var pointsArr : Array = []
 	var tileSize = Vector2i(32,16)
-	pointsArr.append(Vector2i(-usedRect.size.x,0) * tileSize + Vector2i(6,0))
-	pointsArr.append(Vector2i(0,-usedRect.size.y) * tileSize + Vector2i(0,6))
-	pointsArr.append(Vector2i(usedRect.size.x,0) * tileSize + Vector2i(-6,0))
-	pointsArr.append(Vector2i(0,usedRect.size.y) * tileSize + Vector2i(0,-6))
-	pointsArr.append(Vector2i(-usedRect.size.x,0) * tileSize + Vector2i(6,0))
+	pointsArr.append(Vector2i(-usedRect.size.x,0) * tileSize + Vector2i(4,0))
+	pointsArr.append(Vector2i(0,-usedRect.size.y) * tileSize + Vector2i(0,4))
+	pointsArr.append(Vector2i(usedRect.size.x,0) * tileSize + Vector2i(-4,0))
+	pointsArr.append(Vector2i(0,usedRect.size.y) * tileSize + Vector2i(0,-4))
+	pointsArr.append(Vector2i(-usedRect.size.x,0) * tileSize + Vector2i(4,0))
 	shape.points = pointsArr
 	
 	col.shape = shape
@@ -287,6 +287,7 @@ func handle_stat_modifying_decree() -> void:
 			unit.match_decree_status()
 			affectedArray.append(unit)
 		
+	print(affectedArray)
 	area.queue_free()
 
 func add_hover_tiles(from : int, to : int,startPos : Vector2i) -> void:

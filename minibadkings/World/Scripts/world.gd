@@ -213,6 +213,11 @@ func on_night_ended() -> void:
 		upgraded_parties -= 2
 		%SpawnTimer.wait_time += 1.5
 		
+	# clear dead enemies
+	var enemies = get_tree().get_nodes_in_group("ENEMY")
+	for enemy in enemies:
+		enemy.queue_free()
+		
 	if is_combat_phase == false : return
 	ui.rollArray.append(Card.ROLLTYPE.GENERAL)
 	start_day()

@@ -63,7 +63,7 @@ _data = {
 }
 
 [node name="Building" type="StaticBody2D" groups=["BUILDING"]]
-z_index = 1
+z_index = 2
 z_as_relative = false
 y_sort_enabled = true
 collision_layer = 2

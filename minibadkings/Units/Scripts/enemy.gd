@@ -34,6 +34,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	super._process(delta)
+	if is_active: handle_behind_wall()
 	
 	if vision.monitoring : target_in_range = vision.has_overlapping_areas()
 	handle_action(delta)
@@ -104,6 +105,8 @@ func handle_action(delta) -> void:
 			var dir = global_position.direction_to(target.global_position)
 			nav.target_position = target.global_position - dir * strafe_dist
 			anim.play("walk")
+		ACTION.DEAD:
+			return
 			
 	move_to(self.global_position.direction_to(nav.get_next_path_position()), delta)
 	
@@ -187,3 +190,5 @@ func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> vo
 			find_building()
 		"strafe":
 			action = ACTION.STRAFE
+		"dead":
+			action = ACTION.DEAD
