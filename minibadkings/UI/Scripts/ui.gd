@@ -30,7 +30,6 @@ var displaying_cards : bool = false
 var dispatchAmt = 0
 var dispatchLimit = 1
 
-
 func _process(delta: float) -> void:
 	Global.cardsInHand = hand.get_child(0).get_children()
 	if mainmenu.visible and !%crtrMenu.playing:
@@ -141,6 +140,7 @@ func _on_show_pressed() -> void:
 		if !Global.cardsDispatched.is_empty() : 
 			%Card3.type = Global.cardsDispatched.front().type
 		%Card3.match_sprite_type()
+	
 	else:
 		%CardShow.texture = preload("res://UI/Assets/menus/cardshow.png")
 		%CardShow.hframes = 20

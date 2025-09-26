@@ -40,8 +40,6 @@ func _process(delta: float) -> void:
 	handle_action(delta)
 	handle_approach()
 	check_houses()
-	
-	
 func handle_action(delta) -> void:
 	var distToTarget = global_position.distance_to(nav.target_position)
 	if dashing:

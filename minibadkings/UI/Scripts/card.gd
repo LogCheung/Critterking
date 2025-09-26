@@ -255,31 +255,34 @@ func randomize_type() -> void:
 	match_sprite_type()
 
 func add_card_to_hand() -> void:
-	if ui.rolltype == ROLLTYPE.CHARM:
-		var card : Card = Global.cardsDispatched.front()
-		var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
-		newCard.type = Global.cardsDispatched.front().type
-		newCard.level = card.level
-		
-		var newCharm = preload("res://Units/Scenes/charm.tscn").instantiate()
-		newCharm.type = type - CARDTYPE.HEARTLOCKET
-		
-		Global.cardsInHand.append(newCard)
-		ui.hand.get_child(0).add_child(newCard)
-		Global.cardsDispatched.remove_at(Global.cardsDispatched.find(card))
-		
-		newCard.for_show = false
-		newCard.charm_pos.add_child(newCharm)
-		newCard.charm = newCharm
-		
-		return
-		
-	var dupe : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-	dupe.type = type
-	Global.cardsInHand.append(dupe)
-	dupe.for_show = false
-	ui.hand.get_child(0).add_child(dupe) # container
-	
+	match ui.rolltype:
+		ROLLTYPE.GENERAL,ROLLTYPE.UNIT,ROLLTYPE.BUILDINGS:
+			var dupe : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+			dupe.type = type
+			Global.cardsInHand.append(dupe)
+			dupe.for_show = false
+			ui.hand.get_child(0).add_child(dupe) # container
+		ROLLTYPE.CHARM:
+			var card : Card = Global.cardsDispatched.front()
+			var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
+			newCard.type = Global.cardsDispatched.front().type
+			newCard.level = card.level
+			
+			var newCharm = preload("res://Units/Scenes/charm.tscn").instantiate()
+			newCharm.type = type - CARDTYPE.HEARTLOCKET
+			
+			Global.cardsInHand.append(newCard)
+			ui.hand.get_child(0).add_child(newCard)
+			Global.cardsDispatched.remove_at(Global.cardsDispatched.find(card))
+			
+			newCard.for_show = false
+			newCard.charm_pos.add_child(newCharm)
+			newCard.charm = newCharm
+		ROLLTYPE.BLESSING:
+			var decree : Decree = load("res://UI/Scenes/decree.tscn").instantiate()
+			decree.type = type - CARDTYPE.INSPIRATION + 1
+			ui.decrees.get_child(0).add_child(decree)
+
 func match_building_type(building : Building) -> Building:
 	match type:
 		CARDTYPE.TRAPS:
@@ -386,6 +389,26 @@ func match_sprite_type() -> void:
 			sprite_2d.texture = preload("res://UI/Assets/cards/glassesCard.png")
 		CARDTYPE.NAIL:
 			sprite_2d.texture = preload("res://UI/Assets/cards/nailsCard.png")
+		CARDTYPE.INSPIRATION:
+			sprite_2d.texture = preload("res://UI/Assets/cards/inspirationCard.png")
+		CARDTYPE.DECARE:
+			sprite_2d.texture = preload("res://UI/Assets/cards/decareCard.png")
+		CARDTYPE.RECON:
+			sprite_2d.texture = preload("res://UI/Assets/cards/reconCard.png")
+		CARDTYPE.DEFENSE:
+			sprite_2d.texture = preload("res://UI/Assets/cards/defenseCard.png")
+		CARDTYPE.RENOVATE:
+			sprite_2d.texture = preload("res://UI/Assets/cards/renovateCard.png")
+		CARDTYPE.WAR:
+			sprite_2d.texture = preload("res://UI/Assets/cards/warCard.png")
+		CARDTYPE.CONSCRIPTION:
+			sprite_2d.texture = preload("res://UI/Assets/cards/conscriptionCard.png")
+		CARDTYPE.MASTERY:
+			sprite_2d.texture = preload("res://UI/Assets/cards/masteryCard.png")
+		CARDTYPE.INFLUENCE:
+			sprite_2d.texture = preload("res://UI/Assets/cards/influenceCard.png")
+		CARDTYPE.CONSTRUCTION:
+			sprite_2d.texture = preload("res://UI/Assets/cards/constructionCard.png")
 	
 	%Upgrade1.visible = level == 2
 	%Upgrade2.visible = level == 3

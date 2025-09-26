@@ -28,6 +28,7 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @export var upgraded : bool = false
 
 @onready var sprite_2d: Sprite2D = %Sprite2D
+@onready var status_sprite: AnimatedSprite2D = %StatusSprite
 @onready var nav: NavigationAgent2D = $NavigationAgent2D
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var anim: AnimationPlayer = $AnimationPlayer
@@ -176,7 +177,8 @@ func on_hurt_box_building_land(body : Node2D):
 			body.health -= damage
 	pass
 
-func start_death() -> void:
+func start_death(destroy : bool = false) -> void:
+	status_sprite.visible = false
 	process_mode = Node.PROCESS_MODE_DISABLED
 	anim.play("death")
 	await anim.animation_finished

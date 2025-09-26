@@ -58,6 +58,7 @@ func new_game() -> void:
 	# add house card
 	ui.rollArray.append(Card.ROLLTYPE.UNIT)
 	ui.rollArray.append(Card.ROLLTYPE.UNIT)
+	ui.rollArray.append(Card.ROLLTYPE.BLESSING)
 	
 	for i in range(1):
 		add_house_card()
@@ -337,6 +338,7 @@ func check_nights() -> void:
 	if Global.nights % 6 == 0:
 		night_is_expansion = true
 		add_house_card()
+		ui.rollArray.append(Card.ROLLTYPE.BLESSING)
 		expand()
 		
 	if Global.nights % 10 == 0:

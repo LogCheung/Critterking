@@ -23,6 +23,11 @@ func _process(delta: float) -> void:
 			return
 	at_border.emit()
 
+func highlight_units(highlight : bool) -> void:
+	for unit in unitsArray:
+		unit.HIGHLIGHT 
+	pass
+
 func activate_units() -> void:
 	isActive = true
 	for unit : Enemy in unitsArray:

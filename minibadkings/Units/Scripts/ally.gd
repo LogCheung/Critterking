@@ -25,7 +25,6 @@ const UPBOMBERNORMALSE = preload("res://Units/Assets/AllyBombardier/AllyBombardi
 const UPFLYINGNORMALSE = preload("res://Units/Assets/AllyFlying/AllyFlyingUpgradedSE.png")
 
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
-@onready var status_sprite: AnimatedSprite2D = %StatusSprite
 
 var allyGroup : AllyGroup
 var healing : bool

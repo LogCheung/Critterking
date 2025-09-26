@@ -174,8 +174,15 @@ func handle_decree() -> void:
 			highlight_buildings(true,Building.TYPE.HOUSE)
 		Decree.TYPE.INFLUENCE:
 			# Highlight enemy units, no hover
-			pass
-	
+			var enemGroups = get_tree().get_first_node_in_group("ENEMYGRPNODE")
+			enemGroups = enemGroups.get_children()
+			for grp : Group in enemGroups:
+				# find first unit and set arrow above them
+				for unit in grp.unitsArray:
+					if !is_instance_valid(unit) : return
+					unit.status_sprite.visible = true
+					unit.status_sprite.play("promptSelect")
+		
 	# handle input
 	if using_decree and Input.is_action_just_released("select"):
 		handle_decree_action(mouseTile)
@@ -269,9 +276,10 @@ func handle_stat_modifying_decree() -> void:
 	area.add_child(col)
 	area.global_position = get_global_mouse_position()
 	area.global_position = active_hover.map_to_local(active_hover.local_to_map(area.global_position))
-	area.set_collision_layer_value(1,false)
-	area.set_collision_mask_value(1,false)
-	area.set_collision_mask_value(5,true)
+	area.set_collision_layer_value(1,false) # no clue but maybe this is good thing to do
+	area.set_collision_mask_value(1,false) # for no reason
+	area.set_collision_mask_value(5,true) # to check for allies
+	area.set_collision_mask_value(6,true) # to check for enemies
 	area.top_level = true
 	add_child(area)
 	
@@ -286,8 +294,9 @@ func handle_stat_modifying_decree() -> void:
 			unit.decree = activeDecree
 			unit.match_decree_status()
 			affectedArray.append(unit)
+		elif unit is Enemy and activeDecree == Decree.TYPE.INFLUENCE:
+			affectedArray.append(unit)
 		
-	print(affectedArray)
 	area.queue_free()
 
 func add_hover_tiles(from : int, to : int,startPos : Vector2i) -> void:
