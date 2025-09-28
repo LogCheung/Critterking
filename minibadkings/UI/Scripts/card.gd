@@ -134,8 +134,9 @@ func plop() -> void:
 		group.charm = charm
 		group.upgraded = level > 1
 		group.level = level
-		group.max_size = 12 if level == 3 else 9
-		if charm and charm.type == Charm.TYPE.FLAG : group.max_size += 1
+		group.max_size =13 # 12 if level == 3 else 9
+		#if charm and charm.type == Charm.TYPE.FLAG : 
+		#group.max_size += 3
 		group.global_position = tileWorld.ground.map_to_local(tile)
 		await get_tree().create_timer(.2).timeout
 		groupNode.add_child(group)

@@ -177,7 +177,7 @@ func match_type() -> void:
 			health = 2
 			damage = 0.75
 			speed = 60
-			dodge = 25
+			dodge = 33
 			attack_cd.wait_time = .5
 		TYPE.BOMBER:
 			sprite_2d.texture = BOMBERNORMALSE if level < 2 else UPBOMBERNORMALSE

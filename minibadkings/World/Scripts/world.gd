@@ -217,7 +217,14 @@ func on_night_ended() -> void:
 	var enemies = get_tree().get_nodes_in_group("ENEMY")
 	for enemy in enemies:
 		enemy.queue_free()
-		
+	
+	# remove cooldown for decrees
+	for d : Decree in get_tree().get_nodes_in_group("DECREE"):
+		if d.time == 0 : continue
+		d.time -= 1.0
+		d.update_cooldown()
+		pass
+	
 	if is_combat_phase == false : return
 	ui.rollArray.append(Card.ROLLTYPE.GENERAL)
 	start_day()

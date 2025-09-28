@@ -1,6 +1,7 @@
 extends Node2D
 class_name TileWorld
 
+@export var decree : Decree
 @export var activeDecree : Decree.TYPE
 
 @onready var ground : TileMapLayer = $Ground
@@ -189,6 +190,9 @@ func handle_decree() -> void:
 		
 		await get_tree().create_timer(.1).timeout
 		activeDecree = Decree.TYPE.NONE
+		decree.time = decree.cooldown
+		decree.update_cooldown()
+		decree = null
 	
 	if using_decree and Input.is_action_just_released("cancel"):
 		activeDecree = Decree.TYPE.NONE
@@ -234,7 +238,6 @@ func handle_decree_action(mouseTile : Vector2i) -> void:
 				for u in group.unitsArray:
 					u.global_position = building.entrance.global_position
 					#u.visible = false
-				
 				
 				highlight_buildings(false,Building.TYPE.NONE)
 		Decree.TYPE.INFLUENCE:

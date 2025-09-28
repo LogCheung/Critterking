@@ -128,7 +128,7 @@ func on_game_over() -> void:
 func _on_show_pressed() -> void:
 	# when deck of cards is clicked, show anim will play
 	if displaying_cards : return
-	await get_tree().create_timer(.001).timeout
+	await get_tree().create_timer(.01).timeout
 	
 	if anim.is_playing():return
 	rolltype = rollArray.front()
