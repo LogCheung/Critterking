@@ -544,17 +544,6 @@ z_index = 1
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_q458e")
-health = null
-max_health = null
-damage = null
-speed = null
-attackRange = null
-visionRange = null
-dodge = null
-level = null
-type = null
-decree = null
-upgraded = null
 
 [node name="StatusSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true

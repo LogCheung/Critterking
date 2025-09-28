@@ -279,12 +279,15 @@ func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> vo
 # select unit to select whole group of unit
 var under_mouse : bool = false
 func _on_behind_wall_mouse_entered() -> void:
+	if dead : return
 	under_mouse = true
 	allyGroup._on_select_area_mouse_entered()
 func _on_behind_wall_mouse_exited() -> void:
+	if dead : return
 	under_mouse = false
 	allyGroup._on_select_area_mouse_exited()
 func _on_behind_wall_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if dead : return
 	if allyGroup.is_under_mouse and event.is_action_pressed("select"):
 		allyGroup.selected = !allyGroup.selected
 		if allyGroup.selected: 

@@ -58,7 +58,6 @@ func new_game() -> void:
 	# add house card
 	ui.rollArray.append(Card.ROLLTYPE.UNIT)
 	ui.rollArray.append(Card.ROLLTYPE.UNIT)
-	ui.rollArray.append(Card.ROLLTYPE.BLESSING)
 	
 	for i in range(1):
 		add_house_card()

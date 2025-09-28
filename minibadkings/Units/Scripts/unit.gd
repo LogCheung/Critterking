@@ -178,6 +178,8 @@ func on_hurt_box_building_land(body : Node2D):
 	pass
 
 func start_death(destroy : bool = false) -> void:
+	unselected.emit()
+	if self is Ally : self.under_mouse = false
 	status_sprite.visible = false
 	process_mode = Node.PROCESS_MODE_DISABLED
 	anim.play("death")
