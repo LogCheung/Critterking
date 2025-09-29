@@ -179,6 +179,7 @@ func handle_decree() -> void:
 			enemGroups = enemGroups.get_children()
 			for grp : Group in enemGroups:
 				# find first unit and set arrow above them
+				# but instead of first just do every one
 				for unit in grp.unitsArray:
 					if !is_instance_valid(unit) : return
 					unit.status_sprite.visible = true
@@ -241,7 +242,14 @@ func handle_decree_action(mouseTile : Vector2i) -> void:
 				
 				highlight_buildings(false,Building.TYPE.NONE)
 		Decree.TYPE.INFLUENCE:
-			# Highlight enemy units, no hover
+			var enemGroups = get_tree().get_first_node_in_group("ENEMYGRPNODE")
+			enemGroups = enemGroups.get_children()
+			# remove prompt select from each enemy
+			for grp : Group in enemGroups:
+				for unit in grp.unitsArray:
+					if !is_instance_valid(unit) : return
+					unit.status_sprite.visible = false
+					unit.status_sprite.play("promptSelect")
 			pass
 		Decree.TYPE.CONSTRUCTION:
 			var usableTiles = ground.get_used_cells_by_id(0,Vector2(0,0),0)
