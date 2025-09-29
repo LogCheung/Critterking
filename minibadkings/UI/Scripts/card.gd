@@ -8,7 +8,7 @@ const BUILDING = preload("res://TileMap/Scenes/building.tscn")
 # Storage is border for buildings, TRAPS is start
 # Nail is border for charms, Heartlocket is start
 enum CARDTYPE {
-	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3,BOMBARDIER = 4, FLYING = 5 ,CRAZED = 6,
+	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3,PARALYTIC, RESILIENT, STINGER ,BOMBARDIER, FLYING,CRAZED,
 	TRAPS ,DESTROY , HOUSE, CARE , FARM , SAPSTORE, NURSERY, STORAGE, 
 	HEARTLOCKET, RING, SWORD, FLAG, SODA, ROLLERSKATE, MEDKIT, GLASSES, NAIL,
 	INSPIRATION, DECARE, RECON, DEFENSE, RENOVATE, WAR, CONSCRIPTION, MASTERY, INFLUENCE, CONSTRUCTION
@@ -409,6 +409,12 @@ func match_sprite_type() -> void:
 			sprite_2d.texture = preload("res://UI/Assets/cards/influenceCard.png")
 		CARDTYPE.CONSTRUCTION:
 			sprite_2d.texture = preload("res://UI/Assets/cards/constructionCard.png")
+		CARDTYPE.PARALYTIC:
+			sprite_2d.texture = preload("res://UI/Assets/cards/paralyticCard.png")
+		CARDTYPE.RESILIENT:
+			sprite_2d.texture = preload("res://UI/Assets/cards/resilientCard.png")
+		CARDTYPE.STINGER:
+			sprite_2d.texture = preload("res://UI/Assets/cards/stingerCard.png")
 	
 	%Upgrade1.visible = level == 2
 	%Upgrade2.visible = level == 3

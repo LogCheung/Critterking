@@ -11,6 +11,9 @@ const SHIELDEDNORMALSE = preload("res://Units/Assets/EnemyShield/EnemyShieldNorm
 const CRAZEDNORMALSE = preload("res://Units/Assets/EnemyCrazed/EnemyCrazedNormalSE.png")
 const BOMBERNORMALSE = preload("res://Units/Assets/EnemyBombardier/EnemyBombardierSE.png")
 const FLYINGNORMALSE = preload("res://Units/Assets/EnemyFlying/EnemyFlyingSE.png")
+const PARALYTICNORMALSE = preload("res://Units/Assets/EnemyParalytic/EnemyNormalParalytic.png")
+const RESILIENTNORMALSE = preload("res://Units/Assets/EnemyResilient/EnemyNormalResilient.png")
+const STINGERNORMALSE = preload("res://Units/Assets/EnemyStinger/EnemyNormalStinger.png")
 
 const UPMELEENORMALSE = preload("res://Units/Assets/EnemyMelee/EnemyMeleeUpgradedSE.png")
 const UPRANGEDNORMALSE = preload("res://Units/Assets/EnemyRanged/EnemyRangedUpgradedSE.png")
@@ -18,6 +21,9 @@ const UPSHIELDEDNORMALSE = preload("res://Units/Assets/EnemyShield/EnemyShieldUp
 const UPCRAZEDNORMALSE = preload("res://Units/Assets/EnemyCrazed/EnemyCrazedUpgradedSE.png")
 const UPBOMBERNORMALSE = preload("res://Units/Assets/EnemyBombardier/EnemyBombardierUpgradedSE.png")
 const UPFLYINGNORMALSE = preload("res://Units/Assets/EnemyFlying/EnemyFlyingUpgradedSE.png")
+const UPPARALYTICNORMALSE = preload("res://Units/Assets/EnemyParalytic/EnemyUpgradedParalytic.png")
+const UPRESILIENTNORMALSE = preload("res://Units/Assets/EnemyResilient/EnemyUpgradedResilient.png")
+const UPSTINGERNORMALSE = preload("res://Units/Assets/EnemyStinger/EnemyUpgradedStinger.png")
 
 var target_in_range : bool
 var is_active : bool = false
@@ -155,6 +161,15 @@ func match_type() -> void:
 			attackRange = 30
 			visionRange = 60
 			attack_cd.wait_time = 2
+		TYPE.PARALYTIC:
+			sprite_2d.texture = PARALYTICNORMALSE if !upgraded else UPPARALYTICNORMALSE
+			health = 3
+			damage = 1.5
+			attack_cd.wait_time = 2.5
+		TYPE.RESILIENT:
+			sprite_2d.texture = RESILIENTNORMALSE if !upgraded else UPRESILIENTNORMALSE
+		TYPE.STINGER:
+			sprite_2d.texture = STINGERNORMALSE if !upgraded else UPSTINGERNORMALSE
 			
 
 func find_building() -> void:

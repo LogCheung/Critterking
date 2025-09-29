@@ -13,6 +13,9 @@ const RANGEDNORMALNW = preload("res://Units/Assets/AllyRanged/AllyRangedNormalNW
 const SHIELDEDNORMALNW = preload("res://Units/Assets/AllyShield/AllyShieldNormalNW.png")
 const BOMBERNORMALSE = preload("res://Units/Assets/AllyBombardier/AllyBombardierSE.png")
 const FLYINGNORMALSE = preload("res://Units/Assets/AllyFlying/AllyFlyingSE.png")
+const PARALYTICNORMALSE = preload("res://Units/Assets/AllyParalytic/AllyNormalParalytic.png")
+const RESILIENTNORMALSE = preload("res://Units/Assets/AllyResilient/AllyNormalResilient.png")
+const STINGERNORMALSE = preload("res://Units/Assets/AllyStinger/AllyNormalStinger.png")
 
 const UPMELEENORMALSE = preload("res://Units/Assets/AllyMelee/AllyMeleeUpgradedSE.png")
 const UPRANGEDNORMALSE = preload("res://Units/Assets/AllyRanged/AllyRangedUpgradedSE.png")
@@ -23,6 +26,9 @@ const UPRANGEDNORMALNW = preload("res://Units/Assets/AllyRanged/AllyRangedUpgrad
 const UPSHIELDEDNORMALNW = preload("res://Units/Assets/AllyShield/AllyShieldUpgradedNW.png")
 const UPBOMBERNORMALSE = preload("res://Units/Assets/AllyBombardier/AllyBombardierUpgradedSE.png")
 const UPFLYINGNORMALSE = preload("res://Units/Assets/AllyFlying/AllyFlyingUpgradedSE.png")
+const UPPARALYTICNORMALSE = preload("res://Units/Assets/AllyParalytic/AllyUpgradedParalytic.png")
+const UPRESILIENTNORMALSE = preload("res://Units/Assets/AllyResilient/AllyUpgradedResilient.png")
+const UPSTINGERNORMALSE = preload("res://Units/Assets/AllyStinger/AllyUpgradedStinger.png")
 
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
 
