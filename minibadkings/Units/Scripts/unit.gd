@@ -38,6 +38,7 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @onready var hit_box: Area2D = %HitBox
 @onready var death: AudioStreamPlayer = %Death
 @onready var hurt: AudioStreamPlayer = %Hurt
+@onready var stun_cd: Timer = $StunCD
 
 
 var action : ACTION = ACTION.NONE
@@ -193,3 +194,6 @@ func start_death(destroy : bool = false) -> void:
 	group.unit_died.emit()
 	%Death.play()
 	#queue_free()
+
+func on_stun_finished() -> void:
+	pass

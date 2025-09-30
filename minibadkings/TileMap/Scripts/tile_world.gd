@@ -134,7 +134,7 @@ func draw_build_area() -> void:
 		for y in range(bStart.y , bEnd.y + 1):
 			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),0)
 			#if wall_tiles.has(Vector2i(x,y)): 
-			wall.set_cell(Vector2i(x,y),-1)
+			#wall.set_cell(Vector2i(x,y),-1)
 	
 	# Building area
 	var start = Vector2i(6,-2) - Vector2i(extra,extra)
