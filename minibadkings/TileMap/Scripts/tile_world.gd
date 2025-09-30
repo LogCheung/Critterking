@@ -125,7 +125,7 @@ func draw_build_area() -> void:
 			
 	for x in range(wallMin.x, wallMax.x,5):
 		for y in range(wallMin.y, wallMax.y,5):
-			wall.set_pattern(Vector2i(x,y),wall.tile_set.get_pattern(0))
+			wall.set_pattern(Vector2i(x,y),wall.tile_set.get_pattern(randi_range(0,5)))
 			
 	# Battlefield
 	var bStart = Vector2i(4,-4) - Vector2i(extra,extra)
