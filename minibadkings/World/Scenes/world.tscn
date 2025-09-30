@@ -28,10 +28,10 @@ y_sort_enabled = true
 [node name="TileWorld" parent="Game" instance=ExtResource("1_jamle")]
 
 [node name="Camera2D" type="Camera2D" parent="Game" groups=["CAMERA"]]
-position = Vector2(289, 162)
+position = Vector2(32, 80)
 zoom = Vector2(2, 2)
-limit_left = -300
-limit_top = -120
+limit_left = -800
+limit_top = -500
 limit_right = 1000
 limit_bottom = 600
 position_smoothing_speed = 2.0
@@ -65,5 +65,14 @@ process_mode = 3
 [node name="Timer" type="Timer" parent="."]
 wait_time = 30.0
 autostart = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -5
+offset_left = -1817.0
+offset_top = -890.0
+offset_right = 2543.0
+offset_bottom = 1350.0
+mouse_filter = 2
+color = Color(0.17120343, 0.13082892, 0.15120402, 1)
 
 [connection signal="timeout" from="Game/SpawnTimer" to="." method="_on_spawn_timer_timeout"]

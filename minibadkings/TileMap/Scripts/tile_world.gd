@@ -128,8 +128,8 @@ func draw_build_area() -> void:
 			wall.set_pattern(Vector2i(x,y),wall.tile_set.get_pattern(randi_range(0,5)))
 			
 	# Battlefield
-	var bStart = Vector2i(4,-4) - Vector2i(extra,extra)
-	var bEnd = Vector2i(13,5) +  Vector2i(extra,extra)
+	var bStart = Vector2i(-2,-2) - Vector2i(extra,extra)
+	var bEnd = Vector2i(6,6) +  Vector2i(extra,extra)
 	for x in range(bStart.x , bEnd.x + 1):
 		for y in range(bStart.y , bEnd.y + 1):
 			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),0)
@@ -137,8 +137,8 @@ func draw_build_area() -> void:
 			#wall.set_cell(Vector2i(x,y),-1)
 	
 	# Building area
-	var start = Vector2i(6,-2) - Vector2i(extra,extra)
-	var end = Vector2i(11,3) +  Vector2i(extra,extra)
+	var start = Vector2i(0,0) - Vector2i(extra,extra)
+	var end = Vector2i(4,4) +  Vector2i(extra,extra)
 	for x in range(start.x , end.x + 1):
 		for y in range(start.y , end.y + 1):
 			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),1)

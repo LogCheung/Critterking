@@ -603,6 +603,7 @@ _data = {
 [node name="Ally" type="CharacterBody2D" groups=["ALLY"]]
 light_mask = 33
 z_index = 1
+collision_layer = 0
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_q458e")
@@ -616,6 +617,7 @@ animation = &"stun"
 frame_progress = 0.20323545
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-0.5, 1)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_daau3")

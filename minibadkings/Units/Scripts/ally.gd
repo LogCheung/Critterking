@@ -138,6 +138,7 @@ func handle_action(delta) -> void:
 			stun_cd.start()
 			return 
 		ACTION.DEAD:
+			sprite_2d.material = null
 			return
 	
 	move_to(self.global_position.direction_to(nav.get_next_path_position()), delta)

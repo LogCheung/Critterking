@@ -577,6 +577,7 @@ radius = 128.0
 
 [node name="Enemy" type="CharacterBody2D" groups=["ENEMY"]]
 z_index = 1
+collision_layer = 0
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("2_mh310")
@@ -590,6 +591,7 @@ animation = &"stun"
 frame_progress = 0.85936534
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-0.5, 1)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_ubmlb")
@@ -605,6 +607,7 @@ frame = 1
 
 [node name="HurtBox" type="Area2D" parent="Flip"]
 unique_name_in_owner = true
+visible = false
 collision_layer = 0
 collision_mask = 2
 
@@ -616,6 +619,7 @@ debug_color = Color(0.793403, 0.426364, 1.92523e-07, 0.42)
 
 [node name="HitBox" parent="." instance=ExtResource("4_0wncj")]
 unique_name_in_owner = true
+visible = false
 collision_layer = 4
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
@@ -737,10 +741,10 @@ metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 navigation_layers = 3
-path_postprocessing = 1
-avoidance_enabled = true
+path_search_max_distance = 100.0
 radius = 20.0
 max_neighbors = 1000
+debug_enabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 process_mode = 3

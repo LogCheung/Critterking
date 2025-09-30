@@ -180,6 +180,7 @@ func start_death(destroy : bool = false) -> void:
 	unselected.emit()
 	if self is Ally : self.under_mouse = false
 	status_sprite.visible = false
+	sprite_2d.material = null
 	process_mode = Node.PROCESS_MODE_DISABLED
 	anim.play("death")
 	await anim.animation_finished
