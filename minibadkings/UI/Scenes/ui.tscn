@@ -17,9 +17,9 @@
 [ext_resource type="AudioStream" uid="uid://cwx4hw05ceroc" path="res://Audio/sfx/Shuffle.tres" id="11_6dw6b"]
 [ext_resource type="Texture2D" uid="uid://b6kejcvarih2b" path="res://UI/Assets/nightcount.png" id="11_yqd36"]
 [ext_resource type="AudioStream" uid="uid://bdq1nbxdckl0r" path="res://Audio/sfx/Card.tres" id="12_yqd36"]
-[ext_resource type="AudioStream" uid="uid://cqs4ssc2g47ia" path="res://Audio/music/crtrnight1.wav" id="13_oemsu"]
-[ext_resource type="AudioStream" uid="uid://cbsqcafyluqad" path="res://Audio/music/crtrday1.wav" id="14_gu1s8"]
 [ext_resource type="AudioStream" uid="uid://bxpbo04dxxuf4" path="res://Audio/sfx/Button.tres" id="15_8g5lr"]
+[ext_resource type="AudioStream" uid="uid://c8brf7l45q10r" path="res://Audio/music/crtrnight.tres" id="19_gu1s8"]
+[ext_resource type="AudioStream" uid="uid://u2y0bys67ovo" path="res://Audio/music/crtrday.tres" id="20_8g5lr"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_yqd36"]
 font = ExtResource("7_titua")
@@ -829,12 +829,12 @@ bus = &"SFX"
 
 [node name="crtrNight" type="AudioStreamPlayer" parent="." groups=["MUSIC"]]
 unique_name_in_owner = true
-stream = ExtResource("13_oemsu")
+stream = ExtResource("19_gu1s8")
 bus = &"Music"
 
 [node name="crtrDay" type="AudioStreamPlayer" parent="." groups=["MUSIC"]]
 unique_name_in_owner = true
-stream = ExtResource("14_gu1s8")
+stream = ExtResource("20_8g5lr")
 bus = &"Music"
 
 [node name="Button" type="AudioStreamPlayer" parent="."]

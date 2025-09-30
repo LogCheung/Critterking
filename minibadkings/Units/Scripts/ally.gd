@@ -114,8 +114,6 @@ func handle_action(delta) -> void:
 					%Shoot.play()
 				else:
 					%Attack.play()
-				
-				
 				await anim.animation_finished
 				anim.speed_scale = 1
 				velocity = Vector2.ZERO

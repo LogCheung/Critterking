@@ -138,8 +138,6 @@ func attack_finished() -> void:
 		proj.damage = damage
 		proj.is_enemy = self is Enemy
 		get_tree().get_first_node_in_group("WORLD").add_child(proj)
-		
-		pass
 func find_target() -> void:
 	target = null
 	if !vision.monitoring: return

@@ -148,7 +148,7 @@ func apply_charm() -> void:
 				create_formation(UNIT)
 				return
 			Charm.TYPE.SODA:
-				unit.speed += 10
+				unit.speed += 12
 			Charm.TYPE.ROLLERSKATE:
 				unit.dodge += 20
 			Charm.TYPE.MEDKIT:

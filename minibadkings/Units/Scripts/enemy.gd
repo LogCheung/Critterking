@@ -59,7 +59,7 @@ func handle_action(delta) -> void:
 	match action:
 		ACTION.FORM:
 			nav.target_position = formation_position.global_position
-			if distToTarget <= 2:
+			if distToTarget <= 8:
 				anim.play("idle")
 				# precheck if it is behind something
 				is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
