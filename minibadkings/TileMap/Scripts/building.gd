@@ -156,7 +156,7 @@ func _on_adj_area_entered(area: Area2D) -> void:
 	if world.is_combat_phase == true: return
 	if area.owner is Ally:
 		var target : Unit = area.owner
-		if type == TYPE.SAPSTORE: target.speed += 3
+		if type == TYPE.SAPSTORE: target.speed += 6
 		if type == TYPE.RUINS: target.speed -= 6
 
 func _on_orth_area_entered(area: Area2D) -> void:

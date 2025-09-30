@@ -47,7 +47,7 @@ func new_game() -> void:
 	Global.expansions = 0
 	Global.cardsInHand.clear()
 	Global.cardsDispatched.clear()	
-	
+	ui.rollArray.clear()
 	tileWorld.draw_build_area()
 	clear_world()
 	
