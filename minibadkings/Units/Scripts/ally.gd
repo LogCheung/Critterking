@@ -134,6 +134,9 @@ func handle_action(delta) -> void:
 			if distToTarget < 8:
 				visible = false
 				return
+		ACTION.STUNNED:
+			stun_cd.start()
+			return 
 		ACTION.DEAD:
 			return
 	
@@ -207,8 +210,14 @@ func match_type() -> void:
 			attack_cd.wait_time = 2.5
 		TYPE.RESILIENT:
 			sprite_2d.texture = RESILIENTNORMALSE if !upgraded else UPRESILIENTNORMALSE
+			health = 4
+			damage = 1
+			attack_cd.wait_time = 1.5
 		TYPE.STINGER:
 			sprite_2d.texture = STINGERNORMALSE if !upgraded else UPSTINGERNORMALSE
+			health = 3
+			damage = 1.5
+			attack_cd.wait_time = 2
 	set_up_vision()
 
 #func on_health_change() -> void:

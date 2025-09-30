@@ -168,9 +168,15 @@ func match_type() -> void:
 			attack_cd.wait_time = 2.5
 		TYPE.RESILIENT:
 			sprite_2d.texture = RESILIENTNORMALSE if !upgraded else UPRESILIENTNORMALSE
+			health = 4
+			damage = 1
+			attack_cd.wait_time = 1.5
 		TYPE.STINGER:
 			sprite_2d.texture = STINGERNORMALSE if !upgraded else UPSTINGERNORMALSE
-			
+			health = 3
+			damage = 1.5
+			attack_cd.wait_time = 2
+	
 
 func find_building() -> void:
 	await get_tree().create_timer(.1).timeout

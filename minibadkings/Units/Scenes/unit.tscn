@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=3 uid="uid://dkqw1dmj0wkgb"]
+[gd_scene load_steps=93 format=3 uid="uid://dkqw1dmj0wkgb"]
 
 [ext_resource type="PackedScene" uid="uid://ddc6mf0gqftb" path="res://Units/Scenes/hit_box.tscn" id="1_pm8qt"]
 [ext_resource type="Script" uid="uid://13y7jtc01ydv" path="res://Units/Scripts/ally.gd" id="1_q458e"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://d0dhe2lv3x4u3" path="res://Units/Debug/utility_debug.tscn" id="5_yd6on"]
 [ext_resource type="Script" uid="uid://bpvkdlp8jw4sj" path="res://addons/utility_ai/actions/action.gd" id="6_m88pn"]
 [ext_resource type="Script" uid="uid://dojkyt7skh8fh" path="res://addons/utility_ai/considerations/consideration_from_node.gd" id="7_m88pn"]
+[ext_resource type="Texture2D" uid="uid://ciy8dhlplknc5" path="res://Units/Assets/Status/stun.png" id="7_n3b5d"]
 [ext_resource type="Script" uid="uid://b2f8vq1st70r0" path="res://addons/utility_ai/considerations/aggregation.gd" id="9_daau3"]
 [ext_resource type="Script" uid="uid://c4w8b5x2jd5q3" path="res://Units/Scripts/considerType.gd" id="9_jqc0h"]
 [ext_resource type="AudioStream" uid="uid://51wb2nkn3yoe" path="res://Audio/sfx/Attack.tres" id="10_t5nd1"]
@@ -179,6 +180,38 @@ region = Rect2(192, 0, 32, 32)
 atlas = ExtResource("5_uum83")
 region = Rect2(224, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_5w5oc"]
+atlas = ExtResource("7_n3b5d")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5y05f"]
+atlas = ExtResource("7_n3b5d")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7hw8h"]
+atlas = ExtResource("7_n3b5d")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t0pbw"]
+atlas = ExtResource("7_n3b5d")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rb3ih"]
+atlas = ExtResource("7_n3b5d")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v4p4r"]
+atlas = ExtResource("7_n3b5d")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6i2he"]
+atlas = ExtResource("7_n3b5d")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hv04o"]
+atlas = ExtResource("7_n3b5d")
+region = Rect2(224, 0, 32, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_ssb4e"]
 animations = [{
 "frames": [{
@@ -324,6 +357,35 @@ animations = [{
 }],
 "loop": true,
 "name": &"recon",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5w5oc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5y05f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7hw8h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t0pbw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rb3ih")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v4p4r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6i2he")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hv04o")
+}],
+"loop": true,
+"name": &"stun",
 "speed": 5.0
 }]
 
@@ -550,8 +612,8 @@ unique_name_in_owner = true
 visible = false
 position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_ssb4e")
-animation = &"promptSelect"
-frame_progress = 0.37094137
+animation = &"stun"
+frame_progress = 0.20323545
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 1)
@@ -773,6 +835,9 @@ wait_time = 1.5
 one_shot = true
 
 [node name="HurtboxCD" type="Timer" parent="."]
+one_shot = true
+
+[node name="StunCD" type="Timer" parent="."]
 one_shot = true
 
 [node name="Attack" type="AudioStreamPlayer" parent="."]
