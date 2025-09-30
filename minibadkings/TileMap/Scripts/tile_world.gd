@@ -23,7 +23,6 @@ func _ready() -> void:
 	start_wall_tiles = wall.get_used_cells()
 	find_outskirt_tiles()
 	handle_navigable_cells()
-	limit_colliding_walls()
 
 func _process(delta: float) -> void:
 	for cell in active_hover.get_used_cells():
@@ -64,6 +63,7 @@ func handle_navigable_cells() -> void:
 	
 	
 func replace_transparent_walls() -> void:
+	return
 	wall_tiles = wall.get_used_cells()
 	var units = get_tree().get_nodes_in_group("ALLY")
 	var trans_walls = units.map(func(u : Unit):return u.wall_tile)
@@ -110,19 +110,31 @@ func draw_build_area() -> void:
 	await get_tree().create_timer(.05).timeout
 	var extra = Global.expansions
 	# clear all ground tiles
-	for tile in start_wall_tiles:
-		wall.set_cell(tile,0,Vector2(0,2))
+	#for tile in start_wall_tiles:
+		#wall.set_cell(tile,0,Vector2(0,2))
 	for tile in ground.get_used_cells():
 		ground.set_cell(tile,-1)
-	
-	# Battlefield
+		
+	# remove walls
 	wall_tiles = wall.get_used_cells()
+	var wallMax = wall_tiles.max()
+	var wallMin = wall_tiles.min()
+	for x in range(wallMin.x, wallMax.x):
+		for y in range(wallMin.y, wallMax.y):
+			wall.set_cell(Vector2i(x,y),-1)
+			
+	for x in range(wallMin.x, wallMax.x,5):
+		for y in range(wallMin.y, wallMax.y,5):
+			wall.set_pattern(Vector2i(x,y),wall.tile_set.get_pattern(0))
+			
+	# Battlefield
 	var bStart = Vector2i(4,-4) - Vector2i(extra,extra)
 	var bEnd = Vector2i(13,5) +  Vector2i(extra,extra)
 	for x in range(bStart.x , bEnd.x + 1):
 		for y in range(bStart.y , bEnd.y + 1):
 			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),0)
-			if wall_tiles.has(Vector2i(x,y)): wall.set_cell(Vector2i(x,y),-1)
+			#if wall_tiles.has(Vector2i(x,y)): 
+			wall.set_cell(Vector2i(x,y),-1)
 	
 	# Building area
 	var start = Vector2i(6,-2) - Vector2i(extra,extra)
@@ -130,6 +142,8 @@ func draw_build_area() -> void:
 	for x in range(start.x , end.x + 1):
 		for y in range(start.y , end.y + 1):
 			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),1)
+			#if wall_tiles.has(Vector2i(x,y)): 
+			wall.set_cell(Vector2i(x,y),-1)
 	
 	# make check for existing buildings/units
 	var unitTiles = get_tree().get_nodes_in_group("ALLYGROUP")
@@ -140,7 +154,6 @@ func draw_build_area() -> void:
 		ground.set_cell(tile,0,Vector2(0,0),2)
 	find_outskirt_tiles()
 	handle_navigable_cells()
-	limit_colliding_walls()
 
 func handle_decree() -> void:
 	# handle size of affected area and action (maybe)

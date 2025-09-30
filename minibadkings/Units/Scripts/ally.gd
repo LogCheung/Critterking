@@ -202,6 +202,15 @@ func match_type() -> void:
 			attack_cd.wait_time = 2.5
 			%HurtShape.shape.size = Vector2(15,15)
 			%HurtShape.position = Vector2(6.5,1.5)
+		TYPE.PARALYTIC:
+			sprite_2d.texture = PARALYTICNORMALSE if !upgraded else UPPARALYTICNORMALSE
+			health = 3
+			damage = 1.5
+			attack_cd.wait_time = 2.5
+		TYPE.RESILIENT:
+			sprite_2d.texture = RESILIENTNORMALSE if !upgraded else UPRESILIENTNORMALSE
+		TYPE.STINGER:
+			sprite_2d.texture = STINGERNORMALSE if !upgraded else UPSTINGERNORMALSE
 	set_up_vision()
 
 #func on_health_change() -> void:
