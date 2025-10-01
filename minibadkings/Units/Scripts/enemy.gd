@@ -59,7 +59,7 @@ func handle_action(delta) -> void:
 	match action:
 		ACTION.FORM:
 			nav.target_position = formation_position.global_position
-			if distToTarget <= 8:
+			if distToTarget <= 20:
 				anim.play("idle")
 				# precheck if it is behind something
 				is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
@@ -93,7 +93,7 @@ func handle_action(delta) -> void:
 			elif !anim.is_playing():
 				anim.play("walk")
 		ACTION.RAID:
-			if distToTarget <= 24:
+			if distToTarget <= 22:
 				anim.play("attack")
 				if type== TYPE.RANGED:
 					%Shoot.play()

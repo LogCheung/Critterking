@@ -17,6 +17,7 @@ var wall_tiles : Array
 var start_wall_tiles : Array
 var unit_tiles : Array
 var outskirt_tiles : Array
+var water_tiles : Array
 
 func _ready() -> void:
 	await get_tree().create_timer(.2).timeout
@@ -98,11 +99,15 @@ func find_outskirt_tiles() -> void:
 	var end : Vector2i = rect.end
 	var pos : Vector2i = rect.position
 	for y in range(pos.y,end.y + 1):
-		outskirt_tiles.append(Vector2i(pos.x - 1,y))
-		outskirt_tiles.append(Vector2i(end.x ,y))
+		if !water_tiles.has(Vector2i(pos.x - 1,y)): 
+			outskirt_tiles.append(Vector2i(pos.x - 1,y))
+		if !water_tiles.has(Vector2i(end.x ,y)):
+			outskirt_tiles.append(Vector2i(end.x ,y))
 	for x in range(pos.x - 1,end.x + 1):
-		outskirt_tiles.append(Vector2i(x,end.y))
-		outskirt_tiles.append(Vector2i(x,pos.y - 1))
+		if !water_tiles.has(Vector2i(x,end.y)):
+			outskirt_tiles.append(Vector2i(x,end.y))
+		if !water_tiles.has(Vector2i(x,pos.y - 1)):
+			outskirt_tiles.append(Vector2i(x,pos.y - 1))
 	for tile in outskirt_tiles:
 		ground.set_cell(tile,0,Vector2(0,0),4)
 
@@ -154,6 +159,18 @@ func draw_build_area() -> void:
 		ground.set_cell(tile,0,Vector2(0,0),2)
 	find_outskirt_tiles()
 	handle_navigable_cells()
+
+func find_water_tiles() -> void:
+	water_tiles.clear()
+	
+	water_tiles.append(wall.get_used_cells_by_id(1,Vector2(0,9)))
+	water_tiles.append(wall.get_used_cells_by_id(1,Vector2(1,9)))
+	water_tiles.append(wall.get_used_cells_by_id(1,Vector2(2,9)))
+	water_tiles.append(wall.get_used_cells_by_id(1,Vector2(3,9)))
+	water_tiles.append(wall.get_used_cells_by_id(1,Vector2(0,10)))
+	water_tiles.append(wall.get_used_cells_by_id(1,Vector2(1,10)))
+	water_tiles.append(wall.get_used_cells_by_id(1,Vector2(2,10)))
+	water_tiles.append(wall.get_used_cells_by_id(1,Vector2(3,10)))
 
 func handle_decree() -> void:
 	# handle size of affected area and action (maybe)

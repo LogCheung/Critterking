@@ -740,8 +740,13 @@ curve = SubResource("Curve_ohg4d")
 metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 10.0
+path_max_distance = 20.0
 navigation_layers = 3
-path_search_max_distance = 100.0
+path_postprocessing = 2
+simplify_path = true
+path_search_max_distance = 500.0
+avoidance_enabled = true
 radius = 20.0
 max_neighbors = 1000
 debug_enabled = true
