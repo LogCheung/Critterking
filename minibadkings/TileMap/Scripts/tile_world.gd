@@ -120,7 +120,7 @@ func draw_build_area() -> void:
 	for tile in ground.get_used_cells():
 		ground.set_cell(tile,-1)
 		
-	# remove walls
+	# remove walls and add random patterns to map
 	wall_tiles = wall.get_used_cells()
 	var wallMax = wall_tiles.max()
 	var wallMin = wall_tiles.min()
@@ -132,11 +132,13 @@ func draw_build_area() -> void:
 		for y in range(wallMin.y, wallMax.y,5):
 			wall.set_pattern(Vector2i(x,y),wall.tile_set.get_pattern(randi_range(0,5)))
 			
+	find_water_tiles()
 	# Battlefield
 	var bStart = Vector2i(-2,-2) - Vector2i(extra,extra)
 	var bEnd = Vector2i(6,6) +  Vector2i(extra,extra)
 	for x in range(bStart.x , bEnd.x + 1):
 		for y in range(bStart.y , bEnd.y + 1):
+			if water_tiles.has(Vector2i(x,y)): continue
 			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),0)
 			#if wall_tiles.has(Vector2i(x,y)): 
 			#wall.set_cell(Vector2i(x,y),-1)
@@ -163,14 +165,14 @@ func draw_build_area() -> void:
 func find_water_tiles() -> void:
 	water_tiles.clear()
 	
-	water_tiles.append(wall.get_used_cells_by_id(1,Vector2(0,9)))
-	water_tiles.append(wall.get_used_cells_by_id(1,Vector2(1,9)))
-	water_tiles.append(wall.get_used_cells_by_id(1,Vector2(2,9)))
-	water_tiles.append(wall.get_used_cells_by_id(1,Vector2(3,9)))
-	water_tiles.append(wall.get_used_cells_by_id(1,Vector2(0,10)))
-	water_tiles.append(wall.get_used_cells_by_id(1,Vector2(1,10)))
-	water_tiles.append(wall.get_used_cells_by_id(1,Vector2(2,10)))
-	water_tiles.append(wall.get_used_cells_by_id(1,Vector2(3,10)))
+	water_tiles.append_array(wall.get_used_cells_by_id(1,Vector2(0,9)))
+	water_tiles.append_array(wall.get_used_cells_by_id(1,Vector2(1,9)))
+	water_tiles.append_array(wall.get_used_cells_by_id(1,Vector2(2,9)))
+	water_tiles.append_array(wall.get_used_cells_by_id(1,Vector2(3,9)))
+	water_tiles.append_array(wall.get_used_cells_by_id(1,Vector2(0,10)))
+	water_tiles.append_array(wall.get_used_cells_by_id(1,Vector2(1,10)))
+	water_tiles.append_array(wall.get_used_cells_by_id(1,Vector2(2,10)))
+	water_tiles.append_array(wall.get_used_cells_by_id(1,Vector2(3,10)))
 
 func handle_decree() -> void:
 	# handle size of affected area and action (maybe)

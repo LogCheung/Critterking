@@ -577,9 +577,9 @@ radius = 128.0
 
 [node name="Enemy" type="CharacterBody2D" groups=["ENEMY"]]
 z_index = 1
-collision_layer = 0
 motion_mode = 1
 wall_min_slide_angle = 0.0
+safe_margin = 5.0
 script = ExtResource("2_mh310")
 
 [node name="StatusSprite" type="AnimatedSprite2D" parent="."]
@@ -591,10 +591,11 @@ animation = &"stun"
 frame_progress = 0.85936534
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
+unique_name_in_owner = true
 position = Vector2(-0.5, 1)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_ubmlb")
+disabled = true
 
 [node name="Flip" type="Node2D" parent="."]
 
@@ -740,12 +741,9 @@ curve = SubResource("Curve_ohg4d")
 metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-path_desired_distance = 10.0
-path_max_distance = 20.0
-navigation_layers = 3
-path_postprocessing = 2
-simplify_path = true
-path_search_max_distance = 500.0
+target_desired_distance = 20.0
+navigation_layers = 2
+path_postprocessing = 1
 avoidance_enabled = true
 radius = 20.0
 max_neighbors = 1000
@@ -783,6 +781,10 @@ one_shot = true
 
 [node name="StunCD" type="Timer" parent="."]
 one_shot = true
+
+[node name="NavDelay" type="Timer" parent="."]
+wait_time = 0.125
+autostart = true
 
 [node name="Attack" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true

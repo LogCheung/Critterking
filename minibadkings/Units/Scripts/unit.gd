@@ -39,7 +39,9 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @onready var death: AudioStreamPlayer = %Death
 @onready var hurt: AudioStreamPlayer = %Hurt
 @onready var stun_cd: Timer = $StunCD
+@onready var nav_delay: Timer = $NavDelay
 
+var next_path_pos
 
 var action : ACTION = ACTION.NONE
 var in_formation : bool = false
@@ -195,6 +197,11 @@ func start_death(destroy : bool = false) -> void:
 	group.unit_died.emit()
 	%Death.play()
 	#queue_free()
+
+func on_nav_delay() -> void:
+	if !nav.target_position : return
+	next_path_pos = nav.get_next_path_position()
+	pass
 
 func on_stun_finished() -> void:
 	pass

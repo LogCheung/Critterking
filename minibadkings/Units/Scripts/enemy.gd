@@ -59,7 +59,7 @@ func handle_action(delta) -> void:
 	match action:
 		ACTION.FORM:
 			nav.target_position = formation_position.global_position
-			if distToTarget <= 20:
+			if distToTarget <= 8:
 				anim.play("idle")
 				# precheck if it is behind something
 				is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
@@ -111,7 +111,9 @@ func handle_action(delta) -> void:
 			anim.play("walk")
 		ACTION.DEAD:
 			return
-			
+	
+	if !next_path_pos: 
+		on_nav_delay()
 	move_to(self.global_position.direction_to(nav.get_next_path_position()), delta)
 	
 func become_active() -> void:
@@ -119,7 +121,9 @@ func become_active() -> void:
 	vision.monitoring = true
 	sprite_2d.material = null
 	z_index = 0
-	#nav.set_navigation_layer_value(2,false)
+	%CollisionShape2D.disabled = false
+	nav.set_navigation_layer_value(1,true)
+	nav.set_navigation_layer_value(2,false)
 
 func match_type() -> void:
 	match type:
