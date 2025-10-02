@@ -7,6 +7,7 @@ class_name TileWorld
 @onready var ground : TileMapLayer = $Ground
 @onready var hover : TileMapLayer = $Hover
 @onready var wall: TileMapLayer = $wall
+@onready var obstacles: TileMapLayer = $obstacles
 @onready var center: Node2D = $Center
 @onready var active_hover: TileMapLayer = $ActiveHover
 @onready var unit_groups : Array
@@ -130,7 +131,10 @@ func draw_build_area() -> void:
 			
 	for x in range(wallMin.x, wallMax.x,5):
 		for y in range(wallMin.y, wallMax.y,5):
-			wall.set_pattern(Vector2i(x,y),wall.tile_set.get_pattern(randi_range(0,5)))
+			var pattern = randi_range(0,10)
+			wall.set_pattern(Vector2i(x,y),wall.tile_set.get_pattern(pattern))
+			if pattern >= 6:
+				obstacles.set_pattern(Vector2i(x,y),obstacles.tile_set.get_pattern(pattern-6))
 			
 	find_water_tiles()
 	# Battlefield
