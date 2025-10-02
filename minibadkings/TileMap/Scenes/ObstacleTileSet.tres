@@ -1,8 +1,23 @@
-[gd_resource type="TileSet" load_steps=16 format=3 uid="uid://ddp6p2t5m2bag"]
+[gd_resource type="TileSet" load_steps=21 format=3 uid="uid://ddp6p2t5m2bag"]
 
 [ext_resource type="Texture2D" uid="uid://cx0b0ucjd4cee" path="res://TileMap/Assets/tiles.png" id="1_7bp73"]
 [ext_resource type="Texture2D" uid="uid://mg1gku362mus" path="res://UI/Scripts/gwj2obstacles.png" id="2_5edhi"]
 [ext_resource type="Texture2D" uid="uid://d06rjt2g5bhak" path="res://TileMap/Assets/test.png" id="3_3ax6m"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_7bp73"]
+tile_data = PackedInt32Array(0, 131073, 14, 65536, 131073, 14, 1, 131073, 19, 65537, 131073, 14, 131073, 131073, 18, 2, 131073, 18, 131074, 65537, 15)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_5edhi"]
+tile_data = PackedInt32Array(262144, 65537, 8, 131073, 1, 8, 196611, 65537, 8, 4, 1, 7)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_tth4i"]
+tile_data = PackedInt32Array(0, 65537, 13, 65536, 65537, 15, 131072, 65537, 13, 1, 65537, 18, 65537, 65537, 13, 131073, 65537, 16, 65538, 65537, 13, 131074, 65537, 14)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_u8cbn"]
+tile_data = PackedInt32Array(0, 131073, 14, 196608, 131073, 14, 196609, 131073, 14, 65538, 131073, 14, 65539, 131073, 14, 131075, 131073, 14, 262147, 131073, 14, 131076, 131073, 14, 262148, 131073, 14)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_3ax6m"]
+tile_data = PackedInt32Array(262144, 1, 6, 1, 65537, 6, 131074, 131073, 6, 196611, 65537, 8)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_jb8ou"]
 vertices = PackedVector2Array(32, 0, 0, 16, -32, 0, 0, -16)
@@ -205,6 +220,7 @@ texture_region_size = Vector2i(64, 64)
 3:3/0/texture_origin = Vector2i(0, -16)
 3:3/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_5edhi")
 3:3/0/navigation_layer_1/polygon = SubResource("NavigationPolygon_7bp73")
+0:4/next_alternative_id = 2
 0:4/0 = 0
 0:4/0/texture_origin = Vector2i(0, -16)
 0:4/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_5edhi")
@@ -233,6 +249,50 @@ texture_region_size = Vector2i(64, 64)
 1:6/0 = 0
 2:6/0 = 0
 3:6/0 = 0
+0:11/0 = 0
+0:11/0/texture_origin = Vector2i(0, -16)
+1:11/0 = 0
+1:11/0/texture_origin = Vector2i(0, -16)
+2:11/0 = 0
+2:11/0/texture_origin = Vector2i(0, -16)
+3:12/0 = 0
+3:12/0/texture_origin = Vector2i(0, -16)
+2:12/0 = 0
+2:12/0/texture_origin = Vector2i(0, -16)
+1:12/0 = 0
+1:12/0/texture_origin = Vector2i(0, -16)
+0:12/0 = 0
+0:12/0/texture_origin = Vector2i(0, -16)
+3:11/0 = 0
+3:11/0/texture_origin = Vector2i(0, -16)
+0:13/0 = 0
+0:14/0 = 0
+1:14/0 = 0
+1:15/0 = 0
+2:16/0 = 0
+2:15/0 = 0
+1:13/0 = 0
+2:13/0 = 0
+3:13/0 = 0
+3:14/0 = 0
+3:15/0 = 0
+2:14/0 = 0
+0:16/0 = 0
+1:16/0 = 0
+0:15/0 = 0
+3:16/0 = 0
+3:17/0 = 0
+2:17/0 = 0
+1:17/0 = 0
+0:17/0 = 0
+0:19/0 = 0
+0:18/0 = 0
+1:18/0 = 0
+2:18/0 = 0
+2:19/0 = 0
+1:19/0 = 0
+3:18/0 = 0
+3:19/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_leqhe"]
 texture = ExtResource("3_3ax6m")
@@ -254,3 +314,8 @@ navigation_layer_1/layers = 2
 sources/50 = SubResource("TileSetAtlasSource_leqhe")
 sources/0 = SubResource("TileSetAtlasSource_h7jyf")
 sources/1 = SubResource("TileSetAtlasSource_ymfrj")
+pattern_0 = SubResource("TileMapPattern_7bp73")
+pattern_1 = SubResource("TileMapPattern_5edhi")
+pattern_2 = SubResource("TileMapPattern_tth4i")
+pattern_3 = SubResource("TileMapPattern_u8cbn")
+pattern_4 = SubResource("TileMapPattern_3ax6m")
