@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=21 format=3 uid="uid://ddp6p2t5m2bag"]
+[gd_resource type="TileSet" load_steps=20 format=3 uid="uid://ddp6p2t5m2bag"]
 
 [ext_resource type="Texture2D" uid="uid://cx0b0ucjd4cee" path="res://TileMap/Assets/tiles.png" id="1_7bp73"]
 [ext_resource type="Texture2D" uid="uid://mg1gku362mus" path="res://UI/Scripts/gwj2obstacles.png" id="2_5edhi"]
@@ -9,9 +9,6 @@ tile_data = PackedInt32Array(0, 131073, 14, 65536, 131073, 14, 1, 131073, 19, 65
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_5edhi"]
 tile_data = PackedInt32Array(262144, 65537, 8, 131073, 1, 8, 196611, 65537, 8, 4, 1, 7)
-
-[sub_resource type="TileMapPattern" id="TileMapPattern_tth4i"]
-tile_data = PackedInt32Array(0, 65537, 13, 65536, 65537, 15, 131072, 65537, 13, 1, 65537, 18, 65537, 65537, 13, 131073, 65537, 16, 65538, 65537, 13, 131074, 65537, 14)
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_u8cbn"]
 tile_data = PackedInt32Array(0, 131073, 14, 196608, 131073, 14, 196609, 131073, 14, 65538, 131073, 14, 65539, 131073, 14, 131075, 131073, 14, 262147, 131073, 14, 131076, 131073, 14, 262148, 131073, 14)
@@ -316,6 +313,5 @@ sources/0 = SubResource("TileSetAtlasSource_h7jyf")
 sources/1 = SubResource("TileSetAtlasSource_ymfrj")
 pattern_0 = SubResource("TileMapPattern_7bp73")
 pattern_1 = SubResource("TileMapPattern_5edhi")
-pattern_2 = SubResource("TileMapPattern_tth4i")
-pattern_3 = SubResource("TileMapPattern_u8cbn")
-pattern_4 = SubResource("TileMapPattern_3ax6m")
+pattern_2 = SubResource("TileMapPattern_u8cbn")
+pattern_3 = SubResource("TileMapPattern_3ax6m")

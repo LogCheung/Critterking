@@ -142,6 +142,7 @@ tile_set = ExtResource("3_fl1qv")
 
 [node name="obstacles" type="TileMapLayer" parent="."]
 z_index = 1
+y_sort_enabled = true
 tile_set = ExtResource("4_c7ucq")
 
 [node name="Hover" type="TileMapLayer" parent="."]

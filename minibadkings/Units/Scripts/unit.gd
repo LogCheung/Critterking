@@ -7,6 +7,9 @@ enum ACTION {
 enum TYPE {
 	NONE, MELEE, SHIELDED, RANGED, PARALYTIC, RESILIENT, STINGER,BOMBER,FLYING,CRAZED,  
 }
+enum STATUS {
+	NONE, STUNNED, POISONED, REGEN
+}
 
 signal selected
 signal unselected
@@ -20,26 +23,29 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @export var attackRange : float = 10
 @export var visionRange : float = 32
 @export var dodge : int = 0
+@export var stun_chance : int = 0
 @export var level : int = 1
 @export var formation_position : Node2D 
 @export var group : Group
 @export var type : TYPE = TYPE.MELEE
 @export var decree : Decree.TYPE
 @export var upgraded : bool = false
+@export var statusArray : Array
 
 @onready var sprite_2d: Sprite2D = %Sprite2D
 @onready var status_sprite: AnimatedSprite2D = %StatusSprite
 @onready var nav: NavigationAgent2D = $NavigationAgent2D
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var anim: AnimationPlayer = $AnimationPlayer
-@onready var attack_cd: Timer = $AttackCD
+@onready var attack_cd: Timer = %AttackCD
 @onready var vision: Area2D = $Vision if self is Enemy else null
-@onready var hurtbox_cd: Timer = $HurtboxCD
+@onready var hurtbox_cd: Timer = %HurtboxCD
 @onready var hit_box: Area2D = %HitBox
 @onready var death: AudioStreamPlayer = %Death
 @onready var hurt: AudioStreamPlayer = %Hurt
-@onready var stun_cd: Timer = $StunCD
-@onready var nav_delay: Timer = $NavDelay
+@onready var stun_cd: Timer = %StunCD
+@onready var nav_delay: Timer = %NavDelay
+@onready var stun_fatigue: Timer = %StunFatigue
 
 var next_path_pos
 
@@ -58,16 +64,19 @@ var distance_from_form : float = 0.0
 var attack_ready : bool
 var too_close : bool
 var dashing : bool
+var is_stunned : bool
 
 var dead : bool
 
 func _ready() -> void:
 	nav.velocity_computed.connect(_on_navigation_agent_2d_velocity_computed)
+	stun_cd.timeout.connect(on_stun_finished)
 	%HurtBox.area_entered.connect(on_hurt_box_land)
 	%HurtBox.body_entered.connect(on_hurt_box_building_land)
 	pass
 
 func _process(_delta: float) -> void:
+	is_stunned = statusArray.has(STATUS.STUNNED)
 	attack_ready = attack_cd.time_left <= 0
 	distance_from_form = global_position.distance_to(formation_position.global_position)
 	
@@ -167,7 +176,12 @@ func on_hurt_box_land(area : Area2D) -> void:
 	if area.owner is Unit:
 		var enemy : Unit = area.owner
 		%Hurt.play()
-		enemy.health -= damage if enemy.dodge < (randi() % 100 + 1) else 0.0
+		if enemy.dodge < (randi() % 100 + 1): # check for miss
+			enemy.health -= damage 
+			# check for stun
+			if enemy.stun_fatigue.time_left <= 0 and stun_chance > (randi() % 100 + 1):
+				enemy.statusArray.append(Unit.STATUS.STUNNED)
+		
 		hurtbox_cd.start()
 		if enemy.health <= 0:
 			# trigger death anim
@@ -204,4 +218,10 @@ func on_nav_delay() -> void:
 	pass
 
 func on_stun_finished() -> void:
+	statusArray.remove_at(statusArray.find(STATUS.STUNNED))
+	stun_fatigue.start()
+	status_sprite.stop()
+	status_sprite.visible = false
+	attack_cd.paused = false
+	is_stunned = false
 	pass
