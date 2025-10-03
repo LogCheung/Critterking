@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=3 uid="uid://dkqw1dmj0wkgb"]
+[gd_scene load_steps=94 format=3 uid="uid://dkqw1dmj0wkgb"]
 
 [ext_resource type="PackedScene" uid="uid://ddc6mf0gqftb" path="res://Units/Scenes/hit_box.tscn" id="1_pm8qt"]
 [ext_resource type="Script" uid="uid://13y7jtc01ydv" path="res://Units/Scripts/ally.gd" id="1_q458e"]
@@ -470,6 +470,11 @@ _limits = [0.0, 2.0, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 2), 0.0, 0.0, 0, 0]
 point_count = 2
 
+[sub_resource type="Curve" id="Curve_frfv4"]
+_limits = [0.0, 1.6, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1.6), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="Animation" id="Animation_daau3"]
 length = 0.001
 tracks/0/type = "value"
@@ -657,6 +662,7 @@ shape = SubResource("RectangleShape2D_pm8qt")
 
 [node name="behindWall" type="Area2D" parent="."]
 process_mode = 3
+visible = false
 z_index = 4096
 collision_layer = 16
 collision_mask = 16
@@ -816,6 +822,18 @@ property_name = "dead"
 curve = SubResource("Curve_n3b5d")
 metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
+[node name="stunned" type="Node" parent="UtilityAiAgent"]
+script = ExtResource("6_m88pn")
+_action_id = "stunned"
+metadata/_custom_type_script = "uid://bpvkdlp8jw4sj"
+
+[node name="is_stunned" type="Node" parent="UtilityAiAgent/stunned" node_paths=PackedStringArray("node")]
+script = ExtResource("7_m88pn")
+node = NodePath("../../..")
+property_name = "is_stunned"
+curve = SubResource("Curve_frfv4")
+metadata/_custom_type_script = "uid://dojkyt7skh8fh"
+
 [node name="utility_debug" parent="." node_paths=PackedStringArray("utility_agent") instance=ExtResource("5_yd6on")]
 visible = false
 scale = Vector2(0.125, 0.125)
@@ -832,17 +850,38 @@ libraries = {
 &"": SubResource("AnimationLibrary_jqc0h")
 }
 
-[node name="AttackCD" type="Timer" parent="."]
+[node name="Timers" type="Node" parent="."]
+
+[node name="AttackCD" type="Timer" parent="Timers"]
+unique_name_in_owner = true
+wait_time = 2.0
+one_shot = true
+
+[node name="HurtboxCD" type="Timer" parent="Timers"]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="StunCD" type="Timer" parent="Timers"]
+unique_name_in_owner = true
 wait_time = 1.5
 one_shot = true
 
-[node name="HurtboxCD" type="Timer" parent="."]
+[node name="StunFatigue" type="Timer" parent="Timers"]
+unique_name_in_owner = true
+wait_time = 3.0
 one_shot = true
 
-[node name="StunCD" type="Timer" parent="."]
+[node name="DamageTimer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
+wait_time = 0.5
 one_shot = true
 
-[node name="NavDelay" type="Timer" parent="."]
+[node name="HealingTimer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="NavDelay" type="Timer" parent="Timers"]
+unique_name_in_owner = true
 wait_time = 0.125
 autostart = true
 
