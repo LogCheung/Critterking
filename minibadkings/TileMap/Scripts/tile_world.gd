@@ -100,14 +100,14 @@ func find_outskirt_tiles() -> void:
 	var end : Vector2i = rect.end
 	var pos : Vector2i = rect.position
 	for y in range(pos.y,end.y + 1):
-		if !water_tiles.has(Vector2i(pos.x - 1,y)): 
+		if !wall_tiles.has(Vector2i(pos.x - 1,y)): 
 			outskirt_tiles.append(Vector2i(pos.x - 1,y))
-		if !water_tiles.has(Vector2i(end.x ,y)):
+		if !wall_tiles.has(Vector2i(end.x ,y)):
 			outskirt_tiles.append(Vector2i(end.x ,y))
 	for x in range(pos.x - 1,end.x + 1):
-		if !water_tiles.has(Vector2i(x,end.y)):
+		if !wall_tiles.has(Vector2i(x,end.y)):
 			outskirt_tiles.append(Vector2i(x,end.y))
-		if !water_tiles.has(Vector2i(x,pos.y - 1)):
+		if !wall_tiles.has(Vector2i(x,pos.y - 1)):
 			outskirt_tiles.append(Vector2i(x,pos.y - 1))
 	for tile in outskirt_tiles:
 		ground.set_cell(tile,0,Vector2(0,0),4)
@@ -150,7 +150,12 @@ func draw_build_area() -> void:
 			if patterns.size() >= 100: patterns.resize(100)
 			for i in range(10):
 				patterns.append(randi_range((chosen/gSize)*gSize,(chosen/gSize)*gSize+gSize-1))
-				
+	
+	# remove navigation on tiles with obstacles
+	find_wall_obstacles()
+	for cell in wall_tiles:
+		wall.set_cell(cell,-1)
+	
 	find_water_tiles()
 	# Battlefield
 	var bStart = Vector2i(-2,-2) - Vector2i(extra,extra)
@@ -158,10 +163,11 @@ func draw_build_area() -> void:
 	for x in range(bStart.x , bEnd.x + 1):
 		for y in range(bStart.y , bEnd.y + 1):
 			if water_tiles.has(Vector2i(x,y)): continue
+			if wall_tiles.has(Vector2i(x,y)) : continue
 			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),0)
 			#if wall_tiles.has(Vector2i(x,y)): 
 			#wall.set_cell(Vector2i(x,y),-1)
-	
+
 	# Building area
 	var start = Vector2i(0,0) - Vector2i(extra,extra)
 	var end = Vector2i(4,4) +  Vector2i(extra,extra)
@@ -170,6 +176,7 @@ func draw_build_area() -> void:
 			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),1)
 			#if wall_tiles.has(Vector2i(x,y)): 
 			wall.set_cell(Vector2i(x,y),-1)
+			obstacles.set_cell(Vector2i(x,y),-1)
 	
 	# make check for existing buildings/units
 	var unitTiles = get_tree().get_nodes_in_group("ALLYGROUP")
@@ -180,6 +187,13 @@ func draw_build_area() -> void:
 		ground.set_cell(tile,0,Vector2(0,0),2)
 	find_outskirt_tiles()
 	handle_navigable_cells()
+
+func find_wall_obstacles() -> void:
+	wall_tiles.clear()
+	for x in range(4):
+		for y in range(13,20):
+			wall_tiles.append_array(obstacles.get_used_cells_by_id(1,Vector2i(x,y)))
+	pass
 
 func find_water_tiles() -> void:
 	water_tiles.clear()

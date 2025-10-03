@@ -118,8 +118,6 @@ func handle_action(delta) -> void:
 		ACTION.DEAD:
 			return
 	
-	if !next_path_pos: 
-		on_nav_delay()
 	move_to(self.global_position.direction_to(nav.get_next_path_position()), delta)
 	
 func become_active() -> void:

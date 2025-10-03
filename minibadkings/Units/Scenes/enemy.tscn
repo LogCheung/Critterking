@@ -600,6 +600,7 @@ unique_name_in_owner = true
 position = Vector2(-0.5, 1)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_ubmlb")
+disabled = true
 
 [node name="Flip" type="Node2D" parent="."]
 
@@ -632,7 +633,6 @@ position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_pm8qt")
 
 [node name="utility_debug" parent="." node_paths=PackedStringArray("utility_agent") instance=ExtResource("5_wh35a")]
-visible = false
 scale = Vector2(0.25, 0.25)
 utility_agent = NodePath("../UtilityAiAgent")
 
