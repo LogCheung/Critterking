@@ -125,17 +125,32 @@ func draw_build_area() -> void:
 	wall_tiles = wall.get_used_cells()
 	var wallMax = wall_tiles.max()
 	var wallMin = wall_tiles.min()
+	var patterns: Array[int] = [0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9, #Dry Tiles, Weighted
+			10,11,12,13,14,15,16,17,18,19,10,11,12,13,14,15,16,17,18,19, #Normal Tiles, Weighted
+			20,21,22,23,24,25,26,27,28,29, #Stone Tiles
+			30,31,32,33,34,35,36,37,38,39, #Grass Tiles
+			40,41,42,43,44,45,46,47,48,49, #Grass Tiles, Obstacles
+			50,51,52,53,54,55,56,57,58,59, #Stone Tiles, Obstacles
+			60,61,62,63,64,65,66,67,68,69,60,61,62,63,64,65,66,67,68,69, #Dry Tiles, Obstacles, Weighted
+			70,71,72,73,4,75,76,77,78,79,70,71,72,73,4,75,76,77,78,79, #Normal Tiles, Obstacles, Weighted
+			] 
+	var gSize = 10
 	for x in range(wallMin.x, wallMax.x):
 		for y in range(wallMin.y, wallMax.y):
 			wall.set_cell(Vector2i(x,y),-1)
 			
 	for x in range(wallMin.x, wallMax.x,5):
 		for y in range(wallMin.y, wallMax.y,5):
-			var pattern = randi_range(0,10)
-			wall.set_pattern(Vector2i(x,y),wall.tile_set.get_pattern(pattern))
-			if pattern >= 6:
-				obstacles.set_pattern(Vector2i(x,y),obstacles.tile_set.get_pattern(pattern-6))
-			
+
+			var chosen = patterns.pick_random()
+			wall.set_pattern(Vector2i(x,y),wall.tile_set.get_pattern(chosen))
+			#if chosen >= 40:
+			obstacles.set_pattern(Vector2i(x,y),obstacles.tile_set.get_pattern(chosen-40))
+			# weight depending on pattern number
+			if patterns.size() >= 100: patterns.resize(100)
+			for i in range(10):
+				patterns.append(randi_range((chosen/gSize)*gSize,(chosen/gSize)*gSize+gSize-1))
+				
 	find_water_tiles()
 	# Battlefield
 	var bStart = Vector2i(-2,-2) - Vector2i(extra,extra)
