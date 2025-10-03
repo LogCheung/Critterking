@@ -135,10 +135,7 @@ func handle_action(delta) -> void:
 				visible = false
 				return
 		ACTION.STUNNED:
-			if stun_cd.is_stopped() : stun_cd.start()
-			status_sprite.visible = true
-			status_sprite.play("stun")
-			attack_cd.paused = true
+			stun_cd.start()
 			return 
 		ACTION.DEAD:
 			sprite_2d.material = null
@@ -211,17 +208,16 @@ func match_type() -> void:
 			sprite_2d.texture = PARALYTICNORMALSE if !upgraded else UPPARALYTICNORMALSE
 			health = 3
 			damage = 1.5
-			stun_chance = 100
-			attack_cd.wait_time = 1.5
+			attack_cd.wait_time = 2.5
 		TYPE.RESILIENT:
 			sprite_2d.texture = RESILIENTNORMALSE if !upgraded else UPRESILIENTNORMALSE
 			health = 4
 			damage = 1
-			attack_cd.wait_time = 2
+			attack_cd.wait_time = 1.5
 		TYPE.STINGER:
 			sprite_2d.texture = STINGERNORMALSE if !upgraded else UPSTINGERNORMALSE
-			health = 3.25
-			damage = 1
+			health = 3
+			damage = 1.5
 			attack_cd.wait_time = 2
 	set_up_vision()
 
@@ -301,8 +297,6 @@ func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> vo
 			hit_box.set_collision_layer_value(2,false)
 		"dead":
 			action = ACTION.DEAD
-		"stunned":
-			action = ACTION.STUNNED
 
 
 # select unit to select whole group of unit

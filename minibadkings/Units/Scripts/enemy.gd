@@ -59,7 +59,7 @@ func handle_action(delta) -> void:
 	match action:
 		ACTION.FORM:
 			nav.target_position = formation_position.global_position
-			if distToTarget <= 16:
+			if distToTarget <= 8:
 				anim.play("idle")
 				# precheck if it is behind something
 				is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
@@ -109,12 +109,6 @@ func handle_action(delta) -> void:
 			var dir = global_position.direction_to(target.global_position)
 			nav.target_position = target.global_position - dir * strafe_dist
 			anim.play("walk")
-		ACTION.STUNNED:
-			if stun_cd.is_stopped() : stun_cd.start()
-			status_sprite.visible = true
-			status_sprite.play("stun")
-			attack_cd.paused = true
-			return
 		ACTION.DEAD:
 			return
 	
@@ -170,24 +164,23 @@ func match_type() -> void:
 			damage = 1.5
 			attackRange = 30
 			visionRange = 60
-			attack_cd.wait_time = 2.5
+			attack_cd.wait_time = 2
 		TYPE.PARALYTIC:
 			sprite_2d.texture = PARALYTICNORMALSE if !upgraded else UPPARALYTICNORMALSE
 			health = 3
 			damage = 1.5
-			stun_chance = 100
-			attack_cd.wait_time = 1.5
+			attack_cd.wait_time = 2.5
 		TYPE.RESILIENT:
 			sprite_2d.texture = RESILIENTNORMALSE if !upgraded else UPRESILIENTNORMALSE
 			health = 4
 			damage = 1
-			attack_cd.wait_time = 2
+			attack_cd.wait_time = 1.5
 		TYPE.STINGER:
 			sprite_2d.texture = STINGERNORMALSE if !upgraded else UPSTINGERNORMALSE
-			health = 3.25
+			health = 3
 			damage = 1.5
 			attack_cd.wait_time = 2
-
+	
 
 func find_building() -> void:
 	await get_tree().create_timer(.1).timeout
@@ -222,5 +215,3 @@ func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> vo
 			action = ACTION.STRAFE
 		"dead":
 			action = ACTION.DEAD
-		"stunned":
-			action = ACTION.STUNNED

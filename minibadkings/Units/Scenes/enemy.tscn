@@ -1,4 +1,4 @@
-[gd_scene load_steps=90 format=3 uid="uid://c14eoupysd2xd"]
+[gd_scene load_steps=89 format=3 uid="uid://c14eoupysd2xd"]
 
 [ext_resource type="Texture2D" uid="uid://bn4niwqkt8x3n" path="res://Units/Assets/Status/defense.png" id="2_06wm5"]
 [ext_resource type="Script" uid="uid://bvqtdufd1qjrv" path="res://Units/Scripts/enemy.gd" id="2_mh310"]
@@ -439,11 +439,6 @@ _limits = [0.0, 2.0, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 2), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="Curve" id="Curve_jg3yg"]
-_limits = [0.0, 1.6, 0.0, 1.0]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1.6), 0.0, 0.0, 0, 0]
-point_count = 2
-
 [sub_resource type="Animation" id="Animation_daau3"]
 length = 0.001
 tracks/0/type = "value"
@@ -582,7 +577,6 @@ radius = 128.0
 
 [node name="Enemy" type="CharacterBody2D" groups=["ENEMY"]]
 z_index = 1
-collision_layer = 0
 motion_mode = 1
 wall_min_slide_angle = 0.0
 safe_margin = 5.0
@@ -593,7 +587,8 @@ unique_name_in_owner = true
 visible = false
 position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_sm18k")
-animation = &"inspiration"
+animation = &"stun"
+frame_progress = 0.85936534
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
@@ -745,25 +740,14 @@ property_name = "dead"
 curve = SubResource("Curve_ohg4d")
 metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
-[node name="stunned" type="Node" parent="UtilityAiAgent"]
-script = ExtResource("7_7xmed")
-_action_id = "stunned"
-metadata/_custom_type_script = "uid://bpvkdlp8jw4sj"
-
-[node name="is_stunned" type="Node" parent="UtilityAiAgent/stunned" node_paths=PackedStringArray("node")]
-script = ExtResource("8_ohg4d")
-node = NodePath("../../..")
-property_name = "is_stunned"
-curve = SubResource("Curve_jg3yg")
-metadata/_custom_type_script = "uid://dojkyt7skh8fh"
-
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 target_desired_distance = 20.0
 navigation_layers = 2
-path_postprocessing = 2
+path_postprocessing = 1
 avoidance_enabled = true
 radius = 20.0
 max_neighbors = 1000
+debug_enabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 process_mode = 3
@@ -788,29 +772,17 @@ monitoring = false
 [node name="VisionShape" type="CollisionShape2D" parent="Vision"]
 shape = SubResource("CircleShape2D_mh310")
 
-[node name="Timers" type="Node" parent="."]
-
-[node name="AttackCD" type="Timer" parent="Timers"]
-unique_name_in_owner = true
+[node name="AttackCD" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
 
-[node name="HurtboxCD" type="Timer" parent="Timers"]
-unique_name_in_owner = true
+[node name="HurtboxCD" type="Timer" parent="."]
 one_shot = true
 
-[node name="StunCD" type="Timer" parent="Timers"]
-unique_name_in_owner = true
-wait_time = 1.5
+[node name="StunCD" type="Timer" parent="."]
 one_shot = true
 
-[node name="StunFatigue" type="Timer" parent="Timers"]
-unique_name_in_owner = true
-wait_time = 3.0
-one_shot = true
-
-[node name="NavDelay" type="Timer" parent="Timers"]
-unique_name_in_owner = true
+[node name="NavDelay" type="Timer" parent="."]
 wait_time = 0.125
 autostart = true
 

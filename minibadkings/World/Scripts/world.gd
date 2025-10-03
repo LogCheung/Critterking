@@ -61,10 +61,10 @@ func new_game() -> void:
 	
 	for i in range(1):
 		add_house_card()
-	for i in range(1):
-		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.PARALYTIC
-		ui.hand.get_child(0).add_child(hCard)
+	#for i in range(4):
+		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.BOMBARDIER
+		#ui.hand.get_child(0).add_child(hCard)
 	#for i in range(2):
 		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 		#hCard.type = Card.CARDTYPE.NURSERY
@@ -269,8 +269,7 @@ func start_day() -> void:
 func unit_to_card(g : Group) -> void:
 	# create card of group
 	var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
-	newCard.type = g.type
-	#newCard = match_unit_to_card(newCard,g.type)
+	newCard = match_unit_to_card(newCard,g.type)
 	if g.charm : newCard = preserve_charm_in_card(newCard,g.charm.type)
 	newCard.level = g.level
 	
