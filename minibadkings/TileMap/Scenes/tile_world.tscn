@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://d3yteynx5bbfn" path="res://TileMap/Scripts/tile_world.gd" id="1_leqhe"]
 [ext_resource type="TileSet" uid="uid://bxsbqepu6rxgc" path="res://TileMap/Scenes/WorldTileSet.tres" id="2_jb8ou"]
-[ext_resource type="TileSet" uid="uid://6glq6mlvxbve" path="res://TileMap/Scenes/GroundTileSet.tres" id="3_fl1qv"]
-[ext_resource type="TileSet" uid="uid://ddp6p2t5m2bag" path="res://TileMap/Scenes/ObstacleTileSet.tres" id="4_c7ucq"]
+[ext_resource type="TileSet" uid="uid://jpkq7go2dbdj" path="res://TileMap/Scenes/GroundTileSet.tres" id="3_fl1qv"]
+[ext_resource type="TileSet" uid="uid://d2t0jti0abk2d" path="res://TileMap/Scenes/ObstacleTileSet.tres" id="4_c7ucq"]
 [ext_resource type="Texture2D" uid="uid://dchtcmyjxapii" path="res://TileMap/Assets/activeHover.png" id="4_fl1qv"]
 [ext_resource type="Texture2D" uid="uid://khwrwj4va25l" path="res://TileMap/Assets/hover.png" id="4_h7jyf"]
 

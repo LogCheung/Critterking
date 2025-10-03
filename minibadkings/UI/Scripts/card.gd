@@ -199,7 +199,6 @@ func check_destroy(plopTile : Vector2) -> bool:
 	for b : Building in buildings:
 		if b.tile == Vector2i(plopTile): 
 			b.on_destroyed()
-			b.remove()
 			return true
 	return false
 

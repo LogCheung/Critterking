@@ -122,6 +122,7 @@ func on_destroyed() -> void:
 	# kill unit inside if group is healing
 	if occupants_inside():
 		occupant.terminate()
+	remove()
 	
 func remove() -> void:
 	type = TYPE.RUINS

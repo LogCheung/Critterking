@@ -144,8 +144,8 @@ func draw_build_area() -> void:
 
 			var chosen = patterns.pick_random()
 			wall.set_pattern(Vector2i(x,y),wall.tile_set.get_pattern(chosen))
-			#if chosen >= 40:
-			obstacles.set_pattern(Vector2i(x,y),obstacles.tile_set.get_pattern(chosen-40))
+			if chosen >= 40:
+				obstacles.set_pattern(Vector2i(x,y),obstacles.tile_set.get_pattern(chosen-40))
 			# weight depending on pattern number
 			if patterns.size() >= 100: patterns.resize(100)
 			for i in range(10):
