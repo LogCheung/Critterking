@@ -158,5 +158,6 @@ func apply_charm() -> void:
 				unit.vision.queue_free()
 				unit.set_up_vision()
 			Charm.TYPE.NAIL:
+				unit.stun_chance += 20
 				pass # allow for stun
 		
