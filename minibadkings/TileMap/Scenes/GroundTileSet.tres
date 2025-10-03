@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=99 format=3 uid="uid://jpkq7go2dbdj"]
+[gd_resource type="TileSet" load_steps=100 format=3 uid="uid://jpkq7go2dbdj"]
 
 [ext_resource type="Texture2D" uid="uid://cx0b0ucjd4cee" path="res://TileMap/Assets/tiles.png" id="1_kxe68"]
 [ext_resource type="Texture2D" uid="uid://mg1gku362mus" path="res://UI/Scripts/gwj2obstacles.png" id="2_f2roa"]
@@ -346,6 +346,12 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(0, -16, -32, 0, 0, 16, 32, 0)])
 agent_radius = 0.0
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_faq22"]
+vertices = PackedVector2Array(32, 0, 0, 16, -32, 0, 0, -16)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, -16, -32, 0, 0, 16, 32, 0)])
+agent_radius = 0.0
+
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_wm6l2"]
 vertices = PackedVector2Array(32, 0, 0, 16, -32, 0, 0, -16)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
@@ -542,34 +548,42 @@ texture_region_size = Vector2i(64, 64)
 0:11/next_alternative_id = 3
 0:11/0 = 0
 0:11/0/texture_origin = Vector2i(0, -16)
+0:11/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_faq22")
 0:11/2 = 2
 1:12/next_alternative_id = 3
 1:12/0 = 0
 1:12/0/texture_origin = Vector2i(0, -16)
+1:12/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_faq22")
 1:12/2 = 2
 2:12/next_alternative_id = 3
 2:12/0 = 0
 2:12/0/texture_origin = Vector2i(0, -16)
+2:12/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_faq22")
 2:12/2 = 2
 3:12/next_alternative_id = 3
 3:12/0 = 0
 3:12/0/texture_origin = Vector2i(0, -16)
+3:12/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_faq22")
 3:12/2 = 2
 3:11/next_alternative_id = 3
 3:11/0 = 0
 3:11/0/texture_origin = Vector2i(0, -16)
+3:11/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_faq22")
 3:11/2 = 2
 2:11/next_alternative_id = 3
 2:11/0 = 0
 2:11/0/texture_origin = Vector2i(0, -16)
+2:11/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_faq22")
 2:11/2 = 2
 1:11/next_alternative_id = 3
 1:11/0 = 0
 1:11/0/texture_origin = Vector2i(0, -16)
+1:11/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_faq22")
 1:11/2 = 2
 0:12/next_alternative_id = 3
 0:12/0 = 0
 0:12/0/texture_origin = Vector2i(0, -16)
+0:12/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_faq22")
 0:12/2 = 2
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_leqhe"]

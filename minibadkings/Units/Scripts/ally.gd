@@ -133,6 +133,7 @@ func handle_action(delta) -> void:
 			anim.play("walk")
 			if distToTarget < 8:
 				visible = false
+				hit_box.set_collision_layer_value(2,false)
 				return
 		ACTION.STUNNED:
 			if stun_cd.is_stopped() : stun_cd.start()
@@ -298,7 +299,6 @@ func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> vo
 			action = ACTION.HEAL
 			nav.target_position = allyGroup.house.entrance.global_position
 			set_collision_layer_value(1,false)
-			hit_box.set_collision_layer_value(2,false)
 		"dead":
 			action = ACTION.DEAD
 		"stunned":

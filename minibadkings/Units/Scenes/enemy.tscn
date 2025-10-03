@@ -633,6 +633,7 @@ position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_pm8qt")
 
 [node name="utility_debug" parent="." node_paths=PackedStringArray("utility_agent") instance=ExtResource("5_wh35a")]
+visible = false
 scale = Vector2(0.25, 0.25)
 utility_agent = NodePath("../UtilityAiAgent")
 

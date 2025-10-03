@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=55 format=3 uid="uid://d2t0jti0abk2d"]
+[gd_resource type="TileSet" load_steps=56 format=3 uid="uid://d2t0jti0abk2d"]
 
 [ext_resource type="Texture2D" uid="uid://cx0b0ucjd4cee" path="res://TileMap/Assets/tiles.png" id="1_7bp73"]
 [ext_resource type="Texture2D" uid="uid://mg1gku362mus" path="res://UI/Scripts/gwj2obstacles.png" id="2_5edhi"]
@@ -223,6 +223,12 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(0, -16, -32, 0, 0, 16, 32, 0)])
 agent_radius = 0.0
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_3ax6m"]
+vertices = PackedVector2Array(32, 0, 0, 16, -32, 0, 0, -16)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, -16, -32, 0, 0, 16, 32, 0)])
+agent_radius = 0.0
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ymfrj"]
 texture = ExtResource("2_5edhi")
 texture_region_size = Vector2i(64, 64)
@@ -353,20 +359,28 @@ texture_region_size = Vector2i(64, 64)
 3:6/0 = 0
 0:11/0 = 0
 0:11/0/texture_origin = Vector2i(0, -16)
+0:11/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_3ax6m")
 1:11/0 = 0
 1:11/0/texture_origin = Vector2i(0, -16)
+1:11/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_3ax6m")
 2:11/0 = 0
 2:11/0/texture_origin = Vector2i(0, -16)
+2:11/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_3ax6m")
 3:12/0 = 0
 3:12/0/texture_origin = Vector2i(0, -16)
+3:12/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_3ax6m")
 2:12/0 = 0
 2:12/0/texture_origin = Vector2i(0, -16)
+2:12/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_3ax6m")
 1:12/0 = 0
 1:12/0/texture_origin = Vector2i(0, -16)
+1:12/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_3ax6m")
 0:12/0 = 0
 0:12/0/texture_origin = Vector2i(0, -16)
+0:12/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_3ax6m")
 3:11/0 = 0
 3:11/0/texture_origin = Vector2i(0, -16)
+3:11/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_3ax6m")
 0:13/0 = 0
 0:14/0 = 0
 1:14/0 = 0

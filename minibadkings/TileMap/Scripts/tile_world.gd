@@ -18,7 +18,7 @@ var wall_tiles : Array
 var start_wall_tiles : Array
 var unit_tiles : Array
 var outskirt_tiles : Array
-var water_tiles : Array
+var obstacle_tiles : Array
 
 func _ready() -> void:
 	await get_tree().create_timer(.2).timeout
@@ -156,13 +156,13 @@ func draw_build_area() -> void:
 	for cell in wall_tiles:
 		wall.set_cell(cell,-1)
 	
-	find_water_tiles()
 	# Battlefield
+	find_obstacle_tiles()
 	var bStart = Vector2i(-2,-2) - Vector2i(extra,extra)
 	var bEnd = Vector2i(6,6) +  Vector2i(extra,extra)
 	for x in range(bStart.x , bEnd.x + 1):
 		for y in range(bStart.y , bEnd.y + 1):
-			if water_tiles.has(Vector2i(x,y)): continue
+			if obstacle_tiles.has(Vector2i(x,y)): continue
 			if wall_tiles.has(Vector2i(x,y)) : continue
 			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),0)
 			#if wall_tiles.has(Vector2i(x,y)): 
@@ -190,22 +190,18 @@ func draw_build_area() -> void:
 
 func find_wall_obstacles() -> void:
 	wall_tiles.clear()
+	# only add tiles that are elevated walls
 	for x in range(4):
 		for y in range(13,20):
 			wall_tiles.append_array(obstacles.get_used_cells_by_id(1,Vector2i(x,y)))
 	pass
 
-func find_water_tiles() -> void:
-	water_tiles.clear()
+func find_obstacle_tiles() -> void:
+	obstacle_tiles.clear()
 	
-	water_tiles.append_array(wall.get_used_cells_by_id(1,Vector2(0,9)))
-	water_tiles.append_array(wall.get_used_cells_by_id(1,Vector2(1,9)))
-	water_tiles.append_array(wall.get_used_cells_by_id(1,Vector2(2,9)))
-	water_tiles.append_array(wall.get_used_cells_by_id(1,Vector2(3,9)))
-	water_tiles.append_array(wall.get_used_cells_by_id(1,Vector2(0,10)))
-	water_tiles.append_array(wall.get_used_cells_by_id(1,Vector2(1,10)))
-	water_tiles.append_array(wall.get_used_cells_by_id(1,Vector2(2,10)))
-	water_tiles.append_array(wall.get_used_cells_by_id(1,Vector2(3,10)))
+	for x in range(4):
+		for y in range(6,9):
+			obstacle_tiles.append_array(obstacles.get_used_cells_by_id(1,Vector2i(x,y)))
 
 func handle_decree() -> void:
 	# handle size of affected area and action (maybe)
