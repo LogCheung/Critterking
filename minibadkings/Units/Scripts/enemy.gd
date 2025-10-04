@@ -53,14 +53,6 @@ func _process(delta: float) -> void:
 	check_houses()
 func handle_action(delta) -> void:
 	var distToTarget = global_position.distance_to(nav.target_position)
-	if dashing:
-		if !target : 
-			find_target()
-			return
-		var dir = global_position.direction_to(target.global_position)
-		move_to(dir,delta)
-		
-		return
 	match action:
 		ACTION.FORM:
 			distToTarget = distance_from_form
@@ -76,6 +68,13 @@ func handle_action(delta) -> void:
 				anim.play("walk")
 				in_formation = false
 		ACTION.FIGHT:
+			if dashing:
+				if !target : 
+					find_target()
+					return
+				var dir = global_position.direction_to(target.global_position)
+				move_to(dir,delta)
+				return
 			if attacking : return
 			find_target()
 			if target == null: target_in_range = false
@@ -140,7 +139,6 @@ func _handle_navigation_path() -> void:
 		path_points = aStar.get_id_path(position_id,target_id,true)
 		return
 	
-	tileWorld.active_hover.set_cells_terrain_connect(path_points,0,0)
 	nav.target_position = tileWorld.wall.map_to_local(path_points.front())
 func become_active() -> void:
 	is_active = true
@@ -211,7 +209,6 @@ func match_type() -> void:
 
 
 func find_building() -> void:
-	await get_tree().create_timer(.1).timeout
 	var buildings = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
 	buildings = buildings.filter(func(b):return b.type != Building.TYPE.TRAP)
 	buildings = buildings.filter(func(b):return b.type != Building.TYPE.RUINS)
@@ -249,5 +246,5 @@ func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> vo
 
 func _on_approach_guarantee_timeout() -> void:
 	if is_active: return
-	global_position = formation_position.global_position
+	self.global_position = self.formation_position.global_position
 	

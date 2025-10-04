@@ -715,7 +715,7 @@ metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 [node name="is_ranged" type="Node" parent="UtilityAiAgent/strafe/UtilityAiAggregation2"]
 script = ExtResource("10_1flw5")
 type = 3
-secondType = 4
+secondType = 7
 curve = SubResource("Curve_0wncj")
 metadata/_custom_type_script = "uid://ds3cm31xh6g85"
 
@@ -830,7 +830,7 @@ stream = ExtResource("13_ohg4d")
 
 [node name="ApproachGuarantee" type="Timer" parent="."]
 unique_name_in_owner = true
-wait_time = 10.0
+wait_time = 15.0
 one_shot = true
 autostart = true
 

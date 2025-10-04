@@ -15,13 +15,13 @@ var _action_scores = []
 var _score_sorted = false
 
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	if not enabled:
 		return
 	_process_actions()
 
 
-func _process_actions():
+func _process_actions() -> void:
 	var actions = self.get_children()
 
 	if actions.size() == 0:

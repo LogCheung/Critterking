@@ -25,7 +25,7 @@ func calculate_score() -> float:
 	return aggregation_handler[aggregation_type].call()
 
 
-func _sum():
+func _sum() -> float:
 	var scores := 0.0
 	for consideration in get_children():
 		if not _is_valid_child(consideration):
@@ -35,7 +35,7 @@ func _sum():
 	return scores
 
 
-func _multiply():
+func _multiply() -> float:
 	var number_of_considerations := 0
 	var scores := 1.0
 	for consideration in get_children():
@@ -50,7 +50,7 @@ func _multiply():
 	return scores
 
 
-func _average():
+func _average() -> float:
 	var number_of_considerations := 0
 	var sum_of_scores := 0.0
 	for consideration in get_children():
@@ -65,7 +65,7 @@ func _average():
 	return sum_of_scores / number_of_considerations
 
 
-func _max():
+func _max() -> float:
 	var max_score := 0.0
 	for consideration in get_children():
 		if not _is_valid_child(consideration):
@@ -74,7 +74,7 @@ func _max():
 	return max_score
 
 
-func _min():
+func _min() -> float:
 	var min_score := 9999.0
 	for consideration in get_children():
 		if not _is_valid_child(consideration):
@@ -84,7 +84,7 @@ func _min():
 	return min_score
 
 
-func _is_valid_child(consideration):
+func _is_valid_child(consideration) -> bool:
 	if not (consideration is UtilityAiConsideration or consideration is UtilityAiAggregation):
 		push_warning("aggregation %s has a child that is not a consideration: %s" % [self.name, consideration.name])
 		return false

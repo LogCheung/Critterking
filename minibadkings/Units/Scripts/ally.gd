@@ -133,6 +133,7 @@ func handle_action(delta) -> void:
 			anim.play("walk")
 			if distToTarget < 8:
 				visible = false
+				hit_box.set_collision_layer_value(2,false)
 				return
 		ACTION.STUNNED:
 			if stun_cd.is_stopped() : stun_cd.start()

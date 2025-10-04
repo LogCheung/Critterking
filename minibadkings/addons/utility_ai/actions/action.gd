@@ -7,7 +7,7 @@ class_name UtilityAiAction extends UtilityAi
 ##
 ## Id for the action. If not set, it returns the node name.
 ##
-func get_action_id():
+func get_action_id() -> String:
 	return _action_id if _action_id != "" else self.name
 
 
