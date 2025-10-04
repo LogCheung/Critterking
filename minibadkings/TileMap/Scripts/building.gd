@@ -169,6 +169,7 @@ func _on_orth_area_entered(area: Area2D) -> void:
 			target.health = target.max_health
 
 func _on_trans_area_entered(area: Area2D) -> void:
+	if type == TYPE.TRAP: return
 	sprite_2d.self_modulate.a = 0.8
 	pass # Replace with function body.
 func _on_trans_area_exited(area: Area2D) -> void:
