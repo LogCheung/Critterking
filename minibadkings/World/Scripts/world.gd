@@ -134,6 +134,7 @@ func create_enemy_perimeter(dist : int, outer : bool) -> void:
 		innerFollow = follow
 
 func spawn_enemy() -> void:
+	print(upgrade_nums)
 	if spawned_parties >= enemy_parties:
 		return
 	# random positon along perimeter of player base
@@ -141,11 +142,11 @@ func spawn_enemy() -> void:
 	var follow = innerFollow if randi() % 2 == 0 else outerFollow
 	follow.progress_ratio = rand
 	# create new enemy group scene and add to world
-	var enemGroup = ENEMYGROUP.instantiate()
+	var enemGroup : EnemyGroup = ENEMYGROUP.instantiate()
 	enemGroup.global_position = follow.global_position
 	enemGroup.size = randi_range(3,6)
 	if upgrade_nums.has(spawned_parties):
-		enemGroup.upgraded = true
+		enemGroup.level = 2
 	
 	var enemyGroupNode = get_tree().get_first_node_in_group("ENEMYGRPNODE")
 	enemyGroupNode.add_child(enemGroup)
@@ -165,21 +166,13 @@ func spawn_enemy() -> void:
 	
 
 func on_night_started() -> void:
-	print(enemy_parties)
+	print(upgraded_parties)
 	ui.hand.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	ui.decrees.process_mode = Node.PROCESS_MODE_PAUSABLE
 	if night_is_expansion:
 		%SpawnTimer.wait_time -= 1.5
 		enemy_parties += 4
 		upgraded_parties += 2
-	
-	# start game and hide menus
-	tileWorld.handle_navigable_cells()
-	is_combat_phase = true
-	spawned_parties = 0
-	spawn_enemy()
-	%Game.process_mode = Node.PROCESS_MODE_PAUSABLE
-	%SpawnTimer.start()
 	
 	# set upgrade number
 	upgrade_nums.clear()
@@ -188,6 +181,14 @@ func on_night_started() -> void:
 		while upgrade_nums.has(rand):
 			rand = randi_range(0,enemy_parties - 1)
 		upgrade_nums.append(rand)
+
+	# start game and hide menus
+	tileWorld.handle_navigable_cells()
+	is_combat_phase = true
+	spawned_parties = 0
+	spawn_enemy()
+	%Game.process_mode = Node.PROCESS_MODE_PAUSABLE
+	%SpawnTimer.start()
 	
 	for c in ui.get_children():
 		if !c is Control: continue
