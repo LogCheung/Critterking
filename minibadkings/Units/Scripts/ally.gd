@@ -139,6 +139,7 @@ func handle_action(delta) -> void:
 			if stun_cd.is_stopped() : stun_cd.start()
 			status_sprite.visible = true
 			status_sprite.play("stun")
+			anim.stop()
 			attack_cd.paused = true
 			return 
 		ACTION.DEAD:
@@ -248,6 +249,7 @@ func match_decree_status() -> void:
 			damage += .5
 		Decree.TYPE.DECARE:
 			if !dead : return
+			status_sprite.visible = false
 			process_mode = Node.PROCESS_MODE_PAUSABLE
 			modulate.a8 = 255
 			anim.play_backwards("death")

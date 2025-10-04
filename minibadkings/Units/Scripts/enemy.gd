@@ -31,6 +31,7 @@ var houses_exist : bool = true
 
 # astar will be used for appraoch
 var aStar : AStarGrid2D
+var navPath : Array
 var target_pos
 
 func _ready() -> void:
@@ -118,6 +119,7 @@ func handle_action(delta) -> void:
 			status_sprite.visible = true
 			status_sprite.play("stun")
 			attack_cd.paused = true
+			anim.stop()
 			return
 		ACTION.DEAD:
 			return
@@ -137,6 +139,13 @@ func _handle_navigation_path() -> void:
 		var position_id = tileWorld.wall.local_to_map(global_position)
 		var target_id = tileWorld.wall.local_to_map(formation_position.global_position)
 		path_points = aStar.get_id_path(position_id,target_id,true)
+		
+		# add navigation only to tiles needed to get to point
+		# to reduce lag from huge nav mesh
+		for cell in path_points:
+			if tileWorld.ground.get_used_cells().has(cell): continue
+			tileWorld.ground.set_cell(cell,0,Vector2(0,0),5)
+			navPath.append(cell)
 		return
 	
 	nav.target_position = tileWorld.wall.map_to_local(path_points.front())
@@ -149,6 +158,10 @@ func become_active() -> void:
 	set_collision_layer_value(1,true)
 	nav.set_navigation_layer_value(1,true)
 	nav.set_navigation_layer_value(2,false)
+	
+	# remove nav cells that were created
+	for cell in navPath:
+		tileWorld.ground.set_cell(cell,-1)
 
 func match_type() -> void:
 	match type:

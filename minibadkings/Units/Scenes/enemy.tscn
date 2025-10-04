@@ -758,7 +758,7 @@ metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 target_desired_distance = 20.0
 path_max_distance = 20.0
-navigation_layers = 2
+navigation_layers = 3
 path_postprocessing = 1
 max_neighbors = 1000
 
