@@ -168,6 +168,14 @@ func _on_orth_area_entered(area: Area2D) -> void:
 			target.max_health = target.max_health + 0.5
 			target.health = target.max_health
 
+func _on_trans_area_entered(area: Area2D) -> void:
+	sprite_2d.self_modulate.a = 0.8
+	pass # Replace with function body.
+func _on_trans_area_exited(area: Area2D) -> void:
+	if !$trans.has_overlapping_areas():
+		sprite_2d.self_modulate.a = 1
+	pass # Replace with function body.
+
 func _on_timer_timeout() -> void:
 	bar.value += 1.25 #if occupant.max_size <= 9 else .12345
 	if type == TYPE.CARE: bar.value += .75

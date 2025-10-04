@@ -109,7 +109,6 @@ collision_mask = 6
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HurtBox"]
 unique_name_in_owner = true
-visible = false
 polygon = PackedVector2Array(0, -15, -31, 0, 0, 15, 31, 0)
 
 [node name="Adj" type="Area2D" parent="."]
@@ -121,13 +120,20 @@ visible = false
 polygon = PackedVector2Array(0, -48, -96, 0, 0, 48, 96, 0)
 
 [node name="Orth" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 6
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Orth"]
-visible = false
 position = Vector2(288, 144)
 polygon = PackedVector2Array(-320, -176, -352, -160, -320, -144, -352, -128, -320, -112, -288, -128, -256, -112, -224, -128, -256, -144, -224, -160, -256, -176, -288, -160)
+
+[node name="trans" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="trans"]
+polygon = PackedVector2Array(0, -24, -40, -4, -16, 7, 0, 0, 16, 7, 40, -4)
 
 [node name="Build" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
@@ -145,4 +151,6 @@ one_shot = true
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="area_entered" from="Adj" to="." method="_on_adj_area_entered"]
 [connection signal="area_entered" from="Orth" to="." method="_on_orth_area_entered"]
+[connection signal="area_entered" from="trans" to="." method="_on_trans_area_entered"]
+[connection signal="area_exited" from="trans" to="." method="_on_trans_area_exited"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
