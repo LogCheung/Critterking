@@ -29,6 +29,10 @@ var target_in_range : bool
 var is_active : bool = false
 var houses_exist : bool = true
 
+# astar will be used for appraoch
+var aStar : AStarGrid2D
+var target_pos
+
 func _ready() -> void:
 	super._ready()
 	match_type()
@@ -37,6 +41,7 @@ func _ready() -> void:
 		health = max_health
 		damage = damage + 0.5
 	house_destroyed.connect(find_building)
+	aStar = tileWorld.aStar
 
 func _process(delta: float) -> void:
 	super._process(delta)
@@ -58,7 +63,7 @@ func handle_action(delta) -> void:
 		return
 	match action:
 		ACTION.FORM:
-			nav.target_position = formation_position.global_position
+			distToTarget = distance_from_form
 			if distToTarget <= 16:
 				anim.play("idle")
 				# precheck if it is behind something
@@ -118,14 +123,32 @@ func handle_action(delta) -> void:
 		ACTION.DEAD:
 			return
 	
+	_handle_navigation_path()
 	move_to(self.global_position.direction_to(nav.get_next_path_position()), delta)
 	
+func _handle_navigation_path() -> void:
+	if is_active : return
+	if distance_from_form < 32: 
+		nav.target_position = formation_position.global_position
+		return
+	# go through each path point that astar provides to target
+	if nav.is_navigation_finished():
+		path_points.pop_front()
+	if path_points.is_empty():
+		var position_id = tileWorld.wall.local_to_map(global_position)
+		var target_id = tileWorld.wall.local_to_map(formation_position.global_position)
+		path_points = aStar.get_id_path(position_id,target_id,true)
+		return
+	
+	tileWorld.active_hover.set_cells_terrain_connect(path_points,0,0)
+	nav.target_position = tileWorld.wall.map_to_local(path_points.front())
 func become_active() -> void:
 	is_active = true
 	vision.monitoring = true
 	sprite_2d.material = null
 	z_index = 0
 	%CollisionShape2D.disabled = false
+	set_collision_layer_value(1,true)
 	nav.set_navigation_layer_value(1,true)
 	nav.set_navigation_layer_value(2,false)
 
@@ -222,3 +245,9 @@ func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> vo
 			action = ACTION.DEAD
 		"stunned":
 			action = ACTION.STUNNED
+
+
+func _on_approach_guarantee_timeout() -> void:
+	if is_active: return
+	global_position = formation_position.global_position
+	

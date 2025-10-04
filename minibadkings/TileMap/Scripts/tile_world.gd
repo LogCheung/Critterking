@@ -12,6 +12,7 @@ class_name TileWorld
 @onready var active_hover: TileMapLayer = $ActiveHover
 @onready var unit_groups : Array
 
+var aStar : AStarGrid2D
 
 var using_decree : bool
 var wall_tiles : Array
@@ -96,18 +97,20 @@ func find_outskirt_tiles() -> void:
 	for tile in ground.get_used_cells_by_id(0,Vector2(0,0),4):
 		ground.set_cell(tile,-1)
 	
+	var nonNavigableTiles = wall_tiles
+	nonNavigableTiles.append_array(obstacle_tiles)
 	var rect : Rect2i = ground.get_used_rect()
 	var end : Vector2i = rect.end
 	var pos : Vector2i = rect.position
 	for y in range(pos.y,end.y + 1):
-		if !wall_tiles.has(Vector2i(pos.x - 1,y)): 
+		if !nonNavigableTiles.has(Vector2i(pos.x - 1,y)): 
 			outskirt_tiles.append(Vector2i(pos.x - 1,y))
-		if !wall_tiles.has(Vector2i(end.x ,y)):
+		if !nonNavigableTiles.has(Vector2i(end.x ,y)):
 			outskirt_tiles.append(Vector2i(end.x ,y))
 	for x in range(pos.x - 1,end.x + 1):
-		if !wall_tiles.has(Vector2i(x,end.y)):
+		if !nonNavigableTiles.has(Vector2i(x,end.y)):
 			outskirt_tiles.append(Vector2i(x,end.y))
-		if !wall_tiles.has(Vector2i(x,pos.y - 1)):
+		if !nonNavigableTiles.has(Vector2i(x,pos.y - 1)):
 			outskirt_tiles.append(Vector2i(x,pos.y - 1))
 	for tile in outskirt_tiles:
 		ground.set_cell(tile,0,Vector2(0,0),4)
@@ -158,6 +161,7 @@ func draw_build_area() -> void:
 	
 	# Battlefield
 	find_obstacle_tiles()
+	find_wall_obstacles()
 	var bStart = Vector2i(-2,-2) - Vector2i(extra,extra)
 	var bEnd = Vector2i(6,6) +  Vector2i(extra,extra)
 	for x in range(bStart.x , bEnd.x + 1):
@@ -177,6 +181,13 @@ func draw_build_area() -> void:
 			#if wall_tiles.has(Vector2i(x,y)): 
 			wall.set_cell(Vector2i(x,y),-1)
 			obstacles.set_cell(Vector2i(x,y),-1)
+			
+	# remove nav from tiles with obstacles on top of them
+	for cell in obstacle_tiles:
+		var atlas = wall.get_cell_atlas_coords(cell)
+		var source = wall.get_cell_source_id(cell)
+		wall.set_cell(cell,source,atlas,2) # alternative with no nav
+		pass
 	
 	# make check for existing buildings/units
 	var unitTiles = get_tree().get_nodes_in_group("ALLYGROUP")
@@ -187,6 +198,7 @@ func draw_build_area() -> void:
 		ground.set_cell(tile,0,Vector2(0,0),2)
 	find_outskirt_tiles()
 	handle_navigable_cells()
+	set_up_astar()
 
 func find_wall_obstacles() -> void:
 	wall_tiles.clear()
@@ -202,6 +214,20 @@ func find_obstacle_tiles() -> void:
 	for x in range(4):
 		for y in range(6,9):
 			obstacle_tiles.append_array(obstacles.get_used_cells_by_id(1,Vector2i(x,y)))
+
+func set_up_astar() -> void:
+	aStar = AStarGrid2D.new()
+	aStar.region = Rect2i(wall.get_used_rect())
+	aStar.cell_shape = AStarGrid2D.CELL_SHAPE_ISOMETRIC_DOWN
+	aStar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
+	aStar.default_compute_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
+	aStar.default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
+	aStar.update()
+	
+	var nonNavigableTiles = wall_tiles
+	nonNavigableTiles.append_array(obstacle_tiles)
+	for cell in nonNavigableTiles:
+		aStar.set_point_solid(cell)
 
 func handle_decree() -> void:
 	# handle size of affected area and action (maybe)

@@ -390,7 +390,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_daau3"]
-radius = 2.0
+radius = 1.0
 height = 4.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_daau3"]
@@ -608,7 +608,6 @@ _data = {
 [node name="Ally" type="CharacterBody2D" groups=["ALLY"]]
 light_mask = 33
 z_index = 1
-collision_layer = 0
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_q458e")
@@ -626,7 +625,6 @@ visible = false
 position = Vector2(-0.5, 1)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_daau3")
-disabled = true
 
 [node name="Flip" type="Node2D" parent="."]
 

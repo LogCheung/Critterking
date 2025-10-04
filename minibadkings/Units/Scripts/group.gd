@@ -39,6 +39,7 @@ func create_formation(unit_type : PackedScene) -> void:
 	
 	var new_row_margin = -(x_sep)
 	var vertical_off = -16 if max_size <= 9 else -20
+	if self is EnemyGroup : vertical_off = 0
 	var last_pos : Vector2 = Vector2(new_row_margin ,vertical_off) 
 	
 	for r in range(rows):

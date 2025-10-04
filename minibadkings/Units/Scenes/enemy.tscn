@@ -389,12 +389,12 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ubmlb"]
-radius = 2.0
-height = 4.0
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ubmlb"]
 size = Vector2(10, 15)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ubmlb"]
+radius = 0.9999982
+height = 4.000004
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm8qt"]
 size = Vector2(7, 8)
@@ -585,7 +585,6 @@ z_index = 1
 collision_layer = 0
 motion_mode = 1
 wall_min_slide_angle = 0.0
-safe_margin = 5.0
 script = ExtResource("2_mh310")
 
 [node name="StatusSprite" type="AnimatedSprite2D" parent="."]
@@ -594,13 +593,6 @@ visible = false
 position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_sm18k")
 animation = &"inspiration"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-unique_name_in_owner = true
-position = Vector2(-0.5, 1)
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_ubmlb")
-disabled = true
 
 [node name="Flip" type="Node2D" parent="."]
 
@@ -622,6 +614,12 @@ position = Vector2(4, 1.5)
 shape = SubResource("RectangleShape2D_ubmlb")
 disabled = true
 debug_color = Color(0.793403, 0.426364, 1.92523e-07, 0.42)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-0.5, 1)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ubmlb")
 
 [node name="HitBox" parent="." instance=ExtResource("4_0wncj")]
 unique_name_in_owner = true
@@ -759,11 +757,11 @@ metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 target_desired_distance = 20.0
+path_max_distance = 20.0
 navigation_layers = 2
-path_postprocessing = 2
-avoidance_enabled = true
-radius = 20.0
+path_postprocessing = 1
 max_neighbors = 1000
+debug_enabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 process_mode = 3
@@ -830,6 +828,13 @@ stream = ExtResource("12_7xmed")
 unique_name_in_owner = true
 stream = ExtResource("13_ohg4d")
 
+[node name="ApproachGuarantee" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 10.0
+one_shot = true
+autostart = true
+
 [connection signal="top_score_action_changed" from="UtilityAiAgent" to="." method="_on_utility_ai_agent_top_score_action_changed"]
+[connection signal="timeout" from="ApproachGuarantee" to="." method="_on_approach_guarantee_timeout"]
 
 [editable path="HitBox"]
