@@ -65,7 +65,7 @@ func handle_drag() -> void:
 		refreshing = false
 		return
 	if for_show: return
-	
+	if ui.pausemenu.visible : return
 	# dragging and plopping
 	if Input.is_action_just_pressed("select") and !selected:
 		if Rect2(Vector2(), size).has_point(get_local_mouse_position()):
@@ -327,6 +327,7 @@ func _on_selected_mouse_entered() -> void:
 	if selected : return
 	if refreshing : return
 	if setting_up : return
+	if ui.pausemenu.visible : return
 	sprite_2d.scale = Vector2(1.5,1.5)
 	sprite_2d.position.y = default_position.y - (custom_minimum_size.y / 1.5) - 32
 	custom_minimum_size.x = default_custom_min.x * 1.5
@@ -337,6 +338,7 @@ func _on_selected_mouse_exited() -> void:
 	if selected : return
 	if refreshing : return
 	if setting_up : return
+	if ui.pausemenu.visible : return
 	set_to_default()
 
 func match_sprite_type() -> void:

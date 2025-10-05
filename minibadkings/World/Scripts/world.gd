@@ -333,6 +333,7 @@ func _input(event: InputEvent) -> void:
 		Engine.time_scale = 8
 
 func check_nights() -> void:
+	expand()
 	if Global.nights % 2 == 0:
 		enemy_parties += 1
 	
@@ -353,7 +354,7 @@ func check_nights() -> void:
 
 func expand() -> void:
 	Global.expansions += 1
-	tileWorld.draw_build_area()
+	tileWorld.draw_battlefield(Global.expansions)
 
 
 func _on_timer_timeout() -> void:

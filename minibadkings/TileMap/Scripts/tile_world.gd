@@ -161,20 +161,7 @@ func draw_build_area() -> void:
 		wall.set_cell(cell,-1)
 	
 	# Battlefield and drawing ring around play area
-	var ringTiles : Array = []
-	find_obstacle_tiles()
-	find_wall_obstacles()
-	var bStart = Vector2i(-2,-2) - Vector2i(extra,extra)
-	var bEnd = Vector2i(6,6) +  Vector2i(extra,extra)
-	for x in range(bStart.x , bEnd.x + 1):
-		for y in range(bStart.y , bEnd.y + 1):
-			ringTiles.append(Vector2i(x,y))
-			if obstacle_tiles.has(Vector2i(x,y)): continue
-			if wall_tiles.has(Vector2i(x,y)) : continue
-			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),0)
-			#if wall_tiles.has(Vector2i(x,y)): 
-			#wall.set_cell(Vector2i(x,y),-1)
-	ring.set_cells_terrain_connect(ringTiles,0,0)
+	draw_battlefield(extra)
 
 	# Building area
 	var start = Vector2i(0,0) - Vector2i(extra,extra)
@@ -203,6 +190,24 @@ func draw_build_area() -> void:
 	find_outskirt_tiles()
 	handle_navigable_cells()
 	set_up_astar()
+
+func draw_battlefield(extra : int) -> void:
+	# Battlefield and drawing ring around play area
+	var ringTiles : Array = []
+	find_obstacle_tiles()
+	find_wall_obstacles()
+	var bStart = Vector2i(-2,-2) - Vector2i(extra,extra)
+	var bEnd = Vector2i(6,6) +  Vector2i(extra,extra)
+	for x in range(bStart.x , bEnd.x + 1):
+		for y in range(bStart.y , bEnd.y + 1):
+			ringTiles.append(Vector2i(x,y))
+			if obstacle_tiles.has(Vector2i(x,y)): continue
+			if wall_tiles.has(Vector2i(x,y)) : continue
+			if ground.get_used_cells().has(Vector2i(x,y)) : continue
+			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),0)
+			#if wall_tiles.has(Vector2i(x,y)): 
+			#wall.set_cell(Vector2i(x,y),-1)
+	ring.set_cells_terrain_connect(ringTiles,0,0)
 
 func find_wall_obstacles() -> void:
 	wall_tiles.clear()
