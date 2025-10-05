@@ -175,10 +175,18 @@ func on_hurt_box_land(area : Area2D) -> void:
 	if hurtbox_cd.time_left > 0 : return
 	if area.owner is Unit:
 		var enemy : Unit = area.owner
+		var reg = enemy.get_modulate()
 		%Hurt.play()
 		if enemy.dodge < (randi() % 100 + 1): # check for miss
 			enemy.health -= damage 
+			enemy.modulate = Color(1.0, 0.0, 0.0, 1.0)
+			await get_tree().create_timer(.05).timeout
+			enemy.set_modulate(reg)
 			# check for stun
+		else:
+			enemy.modulate.a = 0.8
+			await get_tree().create_timer(.05).timeout
+			enemy.set_modulate(reg)
 			if enemy.stun_fatigue.time_left <= 0 and stun_chance > (randi() % 100 + 1):
 				enemy.statusArray.append(Unit.STATUS.STUNNED)
 		
