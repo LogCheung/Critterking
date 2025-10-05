@@ -36,6 +36,7 @@ func create_formation(unit_type : PackedScene) -> void:
 	# attempt to make square formation
 	rows = max_size / columns
 	if max_size % columns != 0:  rows += 1
+	print(rows)
 	
 	var new_row_margin = -(x_sep)
 	var vertical_off = -16 if max_size <= 9 else -20

@@ -134,7 +134,6 @@ func create_enemy_perimeter(dist : int, outer : bool) -> void:
 		innerFollow = follow
 
 func spawn_enemy() -> void:
-	print(upgrade_nums)
 	if spawned_parties >= enemy_parties:
 		return
 	# random positon along perimeter of player base
@@ -167,7 +166,6 @@ func spawn_enemy() -> void:
 	
 
 func on_night_started() -> void:
-	print(upgraded_parties)
 	ui.hand.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	ui.decrees.process_mode = Node.PROCESS_MODE_PAUSABLE
 	if night_is_expansion:
