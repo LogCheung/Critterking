@@ -141,6 +141,7 @@ func spawn_enemy() -> void:
 	var rand = randf()
 	var follow = innerFollow if randi() % 2 == 0 else outerFollow
 	follow.progress_ratio = rand
+	
 	# create new enemy group scene and add to world
 	var enemGroup : EnemyGroup = ENEMYGROUP.instantiate()
 	enemGroup.global_position = follow.global_position
