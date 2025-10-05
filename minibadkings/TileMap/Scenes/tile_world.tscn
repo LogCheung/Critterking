@@ -266,3 +266,4 @@ top_level = true
 tile_set = SubResource("TileSet_ftxe1")
 
 [node name="Center" type="Node2D" parent="."]
+position = Vector2(32, 80)
