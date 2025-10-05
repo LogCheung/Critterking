@@ -62,7 +62,9 @@ func check_aoe() -> void:
 		if !area or !area.owner is Unit: continue
 		var enemy : Unit = area.owner
 		%Hurt.play()
-		enemy.health -= damage if enemy.dodge < (randi() % 100 + 1) else 0.0
+		if enemy.dodge < (randi() % 100 + 1): 
+			enemy.health -= damage
+		else:
 		if enemy.health <= 0:
 			# trigger death anim
 			enemy.start_death()
