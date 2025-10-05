@@ -333,7 +333,6 @@ func _input(event: InputEvent) -> void:
 		Engine.time_scale = 8
 
 func check_nights() -> void:
-	expand()
 	if Global.nights % 2 == 0:
 		enemy_parties += 1
 	

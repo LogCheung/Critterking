@@ -64,7 +64,8 @@ func check_aoe() -> void:
 		%Hurt.play()
 		if enemy.dodge < (randi() % 100 + 1): 
 			enemy.health -= damage
-		else:
+			enemy.hitAnim(true)
+		else:enemy.hitAnim(false)
 		if enemy.health <= 0:
 			# trigger death anim
 			enemy.start_death()

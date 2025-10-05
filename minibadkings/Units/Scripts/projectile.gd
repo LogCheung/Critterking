@@ -34,15 +34,17 @@ func _on_area_entered(area: Area2D) -> void:
 		# for shielded
 		if target.decree == Decree.TYPE.DEFENSE:
 			damage -= .25
-		if target.type == Unit.TYPE.SHIELDED:
+		if target.type == Unit.TYPE.SHIELDED: 
+			damage -= .75
+		if target.dodge < (randi() % 100 + 1):
 		 # chance to ignore damage while also having reduced damage
 			#var rand = randi()
 			#if rand % 2 == 0: 
 			%Hurt.play()
-			target.health -= damage - .75 if target.dodge < (randi() % 100 + 1) else 0.0
+			target.health -= damage
+			target.hitAnim(true)
 		else:
-			%Hurt.play()
-			target.health -= damage if target.dodge < (randi() % 100 + 1) else 0.0
+			target.hitAnim(false)
 		if target.health <= 0:
 			target.start_death()
 		queue_free()

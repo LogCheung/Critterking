@@ -179,8 +179,8 @@ func on_hurt_box_land(area : Area2D) -> void:
 		%Hurt.play()
 		if enemy.dodge < (randi() % 100 + 1): # check for miss
 			enemy.health -= damage 
-			hitAnim(true,enemy)
-		else: hitAnim(false,enemy)
+			enemy.hitAnim(true)
+		else: enemy.hitAnim(false)
 			
 		# check for stun
 		if enemy.stun_fatigue.time_left <= 0 and stun_chance > (randi() % 100 + 1):
@@ -196,16 +196,16 @@ func on_hurt_box_building_land(body : Node2D):
 			body.health -= damage
 	pass
 
-func hitAnim(hit:bool,enemy) -> void:
-	var reg = enemy.get_modulate()
-	if hit==true:
-		enemy.modulate = Color(1.0, 0.0, 0.0, 1.0)
+func hitAnim(hit : bool) -> void:
+	var reg = get_modulate()
+	if hit:
+		modulate = Color(1.0, 0.0, 0.0, 1.0)
 		await get_tree().create_timer(.05).timeout
-		enemy.set_modulate(reg)
+		set_modulate(reg)
 	else:
-		enemy.modulate.a = 0.8
+		modulate.a = 0.8
 		await get_tree().create_timer(.05).timeout
-		enemy.modulate.a = 1
+		modulate.a = 1
 func start_death(destroy : bool = false) -> void:
 	unselected.emit()
 	if self is Ally : self.under_mouse = false
