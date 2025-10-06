@@ -48,6 +48,9 @@ func new_game() -> void:
 	Global.cardsInHand.clear()
 	Global.cardsDispatched.clear()	
 	ui.rollArray.clear()
+	
+	# map gen with tilemap patterns
+	tileWorld.generate_map_patterns()
 	tileWorld.draw_build_area()
 	clear_world()
 	
@@ -55,16 +58,17 @@ func new_game() -> void:
 	create_enemy_perimeter(12 + Global.expansions, true)
 	create_enemy_perimeter(11 + Global.expansions, false)
 	
+	
 	# add house card
 	ui.rollArray.append(Card.ROLLTYPE.UNIT)
 	ui.rollArray.append(Card.ROLLTYPE.UNIT)
 	
 	for i in range(1):
 		add_house_card()
-	#for i in range(1):
-		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.TRAPS
-		#ui.hand.get_child(0).add_child(hCard)
+	for i in range(1):
+		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.DESTROY
+		ui.hand.get_child(0).add_child(hCard)
 	#for i in range(2):
 		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 		#hCard.type = Card.CARDTYPE.NURSERY
@@ -259,10 +263,15 @@ func start_day() -> void:
 	# jk we don't do that anymore
 	# run chance for extra roll
 	var buildings = get_tree().get_nodes_in_group("BUILDING")
+	var traps = buildings.filter(func(b : Building): return b.type == Building.TYPE.TRAP)
 	var nursuries = buildings.filter(func(b : Building): return b.type == Building.TYPE.NURSERY)
 	var storages = buildings.filter(func(b : Building): return b.type == Building.TYPE.STORAGE)
 	check_extra_roll(Card.ROLLTYPE.UNIT,nursuries,25)
 	check_extra_roll(Card.ROLLTYPE.BUILDINGS,storages,25)
+	
+	# remove temp traps
+	for trap : Building in traps:
+		trap.remove()
 	
 	tileWorld.handle_navigable_cells()
 
@@ -330,7 +339,8 @@ func _input(event: InputEvent) -> void:
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
-		Engine.time_scale = 8
+		expand()
+		#Engine.time_scale = 8
 
 func check_nights() -> void:
 	if Global.nights % 2 == 0:
@@ -353,7 +363,7 @@ func check_nights() -> void:
 
 func expand() -> void:
 	Global.expansions += 1
-	tileWorld.draw_battlefield(Global.expansions)
+	tileWorld.draw_build_area()
 
 
 func _on_timer_timeout() -> void:

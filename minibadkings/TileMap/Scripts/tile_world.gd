@@ -119,6 +119,61 @@ func find_outskirt_tiles() -> void:
 func draw_build_area() -> void:
 	await get_tree().create_timer(.05).timeout
 	var extra = Global.expansions
+	
+	# remove navigation on tiles with obstacles
+	find_wall_obstacles()
+	for cell in wall_tiles:
+		wall.set_cell(cell,-1)
+	
+	# Battlefield and drawing ring around play area
+	draw_battlefield(extra)
+	
+	# Building area
+	var start = Vector2i(0,0) - Vector2i(extra,extra)
+	var end = Vector2i(4,4) +  Vector2i(extra,extra)
+	for x in range(start.x , end.x + 1):
+		for y in range(start.y , end.y + 1):
+			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),1)
+			#if wall_tiles.has(Vector2i(x,y)): 
+			wall.set_cell(Vector2i(x,y),-1)
+			obstacles.set_cell(Vector2i(x,y),-1)
+	
+	# remove nav from tiles with obstacles on top of them
+	for cell in obstacle_tiles:
+		var atlas = wall.get_cell_atlas_coords(cell)
+		var source = wall.get_cell_source_id(cell)
+		wall.set_cell(cell,source,atlas,2) # alternative with no nav
+		pass
+	
+	# make check for existing buildings/units
+	var unitTiles = get_tree().get_nodes_in_group("ALLYGROUP")
+	unitTiles = unitTiles.map(func(g : AllyGroup):return g.tile)
+	var buildTiles = get_tree().get_nodes_in_group("BUILDING")
+	buildTiles = buildTiles.map(func(b : Building):return b.tile)
+	for tile in buildTiles:
+		ground.set_cell(tile,0,Vector2(0,0),2)
+	find_outskirt_tiles()
+	handle_navigable_cells()
+	set_up_astar()
+
+func draw_battlefield(extra : int) -> void:
+	# Battlefield and drawing ring around play area
+	var ringTiles : Array = []
+	find_obstacle_tiles()
+	find_wall_obstacles()
+	var bStart = Vector2i(-2,-2) - Vector2i(extra,extra)
+	var bEnd = Vector2i(6,6) +  Vector2i(extra,extra)
+	for x in range(bStart.x , bEnd.x + 1):
+		for y in range(bStart.y , bEnd.y + 1):
+			ringTiles.append(Vector2i(x,y))
+			if obstacle_tiles.has(Vector2i(x,y)): continue
+			if wall_tiles.has(Vector2i(x,y)) : continue
+			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),0)
+			#if wall_tiles.has(Vector2i(x,y)): 
+			#wall.set_cell(Vector2i(x,y),-1)
+	ring.set_cells_terrain_connect(ringTiles,0,0)
+	
+func generate_map_patterns() -> void:
 	# clear all ground tiles
 	#for tile in start_wall_tiles:
 		#wall.set_cell(tile,0,Vector2(0,2))
@@ -155,59 +210,6 @@ func draw_build_area() -> void:
 			for i in range(10):
 				patterns.append(randi_range((chosen/gSize)*gSize,(chosen/gSize)*gSize+gSize-1))
 	
-	# remove navigation on tiles with obstacles
-	find_wall_obstacles()
-	for cell in wall_tiles:
-		wall.set_cell(cell,-1)
-	
-	# Battlefield and drawing ring around play area
-	draw_battlefield(extra)
-
-	# Building area
-	var start = Vector2i(0,0) - Vector2i(extra,extra)
-	var end = Vector2i(4,4) +  Vector2i(extra,extra)
-	for x in range(start.x , end.x + 1):
-		for y in range(start.y , end.y + 1):
-			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),1)
-			#if wall_tiles.has(Vector2i(x,y)): 
-			wall.set_cell(Vector2i(x,y),-1)
-			obstacles.set_cell(Vector2i(x,y),-1)
-			
-	# remove nav from tiles with obstacles on top of them
-	for cell in obstacle_tiles:
-		var atlas = wall.get_cell_atlas_coords(cell)
-		var source = wall.get_cell_source_id(cell)
-		wall.set_cell(cell,source,atlas,2) # alternative with no nav
-		pass
-	
-	# make check for existing buildings/units
-	var unitTiles = get_tree().get_nodes_in_group("ALLYGROUP")
-	unitTiles = unitTiles.map(func(g : AllyGroup):return g.tile)
-	var buildTiles = get_tree().get_nodes_in_group("BUILDING")
-	buildTiles = buildTiles.map(func(b : Building):return b.tile)
-	for tile in buildTiles:
-		ground.set_cell(tile,0,Vector2(0,0),2)
-	find_outskirt_tiles()
-	handle_navigable_cells()
-	set_up_astar()
-
-func draw_battlefield(extra : int) -> void:
-	# Battlefield and drawing ring around play area
-	var ringTiles : Array = []
-	find_obstacle_tiles()
-	find_wall_obstacles()
-	var bStart = Vector2i(-2,-2) - Vector2i(extra,extra)
-	var bEnd = Vector2i(6,6) +  Vector2i(extra,extra)
-	for x in range(bStart.x , bEnd.x + 1):
-		for y in range(bStart.y , bEnd.y + 1):
-			ringTiles.append(Vector2i(x,y))
-			if obstacle_tiles.has(Vector2i(x,y)): continue
-			if wall_tiles.has(Vector2i(x,y)) : continue
-			if ground.get_used_cells().has(Vector2i(x,y)) : continue
-			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),0)
-			#if wall_tiles.has(Vector2i(x,y)): 
-			#wall.set_cell(Vector2i(x,y),-1)
-	ring.set_cells_terrain_connect(ringTiles,0,0)
 
 func find_wall_obstacles() -> void:
 	wall_tiles.clear()
@@ -355,6 +357,7 @@ func handle_decree_action(mouseTile : Vector2i) -> void:
 				var buildingNode = get_tree().get_first_node_in_group("BUILDINGSNODE")
 				var trap : Building = load("res://TileMap/Scenes/building.tscn").instantiate()
 				trap.type = Building.TYPE.TRAP
+				trap.temporary = true
 				
 				trap.global_position = ground.map_to_local(tile)
 				buildingNode.add_child(trap)

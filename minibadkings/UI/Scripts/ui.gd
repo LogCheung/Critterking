@@ -117,6 +117,7 @@ func show_hand() -> void:
 	refresh_positions()
 
 func on_game_over() -> void:
+	hand.hide()
 	gameover.show()
 	$AnimationPlayer.play("Lose")
 	await anim.animation_finished

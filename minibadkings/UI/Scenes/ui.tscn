@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=32 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Texture2D" uid="uid://luuqbnbqgyao" path="res://UI/Assets/menus/mainmenu.png" id="3_2fejo"]
@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://bfqdqavdl2kr3" path="res://UI/Assets/menus/pause.png" id="5_n2q0n"]
 [ext_resource type="Texture2D" uid="uid://drytwq44nae6t" path="res://UI/Assets/menus/discoveryshow.png" id="5_oemsu"]
 [ext_resource type="Texture2D" uid="uid://dwseh6hsy3l77" path="res://UI/Assets/menus/gameover.png" id="7_ftqev"]
-[ext_resource type="PackedScene" uid="uid://dtxo6oppyymjc" path="res://UI/Scenes/decree.tscn" id="7_gu1s8"]
 [ext_resource type="FontFile" uid="uid://dqt550qq7jmvu" path="res://Units/Debug/PressStart2P.ttf" id="7_titua"]
 [ext_resource type="Script" uid="uid://dn5w3jfm4dcjv" path="res://UI/Scripts/slider.gd" id="8_6dw6b"]
 [ext_resource type="AudioStream" uid="uid://bmkptsfk4bkc" path="res://Audio/music/crtrpause.wav" id="8_oj6tj"]
@@ -551,10 +550,6 @@ scale = Vector2(2.5, 2.5)
 mouse_filter = 2
 theme_override_constants/separation = 10
 alignment = 1
-
-[node name="Decree" parent="Decrees/VBoxContainer" instance=ExtResource("7_gu1s8")]
-layout_mode = 2
-type = 2
 
 [node name="Hand" type="Control" parent="."]
 unique_name_in_owner = true

@@ -197,12 +197,14 @@ func on_hurt_box_building_land(body : Node2D):
 	pass
 
 func hitAnim(hit : bool) -> void:
-	var reg = get_modulate()
+	var reg = Color(1,1,1)
 	if hit:
 		modulate = Color(1.0, 0.0, 0.0, 1.0)
+		if self is Enemy: modulate = Color(2, 0.0, 0.0, 2)
 		await get_tree().create_timer(.05).timeout
 		set_modulate(reg)
-	else:
+		modulate.lightened(0)
+	else: # dodged
 		modulate.a = 0.8
 		await get_tree().create_timer(.05).timeout
 		modulate.a = 1

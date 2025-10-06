@@ -117,12 +117,12 @@ func on_destroyed() -> void:
 	buildings = buildings.filter(func(b):return b.type == Building.TYPE.HOUSE)
 	if buildings.is_empty():
 		ui.game_over.emit()
+		
 		# lose screen
 		
 	# kill unit inside if group is healing
 	if occupants_inside():
 		occupant.terminate()
-	remove()
 	
 func remove() -> void:
 	type = TYPE.RUINS

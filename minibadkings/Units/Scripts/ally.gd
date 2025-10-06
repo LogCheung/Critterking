@@ -76,13 +76,6 @@ func _process(delta: float) -> void:
 
 func handle_action(delta) -> void:
 	var distToTarget = global_position.distance_to(nav.target_position)
-	if dashing:
-		if !target : 
-			find_target()
-			return
-		var dir = global_position.direction_to(target.global_position)
-		move_to(dir,delta)
-		return
 	
 	match action:
 		ACTION.NONE:
@@ -102,6 +95,13 @@ func handle_action(delta) -> void:
 				anim.stop()
 				return
 		ACTION.FIGHT:
+			if dashing:
+				if !target : 
+					find_target()
+					return
+				var dir = global_position.direction_to(target.global_position)
+				move_to(dir,delta)
+				return
 			if attacking: return
 			find_target()
 			if distToTarget <= attackRange :
