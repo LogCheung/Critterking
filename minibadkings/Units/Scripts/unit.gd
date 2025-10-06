@@ -196,14 +196,23 @@ func on_hurt_box_building_land(body : Node2D):
 			body.health -= damage
 	pass
 
-func hitAnim(hit : bool) -> void:
+func hitAnim(hit : bool, status : STATUS = STATUS.NONE) -> void:
 	var reg = Color(1,1,1)
+	var mod = Color(1.0, 0.0, 0.0, 1.0)
+	
+	# set modulate to custom based on status
+	match status:
+		STATUS.NONE:
+			if self is Enemy: mod = Color(2, 0.0, 0.0, 2)
+		STATUS.POISONED:
+			mod = Color(0,.5,0)
+		STATUS.REGEN:
+			mod = Color(0,2.0,0)
+			
 	if hit:
-		modulate = Color(1.0, 0.0, 0.0, 1.0)
-		if self is Enemy: modulate = Color(2, 0.0, 0.0, 2)
+		modulate = mod
 		await get_tree().create_timer(.05).timeout
 		set_modulate(reg)
-		modulate.lightened(0)
 	else: # dodged
 		modulate.a = 0.8
 		await get_tree().create_timer(.05).timeout
@@ -240,4 +249,9 @@ func on_stun_finished() -> void:
 	status_sprite.visible = false
 	attack_cd.paused = false
 	is_stunned = false
+	pass
+
+func on_damage_timer() -> void:
+	pass
+func on_healing_timer() -> void:
 	pass
