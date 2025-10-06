@@ -88,6 +88,7 @@ func handle_drag() -> void:
 	if Input.is_action_pressed("select") and selected:
 		sprite_2d.scale = Vector2(.4,.4)
 		global_position = get_global_mouse_position()
+		highlight_tiles()
 	elif Input.is_action_just_released("select") and selected:
 		if ui.dispatch.visible : 
 			set_to_default() 
@@ -115,7 +116,30 @@ func set_to_default() -> void:
 	
 	selected = false
 	is_under_mouse = false
+
+func highlight_tiles() -> void:
+	# preconditions or exceptions
+	if type == CARDTYPE.DESTROY : return
 	
+	# clear hover tiles
+	for cell in tileWorld.hover.get_used_cells():
+		tileWorld.hover.set_cell(cell,-1)
+	
+	# filter tiles already placed
+	var unit_tiles : Array
+	var unit_groups = get_tree().get_first_node_in_group("GROUPSNODE").get_children()
+	for group : AllyGroup in unit_groups:
+		if !group is AllyGroup : continue
+		group.tile = tileWorld.ground.local_to_map(group.global_position)
+		unit_tiles.append(Vector2i(group.tile))
+	
+	print(unit_tiles)
+	# add appropriate tiles
+	for cell in tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),1):
+		if unit_tiles.has(cell) : continue
+		tileWorld.hover.set_cell(cell,0,Vector2(0,0),0)
+		tileWorld.hover.visible = true
+	pass
 
 func plop() -> void:
 	tileWorld.handle_navigable_cells()

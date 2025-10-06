@@ -16,6 +16,7 @@ class_name TileWorld
 var aStar : AStarGrid2D
 
 var using_decree : bool
+
 var wall_tiles : Array
 var start_wall_tiles : Array
 var unit_tiles : Array
@@ -31,6 +32,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	for cell in active_hover.get_used_cells():
 		active_hover.set_cell(cell,-1)
+	
+	# decree
 	handle_decree()
 	using_decree = activeDecree != Decree.TYPE.NONE
 
@@ -117,13 +120,7 @@ func find_outskirt_tiles() -> void:
 		ground.set_cell(tile,0,Vector2(0,0),4)
 
 func draw_build_area() -> void:
-	await get_tree().create_timer(.05).timeout
 	var extra = Global.expansions
-	
-	# remove navigation on tiles with obstacles
-	find_wall_obstacles()
-	for cell in wall_tiles:
-		wall.set_cell(cell,-1)
 	
 	# Battlefield and drawing ring around play area
 	draw_battlefield(extra)
@@ -135,8 +132,15 @@ func draw_build_area() -> void:
 		for y in range(start.y , end.y + 1):
 			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),1)
 			#if wall_tiles.has(Vector2i(x,y)): 
-			wall.set_cell(Vector2i(x,y),-1)
+			#wall.set_cell(Vector2i(x,y),-1)
 			obstacles.set_cell(Vector2i(x,y),-1)
+			
+	# remove navigation on tiles with obstacles
+	find_wall_obstacles()
+	for cell in wall_tiles:
+		if ground.get_used_cells_by_id(0,Vector2(0,0),1).has(cell):
+			continue
+		wall.set_cell(cell,-1)
 	
 	# remove nav from tiles with obstacles on top of them
 	for cell in obstacle_tiles:

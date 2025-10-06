@@ -44,7 +44,7 @@ _data = {
 &"shrink": SubResource("Animation_e2s86")
 }
 
-[node name="Card" type="Control" node_paths=PackedStringArray("charm") groups=["CARD"]]
+[node name="Card" type="Control" groups=["CARD"]]
 custom_minimum_size = Vector2(128, 272)
 layout_mode = 3
 anchor_left = -0.102
@@ -58,7 +58,6 @@ offset_bottom = -136.24
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_e2s86")
-charm = NodePath("")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_dryym")

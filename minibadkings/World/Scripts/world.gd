@@ -50,9 +50,9 @@ func new_game() -> void:
 	ui.rollArray.clear()
 	
 	# map gen with tilemap patterns
+	clear_world()
 	tileWorld.generate_map_patterns()
 	tileWorld.draw_build_area()
-	clear_world()
 	
 	ui.cards.show()
 	create_enemy_perimeter(12 + Global.expansions, true)
@@ -65,9 +65,9 @@ func new_game() -> void:
 	
 	for i in range(1):
 		add_house_card()
-	for i in range(1):
+	for i in range(2):
 		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.DESTROY
+		hCard.type = Card.CARDTYPE.PARALYTIC
 		ui.hand.get_child(0).add_child(hCard)
 	#for i in range(2):
 		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
@@ -103,6 +103,9 @@ func clear_world() -> void:
 	for c : Card in cards:
 		if c.for_show : continue
 		c.queue_free()
+	# obstacles
+	for cell in tileWorld.obstacles.get_used_cells():
+		tileWorld.obstacles.set_cell(cell,-1)
 
 func create_enemy_perimeter(dist : int, outer : bool) -> void:
 	# Battlefield is 10x10, 
@@ -339,7 +342,7 @@ func _input(event: InputEvent) -> void:
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
-		expand()
+		new_game()
 		#Engine.time_scale = 8
 
 func check_nights() -> void:
