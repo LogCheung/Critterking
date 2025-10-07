@@ -70,6 +70,13 @@ func handle_action(delta) -> void:
 				anim.play("walk")
 				in_formation = false
 		ACTION.FIGHT:
+			if dashing:
+				if !target : 
+					find_target()
+					return
+				var dir = global_position.direction_to(target.global_position)
+				move_to(dir,delta)
+				return
 			if attacking : return
 			find_target()
 			if target == null: target_in_range = false

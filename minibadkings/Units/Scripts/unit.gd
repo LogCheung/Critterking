@@ -5,7 +5,8 @@ enum ACTION {
 	NONE,FORM, FIGHT, RAID, STRAFE, HEAL, STUNNED, DEAD
 }
 enum TYPE {
-	NONE, MELEE, SHIELDED, RANGED, PARALYTIC, RESILIENT, STINGER,BOMBER,FLYING,CRAZED,  
+	NONE, MELEE, SHIELDED, RANGED, RHINO, EXPLOSIVE, FUNGI, 
+	PARALYTIC, RESILIENT, STINGER,BOMBER,FLYING,CRAZED,  
 }
 enum STATUS {
 	NONE, STUNNED, POISONED, REGEN
@@ -25,6 +26,7 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @export var dodge : int = 0
 @export var stun_chance : int = 0
 @export var poison_chance : int = 0
+@export var knock_chance : int = 0
 @export var level : int = 1
 @export var formation_position : Node2D 
 @export var group : Group
@@ -67,6 +69,7 @@ var distance_from_form : float = 0.0
 var attack_ready : bool
 var too_close : bool
 var dashing : bool
+var knocked : bool
 var is_stunned : bool
 
 var dead : bool
@@ -186,6 +189,8 @@ func on_hurt_box_land(area : Area2D) -> void:
 			enemy.health -= damage 
 			enemy.hitAnim(true)
 		else: enemy.hitAnim(false)
+		
+		# check for knockback
 		
 		# check for poison
 		if poison_chance > (randi() % 100 + 1):
