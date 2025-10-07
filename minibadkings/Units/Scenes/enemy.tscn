@@ -811,6 +811,15 @@ unique_name_in_owner = true
 wait_time = 0.125
 autostart = true
 
+[node name="DamageTimer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
+wait_time = 0.5
+autostart = true
+
+[node name="HealingTimer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
+autostart = true
+
 [node name="Attack" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("10_0wncj")

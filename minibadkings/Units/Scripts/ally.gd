@@ -217,14 +217,15 @@ func match_type() -> void:
 			attack_cd.wait_time = 1.5
 		TYPE.RESILIENT:
 			sprite_2d.texture = RESILIENTNORMALSE if !upgraded else UPRESILIENTNORMALSE
-			health = 4
+			health = 3
 			damage = 1
 			attack_cd.wait_time = 2
 		TYPE.STINGER:
 			sprite_2d.texture = STINGERNORMALSE if !upgraded else UPSTINGERNORMALSE
-			health = 3.25
+			health = 3
 			damage = 1
 			attack_cd.wait_time = 2
+			poison_chance = 100
 	set_up_vision()
 
 #func on_health_change() -> void:

@@ -24,6 +24,7 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @export var visionRange : float = 32
 @export var dodge : int = 0
 @export var stun_chance : int = 0
+@export var poison_chance : int = 0
 @export var level : int = 1
 @export var formation_position : Node2D 
 @export var group : Group
@@ -46,6 +47,8 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @onready var stun_cd: Timer = %StunCD
 @onready var nav_delay: Timer = %NavDelay
 @onready var stun_fatigue: Timer = %StunFatigue
+@onready var damage_timer: Timer = %DamageTimer
+@onready var healing_timer: Timer = %HealingTimer
 
 var next_path_pos
 
@@ -71,6 +74,8 @@ var dead : bool
 func _ready() -> void:
 	nav.velocity_computed.connect(_on_navigation_agent_2d_velocity_computed)
 	stun_cd.timeout.connect(on_stun_finished)
+	damage_timer.timeout.connect(on_damage_timer)
+	healing_timer.timeout.connect(on_healing_timer)
 	%HurtBox.area_entered.connect(on_hurt_box_land)
 	%HurtBox.body_entered.connect(on_hurt_box_building_land)
 	pass
@@ -181,6 +186,12 @@ func on_hurt_box_land(area : Area2D) -> void:
 			enemy.health -= damage 
 			enemy.hitAnim(true)
 		else: enemy.hitAnim(false)
+		
+		# check for poison
+		if poison_chance > (randi() % 100 + 1):
+			enemy.statusArray.append(Unit.STATUS.POISONED)
+			enemy.statusArray.append(Unit.STATUS.POISONED)
+			enemy.statusArray.append(Unit.STATUS.POISONED)
 			
 		# check for stun
 		if enemy.stun_fatigue.time_left <= 0 and stun_chance > (randi() % 100 + 1):
@@ -205,7 +216,7 @@ func hitAnim(hit : bool, status : STATUS = STATUS.NONE) -> void:
 		STATUS.NONE:
 			if self is Enemy: mod = Color(2, 0.0, 0.0, 2)
 		STATUS.POISONED:
-			mod = Color(0,.5,0)
+			mod = Color(.6,.0,1)
 		STATUS.REGEN:
 			mod = Color(0,2.0,0)
 			
@@ -252,6 +263,16 @@ func on_stun_finished() -> void:
 	pass
 
 func on_damage_timer() -> void:
+	if statusArray.has(STATUS.POISONED):
+		health -= .5
+		hitAnim(true, STATUS.POISONED)
+		statusArray.remove_at(statusArray.find(STATUS.POISONED))
 	pass
 func on_healing_timer() -> void:
+	if type == TYPE.RESILIENT: statusArray.append(STATUS.REGEN)
+	if statusArray.has(STATUS.REGEN):
+		if health >= max_health : return
+		health += .5
+		hitAnim(true,STATUS.REGEN)
+		statusArray.remove_at(statusArray.find(STATUS.REGEN))
 	pass
