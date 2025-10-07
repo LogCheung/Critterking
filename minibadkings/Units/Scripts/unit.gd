@@ -5,7 +5,7 @@ enum ACTION {
 	NONE,FORM, FIGHT, RAID, STRAFE, HEAL, STUNNED, DEAD
 }
 enum TYPE {
-	NONE, MELEE, SHIELDED, RANGED, RHINO, EXPLOSIVE, FUNGI, 
+	NONE, MELEE, SHIELDED, RANGED, #RHINO, EXPLOSIVE, FUNGI, 
 	PARALYTIC, RESILIENT, STINGER,BOMBER,FLYING,CRAZED,  
 }
 enum STATUS {
@@ -47,7 +47,6 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @onready var death: AudioStreamPlayer = %Death
 @onready var hurt: AudioStreamPlayer = %Hurt
 @onready var stun_cd: Timer = %StunCD
-@onready var nav_delay: Timer = %NavDelay
 @onready var stun_fatigue: Timer = %StunFatigue
 @onready var damage_timer: Timer = %DamageTimer
 @onready var healing_timer: Timer = %HealingTimer
@@ -117,6 +116,8 @@ func handle_behind_wall() -> void:
 		tileWorld.wall.set_cell(wall_tile,0,Vector2(0,2),1)
 
 func move_to(direction, _delta):
+	if knocked : return
+	
 	if direction.x > 0:
 		$Flip.scale.x = 1
 	else:
@@ -191,15 +192,18 @@ func on_hurt_box_land(area : Area2D) -> void:
 		else: enemy.hitAnim(false)
 		
 		# check for knockback
+		if knock_chance >= (randi() % 100 + 1):
+			var dir = -enemy.global_position.direction_to(global_position)
+			enemy.take_knockback(dir)
 		
 		# check for poison
-		if poison_chance > (randi() % 100 + 1):
+		if poison_chance >= (randi() % 100 + 1):
 			enemy.statusArray.append(Unit.STATUS.POISONED)
 			enemy.statusArray.append(Unit.STATUS.POISONED)
 			enemy.statusArray.append(Unit.STATUS.POISONED)
 			
 		# check for stun
-		if enemy.stun_fatigue.time_left <= 0 and stun_chance > (randi() % 100 + 1):
+		if enemy.stun_fatigue.time_left <= 0 and stun_chance >= (randi() % 100 + 1):
 			enemy.statusArray.append(Unit.STATUS.STUNNED)
 		
 		hurtbox_cd.start()
@@ -253,9 +257,15 @@ func start_death(destroy : bool = false) -> void:
 	%Death.play()
 	#queue_free()
 
-func on_nav_delay() -> void:
-	if !nav.target_position : return
-	next_path_pos = nav.get_next_path_position()
+func take_knockback(dir : Vector2) -> void:
+	knocked = true
+	dir = dir.normalized()
+	var knockSpeed = 40
+	velocity = dir * knockSpeed
+	move_and_slide()
+	
+	await get_tree().create_timer(.125).timeout
+	knocked = false
 	pass
 
 func on_stun_finished() -> void:
@@ -267,9 +277,49 @@ func on_stun_finished() -> void:
 	is_stunned = false
 	pass
 
+func explode_on_death() -> void:
+	#if type != TYPE.EXPLOSIVE : return # check is explosive
+	# create explosion hurtbox area
+	var area = Area2D.new()
+	var col = CollisionShape2D.new()
+	var shape = CapsuleShape2D.new()
+	area.process_mode = Node.PROCESS_MODE_ALWAYS
+	shape.radius = 12
+	shape.height = 40
+	col.rotation = 90
+	col.shape = shape
+	area.add_child(col)
+	area.set_collision_layer_value(1,false)
+	area.set_collision_mask_value(1,false)
+	if self is Enemy:
+		area.set_collision_mask_value(2,true)
+	else:
+		# default texture is splash texture
+		area.set_collision_mask_value(3, true)
+	add_child(area)
+	# wait three frames
+	for i in range(3):
+		await get_tree().process_frame
+	# check for enemies under explosion
+	print(area.get_overlapping_areas())
+	for a in area.get_overlapping_areas():
+		if !a or !a.owner is Unit: continue
+		var enemy : Unit = a.owner
+		%Hurt.play()
+		if enemy.dodge < (randi() % 100 + 1): 
+			enemy.health -= 1.0 
+			enemy.hitAnim(true)
+		else:enemy.hitAnim(false)
+		if enemy.health <= 0:
+			# trigger death anim
+			print("noob get killed by explosion")
+			enemy.start_death()
+	pass
 func on_damage_timer() -> void:
 	if statusArray.has(STATUS.POISONED):
 		health -= .5
+		if health <= 0:
+			start_death()
 		hitAnim(true, STATUS.POISONED)
 		statusArray.remove_at(statusArray.find(STATUS.POISONED))
 	pass

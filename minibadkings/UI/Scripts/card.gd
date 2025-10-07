@@ -8,7 +8,7 @@ const BUILDING = preload("res://TileMap/Scenes/building.tscn")
 # Storage is border for buildings, TRAPS is start
 # Nail is border for charms, Heartlocket is start
 enum CARDTYPE {
-	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3, RHINO, EXPLOSIVE, FUNGI, 
+	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3, #RHINO, EXPLOSIVE, FUNGI, 
 	PARALYTIC, RESILIENT, STINGER ,BOMBARDIER, FLYING,CRAZED,
 	
 	TRAPS ,DESTROY , HOUSE, CARE , FARM , SAPSTORE, NURSERY, STORAGE, 
@@ -135,7 +135,6 @@ func highlight_tiles() -> void:
 		group.tile = tileWorld.ground.local_to_map(group.global_position)
 		unit_tiles.append(Vector2i(group.tile))
 	
-	print(unit_tiles)
 	# add appropriate tiles
 	for cell in tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),1):
 		if unit_tiles.has(cell) : continue

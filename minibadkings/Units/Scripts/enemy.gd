@@ -54,6 +54,8 @@ func _process(delta: float) -> void:
 	check_houses()
 func handle_action(delta) -> void:
 	var distToTarget = global_position.distance_to(nav.target_position)
+	if knocked: 
+		move_and_slide()
 	
 	match action:
 		ACTION.FORM:

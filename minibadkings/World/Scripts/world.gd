@@ -36,6 +36,11 @@ func _ready() -> void:
 	Engine.time_scale = 1
 
 func new_game() -> void:
+	# set up initial rolls
+	ui.rollArray.clear()
+	ui.rollArray.append(Card.ROLLTYPE.UNIT)
+	ui.rollArray.append(Card.ROLLTYPE.UNIT)
+	
 	await get_tree().create_timer(.125).timeout
 	%SpawnTimer.stop()
 	%SpawnTimer.wait_time = 10
@@ -47,10 +52,9 @@ func new_game() -> void:
 	Global.expansions = 0
 	Global.cardsInHand.clear()
 	Global.cardsDispatched.clear()	
-	ui.rollArray.clear()
-	
 	# map gen with tilemap patterns
 	clear_world()
+	await get_tree().create_timer(.125).timeout
 	tileWorld.generate_map_patterns()
 	tileWorld.draw_build_area()
 	
@@ -60,9 +64,6 @@ func new_game() -> void:
 	
 	
 	# add house card
-	ui.rollArray.append(Card.ROLLTYPE.UNIT)
-	ui.rollArray.append(Card.ROLLTYPE.UNIT)
-	
 	for i in range(1):
 		add_house_card()
 	#for i in range(2):
@@ -96,7 +97,7 @@ func clear_world() -> void:
 	for g in enemGroups.get_children():
 		g.queue_free()
 	# buildings
-	for b in get_tree().get_nodes_in_group("BUILDING"):
+	for b : Building in get_tree().get_nodes_in_group("BUILDING"):
 		b.remove()
 	# cards
 	var cards = get_tree().get_nodes_in_group("CARD")
@@ -342,8 +343,8 @@ func _input(event: InputEvent) -> void:
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
-		new_game()
-		#Engine.time_scale = 8
+		#new_game()
+		Engine.time_scale = 8
 
 func check_nights() -> void:
 	if Global.nights % 2 == 0:

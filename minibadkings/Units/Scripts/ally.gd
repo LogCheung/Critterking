@@ -76,6 +76,9 @@ func _process(delta: float) -> void:
 
 func handle_action(delta) -> void:
 	var distToTarget = global_position.distance_to(nav.target_position)
+	if knocked: 
+		move_and_slide()
+		return
 	
 	match action:
 		ACTION.NONE:
@@ -226,6 +229,19 @@ func match_type() -> void:
 			damage = 1
 			attack_cd.wait_time = 2
 			poison_chance = 100
+		#TYPE.RHINO:
+			#health = 4
+			#damage = 1.5
+			#knock_chance = 100
+			#attack_cd.wait_time = 2
+			#poison_chance = 100
+		#TYPE.EXPLOSIVE:
+			#health = 3
+			#damage = 1
+			#attack_cd.wait_time = 2
+			#poison_chance = 100
+			#var death = anim.get_animation("death")
+			#death.length = 1
 	set_up_vision()
 
 #func on_health_change() -> void:
