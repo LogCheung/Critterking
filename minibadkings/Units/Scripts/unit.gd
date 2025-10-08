@@ -6,7 +6,7 @@ enum ACTION {
 }
 enum TYPE {
 	NONE, MELEE, SHIELDED, RANGED, #RHINO, EXPLOSIVE, FUNGI, 
-	PARALYTIC, RESILIENT, STINGER,BOMBER,FLYING,CRAZED,  
+	PARALYTIC, RESILIENT, STINGER,BOMBER,FLYING,CRAZED, ZOMBIFIED
 }
 enum STATUS {
 	NONE, STUNNED, POISONED, REGEN
@@ -68,7 +68,7 @@ var distance_from_form : float = 0.0
 var attack_ready : bool
 var too_close : bool
 var dashing : bool
-var knocked : bool
+var knocked : bool = false
 var is_stunned : bool
 
 var dead : bool
@@ -85,6 +85,16 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	is_stunned = statusArray.has(STATUS.STUNNED)
 	attack_ready = attack_cd.time_left <= 0
+	
+	check_formation()
+	
+func check_formation() -> void:
+	# zombie has no formation
+	if type == TYPE.ZOMBIFIED: 
+		in_formation = false
+		distance_from_form = 2.0
+		return
+	
 	distance_from_form = global_position.distance_to(formation_position.global_position)
 	
 	if global_position.distance_to(formation_position.global_position) <= 2:
@@ -95,7 +105,6 @@ func _process(_delta: float) -> void:
 		in_formation = true
 	else:
 		in_formation = false
-	
 func handle_behind_wall() -> void:
 	is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
 	# not liking but looks for closest tile by going all wall tiles and makes transparent
@@ -146,14 +155,15 @@ func attack_finished() -> void:
 	# Custom attacks such as ranged or dash attacks
 	if !target : return
 	if type == TYPE.RANGED:
-		var proj = preload("res://Units/Scenes/projectile.tscn").instantiate()
+		var proj = load("res://Units/Scenes/projectile.tscn").instantiate()
 		proj.DIRECTION = global_position.direction_to(target.global_position)
 		proj.global_position = global_position
 		proj.damage = damage
+		proj.is_fungus = true # type == TYPE.FUNGI
 		proj.is_enemy = self is Enemy
 		get_tree().get_first_node_in_group("WORLD").add_child(proj)
 	elif type == TYPE.BOMBER:
-		var proj = preload("res://Units/Scenes/bombard.tscn").instantiate()
+		var proj = load("res://Units/Scenes/bombard.tscn").instantiate()
 		proj.global_position = global_position
 		proj._target = target.global_position
 		proj.damage = damage
@@ -238,22 +248,23 @@ func hitAnim(hit : bool, status : STATUS = STATUS.NONE) -> void:
 		await get_tree().create_timer(.05).timeout
 		modulate.a = 1
 func start_death(destroy : bool = false) -> void:
-	unselected.emit()
-	if self is Ally : self.under_mouse = false
+	dead = true
 	status_sprite.visible = false
 	sprite_2d.material = null
 	process_mode = Node.PROCESS_MODE_DISABLED
 	anim.play("death")
 	await anim.animation_finished
 	
-	dead = true
 	z_index = 0
 	modulate.a8 = 200
-	group.deadUnitsArray.append(self)
 	
+	# remove from group unless is zombified
+	if type == TYPE.ZOMBIFIED : return
 	var unitArr = group.unitsArray
 	if unitArr.find(self) != -1 : unitArr.remove_at(unitArr.find(self))
 	group.unit_died.emit()
+	group.deadUnitsArray.append(self)
+	
 	%Death.play()
 	#queue_free()
 

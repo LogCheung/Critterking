@@ -3,7 +3,7 @@ class_name AllyGroup
 
 signal being_upgraded
 
-const UNIT : PackedScene = preload("res://Units/Scenes/unit.tscn")
+var UNIT : PackedScene = load("res://Units/Scenes/unit.tscn")
 
 @export var house : Building
 @export var conscripted : bool

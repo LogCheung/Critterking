@@ -56,6 +56,14 @@ func handle_action(delta) -> void:
 	var distToTarget = global_position.distance_to(nav.target_position)
 	if knocked: 
 		move_and_slide()
+	if dashing:
+		if !target : 
+			find_target()
+			dashing = false
+			return
+		var dir = global_position.direction_to(target.global_position)
+		move_to(dir,delta)
+		return
 	
 	match action:
 		ACTION.FORM:
@@ -72,13 +80,7 @@ func handle_action(delta) -> void:
 				anim.play("walk")
 				in_formation = false
 		ACTION.FIGHT:
-			if dashing:
-				if !target : 
-					find_target()
-					return
-				var dir = global_position.direction_to(target.global_position)
-				move_to(dir,delta)
-				return
+
 			if attacking : return
 			find_target()
 			if target == null: target_in_range = false
@@ -223,7 +225,14 @@ func match_type() -> void:
 			damage = 1
 			attack_cd.wait_time = 2
 			poison_chance = 100
-
+		TYPE.ZOMBIFIED:
+			sprite_2d.texture = CRAZEDNORMALSE if level < 2 else UPCRAZEDNORMALSE
+			health = 1
+			damage = 0.75
+			speed = 60
+			attack_cd.wait_time = .5
+			visionRange = 200
+			become_active()
 
 func find_building() -> void:
 	var buildings = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()

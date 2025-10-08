@@ -4,6 +4,7 @@ extends Area2D
 @export var RANGE : float
 @export var DIRECTION : Vector2
 @export var damage : float
+@export var is_fungus : bool
 @export var is_enemy : bool
 
 const ENEMYPROJ = preload("res://Units/Assets/EnemyProjectile.png")
@@ -35,7 +36,7 @@ func _on_area_entered(area: Area2D) -> void:
 		if target.decree == Decree.TYPE.DEFENSE:
 			damage -= .25
 		if target.type == Unit.TYPE.SHIELDED: 
-			damage -= .75
+			damage -= .5
 		if target.dodge < (randi() % 100 + 1):
 		 # chance to ignore damage while also having reduced damage
 			#var rand = randi()
@@ -47,6 +48,11 @@ func _on_area_entered(area: Area2D) -> void:
 			target.hitAnim(false)
 		if target.health <= 0:
 			target.start_death()
+			
+			# create a zombified (crazed-like) ally at position if fungus
+			if is_fungus:
+				var unitsNode : UnitsNode = get_tree().get_first_node_in_group("UNITSNODE")
+				unitsNode.create_zombified(target.global_position,is_enemy)
 		queue_free()
 
 func _on_body_entered(body: Node2D) -> void:

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bxqxjbkdfqn0q"]
+[gd_scene load_steps=7 format=3 uid="uid://bxqxjbkdfqn0q"]
 
 [ext_resource type="Script" uid="uid://dvsiuovo1wgp" path="res://World/Scripts/world.gd" id="1_fdxdb"]
 [ext_resource type="PackedScene" uid="uid://y0ju1mi4ih78" path="res://TileMap/Scenes/tile_world.tscn" id="1_jamle"]
+[ext_resource type="Script" uid="uid://djh4kkt8c6qxj" path="res://World/Scenes/units_node.gd" id="2_xvb7p"]
 [ext_resource type="Script" uid="uid://bjiaogu16dctd" path="res://World/Scripts/camera_2d.gd" id="2_yw7h8"]
 [ext_resource type="PackedScene" uid="uid://bhln07v3h2elp" path="res://UI/Scenes/ui.tscn" id="6_7qq3u"]
 
@@ -24,6 +25,7 @@ y_sort_enabled = true
 unique_name_in_owner = true
 z_index = 1
 y_sort_enabled = true
+script = ExtResource("2_xvb7p")
 
 [node name="TileWorld" parent="Game" instance=ExtResource("1_jamle")]
 

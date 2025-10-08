@@ -39,7 +39,6 @@ func new_game() -> void:
 	# set up initial rolls
 	ui.rollArray.clear()
 	ui.rollArray.append(Card.ROLLTYPE.UNIT)
-	ui.rollArray.append(Card.ROLLTYPE.UNIT)
 	
 	await get_tree().create_timer(.125).timeout
 	%SpawnTimer.stop()
@@ -66,14 +65,14 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	#for i in range(2):
-		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.PARALYTIC
-		#ui.hand.get_child(0).add_child(hCard)
-	#for i in range(2):
-		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.NURSERY
-		#ui.hand.get_child(0).add_child(hCard)
+	for i in range(1):
+		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.SPITTER
+		ui.hand.get_child(0).add_child(hCard)
+	for i in range(1):
+		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.FLYING
+		ui.hand.get_child(0).add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE

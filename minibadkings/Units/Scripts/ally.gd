@@ -78,6 +78,13 @@ func handle_action(delta) -> void:
 	var distToTarget = global_position.distance_to(nav.target_position)
 	if knocked: 
 		move_and_slide()
+	if dashing:
+		if !target : 
+			find_target()
+			dashing = false
+			return
+		var dir = global_position.direction_to(target.global_position)
+		move_to(dir,delta)
 		return
 	
 	match action:
@@ -86,6 +93,9 @@ func handle_action(delta) -> void:
 			visible = true
 			return
 		ACTION.FORM:
+			# if zombie, can't go to formation cuz no group
+			if type == TYPE.ZOMBIFIED: return
+			
 			anim.play("walk")
 			nav.target_position = formation_position.global_position
 			if distToTarget <= 2:
@@ -98,13 +108,6 @@ func handle_action(delta) -> void:
 				anim.stop()
 				return
 		ACTION.FIGHT:
-			if dashing:
-				if !target : 
-					find_target()
-					return
-				var dir = global_position.direction_to(target.global_position)
-				move_to(dir,delta)
-				return
 			if attacking: return
 			find_target()
 			if distToTarget <= attackRange :
@@ -123,6 +126,8 @@ func handle_action(delta) -> void:
 				attack_cd.start()
 				attacking = true
 				return
+			elif !anim.is_playing() and type == TYPE.ZOMBIFIED:
+				anim.play("walk")
 		ACTION.STRAFE:
 			find_target()
 			if !target : 
@@ -234,14 +239,25 @@ func match_type() -> void:
 			#damage = 1.5
 			#knock_chance = 100
 			#attack_cd.wait_time = 2
-			#poison_chance = 100
 		#TYPE.EXPLOSIVE:
 			#health = 3
 			#damage = 1
 			#attack_cd.wait_time = 2
-			#poison_chance = 100
 			#var death = anim.get_animation("death")
 			#death.length = 1
+		#TYPE.FUNGI:
+			#health = 2
+			#damage = 1
+			#attack_cd.wait_time = 2
+			#var death = anim.get_animation("death")
+			#death.length = 1
+		TYPE.ZOMBIFIED:
+			sprite_2d.texture = CRAZEDNORMALSE if level < 2 else UPCRAZEDNORMALSE
+			health = 1
+			damage = 0.75
+			speed = 60
+			attack_cd.wait_time = .5
+			visionRange = 200
 	set_up_vision()
 
 #func on_health_change() -> void:
@@ -328,15 +344,15 @@ func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> vo
 # select unit to select whole group of unit
 var under_mouse : bool = false
 func _on_behind_wall_mouse_entered() -> void:
-	if dead : return
+	if dead or type == TYPE.ZOMBIFIED : return
 	under_mouse = true
 	allyGroup._on_select_area_mouse_entered()
 func _on_behind_wall_mouse_exited() -> void:
-	if dead : return
+	if dead or type == TYPE.ZOMBIFIED: return
 	under_mouse = false
 	allyGroup._on_select_area_mouse_exited()
 func _on_behind_wall_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if dead : return
+	if dead or type == TYPE.ZOMBIFIED: return
 	if allyGroup.is_under_mouse and event.is_action_pressed("select"):
 		allyGroup.selected = !allyGroup.selected
 		if allyGroup.selected: 
