@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://dtxo6oppyymjc"]
+[gd_scene load_steps=7 format=3 uid="uid://dtxo6oppyymjc"]
 
 [ext_resource type="Script" uid="uid://csaqv2adjje2f" path="res://UI/Scripts/decree.gd" id="1_e1hmt"]
 [ext_resource type="Texture2D" uid="uid://sdy5sp6pb1jv" path="res://UI/Assets/decrees/conscriptionIco.png" id="2_l0dgt"]
-[ext_resource type="Texture2D" uid="uid://blj667algxvec" path="res://UI/Assets/decrees/cooldown.png" id="3_56efs"]
+[ext_resource type="Texture2D" uid="uid://bescw1thidv6k" path="res://UI/Assets/decrees/box.png" id="2_yx1n0"]
+[ext_resource type="Texture2D" uid="uid://cnf1f277smjc" path="res://UI/Assets/decrees/cdUnder.png" id="4_4xmmc"]
+[ext_resource type="Texture2D" uid="uid://cqxdbd8n53ury" path="res://UI/Assets/decrees/cdOver.png" id="5_01wu6"]
+[ext_resource type="Texture2D" uid="uid://b75sun777c254" path="res://UI/Assets/decrees/cdProgress.png" id="6_i8cg1"]
 
 [node name="Decree" type="Button" groups=["DECREE"]]
 custom_minimum_size = Vector2(32, 26)
@@ -15,6 +18,10 @@ flat = true
 script = ExtResource("1_e1hmt")
 type = 1
 
+[node name="Box" type="Sprite2D" parent="."]
+position = Vector2(16, 18)
+texture = ExtResource("2_yx1n0")
+
 [node name="Icon" type="Sprite2D" parent="."]
 texture = ExtResource("2_l0dgt")
 offset = Vector2(16, 16)
@@ -23,13 +30,16 @@ offset = Vector2(16, 16)
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.90588236)
 layout_mode = 0
-offset_left = -1.0
-offset_right = 33.0
-offset_bottom = 34.0
+offset_left = -8.0
+offset_top = -6.0
+offset_right = 40.0
+offset_bottom = 42.0
 step = 0.001
-value = 100.0
+value = 66.0
 fill_mode = 5
-texture_progress = ExtResource("3_56efs")
+texture_under = ExtResource("4_4xmmc")
+texture_over = ExtResource("5_01wu6")
+texture_progress = ExtResource("6_i8cg1")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

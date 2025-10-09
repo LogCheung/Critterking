@@ -6,6 +6,7 @@ extends Area2D
 @export var damage : float
 @export var is_fungus : bool
 @export var is_enemy : bool
+@export var raiding : bool
 
 const ENEMYPROJ = preload("res://Units/Assets/EnemyProjectile.png")
 var travelled_distance = 0
@@ -56,7 +57,7 @@ func _on_area_entered(area: Area2D) -> void:
 		queue_free()
 
 func _on_body_entered(body: Node2D) -> void:
-	if body is Building:
+	if body is Building and raiding:
 		if body.type != Building.TYPE.TRAP or body.type != Building.TYPE.RUINS:
 			body.health -= damage
 	queue_free()
