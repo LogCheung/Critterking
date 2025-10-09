@@ -155,6 +155,7 @@ func apply_charm() -> void:
 				pass # recovery speed
 			Charm.TYPE.GLASSES:
 				unit.visionRange += 20
+				unit.attackRange += 10
 				unit.vision.queue_free()
 				unit.set_up_vision()
 			Charm.TYPE.NAIL:
