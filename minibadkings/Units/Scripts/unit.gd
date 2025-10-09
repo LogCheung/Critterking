@@ -159,7 +159,7 @@ func attack_finished() -> void:
 		proj.DIRECTION = global_position.direction_to(target.global_position)
 		proj.global_position = global_position
 		proj.damage = damage
-		proj.is_fungus = true # type == TYPE.FUNGI
+		#proj.is_fungus = true # type == TYPE.FUNGI
 		proj.is_enemy = self is Enemy
 		get_tree().get_first_node_in_group("WORLD").add_child(proj)
 	elif type == TYPE.BOMBER:
