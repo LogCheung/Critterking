@@ -109,12 +109,14 @@ func handle_behind_wall() -> void:
 	is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
 	# not liking but looks for closest tile by going all wall tiles and makes transparent
 	if is_behind_wall:
-		var walls = tileWorld.wall.get_used_cells_by_id(0,Vector2(0,2),2)
-		walls.append_array(tileWorld.wall.get_used_cells_by_id(0,Vector2(0,2),1))
+		var walls : Array
+		for x in range(4):
+			for y in range(13,20):
+				walls.append_array(tileWorld.obstacles.get_used_cells_by_id(1,Vector2i(x,y)))
+		
 		
 		wall_tile = walls.front()
 		for w in walls:
-			
 			var w_local_pos = tileWorld.wall.map_to_local(w)
 			var wall_tile_local_pos = tileWorld.wall.map_to_local(wall_tile)
 			var cur_dist = global_position.distance_to(wall_tile_local_pos)
@@ -122,7 +124,9 @@ func handle_behind_wall() -> void:
 			if next_dist < cur_dist :
 				wall_tile = w
 		
-		tileWorld.wall.set_cell(wall_tile,0,Vector2(0,2),1)
+		var atlas = tileWorld.obstacles.get_cell_atlas_coords(wall_tile)
+		var source = tileWorld.obstacles.get_cell_source_id(wall_tile)
+		tileWorld.obstacles.set_cell(wall_tile,source,atlas,1)
 
 func move_to(direction, _delta):
 	if knocked : return

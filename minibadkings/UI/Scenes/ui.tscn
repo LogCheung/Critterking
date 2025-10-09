@@ -1,17 +1,23 @@
-[gd_scene load_steps=32 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=37 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Texture2D" uid="uid://luuqbnbqgyao" path="res://UI/Assets/menus/mainmenu.png" id="3_2fejo"]
 [ext_resource type="PackedScene" uid="uid://bjjg37vgshqt6" path="res://UI/Scenes/card.tscn" id="3_bujes"]
 [ext_resource type="Texture2D" uid="uid://cq8c1lx28bb3u" path="res://UI/Assets/menus/help.png" id="4_pyqth"]
+[ext_resource type="Texture2D" uid="uid://brierbf6c6biv" path="res://UI/Assets/alerts/upgradedAlert.png" id="5_1rapc"]
+[ext_resource type="Texture2D" uid="uid://0aaq2moh04q8" path="res://UI/Assets/alerts/houseInHand.png" id="5_ia477"]
 [ext_resource type="Texture2D" uid="uid://ce2faiksbdbqw" path="res://UI/Assets/menus/settings.png" id="5_kd6an"]
 [ext_resource type="Texture2D" uid="uid://bfqdqavdl2kr3" path="res://UI/Assets/menus/pause.png" id="5_n2q0n"]
 [ext_resource type="Texture2D" uid="uid://drytwq44nae6t" path="res://UI/Assets/menus/discoveryshow.png" id="5_oemsu"]
+[ext_resource type="Texture2D" uid="uid://e0lt6th6b1bi" path="res://UI/Assets/alerts/wavetimeAlert.png" id="6_ia477"]
 [ext_resource type="Texture2D" uid="uid://dwseh6hsy3l77" path="res://UI/Assets/menus/gameover.png" id="7_ftqev"]
+[ext_resource type="Texture2D" uid="uid://3it4y7vqlqgb" path="res://UI/Assets/alerts/swarmAlert.png" id="7_l2k1h"]
 [ext_resource type="FontFile" uid="uid://dqt550qq7jmvu" path="res://Units/Debug/PressStart2P.ttf" id="7_titua"]
 [ext_resource type="Script" uid="uid://dn5w3jfm4dcjv" path="res://UI/Scripts/slider.gd" id="8_6dw6b"]
+[ext_resource type="Texture2D" uid="uid://o7d76rkb77wk" path="res://UI/Assets/alerts/discoveryPrompt.png" id="8_lpmf3"]
 [ext_resource type="AudioStream" uid="uid://bmkptsfk4bkc" path="res://Audio/music/crtrpause.wav" id="8_oj6tj"]
 [ext_resource type="AudioStream" uid="uid://bj8clo00ioln7" path="res://Audio/music/crtrover.wav" id="9_ftqev"]
+[ext_resource type="Texture2D" uid="uid://jtekvj8524k4" path="res://UI/Assets/continueButton.png" id="9_l2k1h"]
 [ext_resource type="Texture2D" uid="uid://dmgylqdp2munp" path="res://UI/Assets/endday.png" id="10_6dw6b"]
 [ext_resource type="AudioStream" uid="uid://wctmm4dlcbix" path="res://Audio/music/crtrmenu.wav" id="10_n2q0n"]
 [ext_resource type="AudioStream" uid="uid://cwx4hw05ceroc" path="res://Audio/sfx/Shuffle.tres" id="11_6dw6b"]
@@ -23,11 +29,6 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_yqd36"]
 font = ExtResource("7_titua")
-
-[sub_resource type="LabelSettings" id="LabelSettings_bujes"]
-font = ExtResource("7_titua")
-font_size = 24
-font_color = Color(0.863436, 5.31845e-06, 7.70092e-07, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ftqev"]
 font = ExtResource("7_titua")
@@ -357,7 +358,6 @@ vertical_alignment = 1
 
 [node name="EndTurn" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
@@ -384,26 +384,71 @@ grow_vertical = 0
 focus_mode = 0
 flat = true
 
-[node name="noHouse" type="Label" parent="EndTurn"]
+[node name="noHouse" type="TextureRect" parent="EndTurn"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -457.0
-offset_top = 41.0
-offset_right = 151.0
-offset_bottom = 86.0
+offset_left = 768.0
+offset_top = 887.0
+offset_right = 832.0
+offset_bottom = 919.0
 grow_horizontal = 2
-scale = Vector2(1.5, 1.5)
-text = "Please place house!"
-label_settings = SubResource("LabelSettings_bujes")
-horizontal_alignment = 1
+scale = Vector2(3, 3)
+texture = ExtResource("5_ia477")
+
+[node name="upgradedAlert" type="TextureRect" parent="EndTurn"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -335.0
+offset_right = -111.0
+offset_bottom = 64.0
+grow_horizontal = 2
+scale = Vector2(3, 3)
+texture = ExtResource("5_1rapc")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="wavetimeAlert" type="TextureRect" parent="EndTurn"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -335.0
+offset_right = -111.0
+offset_bottom = 64.0
+grow_horizontal = 2
+scale = Vector2(3, 3)
+texture = ExtResource("6_ia477")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="swarmAlert" type="TextureRect" parent="EndTurn"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -335.0
+offset_right = -111.0
+offset_bottom = 64.0
+grow_horizontal = 2
+scale = Vector2(3, 3)
+texture = ExtResource("7_l2k1h")
+expand_mode = 2
+stretch_mode = 4
 
 [node name="Dispatch" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
@@ -423,37 +468,35 @@ scale = Vector2(3, 3)
 texture = ExtResource("10_6dw6b")
 
 [node name="dispatchEnd" type="Button" parent="Dispatch/Sprite2D"]
+z_index = 4096
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -96.0
-offset_top = -48.0
-offset_right = -32.0
-offset_bottom = -16.0
+offset_left = -100.0
+offset_top = -52.0
+offset_right = -28.0
+offset_bottom = -12.0
 grow_horizontal = 0
 grow_vertical = 0
 focus_mode = 0
-text = "continue"
+icon = ExtResource("9_l2k1h")
 flat = true
 
-[node name="dispatchText" type="Label" parent="Dispatch"]
+[node name="dispatchText" type="TextureRect" parent="Dispatch"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -549.0
-offset_top = 41.0
-offset_right = 243.0
-offset_bottom = 119.0
+offset_left = -335.0
+offset_right = -111.0
+offset_bottom = 64.0
 grow_horizontal = 2
-scale = Vector2(1.5, 1.5)
-text = "Dispatch unit to look for charms.
-Select 0 to 1 units 
-"
-label_settings = SubResource("LabelSettings_bujes")
-horizontal_alignment = 1
+scale = Vector2(3, 3)
+texture = ExtResource("8_lpmf3")
+expand_mode = 2
+stretch_mode = 4
 
 [node name="Cards" type="Control" parent="."]
 unique_name_in_owner = true

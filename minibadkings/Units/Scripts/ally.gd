@@ -39,7 +39,6 @@ func _ready() -> void:
 	allyGroup = group
 	if level > 1:  # if upgraded
 		max_health = max_health + 0.5
-		health = max_health
 		damage = damage + 0.5
 		upgraded = true
 		
@@ -50,6 +49,7 @@ func _ready() -> void:
 	#speedchange.connect(on_speed_change)
 	unselected.connect(on_unselected)
 	match_type()
+	health = max_health
 	
 	await get_tree().create_timer(.5).timeout
 	set_collision_layer_value(1,true)
@@ -292,7 +292,8 @@ func match_decree_status() -> void:
 			health = max_health
 		Decree.TYPE.RECON:
 			status_sprite.play("recon")
-			visionRange += 10
+			visionRange += 15
+			attackRange += 10
 			vision.queue_free()
 			set_up_vision()
 		Decree.TYPE.DEFENSE:

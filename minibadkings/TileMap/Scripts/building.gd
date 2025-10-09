@@ -35,6 +35,7 @@ enum TYPE {
 
 var tile : Vector2i
 var doorstepTile : Vector2i
+var highlightSprite : Sprite2D
 
 func _ready() -> void:
 	# set up position and blocking navigation
@@ -72,6 +73,9 @@ func match_type() -> void:
 	match type:
 		TYPE.HOUSE:
 			sprite_2d.texture = HOUSEA if randi() % 2 == 0 else HOUSEB
+			
+			await anim.animation_finished
+			duplicate_sprite()
 		TYPE.TRAP:
 			sprite_2d.texture = TRAPA if randi() % 2 == 0 else TRAPB
 			sprite_2d.offset = Vector2.ZERO
@@ -80,6 +84,9 @@ func match_type() -> void:
 		TYPE.CARE:
 			sprite_2d.texture = CARE
 			sprite_2d.offset = Vector2(1,-9)
+			
+			await anim.animation_finished
+			duplicate_sprite()
 		TYPE.SAPSTORE:
 			sprite_2d.texture = SAPSTORE
 			sprite_2d.offset = Vector2(0,-6)
@@ -96,6 +103,17 @@ func match_type() -> void:
 		TYPE.STORAGE:
 			sprite_2d.texture = STORAGE
 			sprite_2d.flip_h = true
+
+func duplicate_sprite() -> void:
+	# used for buildings selected during battle
+	# allows for highlight when hovered for and making it clearer to player
+	# if where they're about to click is actually on the building
+	var newSprite = sprite_2d.duplicate()
+	newSprite.material = null
+	newSprite.visible = false
+	add_child(newSprite)
+	highlightSprite = newSprite
+	pass
 
 func on_destroyed() -> void:
 	if type == TYPE.RUINS : return
@@ -193,3 +211,14 @@ func _on_timer_timeout() -> void:
 			unit.visible = true
 			occupant = null
 		%Timer.stop()
+
+func _on_mouse_entered() -> void:
+	if !highlightSprite: return
+	if Engine.time_scale == .1 and sprite_2d.material != null: 
+		highlightSprite.modulate = Color(3,3,3)
+		highlightSprite.visible = true
+
+func _on_mouse_exited() -> void:
+	if !highlightSprite: return
+	highlightSprite.visible = false
+	highlightSprite.modulate = Color(1,1,1)

@@ -39,8 +39,8 @@ func _ready() -> void:
 	match_type()
 	if upgraded: 
 		max_health = max_health + 0.5
-		health = max_health
 		damage = damage + 0.5
+	health = max_health
 	house_destroyed.connect(find_building)
 	aStar = tileWorld.aStar
 

@@ -46,7 +46,7 @@ func new_game() -> void:
 	%SpawnTimer.wait_time = 10
 	enemy_parties = 3
 	upgraded_parties = 0
-	dispatchDay = false
+	dispatchDay = true
 	tileWorld.activeDecree = Decree.TYPE.NONE
 	Global.nights = 0
 	Global.expansions = 0
@@ -68,7 +68,7 @@ func new_game() -> void:
 		add_house_card()
 	#for i in range(1):
 		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.SPITTER
+		#hCard.type = Card.CARDTYPE.CARE
 		#ui.hand.get_child(0).add_child(hCard)
 	#for i in range(1):
 		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()

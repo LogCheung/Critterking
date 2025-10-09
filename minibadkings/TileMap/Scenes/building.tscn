@@ -67,6 +67,7 @@ z_index = 2
 z_as_relative = false
 y_sort_enabled = true
 collision_layer = 2
+input_pickable = true
 script = ExtResource("1_mpr6t")
 type = 1
 
@@ -78,7 +79,6 @@ hframes = 8
 frame = 1
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
-visible = false
 position = Vector2(1, 0)
 polygon = PackedVector2Array(28, 0, -1, -15, -28, 0, -1, 15)
 
@@ -104,33 +104,39 @@ libraries = {
 }
 
 [node name="HurtBox" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 6
+input_pickable = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HurtBox"]
 unique_name_in_owner = true
 polygon = PackedVector2Array(0, -15, -31, 0, 0, 15, 31, 0)
 
 [node name="Adj" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 6
+input_pickable = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Adj"]
-visible = false
 polygon = PackedVector2Array(0, -48, -96, 0, 0, 48, 96, 0)
 
 [node name="Orth" type="Area2D" parent="."]
 visible = false
 collision_layer = 0
 collision_mask = 6
+input_pickable = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Orth"]
 position = Vector2(288, 144)
 polygon = PackedVector2Array(-320, -176, -352, -160, -320, -144, -352, -128, -320, -112, -288, -128, -256, -112, -224, -128, -256, -144, -224, -160, -256, -176, -288, -160)
 
 [node name="trans" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 6
+input_pickable = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="trans"]
 polygon = PackedVector2Array(0, -24, -40, -4, -16, 7, 0, 0, 16, 7, 40, -4)
@@ -148,6 +154,8 @@ unique_name_in_owner = true
 wait_time = 0.125
 one_shot = true
 
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="area_entered" from="Adj" to="." method="_on_adj_area_entered"]
 [connection signal="area_entered" from="Orth" to="." method="_on_orth_area_entered"]

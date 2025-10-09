@@ -70,17 +70,16 @@ func handle_navigable_cells() -> void:
 	
 	
 func replace_transparent_walls() -> void:
-	return
-	wall_tiles = wall.get_used_cells()
+	find_wall_obstacles()
 	var units = get_tree().get_nodes_in_group("ALLY")
 	var trans_walls = units.map(func(u : Unit):return u.wall_tile)
 	trans_walls = trans_walls.filter(func(e):return e != null)
-	var opaque_cells = wall.get_used_cells_by_id(0,Vector2(0,2),0)
 	for cell in wall_tiles:
-		if opaque_cells.has(cell): continue
 		if trans_walls.has(cell): continue
 		
-		wall.set_cell(cell,0,Vector2(0,2),2)
+		var atlas = obstacles.get_cell_atlas_coords(cell)
+		var source = obstacles.get_cell_source_id(cell)
+		obstacles.set_cell(cell,source,atlas,0)
 
 func limit_colliding_walls() -> void:
 	for w in wall.get_used_cells():

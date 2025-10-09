@@ -111,7 +111,7 @@ func show_hand() -> void:
 	for c : Card in container.get_children():
 		c.set_up()
 		c.refreshing = true
-		
+	
 	if world.dispatchDay: dispatch.show()
 	
 	refresh_positions()
