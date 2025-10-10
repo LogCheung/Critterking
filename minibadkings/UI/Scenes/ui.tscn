@@ -1,6 +1,6 @@
 [gd_scene load_steps=37 format=3 uid="uid://bhln07v3h2elp"]
 
-[ext_resource type="Script" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
+[ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Texture2D" uid="uid://luuqbnbqgyao" path="res://UI/Assets/menus/mainmenu.png" id="3_2fejo"]
 [ext_resource type="PackedScene" uid="uid://bjjg37vgshqt6" path="res://UI/Scenes/card.tscn" id="3_bujes"]
 [ext_resource type="Texture2D" uid="uid://cq8c1lx28bb3u" path="res://UI/Assets/menus/help.png" id="4_pyqth"]
@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://dwseh6hsy3l77" path="res://UI/Assets/menus/gameover.png" id="7_ftqev"]
 [ext_resource type="Texture2D" uid="uid://3it4y7vqlqgb" path="res://UI/Assets/alerts/swarmAlert.png" id="7_l2k1h"]
 [ext_resource type="FontFile" uid="uid://dqt550qq7jmvu" path="res://Units/Debug/PressStart2P.ttf" id="7_titua"]
-[ext_resource type="Script" path="res://UI/Scripts/slider.gd" id="8_6dw6b"]
+[ext_resource type="Script" uid="uid://dn5w3jfm4dcjv" path="res://UI/Scripts/slider.gd" id="8_6dw6b"]
 [ext_resource type="Texture2D" uid="uid://o7d76rkb77wk" path="res://UI/Assets/alerts/discoveryPrompt.png" id="8_lpmf3"]
 [ext_resource type="AudioStream" uid="uid://bmkptsfk4bkc" path="res://Audio/music/crtrpause.wav" id="8_oj6tj"]
 [ext_resource type="AudioStream" uid="uid://bj8clo00ioln7" path="res://Audio/music/crtrover.wav" id="9_ftqev"]
@@ -321,13 +321,13 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pyqth"]
 _data = {
-"Lose": SubResource("Animation_6dw6b"),
-"LoseToTitle": SubResource("Animation_oemsu"),
-"MainToGame": SubResource("Animation_n2q0n"),
-"RESET": SubResource("Animation_2fejo"),
-"cardhide": SubResource("Animation_titua"),
-"cardshow": SubResource("Animation_rbgpe"),
-"playAgain": SubResource("Animation_yqd36")
+&"Lose": SubResource("Animation_6dw6b"),
+&"LoseToTitle": SubResource("Animation_oemsu"),
+&"MainToGame": SubResource("Animation_n2q0n"),
+&"RESET": SubResource("Animation_2fejo"),
+&"cardhide": SubResource("Animation_titua"),
+&"cardshow": SubResource("Animation_rbgpe"),
+&"playAgain": SubResource("Animation_yqd36")
 }
 
 [node name="UI" type="CanvasLayer"]
@@ -673,6 +673,7 @@ focus_mode = 0
 flat = true
 
 [node name="load" type="Button" parent="mainmenu/main"]
+visible = false
 offset_left = 184.167
 offset_top = 129.5
 offset_right = 226.167
@@ -726,6 +727,7 @@ focus_mode = 0
 flat = true
 
 [node name="Save" type="Button" parent="pausemenu/pause"]
+visible = false
 offset_left = 240.167
 offset_top = 58.3333
 offset_right = 283.833
@@ -855,7 +857,7 @@ vertical_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_pyqth")
+&"": SubResource("AnimationLibrary_pyqth")
 }
 
 [node name="crtrPause" type="AudioStreamPlayer" parent="." groups=["MUSIC"]]

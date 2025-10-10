@@ -347,15 +347,14 @@ func preserve_charm_in_card(card : Card, charmType : Charm.TYPE) -> Card:
 	return card
 
 var tile2
-var wow : int
 func _input(event: InputEvent) -> void:
 	if event.is_action_released("select"):
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
-	if event.is_action_pressed("ui_accept"):
-		#new_game()
-		#Engine.time_scale = 8
-		world_start()
+	#if event.is_action_pressed("ui_accept"):
+		##new_game()
+		##Engine.time_scale = 8
+		#world_start()
 
 func world_start() -> void:
 	game.process_mode = Node.PROCESS_MODE_PAUSABLE
