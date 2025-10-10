@@ -11,5 +11,7 @@ func create_zombified(pos : Vector2, is_enemy : bool):
 	if unit is Enemy : unit.is_active = true
 	unit.level = 1
 	unit.global_position = pos
+	unit.set_owner(get_tree().get_current_scene())
 		
 	call_deferred("add_child",unit)
+	unit.set_owner(get_tree().get_current_scene())

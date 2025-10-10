@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://chd7ep0osr0l3"]
 
 [ext_resource type="Texture2D" uid="uid://dlhx4lxoeh06y" path="res://TileMap/Assets/ruinBreak.png" id="1_nsf1k"]
-[ext_resource type="Script" uid="uid://bf12ijtnudn3f" path="res://TileMap/Scripts/destroy.gd" id="1_u202p"]
+[ext_resource type="Script" path="res://TileMap/Scripts/destroy.gd" id="1_u202p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5etl2"]
 atlas = ExtResource("1_nsf1k")

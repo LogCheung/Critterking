@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bjjg37vgshqt6"]
 
 [ext_resource type="Texture2D" uid="uid://f768reu1yll7" path="res://UI/Assets/cards/biterCard.png" id="2_dryym"]
-[ext_resource type="Script" uid="uid://dp28vuy42urfg" path="res://UI/Scripts/card.gd" id="2_e2s86"]
+[ext_resource type="Script" path="res://UI/Scripts/card.gd" id="2_e2s86"]
 [ext_resource type="Texture2D" uid="uid://b5ks3m4v4jjkw" path="res://UI/Assets/cards/upgrade1.png" id="3_o5kma"]
 [ext_resource type="Texture2D" uid="uid://djc2ycppgts1n" path="res://UI/Assets/cards/upgrade2.png" id="4_dryym"]
 
@@ -40,8 +40,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o5kma"]
 _data = {
-&"RESET": SubResource("Animation_o5kma"),
-&"shrink": SubResource("Animation_e2s86")
+"RESET": SubResource("Animation_o5kma"),
+"shrink": SubResource("Animation_e2s86")
 }
 
 [node name="Card" type="Control" groups=["CARD"]]
@@ -90,7 +90,7 @@ position = Vector2(64, 241)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_o5kma")
+"": SubResource("AnimationLibrary_o5kma")
 }
 
 [connection signal="mouse_entered" from="Sprite2D/Selected" to="." method="_on_selected_mouse_entered"]

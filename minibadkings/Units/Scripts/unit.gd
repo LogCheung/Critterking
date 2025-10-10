@@ -167,6 +167,7 @@ func attack_finished() -> void:
 		#proj.is_fungus = true # type == TYPE.FUNGI
 		proj.is_enemy = self is Enemy
 		get_tree().get_first_node_in_group("WORLD").add_child(proj)
+		proj.set_owner(get_tree().get_current_scene())
 	elif type == TYPE.BOMBER:
 		var proj = load("res://Units/Scenes/bombard.tscn").instantiate()
 		proj.global_position = global_position
@@ -174,6 +175,7 @@ func attack_finished() -> void:
 		proj.damage = damage
 		proj.is_enemy = self is Enemy
 		get_tree().get_first_node_in_group("WORLD").add_child(proj)
+		proj.set_owner(get_tree().get_current_scene())
 func find_target() -> void:
 	target = null
 	if !vision.monitoring: return

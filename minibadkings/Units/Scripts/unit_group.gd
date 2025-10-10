@@ -133,6 +133,7 @@ func apply_charm() -> void:
 	nCharm.visible = false
 	add_child(nCharm)
 	charm = nCharm
+	nCharm.set_owner(get_tree().get_current_scene())
 	
 	for unit : Ally in unitsArray:
 		match charm.type:

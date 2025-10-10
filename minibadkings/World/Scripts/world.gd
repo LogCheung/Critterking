@@ -16,7 +16,9 @@ signal mouse_clicked
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var enemy_perimeters: Node = %EnemyPerimeters
 @onready var groupNode : Node2D = get_tree().get_first_node_in_group("GROUPSNODE")
-@onready var ui: UI = %UI
+@onready var ui: UI = get_tree().get_first_node_in_group("UI")
+@onready var game: Node2D = %Game
+
 
 var outerFollow : PathFollow2D
 var innerFollow : PathFollow2D
@@ -46,7 +48,7 @@ func new_game() -> void:
 	%SpawnTimer.wait_time = 10
 	enemy_parties = 3
 	upgraded_parties = 0
-	dispatchDay = true
+	dispatchDay = false
 	tileWorld.activeDecree = Decree.TYPE.NONE
 	Global.nights = 0
 	Global.expansions = 0
@@ -78,6 +80,7 @@ func add_house_card() -> void:
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
 	ui.hand.get_child(0).add_child(hCard)
+	hCard.set_owner(get_tree().get_current_scene())
 func clear_perimeters() -> void:
 	# clear children
 	outerFollow = null
@@ -158,6 +161,7 @@ func spawn_enemy() -> void:
 	
 	var enemyGroupNode = get_tree().get_first_node_in_group("ENEMYGRPNODE")
 	enemyGroupNode.add_child(enemGroup)
+	enemGroup.set_owner(get_tree().get_current_scene())
 	
 	# let units approach player borders before activation
 	var targetTiles = tileWorld.outskirt_tiles
@@ -290,9 +294,14 @@ func unit_to_card(g : Group) -> void:
 	# add card to hand
 	Global.cardsInHand.append(newCard)
 	ui.hand.get_child(0).add_child(newCard)
-	if newCard.charm : newCard.charm_pos.add_child(newCard.charm)
+	if newCard.charm : 
+		newCard.charm_pos.add_child(newCard.charm)
+		newCard.charm.set_owner(get_tree().get_current_scene())
 	newCard.for_show = false
+	newCard.set_owner(get_tree().get_current_scene())
 
+	
+	
 func check_extra_roll(extraRolltype : Card.ROLLTYPE,buildingArray : Array, chance : float) -> void:
 	var extraChance = chance * buildingArray.size()
 	while extraChance > 0:
@@ -338,13 +347,23 @@ func preserve_charm_in_card(card : Card, charmType : Charm.TYPE) -> Card:
 	return card
 
 var tile2
+var wow : int
 func _input(event: InputEvent) -> void:
 	if event.is_action_released("select"):
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
 		#new_game()
-		Engine.time_scale = 8
+		#Engine.time_scale = 8
+		world_start()
+
+func world_start() -> void:
+	game.process_mode = Node.PROCESS_MODE_PAUSABLE
+	ui.crtr_pause.stop()
+	ui.pausemenu.hide()
+	ui.mainmenu.hide()
+	if !is_combat_phase: ui.end_turn.show()
+	if is_combat_phase: ui.crtr_night.play()
 
 func check_nights() -> void:
 	if Global.nights % 2 == 0:

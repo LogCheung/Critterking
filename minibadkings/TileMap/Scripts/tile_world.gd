@@ -312,6 +312,7 @@ func handle_decree_action(mouseTile : Vector2i) -> void:
 			var bombard = preload("res://TileMap/Scenes/war_bombard.tscn").instantiate()
 			bombard.global_position = active_hover.map_to_local(mouseTile) - Vector2(0,16)
 			add_child(bombard)
+			bombard.set_owner(get_tree().get_current_scene())
 		Decree.TYPE.RECON:
 			pass # do nothing
 		Decree.TYPE.RENOVATE:
@@ -335,6 +336,7 @@ func handle_decree_action(mouseTile : Vector2i) -> void:
 				
 				var groupsNode = get_tree().get_first_node_in_group("GROUPSNODE")
 				groupsNode.add_child(group) # group ready is then called
+				group.set_owner(get_tree().get_current_scene())
 				
 				# stage them coming from building
 				for u in group.unitsArray:
@@ -364,6 +366,7 @@ func handle_decree_action(mouseTile : Vector2i) -> void:
 				
 				trap.global_position = ground.map_to_local(tile)
 				buildingNode.add_child(trap)
+				trap.set_owner(get_tree().get_current_scene())
 				
 			
 	highlight_buildings(false,Building.TYPE.NONE)

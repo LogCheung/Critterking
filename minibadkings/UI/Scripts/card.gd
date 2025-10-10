@@ -163,6 +163,7 @@ func plop() -> void:
 		group.global_position = tileWorld.ground.map_to_local(tile)
 		await get_tree().create_timer(.2).timeout
 		groupNode.add_child(group)
+		group.set_owner(get_tree().get_current_scene())
 		
 		remove_self()
 	else:
@@ -193,7 +194,7 @@ func plop_building() -> void:
 	
 	building.global_position = tileWorld.ground.map_to_local(tile)
 	buildingNode.add_child(building)
-	
+	building.set_owner(get_tree().get_current_scene())
 	# remove self
 	remove_self()
 
@@ -220,6 +221,7 @@ func check_destroy(plopTile : Vector2) -> bool:
 	var des = preload("res://TileMap/Scenes/destroy.tscn").instantiate()
 	des.global_position = tileWorld.ground.map_to_local(plopTile)
 	world.add_child(des)
+	des.set_owner(get_tree().get_current_scene())
 	for b : Building in buildings:
 		if b.tile == Vector2i(plopTile): 
 			b.on_destroyed()
@@ -285,6 +287,7 @@ func add_card_to_hand() -> void:
 			Global.cardsInHand.append(dupe)
 			dupe.for_show = false
 			ui.hand.get_child(0).add_child(dupe) # container
+			dupe.set_owner(get_tree().get_current_scene())
 		ROLLTYPE.CHARM:
 			var card : Card = Global.cardsDispatched.front()
 			var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
@@ -296,15 +299,18 @@ func add_card_to_hand() -> void:
 			
 			Global.cardsInHand.append(newCard)
 			ui.hand.get_child(0).add_child(newCard)
+			newCard.set_owner(get_tree().get_current_scene())
 			Global.cardsDispatched.remove_at(Global.cardsDispatched.find(card))
 			
 			newCard.for_show = false
 			newCard.charm_pos.add_child(newCharm)
+			newCharm.set_owner(get_tree().get_current_scene())
 			newCard.charm = newCharm
 		ROLLTYPE.BLESSING:
 			var decree : Decree = load("res://UI/Scenes/decree.tscn").instantiate()
 			decree.type = type - CARDTYPE.INSPIRATION + 1
 			ui.decrees.get_child(0).add_child(decree)
+			decree.set_owner(get_tree().get_current_scene())
 
 func match_building_type(building : Building) -> Building:
 	match type:

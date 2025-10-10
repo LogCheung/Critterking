@@ -1,20 +1,20 @@
 [gd_scene load_steps=94 format=3 uid="uid://dkqw1dmj0wkgb"]
 
 [ext_resource type="PackedScene" uid="uid://ddc6mf0gqftb" path="res://Units/Scenes/hit_box.tscn" id="1_pm8qt"]
-[ext_resource type="Script" uid="uid://13y7jtc01ydv" path="res://Units/Scripts/ally.gd" id="1_q458e"]
+[ext_resource type="Script" path="res://Units/Scripts/ally.gd" id="1_q458e"]
 [ext_resource type="Texture2D" uid="uid://bn4niwqkt8x3n" path="res://Units/Assets/Status/defense.png" id="2_lx5cy"]
 [ext_resource type="Texture2D" uid="uid://derf24r2nwwjt" path="res://Units/Assets/AllyMelee/AllyMeleeNormalSE.png" id="3_amxnv"]
 [ext_resource type="Texture2D" uid="uid://cb4h4e5bevpjt" path="res://Units/Assets/Status/attack.png" id="3_n3b5d"]
 [ext_resource type="Texture2D" uid="uid://b3o0d2bjk4dj6" path="res://Units/Assets/Status/mastery.png" id="4_frfv4"]
 [ext_resource type="Texture2D" uid="uid://d317xtem80gob" path="res://Units/Assets/Status/promptSelect.png" id="5_lx5cy"]
-[ext_resource type="Script" uid="uid://bxew2mys8y8u8" path="res://addons/utility_ai/agent/agent.gd" id="5_t35g5"]
+[ext_resource type="Script" path="res://addons/utility_ai/agent/agent.gd" id="5_t35g5"]
 [ext_resource type="Texture2D" uid="uid://bv8gtqmlkik1g" path="res://Units/Assets/Status/recon.png" id="5_uum83"]
 [ext_resource type="PackedScene" uid="uid://d0dhe2lv3x4u3" path="res://Units/Debug/utility_debug.tscn" id="5_yd6on"]
-[ext_resource type="Script" uid="uid://bpvkdlp8jw4sj" path="res://addons/utility_ai/actions/action.gd" id="6_m88pn"]
-[ext_resource type="Script" uid="uid://dojkyt7skh8fh" path="res://addons/utility_ai/considerations/consideration_from_node.gd" id="7_m88pn"]
+[ext_resource type="Script" path="res://addons/utility_ai/actions/action.gd" id="6_m88pn"]
+[ext_resource type="Script" path="res://addons/utility_ai/considerations/consideration_from_node.gd" id="7_m88pn"]
 [ext_resource type="Texture2D" uid="uid://ciy8dhlplknc5" path="res://Units/Assets/Status/stun.png" id="7_n3b5d"]
-[ext_resource type="Script" uid="uid://b2f8vq1st70r0" path="res://addons/utility_ai/considerations/aggregation.gd" id="9_daau3"]
-[ext_resource type="Script" uid="uid://c4w8b5x2jd5q3" path="res://Units/Scripts/considerType.gd" id="9_jqc0h"]
+[ext_resource type="Script" path="res://addons/utility_ai/considerations/aggregation.gd" id="9_daau3"]
+[ext_resource type="Script" path="res://Units/Scripts/considerType.gd" id="9_jqc0h"]
 [ext_resource type="AudioStream" uid="uid://51wb2nkn3yoe" path="res://Audio/sfx/Attack.tres" id="10_t5nd1"]
 [ext_resource type="AudioStream" uid="uid://b7scm4fug5tje" path="res://Audio/sfx/Hurt.tres" id="11_amxnv"]
 [ext_resource type="AudioStream" uid="uid://bmrvq8a3r1mcb" path="res://Audio/sfx/Shoot.tres" id="12_iqrsy"]
@@ -419,7 +419,6 @@ func set_range(radius : float = range) -> void:
 radius = 32.0
 
 [sub_resource type="Curve" id="Curve_yd6on"]
-_limits = [0.0, 1.1, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1.1), 0.0, 0.0, 0, 0]
 point_count = 2
 
@@ -448,7 +447,6 @@ _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_8nglq"]
-_limits = [0.0, 1.5, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1.5), 0.0, 0.0, 0, 0]
 point_count = 2
 
@@ -461,17 +459,14 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_tcpyn"]
-_limits = [0.0, 2.0, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 2), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_n3b5d"]
-_limits = [0.0, 2.0, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 2), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_frfv4"]
-_limits = [0.0, 1.6, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1.6), 0.0, 0.0, 0, 0]
 point_count = 2
 
@@ -612,11 +607,11 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jqc0h"]
 _data = {
-&"RESET": SubResource("Animation_daau3"),
-&"attack": SubResource("Animation_jqc0h"),
-&"death": SubResource("Animation_t5nd1"),
-&"idle": SubResource("Animation_yd6on"),
-&"walk": SubResource("Animation_37x55")
+"RESET": SubResource("Animation_daau3"),
+"attack": SubResource("Animation_jqc0h"),
+"death": SubResource("Animation_t5nd1"),
+"idle": SubResource("Animation_yd6on"),
+"walk": SubResource("Animation_37x55")
 }
 
 [node name="Ally" type="CharacterBody2D" groups=["ALLY"]]
@@ -632,7 +627,7 @@ visible = false
 position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_ssb4e")
 animation = &"stun"
-frame_progress = 0.20323545
+frame_progress = 0.203235
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -858,7 +853,7 @@ max_neighbors = 100
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 process_mode = 3
 libraries = {
-&"": SubResource("AnimationLibrary_jqc0h")
+"": SubResource("AnimationLibrary_jqc0h")
 }
 
 [node name="Timers" type="Node" parent="."]

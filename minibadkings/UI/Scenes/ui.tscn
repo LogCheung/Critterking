@@ -1,6 +1,6 @@
 [gd_scene load_steps=37 format=3 uid="uid://bhln07v3h2elp"]
 
-[ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
+[ext_resource type="Script" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Texture2D" uid="uid://luuqbnbqgyao" path="res://UI/Assets/menus/mainmenu.png" id="3_2fejo"]
 [ext_resource type="PackedScene" uid="uid://bjjg37vgshqt6" path="res://UI/Scenes/card.tscn" id="3_bujes"]
 [ext_resource type="Texture2D" uid="uid://cq8c1lx28bb3u" path="res://UI/Assets/menus/help.png" id="4_pyqth"]
@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://dwseh6hsy3l77" path="res://UI/Assets/menus/gameover.png" id="7_ftqev"]
 [ext_resource type="Texture2D" uid="uid://3it4y7vqlqgb" path="res://UI/Assets/alerts/swarmAlert.png" id="7_l2k1h"]
 [ext_resource type="FontFile" uid="uid://dqt550qq7jmvu" path="res://Units/Debug/PressStart2P.ttf" id="7_titua"]
-[ext_resource type="Script" uid="uid://dn5w3jfm4dcjv" path="res://UI/Scripts/slider.gd" id="8_6dw6b"]
+[ext_resource type="Script" path="res://UI/Scripts/slider.gd" id="8_6dw6b"]
 [ext_resource type="Texture2D" uid="uid://o7d76rkb77wk" path="res://UI/Assets/alerts/discoveryPrompt.png" id="8_lpmf3"]
 [ext_resource type="AudioStream" uid="uid://bmkptsfk4bkc" path="res://Audio/music/crtrpause.wav" id="8_oj6tj"]
 [ext_resource type="AudioStream" uid="uid://bj8clo00ioln7" path="res://Audio/music/crtrover.wav" id="9_ftqev"]
@@ -321,13 +321,13 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pyqth"]
 _data = {
-&"Lose": SubResource("Animation_6dw6b"),
-&"LoseToTitle": SubResource("Animation_oemsu"),
-&"MainToGame": SubResource("Animation_n2q0n"),
-&"RESET": SubResource("Animation_2fejo"),
-&"cardhide": SubResource("Animation_titua"),
-&"cardshow": SubResource("Animation_rbgpe"),
-&"playAgain": SubResource("Animation_yqd36")
+"Lose": SubResource("Animation_6dw6b"),
+"LoseToTitle": SubResource("Animation_oemsu"),
+"MainToGame": SubResource("Animation_n2q0n"),
+"RESET": SubResource("Animation_2fejo"),
+"cardhide": SubResource("Animation_titua"),
+"cardshow": SubResource("Animation_rbgpe"),
+"playAgain": SubResource("Animation_yqd36")
 }
 
 [node name="UI" type="CanvasLayer"]
@@ -586,9 +586,9 @@ mouse_filter = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="Decrees"]
 layout_mode = 0
 offset_left = 2.0
-offset_top = 1.5258789e-05
+offset_top = 1.52588e-05
 offset_right = 34.0
-offset_bottom = 170.00002
+offset_bottom = 170.0
 scale = Vector2(2.5, 2.5)
 mouse_filter = 2
 theme_override_constants/separation = 10
@@ -629,7 +629,6 @@ position = Vector2(964, 1080)
 
 [node name="mainmenu" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -672,6 +671,13 @@ offset_right = 317.167
 offset_bottom = 178.667
 focus_mode = 0
 flat = true
+
+[node name="load" type="Button" parent="mainmenu/main"]
+offset_left = 184.167
+offset_top = 129.5
+offset_right = 226.167
+offset_bottom = 160.5
+text = "load"
 
 [node name="pausemenu" type="Control" parent="."]
 unique_name_in_owner = true
@@ -718,6 +724,13 @@ offset_right = 188.833
 offset_bottom = 145.833
 focus_mode = 0
 flat = true
+
+[node name="Save" type="Button" parent="pausemenu/pause"]
+offset_left = 240.167
+offset_top = 58.3333
+offset_right = 283.833
+offset_bottom = 89.3333
+text = "save"
 
 [node name="Help" type="Control" parent="."]
 unique_name_in_owner = true
@@ -842,7 +855,7 @@ vertical_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_pyqth")
+"": SubResource("AnimationLibrary_pyqth")
 }
 
 [node name="crtrPause" type="AudioStreamPlayer" parent="." groups=["MUSIC"]]
@@ -892,10 +905,12 @@ bus = &"SFX"
 [connection signal="pressed" from="mainmenu/main/Help" to="." method="_on_help_pressed"]
 [connection signal="pressed" from="mainmenu/main/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="mainmenu/main/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="mainmenu/main/load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="pausemenu/pause/continue" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="pausemenu/pause/Help" to="." method="_on_help_pressed"]
 [connection signal="pressed" from="pausemenu/pause/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="pausemenu/pause/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="pausemenu/pause/Save" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="Help/help/Backhelp" to="." method="_on_backhelp_pressed"]
 [connection signal="pressed" from="Settings/settings/settingsback" to="." method="_on_settingsback_pressed"]
 [connection signal="pressed" from="gameover/over/newgame" to="." method="_on_newgame_pressed"]

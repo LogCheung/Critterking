@@ -65,6 +65,7 @@ func _process(delta: float) -> void:
 	%DayNight.text = str(Global.nights)
 		
 func _ready() -> void:
+	print(world.wow)
 	# connect signals
 	game_over.connect(on_game_over)
 	# hide all but show main menu
@@ -253,6 +254,7 @@ func refresh_positions() -> void:
 	# Add and remove dummy card to refresh positions
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 	hand.get_child(0).add_child(hCard)
+	hCard.set_owner(get_tree().get_current_scene())
 	hCard.set_up()
 	hCard.remove_self()
 	
@@ -265,14 +267,28 @@ func _input(event: InputEvent) -> void:
 func handle_pause() -> void:
 	if mainmenu.visible or gameover.visible or help.visible or settings.visible : return
 	if pausemenu.visible:
-		%Game.process_mode = Node.PROCESS_MODE_PAUSABLE
+		world.game.process_mode = Node.PROCESS_MODE_PAUSABLE
 		crtr_pause.stop()
 		pausemenu.hide()
 		if world.is_combat_phase == false: end_turn.show()
 		if world.is_combat_phase == true: crtr_night.play()
 		return
-	%Game.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+	world.game.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	pausemenu.show()
 	end_turn.hide()
 	get_tree().call_group("MUSIC", "stop")
 	crtr_pause.play()
+
+
+func _on_save_pressed() -> void:
+	var scene = PackedScene.new()
+	print(world.wow)
+	scene.pack(world)
+	ResourceSaver.save(scene,"res://saves/savefile.tscn")
+
+func _on_load_pressed() -> void:
+	if !FileAccess.file_exists("res://saves/savefile.tscn"):
+		return
+	else:
+		var new_scene = ResourceLoader.load("res://saves/savefile.tscn")
+		get_tree().change_scene_to_packed(new_scene)

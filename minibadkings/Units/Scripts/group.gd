@@ -30,7 +30,7 @@ func _ready() -> void:
 func create_formation(unit_type : PackedScene) -> void:
 	# clear all units and create new formation based on size
 	for child : Unit in unitsArray:
-		child.formation_position.queue_free()
+		if child.formation_position : child.formation_position.queue_free()
 		child.queue_free()
 	unitsArray.clear()
 	# attempt to make square formation
@@ -58,7 +58,7 @@ func create_formation(unit_type : PackedScene) -> void:
 			last_pos = unit.position
 			unitsNode.add_child(unit)
 			unitsArray.append(unit)
-			
+			unit.set_owner(get_tree().get_current_scene())
 			# add permanent formation position to unit
 			var formation_pos = Node2D.new()
 			formation_pos.position = unit.position

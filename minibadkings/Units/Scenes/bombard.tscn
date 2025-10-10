@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://cg6xxglor1wup"]
 
-[ext_resource type="Script" uid="uid://1u7s8yxiymhc" path="res://Units/Scripts/bombard.gd" id="1_oai4r"]
+[ext_resource type="Script" path="res://Units/Scripts/bombard.gd" id="1_oai4r"]
 [ext_resource type="Texture2D" uid="uid://dadb0e4qcag4d" path="res://Units/Assets/bombard.png" id="2_xnkvy"]
 [ext_resource type="Texture2D" uid="uid://6tjqg043lhpv" path="res://Units/Assets/AllySplash.png" id="3_cp5rl"]
 [ext_resource type="AudioStream" uid="uid://b7scm4fug5tje" path="res://Audio/sfx/Hurt.tres" id="3_thnri"]
@@ -58,8 +58,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xa7gf"]
 _data = {
-&"RESET": SubResource("Animation_kjd7n"),
-&"splash": SubResource("Animation_hc2lc")
+"RESET": SubResource("Animation_kjd7n"),
+"splash": SubResource("Animation_hc2lc")
 }
 
 [node name="bombard" type="Path2D"]
@@ -98,7 +98,7 @@ stream = ExtResource("4_cp5rl")
 [node name="Anim" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 libraries = {
-&"": SubResource("AnimationLibrary_xa7gf")
+"": SubResource("AnimationLibrary_xa7gf")
 }
 
 [node name="Splash" type="Sprite2D" parent="."]

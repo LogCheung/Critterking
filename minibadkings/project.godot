@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Critterking"
-run/main_scene="uid://bxqxjbkdfqn0q"
+run/main_scene="res://World/Scenes/world.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -22,6 +22,7 @@ buses/default_bus_layout="uid://bncso1667yex7"
 [autoload]
 
 Global="*res://World/Scripts/Global.gd"
+SaveLoad="*res://saves/SaveLoad.gd"
 
 [debug]
 
@@ -60,6 +61,7 @@ MUSIC=""
 CAMERA=""
 ALLY=""
 DECREE=""
+BIG=""
 
 [importer_defaults]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=4 uid="uid://y0ju1mi4ih78"]
 
-[ext_resource type="Script" uid="uid://d3yteynx5bbfn" path="res://TileMap/Scripts/tile_world.gd" id="1_leqhe"]
+[ext_resource type="Script" path="res://TileMap/Scripts/tile_world.gd" id="1_leqhe"]
 [ext_resource type="TileSet" uid="uid://bxsbqepu6rxgc" path="res://TileMap/Scenes/WorldTileSet.tres" id="2_jb8ou"]
 [ext_resource type="TileSet" uid="uid://jpkq7go2dbdj" path="res://TileMap/Scenes/GroundTileSet.tres" id="3_fl1qv"]
 [ext_resource type="TileSet" uid="uid://d2t0jti0abk2d" path="res://TileMap/Scenes/ObstacleTileSet.tres" id="4_c7ucq"]
@@ -124,7 +124,7 @@ tile_offset_axis = 1
 tile_size = Vector2i(64, 32)
 terrain_set_0/mode = 2
 terrain_set_0/terrain_0/name = "Terrain 0"
-terrain_set_0/terrain_0/color = Color(0.31056225, 4.548356e-06, 0.22128147, 1)
+terrain_set_0/terrain_0/color = Color(0.310562, 4.54836e-06, 0.221281, 1)
 sources/0 = SubResource("TileSetAtlasSource_c7ucq")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3cgbr"]
@@ -218,7 +218,7 @@ tile_offset_axis = 1
 tile_size = Vector2i(64, 32)
 terrain_set_0/mode = 2
 terrain_set_0/terrain_0/name = "Terrain 0"
-terrain_set_0/terrain_0/color = Color(1.4679879e-06, 0.4493556, 0.40418187, 1)
+terrain_set_0/terrain_0/color = Color(1.46799e-06, 0.449356, 0.404182, 1)
 sources/0 = SubResource("TileSetAtlasSource_3cgbr")
 
 [node name="TileWorld" type="Node2D" groups=["TILEWORLD"]]
