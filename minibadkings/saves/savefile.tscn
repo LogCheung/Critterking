@@ -40,267 +40,207 @@ z_index = 1
 y_sort_enabled = true
 script = ExtResource("2_7jovn")
 
-[node name="@CharacterBody2D@45" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ALLY"] instance=ExtResource("3_o4mu2")]
+[node name="@CharacterBody2D@38" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ALLY"] instance=ExtResource("3_o4mu2")]
 light_mask = 33
 z_index = 1
-position = Vector2(32, 100)
+position = Vector2(62.56875, 115.855515)
 motion_mode = 1
-velocity = Vector2(-99.133705, -13.134209)
+velocity = Vector2(35.989594, -93.29924)
 wall_min_slide_angle = 0.0
 script = ExtResource("4_epfnx")
-health = 4.5
-max_health = 4.5
-damage = 1.5
-attackRange = 80.0
-visionRange = 100.0
-level = 2
-formation_position = NodePath("../../UnitGroupsNode/UnitGroup/PositionsNode/@Node2D@48")
-group = NodePath("../../UnitGroupsNode/UnitGroup")
-type = 3
-upgraded = true
-
-[node name="@CharacterBody2D@49" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ALLY"] instance=ExtResource("3_o4mu2")]
-light_mask = 33
-z_index = 1
-position = Vector2(22, 104)
-motion_mode = 1
-velocity = Vector2(-99.84802, 5.503296)
-wall_min_slide_angle = 0.0
-script = ExtResource("4_epfnx")
-health = 4.5
-max_health = 4.5
-damage = 1.5
-attackRange = 80.0
-visionRange = 100.0
-level = 2
-formation_position = NodePath("../../UnitGroupsNode/UnitGroup/PositionsNode/@Node2D@52")
-group = NodePath("../../UnitGroupsNode/UnitGroup")
-type = 3
-upgraded = true
-
-[node name="@CharacterBody2D@53" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ALLY"] instance=ExtResource("3_o4mu2")]
-light_mask = 33
-z_index = 1
-position = Vector2(12, 108)
-motion_mode = 1
-velocity = Vector2(-83.97818, -54.292416)
-wall_min_slide_angle = 0.0
-script = ExtResource("4_epfnx")
-health = 4.5
-max_health = 4.5
-damage = 1.5
-attackRange = 80.0
-visionRange = 100.0
-level = 2
-formation_position = NodePath("../../UnitGroupsNode/UnitGroup/PositionsNode/@Node2D@56")
-group = NodePath("../../UnitGroupsNode/UnitGroup")
-type = 3
-upgraded = true
-
-[node name="@CharacterBody2D@57" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ALLY"] instance=ExtResource("3_o4mu2")]
-light_mask = 33
-z_index = 1
-position = Vector2(39.5, 104)
-motion_mode = 1
-velocity = Vector2(51.693054, -85.60254)
-wall_min_slide_angle = 0.0
-script = ExtResource("4_epfnx")
-health = 4.5
-max_health = 4.5
-damage = 1.5
-attackRange = 80.0
-visionRange = 100.0
-level = 2
-formation_position = NodePath("../../UnitGroupsNode/UnitGroup/PositionsNode/@Node2D@60")
-group = NodePath("../../UnitGroupsNode/UnitGroup")
-type = 3
-upgraded = true
-
-[node name="@CharacterBody2D@61" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ALLY"] instance=ExtResource("3_o4mu2")]
-light_mask = 33
-z_index = 1
-position = Vector2(29.5, 108)
-motion_mode = 1
-velocity = Vector2(-10.302269, 99.4679)
-wall_min_slide_angle = 0.0
-script = ExtResource("4_epfnx")
-health = 4.5
-max_health = 4.5
-damage = 1.5
-attackRange = 80.0
-visionRange = 100.0
-level = 2
-formation_position = NodePath("../../UnitGroupsNode/UnitGroup/PositionsNode/@Node2D@64")
-group = NodePath("../../UnitGroupsNode/UnitGroup")
-type = 3
-upgraded = true
-
-[node name="@CharacterBody2D@65" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ALLY"] instance=ExtResource("3_o4mu2")]
-light_mask = 33
-z_index = 1
-position = Vector2(19.5, 112)
-motion_mode = 1
-velocity = Vector2(-61.489723, 78.86073)
-wall_min_slide_angle = 0.0
-script = ExtResource("4_epfnx")
-health = 4.5
-max_health = 4.5
-damage = 1.5
-attackRange = 80.0
-visionRange = 100.0
-level = 2
-formation_position = NodePath("../../UnitGroupsNode/UnitGroup/PositionsNode/@Node2D@68")
-group = NodePath("../../UnitGroupsNode/UnitGroup")
-type = 3
-upgraded = true
-
-[node name="@CharacterBody2D@69" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ALLY"] instance=ExtResource("3_o4mu2")]
-light_mask = 33
-z_index = 1
-position = Vector2(47, 108)
-motion_mode = 1
-velocity = Vector2(97.32407, 22.97878)
-wall_min_slide_angle = 0.0
-script = ExtResource("4_epfnx")
-health = 4.5
-max_health = 4.5
-damage = 1.5
-attackRange = 80.0
-visionRange = 100.0
-level = 2
-formation_position = NodePath("../../UnitGroupsNode/UnitGroup/PositionsNode/@Node2D@72")
-group = NodePath("../../UnitGroupsNode/UnitGroup")
-type = 3
-upgraded = true
-
-[node name="@CharacterBody2D@73" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ALLY"] instance=ExtResource("3_o4mu2")]
-light_mask = 33
-z_index = 1
-position = Vector2(37, 112)
-motion_mode = 1
-velocity = Vector2(95.64159, 29.200787)
-wall_min_slide_angle = 0.0
-script = ExtResource("4_epfnx")
-health = 4.5
-max_health = 4.5
-damage = 1.5
-attackRange = 80.0
-visionRange = 100.0
-level = 2
-formation_position = NodePath("../../UnitGroupsNode/UnitGroup/PositionsNode/@Node2D@76")
-group = NodePath("../../UnitGroupsNode/UnitGroup")
-type = 3
-upgraded = true
-
-[node name="@CharacterBody2D@77" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ALLY"] instance=ExtResource("3_o4mu2")]
-light_mask = 33
-z_index = 1
-position = Vector2(27, 116)
-motion_mode = 1
-velocity = Vector2(-34.46796, 93.87203)
-wall_min_slide_angle = 0.0
-script = ExtResource("4_epfnx")
-health = 4.5
-max_health = 4.5
-damage = 1.5
-attackRange = 80.0
-visionRange = 100.0
-level = 2
-formation_position = NodePath("../../UnitGroupsNode/UnitGroup/PositionsNode/@Node2D@80")
-group = NodePath("../../UnitGroupsNode/UnitGroup")
-type = 3
-upgraded = true
-
-[node name="Enemy" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ENEMY"] instance=ExtResource("5_jn83w")]
-z_index = 10
-position = Vector2(158.39871, 359.79034)
-collision_layer = 0
-motion_mode = 1
-velocity = Vector2(29.224823, -6.7756658)
-wall_min_slide_angle = 0.0
-script = ExtResource("6_spxb3")
 damage = 1.0
 poison_chance = 100
-formation_position = NodePath("../../EnemyGroupsNode/enemyGroup/PositionsNode/@Node2D@81")
-group = NodePath("../../EnemyGroupsNode/enemyGroup")
+formation_position = NodePath("../../UnitGroupsNode/UnitGroup/PositionsNode/@Node2D@41")
+group = NodePath("../../UnitGroupsNode/UnitGroup")
 type = 6
 
-[node name="@CharacterBody2D@82" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ENEMY"] instance=ExtResource("5_jn83w")]
-z_index = 10
-position = Vector2(148.38326, 363.1553)
-collision_layer = 0
+[node name="@CharacterBody2D@42" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ALLY"] instance=ExtResource("3_o4mu2")]
+light_mask = 33
+z_index = 1
+position = Vector2(52.36682, 119.61657)
 motion_mode = 1
-velocity = Vector2(29.80609, -3.4054496)
+velocity = Vector2(-95.895386, -28.356194)
 wall_min_slide_angle = 0.0
-script = ExtResource("6_spxb3")
+script = ExtResource("4_epfnx")
 damage = 1.0
 poison_chance = 100
-formation_position = NodePath("../../EnemyGroupsNode/enemyGroup/PositionsNode/@Node2D@83")
-group = NodePath("../../EnemyGroupsNode/enemyGroup")
+formation_position = NodePath("../../UnitGroupsNode/UnitGroup/PositionsNode/@Node2D@45")
+group = NodePath("../../UnitGroupsNode/UnitGroup")
 type = 6
 
-[node name="@CharacterBody2D@84" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ENEMY"] instance=ExtResource("5_jn83w")]
-z_index = 10
-position = Vector2(138.45055, 368.2335)
-collision_layer = 0
+[node name="@CharacterBody2D@82" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ALLY"] instance=ExtResource("3_o4mu2")]
+light_mask = 33
+z_index = 1
+position = Vector2(107.02883, 91.795845)
 motion_mode = 1
-velocity = Vector2(29.998241, -0.32501203)
+velocity = Vector2(-87.97898, -47.536274)
 wall_min_slide_angle = 0.0
-script = ExtResource("6_spxb3")
-damage = 1.0
-poison_chance = 100
-formation_position = NodePath("../../EnemyGroupsNode/enemyGroup/PositionsNode/@Node2D@85")
-group = NodePath("../../EnemyGroupsNode/enemyGroup")
-type = 6
+script = ExtResource("4_epfnx")
+damage = 0.75
+speed = 60.0
+dodge = 33
+formation_position = NodePath("../../UnitGroupsNode/@Node2D@45/PositionsNode/@Node2D@85")
+group = NodePath("../../UnitGroupsNode/@Node2D@45")
+type = 9
 
-[node name="@CharacterBody2D@86" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ENEMY"] instance=ExtResource("5_jn83w")]
-z_index = 10
-position = Vector2(165.43144, 361.11615)
-collision_layer = 0
+[node name="@CharacterBody2D@86" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ALLY"] instance=ExtResource("3_o4mu2")]
+light_mask = 33
+z_index = 1
+position = Vector2(142.0722, 86.5279)
 motion_mode = 1
-velocity = Vector2(28.376108, -9.736343)
+velocity = Vector2(-58.019505, 15.288469)
 wall_min_slide_angle = 0.0
-script = ExtResource("6_spxb3")
-damage = 1.0
-poison_chance = 100
-formation_position = NodePath("../../EnemyGroupsNode/enemyGroup/PositionsNode/@Node2D@87")
-group = NodePath("../../EnemyGroupsNode/enemyGroup")
-type = 6
+script = ExtResource("4_epfnx")
+damage = 0.75
+speed = 60.0
+dodge = 33
+formation_position = NodePath("../../UnitGroupsNode/@Node2D@45/PositionsNode/@Node2D@89")
+group = NodePath("../../UnitGroupsNode/@Node2D@45")
+type = 9
 
-[node name="@CharacterBody2D@88" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ENEMY"] instance=ExtResource("5_jn83w")]
-z_index = 10
-position = Vector2(155.5798, 365.57968)
-collision_layer = 0
+[node name="@CharacterBody2D@90" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ALLY"] instance=ExtResource("3_o4mu2")]
+light_mask = 33
+z_index = 1
+position = Vector2(139.4207, 88.14461)
 motion_mode = 1
-velocity = Vector2(28.939127, -7.9074016)
+velocity = Vector2(56.874454, -19.112724)
 wall_min_slide_angle = 0.0
-script = ExtResource("6_spxb3")
-damage = 1.0
-poison_chance = 100
-formation_position = NodePath("../../EnemyGroupsNode/enemyGroup/PositionsNode/@Node2D@89")
-group = NodePath("../../EnemyGroupsNode/enemyGroup")
-type = 6
+script = ExtResource("4_epfnx")
+health = 2.0
+damage = 0.75
+speed = 60.0
+dodge = 33
+formation_position = NodePath("../../UnitGroupsNode/@Node2D@45/PositionsNode/@Node2D@93")
+group = NodePath("../../UnitGroupsNode/@Node2D@45")
+type = 9
 
-[node name="@CharacterBody2D@90" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ENEMY"] instance=ExtResource("5_jn83w")]
-z_index = 10
-position = Vector2(145.60973, 369.78925)
-collision_layer = 0
+[node name="@CharacterBody2D@94" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ALLY"] instance=ExtResource("3_o4mu2")]
+light_mask = 33
+z_index = 1
+position = Vector2(114.17907, 95.65922)
 motion_mode = 1
-velocity = Vector2(28.555122, -9.198098)
+velocity = Vector2(87.97897, 47.536293)
+wall_min_slide_angle = 0.0
+script = ExtResource("4_epfnx")
+damage = 0.75
+speed = 60.0
+dodge = 33
+formation_position = NodePath("../../UnitGroupsNode/@Node2D@45/PositionsNode/@Node2D@97")
+group = NodePath("../../UnitGroupsNode/@Node2D@45")
+type = 9
+
+[node name="@CharacterBody2D@98" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ALLY"] instance=ExtResource("3_o4mu2")]
+light_mask = 33
+z_index = 1
+position = Vector2(143.69981, 91.836205)
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("4_epfnx")
+health = 2.0
+damage = 0.75
+speed = 60.0
+dodge = 33
+formation_position = NodePath("../../UnitGroupsNode/@Node2D@45/PositionsNode/@Node2D@101")
+group = NodePath("../../UnitGroupsNode/@Node2D@45")
+type = 9
+
+[node name="@CharacterBody2D@102" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ALLY"] instance=ExtResource("3_o4mu2")]
+process_mode = 4
+modulate = Color(1, 1, 1, 0.78431374)
+light_mask = 33
+position = Vector2(155.71669, 91.62386)
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("4_epfnx")
+health = 0.0
+damage = 0.75
+speed = 60.0
+dodge = 33
+formation_position = NodePath("../../UnitGroupsNode/@Node2D@45/PositionsNode/@Node2D@105")
+group = NodePath("../../UnitGroupsNode/@Node2D@45")
+type = 9
+
+[node name="@CharacterBody2D@106" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ALLY"] instance=ExtResource("3_o4mu2")]
+light_mask = 33
+z_index = 1
+position = Vector2(143.09825, 89.83597)
+motion_mode = 1
+velocity = Vector2(-53.24025, 27.667227)
+wall_min_slide_angle = 0.0
+script = ExtResource("4_epfnx")
+damage = 0.75
+speed = 60.0
+dodge = 33
+formation_position = NodePath("../../UnitGroupsNode/@Node2D@45/PositionsNode/@Node2D@109")
+group = NodePath("../../UnitGroupsNode/@Node2D@45")
+type = 9
+
+[node name="@CharacterBody2D@110" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ENEMY"] instance=ExtResource("5_jn83w")]
+position = Vector2(151.5967, 84.426544)
+motion_mode = 1
+velocity = Vector2(-21.519382, 20.902538)
 wall_min_slide_angle = 0.0
 script = ExtResource("6_spxb3")
-damage = 1.0
-poison_chance = 100
-formation_position = NodePath("../../EnemyGroupsNode/enemyGroup/PositionsNode/@Node2D@91")
+health = 3.25
+formation_position = NodePath("../../EnemyGroupsNode/enemyGroup/PositionsNode/@Node2D@111")
 group = NodePath("../../EnemyGroupsNode/enemyGroup")
-type = 6
+
+[node name="@CharacterBody2D@112" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ENEMY"] instance=ExtResource("5_jn83w")]
+position = Vector2(152.16394, 86.67048)
+motion_mode = 1
+velocity = Vector2(-28.406446, 9.647471)
+wall_min_slide_angle = 0.0
+script = ExtResource("6_spxb3")
+health = 2.5
+formation_position = NodePath("../../EnemyGroupsNode/enemyGroup/PositionsNode/@Node2D@113")
+group = NodePath("../../EnemyGroupsNode/enemyGroup")
+
+[node name="@CharacterBody2D@114" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ENEMY"] instance=ExtResource("5_jn83w")]
+position = Vector2(152.93105, 88.74078)
+motion_mode = 1
+velocity = Vector2(-28.44702, 9.52718)
+wall_min_slide_angle = 0.0
+script = ExtResource("6_spxb3")
+formation_position = NodePath("../../EnemyGroupsNode/enemyGroup/PositionsNode/@Node2D@115")
+group = NodePath("../../EnemyGroupsNode/enemyGroup")
+
+[node name="@CharacterBody2D@116" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ENEMY"] instance=ExtResource("5_jn83w")]
+process_mode = 4
+modulate = Color(1, 1, 1, 0.78431374)
+position = Vector2(156.99603, 87.36378)
+motion_mode = 1
+velocity = Vector2(-29.846533, 3.0305903)
+wall_min_slide_angle = 0.0
+script = ExtResource("6_spxb3")
+health = -0.5
+formation_position = NodePath("../../EnemyGroupsNode/enemyGroup/PositionsNode/@Node2D@117")
+group = NodePath("../../EnemyGroupsNode/enemyGroup")
+
+[node name="@CharacterBody2D@118" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ENEMY"] instance=ExtResource("5_jn83w")]
+position = Vector2(156.88144, 89.19105)
+motion_mode = 1
+velocity = Vector2(-29.467194, 5.628897)
+wall_min_slide_angle = 0.0
+script = ExtResource("6_spxb3")
+health = 3.25
+formation_position = NodePath("../../EnemyGroupsNode/enemyGroup/PositionsNode/@Node2D@119")
+group = NodePath("../../EnemyGroupsNode/enemyGroup")
+
+[node name="@CharacterBody2D@120" type="CharacterBody2D" parent="Game/UnitsNode" node_paths=PackedStringArray("formation_position", "group") groups=["ENEMY"] instance=ExtResource("5_jn83w")]
+position = Vector2(153.5868, 90.80497)
+motion_mode = 1
+velocity = Vector2(-29.838135, 3.1121902)
+wall_min_slide_angle = 0.0
+script = ExtResource("6_spxb3")
+formation_position = NodePath("../../EnemyGroupsNode/enemyGroup/PositionsNode/@Node2D@121")
+group = NodePath("../../EnemyGroupsNode/enemyGroup")
 
 [node name="TileWorld" type="Node2D" parent="Game" groups=["TILEWORLD"] instance=ExtResource("7_c267l")]
 y_sort_enabled = true
 script = ExtResource("8_61o8v")
 
 [node name="Camera2D" type="Camera2D" parent="Game" groups=["CAMERA"]]
-position = Vector2(32, 80)
+position = Vector2(38.590103, 108.33629)
 zoom = Vector2(3, 3)
 limit_left = -800
 limit_top = -500
@@ -317,12 +257,20 @@ z_index = 1
 [node name="UnitGroup" type="Node2D" parent="Game/UnitGroupsNode" node_paths=PackedStringArray("unitsArray") groups=["ALLYGROUP"] instance=ExtResource("10_2l4v8")]
 z_index = 1
 z_as_relative = false
-position = Vector2(32, 112)
+position = Vector2(64, 128)
 script = ExtResource("11_wp6wb")
-type = 3
-unitsArray = [NodePath("../../UnitsNode/@CharacterBody2D@45"), NodePath("../../UnitsNode/@CharacterBody2D@49"), NodePath("../../UnitsNode/@CharacterBody2D@53"), NodePath("../../UnitsNode/@CharacterBody2D@57"), NodePath("../../UnitsNode/@CharacterBody2D@61"), NodePath("../../UnitsNode/@CharacterBody2D@65"), NodePath("../../UnitsNode/@CharacterBody2D@69"), NodePath("../../UnitsNode/@CharacterBody2D@73"), NodePath("../../UnitsNode/@CharacterBody2D@77")]
-upgraded = true
-level = 2
+type = 6
+unitsArray = [NodePath("../../UnitsNode/@CharacterBody2D@38"), NodePath("../../UnitsNode/@CharacterBody2D@42"), NodePath("../../UnitsNode/@CharacterBody2D@46"), NodePath("../../UnitsNode/@CharacterBody2D@50"), NodePath("../../UnitsNode/@CharacterBody2D@54"), NodePath("../../UnitsNode/@CharacterBody2D@58"), NodePath("../../UnitsNode/@CharacterBody2D@62"), NodePath("../../UnitsNode/@CharacterBody2D@66"), NodePath("../../UnitsNode/@CharacterBody2D@70")]
+
+[node name="@Node2D@45" type="Node2D" parent="Game/UnitGroupsNode" node_paths=PackedStringArray("unitsArray", "deadUnitsArray") groups=["ALLYGROUP"] instance=ExtResource("10_2l4v8")]
+z_index = 1
+z_as_relative = false
+position = Vector2(128, 96)
+script = ExtResource("11_wp6wb")
+type = 9
+size = 8
+unitsArray = [NodePath("../../UnitsNode/@CharacterBody2D@74"), NodePath("../../UnitsNode/@CharacterBody2D@78"), NodePath("../../UnitsNode/@CharacterBody2D@82"), NodePath("../../UnitsNode/@CharacterBody2D@86"), NodePath("../../UnitsNode/@CharacterBody2D@90"), NodePath("../../UnitsNode/@CharacterBody2D@94"), NodePath("../../UnitsNode/@CharacterBody2D@98"), NodePath("../../UnitsNode/@CharacterBody2D@106")]
+deadUnitsArray = [NodePath("../../UnitsNode/@CharacterBody2D@102")]
 
 [node name="EnemyPerimeters" type="Node" parent="Game"]
 unique_name_in_owner = true
@@ -333,13 +281,14 @@ wait_time = 10.0
 
 [node name="EnemyGroupsNode" type="Node2D" parent="Game" groups=["ENEMYGRPNODE"]]
 
-[node name="enemyGroup" type="Node2D" parent="Game/EnemyGroupsNode" node_paths=PackedStringArray("unitsArray") instance=ExtResource("12_7b7i7")]
-position = Vector2(64, 224)
+[node name="enemyGroup" type="Node2D" parent="Game/EnemyGroupsNode" node_paths=PackedStringArray("unitsArray", "deadUnitsArray") instance=ExtResource("12_7b7i7")]
+position = Vector2(352, 80)
 script = ExtResource("13_8pikr")
-type = 6
-size = 4
+type = 1
+size = 5
 max_size = 6
-unitsArray = [NodePath("../../UnitsNode/Enemy"), NodePath("../../UnitsNode/@CharacterBody2D@82"), NodePath("../../UnitsNode/@CharacterBody2D@84"), NodePath("../../UnitsNode/@CharacterBody2D@86"), NodePath("../../UnitsNode/@CharacterBody2D@88"), NodePath("../../UnitsNode/@CharacterBody2D@90")]
+unitsArray = [NodePath("../../UnitsNode/@CharacterBody2D@110"), NodePath("../../UnitsNode/@CharacterBody2D@112"), NodePath("../../UnitsNode/@CharacterBody2D@114"), NodePath("../../UnitsNode/@CharacterBody2D@118"), NodePath("../../UnitsNode/@CharacterBody2D@120")]
+deadUnitsArray = [NodePath("../../UnitsNode/@CharacterBody2D@116")]
 
 [node name="BuidlingsNode" type="Node2D" parent="Game" groups=["BUILDINGSNODE"]]
 y_sort_enabled = true

@@ -132,12 +132,15 @@ func draw_build_area() -> void:
 			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),1)
 			#if wall_tiles.has(Vector2i(x,y)): 
 			#wall.set_cell(Vector2i(x,y),-1)
+			if extra > 0:
+				continue
 			obstacles.set_cell(Vector2i(x,y),-1)
 			
 	# remove navigation on tiles with obstacles
 	find_wall_obstacles()
 	for cell in wall_tiles:
 		if ground.get_used_cells_by_id(0,Vector2(0,0),1).has(cell):
+			ground.set_cell(cell,-1)
 			continue
 		wall.set_cell(cell,-1)
 	

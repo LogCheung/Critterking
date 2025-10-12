@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dtxo6oppyymjc"]
 
-[ext_resource type="Script" path="res://UI/Scripts/decree.gd" id="1_e1hmt"]
+[ext_resource type="Script" uid="uid://csaqv2adjje2f" path="res://UI/Scripts/decree.gd" id="1_e1hmt"]
 [ext_resource type="Texture2D" uid="uid://sdy5sp6pb1jv" path="res://UI/Assets/decrees/conscriptionIco.png" id="2_l0dgt"]
 [ext_resource type="Texture2D" uid="uid://bescw1thidv6k" path="res://UI/Assets/decrees/box.png" id="2_yx1n0"]
 [ext_resource type="Texture2D" uid="uid://cnf1f277smjc" path="res://UI/Assets/decrees/cdUnder.png" id="4_4xmmc"]
@@ -18,16 +18,18 @@ flat = true
 script = ExtResource("1_e1hmt")
 type = 1
 
-[node name="Box" type="Sprite2D" parent="."]
-position = Vector2(16, 18)
-texture = ExtResource("2_yx1n0")
-
 [node name="Icon" type="Sprite2D" parent="."]
 texture = ExtResource("2_l0dgt")
 offset = Vector2(16, 16)
 
+[node name="Box" type="Sprite2D" parent="Icon"]
+z_index = -1
+position = Vector2(16, 18)
+texture = ExtResource("2_yx1n0")
+
 [node name="TextureProgressBar" type="TextureProgressBar" parent="."]
 unique_name_in_owner = true
+visible = false
 modulate = Color(1, 1, 1, 0.905882)
 layout_mode = 0
 offset_left = -8.0

@@ -8,7 +8,7 @@ const BUILDING = preload("res://TileMap/Scenes/building.tscn")
 # Storage is border for buildings, TRAPS is start
 # Nail is border for charms, Heartlocket is start
 enum CARDTYPE {
-	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3, #RHINO, EXPLOSIVE, FUNGI, 
+	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3, #TRAPJAW, EXPLOSIVE, FUNGI, 
 	PARALYTIC, RESILIENT, STINGER ,BOMBARDIER, FLYING,CRAZED,
 	
 	TRAPS ,DESTROY , HOUSE, CARE , FARM , SAPSTORE, NURSERY, STORAGE, 
@@ -225,6 +225,7 @@ func check_destroy(plopTile : Vector2) -> bool:
 	for b : Building in buildings:
 		if b.tile == Vector2i(plopTile): 
 			b.on_destroyed()
+			b.remove()
 			return true
 	return false
 

@@ -196,9 +196,9 @@ func match_type() -> void:
 		TYPE.CRAZED:
 			sprite_2d.texture = CRAZEDNORMALSE if level < 2 else UPCRAZEDNORMALSE
 			health = 2
-			damage = 0.75
+			damage = 0.5
 			speed = 60
-			dodge = 33
+			dodge = 33 if level < 2 else 25
 			attack_cd.wait_time = .5
 		TYPE.BOMBER:
 			sprite_2d.texture = BOMBERNORMALSE if level < 2 else UPBOMBERNORMALSE
@@ -234,7 +234,7 @@ func match_type() -> void:
 			damage = 1
 			attack_cd.wait_time = 2
 			poison_chance = 100
-		#TYPE.RHINO:
+		#TYPE.TRAPJAW:
 			#health = 4
 			#damage = 1.5
 			#knock_chance = 100

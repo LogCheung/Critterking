@@ -23,6 +23,7 @@ func _ready() -> void:
 func update_cooldown() -> void:
 	bar.max_value = cooldown
 	bar.value = time
+	bar.visible = bar.value > 0
 
 func _on_mouse_entered() -> void:
 	if time > 0 : return

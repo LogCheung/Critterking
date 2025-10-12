@@ -60,4 +60,4 @@ func _on_body_entered(body: Node2D) -> void:
 	if body is Building and raiding:
 		if body.type != Building.TYPE.TRAP or body.type != Building.TYPE.RUINS:
 			body.health -= damage
-	queue_free()
+		queue_free()

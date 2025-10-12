@@ -68,16 +68,16 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	#for i in range(1):
-		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.CARE
-		#ui.hand.get_child(0).add_child(hCard)
-	#for i in range(1):
-		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.FLYING
-		#ui.hand.get_child(0).add_child(hCard)
+	for i in range(1):
+		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.CARE
+		ui.hand.get_child(0).add_child(hCard)
+	for i in range(1):
+		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.DESTROY
+		ui.hand.get_child(0).add_child(hCard)
 func add_house_card() -> void:
-	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+	var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
 	ui.hand.get_child(0).add_child(hCard)
 	hCard.set_owner(get_tree().get_current_scene())
@@ -137,8 +137,10 @@ func create_enemy_perimeter(dist : int, outer : bool) -> void:
 	curve.add_point(leftPoint)
 	
 	enemy_perimeters.add_child(enemy_spawn)
+	enemy_spawn.set_owner(get_tree().get_current_scene())
 	enemy_spawn.curve = curve
 	enemy_spawn.add_child(follow)
+	follow.set_owner(get_tree().get_current_scene())
 	if outer:
 		outerFollow = follow
 	else:
@@ -279,10 +281,14 @@ func start_day() -> void:
 	
 	# remove temp traps
 	for trap : Building in traps:
-		trap.remove()
+		if trap.temporary: trap.remove()
 	
 	tileWorld.handle_navigable_cells()
-
+	
+	for i in range(20):
+		await get_tree().process_frame
+	ui._on_save_pressed()
+	
 func unit_to_card(g : Group) -> void:
 	# create card of group
 	var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
@@ -351,10 +357,10 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_released("select"):
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
-	#if event.is_action_pressed("ui_accept"):
-		##new_game()
-		##Engine.time_scale = 8
-		#world_start()
+	if event.is_action_pressed("ui_accept"):
+		#new_game()
+		Engine.time_scale = 8
+		#expand()
 
 func world_start() -> void:
 	game.process_mode = Node.PROCESS_MODE_PAUSABLE

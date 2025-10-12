@@ -65,7 +65,6 @@ func _process(delta: float) -> void:
 	%DayNight.text = str(Global.nights)
 		
 func _ready() -> void:
-	print(world.wow)
 	# connect signals
 	game_over.connect(on_game_over)
 	# hide all but show main menu
@@ -116,6 +115,7 @@ func show_hand() -> void:
 	if world.dispatchDay: dispatch.show()
 	
 	refresh_positions()
+	_on_save_pressed()
 
 func on_game_over() -> void:
 	hand.hide()
@@ -153,10 +153,10 @@ func _on_play_pressed() -> void:
 	if anim.is_playing() : return
 	%Button.play()
 	$AnimationPlayer.play("MainToGame")
+	world.new_game()
 	await anim.animation_finished
 	%crtrMenu.stop()
 	mainmenu.hide()
-	world.new_game()
 	world.start_day()
 	%crtrDay.play()
 	$AnimationPlayer.play("RESET")
@@ -254,7 +254,7 @@ func refresh_positions() -> void:
 	# Add and remove dummy card to refresh positions
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 	hand.get_child(0).add_child(hCard)
-	hCard.set_owner(get_tree().get_current_scene())
+	#hCard.set_owner(get_tree().get_current_scene())
 	hCard.set_up()
 	hCard.remove_self()
 	
@@ -282,13 +282,58 @@ func handle_pause() -> void:
 
 func _on_save_pressed() -> void:
 	var scene = PackedScene.new()
-	print(world.wow)
 	scene.pack(world)
-	ResourceSaver.save(scene,"res://saves/savefile.tscn")
+	
+	var walls = world.tileWorld.wall.tile_map_data
+	var ground = world.tileWorld.ground.tile_map_data
+	var obstacles = world.tileWorld.obstacles.tile_map_data
+	var ring = world.tileWorld.ring.tile_map_data
+	
+	SaveLoad._save(scene,rollArray,walls,ground,obstacles,ring)
+	#ResourceSaver.save(scene,"res://saves/savefile.tscn")
 
 func _on_load_pressed() -> void:
-	if !FileAccess.file_exists("res://saves/savefile.tscn"):
-		return
-	else:
-		var new_scene = ResourceLoader.load("res://saves/savefile.tscn")
-		get_tree().change_scene_to_packed(new_scene)
+	SaveLoad._load()
+
+func load_world() -> void:
+	# clear dead allies
+	for unit : Ally in get_tree().get_nodes_in_group("ALLY"):
+		if unit.dead or !unit.group: unit.queue_free()
+	
+	# load data from save
+	world.game.process_mode = Node.PROCESS_MODE_PAUSABLE
+	world.create_enemy_perimeter(12 + Global.expansions, true)
+	world.create_enemy_perimeter(11 + Global.expansions, false)
+	mainmenu.hide()
+	night_counter.show()
+	end_turn.show()
+	hand.show()
+	decrees.show()
+	
+	world.tileWorld.wall.tile_map_data = SaveLoad.SaveFileData.walls
+	world.tileWorld.ground.tile_map_data = SaveLoad.SaveFileData.ground
+	world.tileWorld.obstacles.tile_map_data = SaveLoad.SaveFileData.obstacles
+	world.tileWorld.ring.tile_map_data  = SaveLoad.SaveFileData.ring
+	Global.nights = SaveLoad.SaveFileData.nights
+	
+	# load cards
+	for card : Card in SaveLoad.SaveFileData.cardsInHand:
+		var dupe : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		dupe.type = card.type
+		Global.cardsInHand.append(dupe)
+		dupe.for_show = false
+		hand.get_child(0).add_child(dupe) # container
+		dupe.set_owner(get_tree().get_current_scene())
+	await get_tree().process_frame
+	for card : Card in hand.get_child(0).get_children():
+		card.set_up()
+		
+	# verify data of units
+	world.tileWorld.set_up_astar()
+	for unit in get_tree().get_nodes_in_group("ALLY"):
+		unit._ready()
+	#if !FileAccess.file_exists("res://saves/savefile.tscn"):
+		#return
+	#else:
+		#var new_scene = ResourceLoader.load("res://saves/savefile.tscn")
+		#get_tree().change_scene_to_packed(new_scene)
