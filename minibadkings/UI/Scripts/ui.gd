@@ -19,6 +19,7 @@ signal game_over
 @onready var dispatch: Control = %Dispatch
 @onready var decrees: Control = %Decrees
 @onready var night_counter: Control = %NightCounter
+@onready var songs : Array = get_tree().get_nodes_in_group("MUSIC")
 
 @export var rollArray : Array = []
 
@@ -33,35 +34,15 @@ var dispatchLimit = 1
 func _process(delta: float) -> void:
 	Global.cardsInHand = hand.get_child(0).get_children()
 	if mainmenu.visible and !%crtrMenu.playing:
-		%crtrPause.stop()
-		%crtrOver.stop()
-		%crtrDay.stop()
-		%crtrNight.stop()
-		%crtrMenu.play()
+		play_song(%crtrMenu)
 	elif settings.visible and !%crtrPause.playing:
-		%crtrMenu.stop()
-		%crtrOver.stop()
-		%crtrDay.stop()
-		%crtrNight.stop()
-		%crtrPause.play()
+		play_song(%pausemenu)
 	elif help.visible and !%crtrPause.playing:
-		%crtrMenu.stop()
-		%crtrOver.stop()
-		%crtrDay.stop()
-		%crtrNight.stop()
-		%crtrPause.play()
+		play_song(%pausemenu)
 	elif end_turn.visible and !%crtrDay.playing:
-		%crtrMenu.stop()
-		%crtrOver.stop()
-		%crtrNight.stop()
-		%crtrPause.stop()
-		%crtrDay.play()
+		play_song(%crtrDay)
 	elif !end_turn.visible and !%crtrNight.playing and !control_is_visible():
-		%crtrMenu.stop()
-		%crtrOver.stop()
-		%crtrDay.stop()
-		%crtrPause.stop()
-		%crtrNight.play()
+		play_song(%crtrNight)
 	%DayNight.text = str(Global.nights)
 		
 func _ready() -> void:
@@ -72,10 +53,16 @@ func _ready() -> void:
 		if !c is Control: continue
 		c.hide()
 	mainmenu.show()
-	
+
+func play_song(song : AudioStreamPlayer) -> void:
+	for s : AudioStreamPlayer in songs:
+		s.stop()
+	song.play()
+
 func control_is_visible() -> bool:
 	for c in get_children():
 		if !c is Control: continue
+		if c == %NightCounter or c == %Decrees : continue
 		if c.visible : return true
 	return false
 	
@@ -115,7 +102,7 @@ func show_hand() -> void:
 	if world.dispatchDay: dispatch.show()
 	
 	refresh_positions()
-	_on_save_pressed()
+	#_on_save_pressed()
 
 func on_game_over() -> void:
 	hand.hide()

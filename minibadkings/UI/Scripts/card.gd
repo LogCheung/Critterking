@@ -9,7 +9,7 @@ const BUILDING = preload("res://TileMap/Scenes/building.tscn")
 # Nail is border for charms, Heartlocket is start
 enum CARDTYPE {
 	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3, #TRAPJAW, EXPLOSIVE, FUNGI, 
-	PARALYTIC, RESILIENT, STINGER ,BOMBARDIER, FLYING,CRAZED,
+	PARALYTIC, RESILIENT, STINGER ,BOMBER, FLYING,CRAZED,
 	
 	TRAPS ,DESTROY , HOUSE, CARE , FARM , SAPSTORE, NURSERY, STORAGE, 
 	HEARTLOCKET, RING, SWORD, FLAG, SODA, ROLLERSKATE, MEDKIT, GLASSES, NAIL,
@@ -118,6 +118,10 @@ func set_to_default() -> void:
 	
 	selected = false
 	is_under_mouse = false
+	
+	# remove highlight
+	if tileWorld.hover.get_used_cells().has(tile):
+		tileWorld.hover.set_cell(tile,0,Vector2.ZERO)
 
 func highlight_tiles() -> void:
 	# preconditions or exceptions
@@ -140,7 +144,11 @@ func highlight_tiles() -> void:
 		if unit_tiles.has(cell) : continue
 		tileWorld.hover.set_cell(cell,0,Vector2(0,0),0)
 		tileWorld.hover.visible = true
-	pass
+	
+	# highlight tile hovered over with card
+	tile = tileWorld.ground.local_to_map(world.get_global_mouse_position())
+	if tileWorld.hover.get_used_cells().has(tile):
+		tileWorld.hover.set_cell(tile,0,Vector2.ZERO,1)
 
 func plop() -> void:
 	tileWorld.handle_navigable_cells()
@@ -224,7 +232,6 @@ func check_destroy(plopTile : Vector2) -> bool:
 	des.set_owner(get_tree().get_current_scene())
 	for b : Building in buildings:
 		if b.tile == Vector2i(plopTile): 
-			b.on_destroyed()
 			b.remove()
 			return true
 	return false
@@ -374,79 +381,9 @@ func _on_selected_mouse_exited() -> void:
 	set_to_default()
 
 func match_sprite_type() -> void:
-	match type:
-		CARDTYPE.BITER:
-			sprite_2d.texture = preload("res://UI/Assets/cards/biterCard.png")
-		CARDTYPE.PLATED:
-			sprite_2d.texture = preload("res://UI/Assets/cards/platedCard.png")
-		CARDTYPE.SPITTER:
-			sprite_2d.texture = preload("res://UI/Assets/cards/spitterCard.png")
-		CARDTYPE.BOMBARDIER:
-			sprite_2d.texture = preload("res://UI/Assets/cards/bomberCard.png")
-		CARDTYPE.FLYING:
-			sprite_2d.texture = preload("res://UI/Assets/cards/flyingCard.png")
-		CARDTYPE.CRAZED:
-			sprite_2d.texture = preload("res://UI/Assets/cards/crazedCard.png")
-		CARDTYPE.TRAPS:
-			sprite_2d.texture = preload("res://UI/Assets/cards/trapsCard.png")
-		CARDTYPE.HOUSE:
-			sprite_2d.texture = preload("res://UI/Assets/cards/houseCard.png")
-		CARDTYPE.DESTROY:
-			sprite_2d.texture = preload("res://UI/Assets/cards/destroyCard.png")
-		CARDTYPE.CARE:
-			sprite_2d.texture = preload("res://UI/Assets/cards/careCard.png")
-		CARDTYPE.FARM:
-			sprite_2d.texture = preload("res://UI/Assets/cards/farmCard.png")
-		CARDTYPE.SAPSTORE:
-			sprite_2d.texture = preload("res://UI/Assets/cards/sapCard.png")
-		CARDTYPE.NURSERY:
-			sprite_2d.texture = preload("res://UI/Assets/cards/nurseryCard.png")
-		CARDTYPE.STORAGE:
-			sprite_2d.texture = preload("res://UI/Assets/cards/storageCard.png")
-		CARDTYPE.HEARTLOCKET:
-			sprite_2d.texture = preload("res://UI/Assets/cards/locketCard.png")
-		CARDTYPE.RING:
-			sprite_2d.texture = preload("res://UI/Assets/cards/ringCard.png")
-		CARDTYPE.SWORD:
-			sprite_2d.texture = preload("res://UI/Assets/cards/swordCard.png")
-		CARDTYPE.FLAG:
-			sprite_2d.texture = preload("res://UI/Assets/cards/flagCard.png")
-		CARDTYPE.SODA:
-			sprite_2d.texture = preload("res://UI/Assets/cards/sodaCard.png")
-		CARDTYPE.ROLLERSKATE:
-			sprite_2d.texture = preload("res://UI/Assets/cards/skateCard.png")
-		CARDTYPE.MEDKIT:
-			sprite_2d.texture = preload("res://UI/Assets/cards/medkitCard.png")
-		CARDTYPE.GLASSES:
-			sprite_2d.texture = preload("res://UI/Assets/cards/glassesCard.png")
-		CARDTYPE.NAIL:
-			sprite_2d.texture = preload("res://UI/Assets/cards/nailsCard.png")
-		CARDTYPE.INSPIRATION:
-			sprite_2d.texture = preload("res://UI/Assets/cards/inspirationCard.png")
-		CARDTYPE.DECARE:
-			sprite_2d.texture = preload("res://UI/Assets/cards/decareCard.png")
-		CARDTYPE.RECON:
-			sprite_2d.texture = preload("res://UI/Assets/cards/reconCard.png")
-		CARDTYPE.DEFENSE:
-			sprite_2d.texture = preload("res://UI/Assets/cards/defenseCard.png")
-		CARDTYPE.RENOVATE:
-			sprite_2d.texture = preload("res://UI/Assets/cards/renovateCard.png")
-		CARDTYPE.WAR:
-			sprite_2d.texture = preload("res://UI/Assets/cards/warCard.png")
-		CARDTYPE.CONSCRIPTION:
-			sprite_2d.texture = preload("res://UI/Assets/cards/conscriptionCard.png")
-		CARDTYPE.MASTERY:
-			sprite_2d.texture = preload("res://UI/Assets/cards/masteryCard.png")
-		CARDTYPE.INFLUENCE:
-			sprite_2d.texture = preload("res://UI/Assets/cards/influenceCard.png")
-		CARDTYPE.CONSTRUCTION:
-			sprite_2d.texture = preload("res://UI/Assets/cards/constructionCard.png")
-		CARDTYPE.PARALYTIC:
-			sprite_2d.texture = preload("res://UI/Assets/cards/paralyticCard.png")
-		CARDTYPE.RESILIENT:
-			sprite_2d.texture = preload("res://UI/Assets/cards/resilientCard.png")
-		CARDTYPE.STINGER:
-			sprite_2d.texture = preload("res://UI/Assets/cards/stingerCard.png")
+	if type == CARDTYPE.NONE : return
+	var path = "res://UI/Assets/cards/"+str(CARDTYPE.keys()[type]).to_lower()+"Card.png"
+	sprite_2d.texture = load(path)
 	
 	%Upgrade1.visible = level == 2
 	%Upgrade2.visible = level == 3

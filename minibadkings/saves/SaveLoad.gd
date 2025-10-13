@@ -21,7 +21,6 @@ func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 		dupe.type = card.type
 		dupe.level = card.level
 		dupe.charm = card.charm
-		print(card.type)
 		SaveFileData.cardsInHand.append(dupe)
 		dupe.for_show = false
 	

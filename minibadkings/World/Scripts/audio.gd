@@ -1,0 +1,2 @@
+extends AudioStreamPlayer
+class_name Audio

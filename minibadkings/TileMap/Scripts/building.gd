@@ -79,7 +79,6 @@ func match_type() -> void:
 		TYPE.TRAP:
 			sprite_2d.texture = TRAPA if randi() % 2 == 0 else TRAPB
 			sprite_2d.offset = Vector2.ZERO
-			tileWorld.ground.set_cell(tile,0,Vector2(0,0),0)
 			z_index = 0
 		TYPE.CARE:
 			sprite_2d.texture = CARE
@@ -143,16 +142,16 @@ func on_destroyed() -> void:
 		occupant.terminate()
 	
 func remove() -> void:
-	type = TYPE.RUINS
+	tileWorld.ground.set_cell(tile,0,Vector2(0,0),1)
+	queue_free()
+	tileWorld.handle_navigable_cells()
+	
 	if type == TYPE.HOUSE:
+		type = TYPE.RUINS
 		var buildings = get_tree().get_nodes_in_group("BUILDING")
 		buildings = buildings.filter(func(b):return b.type == Building.TYPE.HOUSE)
 		if buildings.is_empty():
 			ui.game_over.emit()
-	
-	tileWorld.ground.set_cell(tile,0,Vector2(0,0),1)
-	queue_free()
-	tileWorld.handle_navigable_cells()
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if !type == TYPE.TRAP : return

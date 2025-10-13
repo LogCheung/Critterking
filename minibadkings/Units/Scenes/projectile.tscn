@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cpdgkoo57h7p5"]
 
-[ext_resource type="Script" path="res://Units/Scripts/projectile.gd" id="1_rk1kh"]
+[ext_resource type="Script" uid="uid://bujip4vrgojsr" path="res://Units/Scripts/projectile.gd" id="1_rk1kh"]
 [ext_resource type="Texture2D" uid="uid://mjdslnm8s23a" path="res://Units/Assets/AllyProjectile.png" id="2_6y74n"]
 [ext_resource type="AudioStream" uid="uid://b7scm4fug5tje" path="res://Audio/sfx/Hurt.tres" id="3_w2vby"]
 [ext_resource type="AudioStream" uid="uid://w5s7eos7mc1q" path="res://Audio/sfx/Death.tres" id="4_1hxdr"]
@@ -23,11 +23,11 @@ texture = ExtResource("2_6y74n")
 position = Vector2(0.5, -0.5)
 shape = SubResource("RectangleShape2D_6y74n")
 
-[node name="Hurt" type="AudioStreamPlayer" parent="."]
+[node name="Hurt" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
 unique_name_in_owner = true
 stream = ExtResource("3_w2vby")
 
-[node name="Death" type="AudioStreamPlayer" parent="."]
+[node name="Death" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
 unique_name_in_owner = true
 stream = ExtResource("4_1hxdr")
 

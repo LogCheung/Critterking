@@ -141,11 +141,11 @@ input_pickable = false
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="trans"]
 polygon = PackedVector2Array(0, -24, -40, -4, -16, 7, 0, 0, 16, 7, 40, -4)
 
-[node name="Build" type="AudioStreamPlayer" parent="."]
+[node name="Build" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
 unique_name_in_owner = true
 stream = ExtResource("6_j1jnl")
 
-[node name="Break" type="AudioStreamPlayer" parent="."]
+[node name="Break" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
 unique_name_in_owner = true
 stream = ExtResource("7_cb372")
 

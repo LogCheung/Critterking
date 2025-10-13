@@ -891,19 +891,19 @@ unique_name_in_owner = true
 wait_time = 0.125
 autostart = true
 
-[node name="Attack" type="AudioStreamPlayer" parent="."]
+[node name="Attack" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
 unique_name_in_owner = true
 stream = ExtResource("10_t5nd1")
 
-[node name="Hurt" type="AudioStreamPlayer" parent="."]
+[node name="Hurt" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
 unique_name_in_owner = true
 stream = ExtResource("11_amxnv")
 
-[node name="Shoot" type="AudioStreamPlayer" parent="."]
+[node name="Shoot" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
 unique_name_in_owner = true
 stream = ExtResource("12_iqrsy")
 
-[node name="Death" type="AudioStreamPlayer" parent="."]
+[node name="Death" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
 unique_name_in_owner = true
 stream = ExtResource("13_esq2s")
 

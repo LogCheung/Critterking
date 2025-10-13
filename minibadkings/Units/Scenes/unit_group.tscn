@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bytyqloqmpx5r"]
 
-[ext_resource type="Script" path="res://Units/Scripts/unit_group.gd" id="1_onkey"]
+[ext_resource type="Script" uid="uid://ckgu67whte16x" path="res://Units/Scripts/unit_group.gd" id="1_onkey"]
 [ext_resource type="AudioStream" uid="uid://dcqngsl7y76w1" path="res://Audio/sfx/Select.tres" id="2_x7lgr"]
 [ext_resource type="AudioStream" uid="uid://cutrpc1r2tugc" path="res://Audio/sfx/Place.tres" id="3_g72jt"]
 [ext_resource type="AudioStream" uid="uid://iffhigsoh7po" path="res://Audio/sfx/Merge.tres" id="4_yeebr"]
@@ -21,15 +21,15 @@ unique_name_in_owner = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SelectArea"]
 shape = SubResource("ConvexPolygonShape2D_onkey")
 
-[node name="Select" type="AudioStreamPlayer" parent="."]
+[node name="Select" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
 unique_name_in_owner = true
 stream = ExtResource("2_x7lgr")
 
-[node name="Place" type="AudioStreamPlayer" parent="."]
+[node name="Place" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
 unique_name_in_owner = true
 stream = ExtResource("3_g72jt")
 
-[node name="Merge" type="AudioStreamPlayer" parent="."]
+[node name="Merge" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
 unique_name_in_owner = true
 stream = ExtResource("4_yeebr")
 

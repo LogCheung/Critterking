@@ -68,14 +68,14 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	for i in range(1):
-		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.CARE
-		ui.hand.get_child(0).add_child(hCard)
-	for i in range(1):
-		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.DESTROY
-		ui.hand.get_child(0).add_child(hCard)
+	#for i in range(1):
+		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.CARE
+		#ui.hand.get_child(0).add_child(hCard)
+	#for i in range(1):
+		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.DESTROY
+		#ui.hand.get_child(0).add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
@@ -341,7 +341,7 @@ func match_unit_to_card(card : Card,unitType : Unit.TYPE) -> Card:
 		Unit.TYPE.CRAZED:
 			card.type = Card.CARDTYPE.CRAZED
 		Unit.TYPE.BOMBER:
-			card.type = Card.CARDTYPE.BOMBARDIER
+			card.type = Card.CARDTYPE.BOMBER
 		Unit.TYPE.FLYING:
 			card.type = Card.CARDTYPE.FLYING
 	return card
@@ -354,13 +354,14 @@ func preserve_charm_in_card(card : Card, charmType : Charm.TYPE) -> Card:
 
 var tile2
 func _input(event: InputEvent) -> void:
-	if event.is_action_released("select"):
+	if event.is_action_released("select") or event.is_action_pressed("select"):
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
 		#new_game()
 		Engine.time_scale = 8
 		#expand()
+		print(ui.rollArray)
 
 func world_start() -> void:
 	game.process_mode = Node.PROCESS_MODE_PAUSABLE

@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://b7gegybq07w8i"]
 
 [ext_resource type="Texture2D" uid="uid://djhd7y1n2cuac" path="res://TileMap/Assets/warBombard.png" id="1_lvful"]
-[ext_resource type="Script" path="res://TileMap/Scenes/war_bombard.gd" id="2_hyro4"]
+[ext_resource type="Script" uid="uid://cdh3lmrd5i16j" path="res://TileMap/Scenes/war_bombard.gd" id="2_hyro4"]
 [ext_resource type="AudioStream" uid="uid://b7scm4fug5tje" path="res://Audio/sfx/Hurt.tres" id="3_g5cnw"]
 [ext_resource type="AudioStream" uid="uid://w5s7eos7mc1q" path="res://Audio/sfx/Death.tres" id="4_smkej"]
 
@@ -92,11 +92,11 @@ shape = SubResource("ConvexPolygonShape2D_hbi3d")
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.25
 
-[node name="Hurt" type="AudioStreamPlayer" parent="."]
+[node name="Hurt" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
 unique_name_in_owner = true
 stream = ExtResource("3_g5cnw")
 
-[node name="Death" type="AudioStreamPlayer" parent="."]
+[node name="Death" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
 unique_name_in_owner = true
 stream = ExtResource("4_smkej")
 
