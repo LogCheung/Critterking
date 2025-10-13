@@ -12,6 +12,7 @@ enum TYPE  {
 
 @onready var sprite: Sprite2D = $Icon
 @onready var tile : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
+@onready var world : World = get_tree().get_first_node_in_group("WORLD")
 @onready var bar: TextureProgressBar = %TextureProgressBar
 
 var under_mouse : bool = false
@@ -26,7 +27,8 @@ func update_cooldown() -> void:
 	bar.visible = bar.value > 0
 
 func _on_mouse_entered() -> void:
-	if time > 0 : return
+	if time > 0 or !world.is_combat_phase: return
+	
 	
 	under_mouse = true
 	sprite.scale = Vector2(1.5,1.5)
@@ -35,7 +37,7 @@ func _on_mouse_entered() -> void:
 	pass # Replace with function body.
 
 func _on_mouse_exited() -> void:
-	if time > 0 : return
+	if time > 0 or !world.is_combat_phase: return
 	
 	under_mouse = false
 	sprite.material = null

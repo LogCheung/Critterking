@@ -34,6 +34,7 @@ enum TYPE {
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
 
 var tile : Vector2i
+var prevTileType : int
 var doorstepTile : Vector2i
 var highlightSprite : Sprite2D
 
@@ -41,9 +42,10 @@ func _ready() -> void:
 	# set up position and blocking navigation
 	match_type()
 	tile = tileWorld.ground.local_to_map(global_position)
+	if temporary : prevTileType = tileWorld.ground.get_cell_alternative_tile(tile)
 	tileWorld.ground.set_cell(tile,0,Vector2(0,0),2)
 	
-	if type != TYPE.TRAP : tileWorld.ground.set_cell(tile,0,Vector2(0,0),2)
+	if type == TYPE.TRAP : tileWorld.ground.set_cell(tile,0,Vector2(0,0),3)
 	
 	doorstepTile = tile + Vector2i(1,0)
 	%Build.play()
@@ -146,6 +148,7 @@ func on_destroyed() -> void:
 	
 func remove() -> void:
 	tileWorld.ground.set_cell(tile,0,Vector2(0,0),1)
+	if temporary : tileWorld.ground.set_cell(tile,0,Vector2(0,0),prevTileType)
 	queue_free()
 	tileWorld.handle_navigable_cells()
 	
@@ -162,17 +165,9 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 		var enemy : Unit = area.owner
 		enemy.health -= 1.5
 		enemy.hurt.play()
+		enemy.hitAnim(true)
 		if enemy.health <= 0:
-			enemy.process_mode = Node.PROCESS_MODE_DISABLED
-			enemy.anim.play("death")
-			await enemy.anim.animation_finished
-			
-			var enemyGroup = enemy.group.unitsArray
-			if enemyGroup.find(enemy) != -1 : enemyGroup.remove_at(enemyGroup.find(enemy))
-			enemy.group.unit_died.emit()
-			enemy.death.play()
-			enemy.queue_free()
-
+			enemy.start_death()
 func _on_adj_area_entered(area: Area2D) -> void:
 	if world.is_combat_phase == true: return
 	if area.owner is Ally:
