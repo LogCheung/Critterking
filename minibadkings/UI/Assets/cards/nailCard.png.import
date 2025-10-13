@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctsr8wsquee6u"
-path="res://.godot/imported/locketCard.png-48e1b4087b63cc0d40d6a09504c2b9ee.ctex"
+uid="uid://ch76thi6y3r28"
+path="res://.godot/imported/nailCard.png-c4790e5a22fcb4bf5a4ae562f16ed0b5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/Assets/cards/locketCard.png"
-dest_files=["res://.godot/imported/locketCard.png-48e1b4087b63cc0d40d6a09504c2b9ee.ctex"]
+source_file="res://UI/Assets/cards/nailCard.png"
+dest_files=["res://.godot/imported/nailCard.png-c4790e5a22fcb4bf5a4ae562f16ed0b5.ctex"]
 
 [params]
 

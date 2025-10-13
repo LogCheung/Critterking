@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bcs82nmipethc"
-path="res://.godot/imported/skateCard.png-49ec9dc20d08d58d32d8d2ba81fb6afe.ctex"
+uid="uid://ctsr8wsquee6u"
+path="res://.godot/imported/heartlocketCard.png-df32fea872b1be82f7e67ff0c1dcb91e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/Assets/cards/skateCard.png"
-dest_files=["res://.godot/imported/skateCard.png-49ec9dc20d08d58d32d8d2ba81fb6afe.ctex"]
+source_file="res://UI/Assets/cards/heartlocketCard.png"
+dest_files=["res://.godot/imported/heartlocketCard.png-df32fea872b1be82f7e67ff0c1dcb91e.ctex"]
 
 [params]
 

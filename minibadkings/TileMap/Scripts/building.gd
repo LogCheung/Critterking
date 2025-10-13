@@ -42,6 +42,9 @@ func _ready() -> void:
 	match_type()
 	tile = tileWorld.ground.local_to_map(global_position)
 	tileWorld.ground.set_cell(tile,0,Vector2(0,0),2)
+	
+	if type != TYPE.TRAP : tileWorld.ground.set_cell(tile,0,Vector2(0,0),2)
+	
 	doorstepTile = tile + Vector2i(1,0)
 	%Build.play()
 	anim.play("build")

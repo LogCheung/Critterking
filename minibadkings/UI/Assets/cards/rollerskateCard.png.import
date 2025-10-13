@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ch76thi6y3r28"
-path="res://.godot/imported/nailsCard.png-efc7633732c1add5f7f3142e6949501a.ctex"
+uid="uid://bcs82nmipethc"
+path="res://.godot/imported/rollerskateCard.png-bc4142c67c851c25c806da841c0a5fc9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/Assets/cards/nailsCard.png"
-dest_files=["res://.godot/imported/nailsCard.png-efc7633732c1add5f7f3142e6949501a.ctex"]
+source_file="res://UI/Assets/cards/rollerskateCard.png"
+dest_files=["res://.godot/imported/rollerskateCard.png-bc4142c67c851c25c806da841c0a5fc9.ctex"]
 
 [params]
 

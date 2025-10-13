@@ -68,10 +68,10 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	#for i in range(1):
-		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.SPITTER
-		#ui.hand.get_child(0).add_child(hCard)
+	for i in range(1):
+		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.TRAPS
+		ui.hand.get_child(0).add_child(hCard)
 	#for i in range(1):
 		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 		#hCard.type = Card.CARDTYPE.DESTROY
@@ -281,8 +281,9 @@ func start_day() -> void:
 	
 	# remove temp traps
 	for trap : Building in traps:
-		if trap.temporary: trap.remove()
-	
+		if trap.temporary: 
+			trap.remove()
+			
 	tileWorld.handle_navigable_cells()
 	
 	for i in range(20):
