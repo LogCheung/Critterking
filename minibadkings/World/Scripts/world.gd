@@ -36,6 +36,8 @@ func _ready() -> void:
 	enemy_group_eliminated.connect(on_enemy_group_eliminated)
 	
 	Engine.time_scale = 1
+	await RenderingServer.frame_post_draw
+	DisplayServer.window_set_title("Critterking", get_window().get_window_id())
 
 func new_game() -> void:
 	# set up initial rolls
@@ -68,10 +70,10 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	for i in range(1):
-		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.TRAPS
-		ui.hand.get_child(0).add_child(hCard)
+	#for i in range(1):
+		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.TRAPS
+		#ui.hand.get_child(0).add_child(hCard)
 	#for i in range(1):
 		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 		#hCard.type = Card.CARDTYPE.DESTROY
@@ -359,10 +361,13 @@ func _input(event: InputEvent) -> void:
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
+		return
 		#new_game()
-		Engine.time_scale = 8
+		#Engine.time_scale = 8
 		#expand()
-		print(ui.rollArray)
+		#print(ui.rollArray)
+		Global.nights += 29
+		check_nights()
 
 func world_start() -> void:
 	game.process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -390,6 +395,9 @@ func check_nights() -> void:
 		
 	if Global.nights % 10 == 0:
 		%SpawnTimer.wait_time -= 1.5
+		
+	if Global.nights == 30:
+		ui.victory()
 
 func expand() -> void:
 	Global.expansions += 1

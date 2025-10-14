@@ -154,7 +154,8 @@ func handle_action(delta) -> void:
 			sprite_2d.material = null
 			return
 	
-	move_to(self.global_position.direction_to(nav.get_next_path_position()), delta)
+	if next_path_pos:
+		move_to(self.global_position.direction_to(next_path_pos), delta)
 
 func on_selected() -> void:
 	if dead : return

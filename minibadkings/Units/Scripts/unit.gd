@@ -75,6 +75,7 @@ var dead : bool
 
 func _ready() -> void:
 	nav.velocity_computed.connect(_on_navigation_agent_2d_velocity_computed)
+	%NavDelay.timeout.connect(on_nav_delay)
 	stun_cd.timeout.connect(on_stun_finished)
 	damage_timer.timeout.connect(on_damage_timer)
 	healing_timer.timeout.connect(on_healing_timer)
@@ -131,22 +132,23 @@ func handle_behind_wall() -> void:
 func move_to(direction, _delta):
 	if knocked : return
 	
-	if direction.x > 0:
+	if direction.x > 0.1:
 		$Flip.scale.x = 1
-	else:
+	elif direction.x < -0.1:
 		$Flip.scale.x = -1
 		
 	var new_velocity = direction * speed
 	velocity = new_velocity
-	if action == ACTION.STRAFE:
-		velocity /= 4
-	if dashing:
-		velocity *= 2.5
 	
 	if nav.avoidance_enabled:
 		nav.set_velocity(new_velocity)
 	else:
 		_on_navigation_agent_2d_velocity_computed(new_velocity)
+		
+	if action == ACTION.STRAFE:
+		velocity /= 4
+	if dashing:
+		velocity *= 2.5
 		
 	move_and_slide()
 	
@@ -348,4 +350,7 @@ func on_healing_timer() -> void:
 		health += .5
 		hitAnim(true,STATUS.REGEN)
 		statusArray.remove_at(statusArray.find(STATUS.REGEN))
+	pass
+func on_nav_delay() -> void:
+	next_path_pos = nav.get_next_path_position()
 	pass

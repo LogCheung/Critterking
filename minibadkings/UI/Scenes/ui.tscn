@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=37 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Texture2D" uid="uid://luuqbnbqgyao" path="res://UI/Assets/menus/mainmenu.png" id="3_2fejo"]
@@ -23,7 +23,6 @@
 [ext_resource type="AudioStream" uid="uid://cwx4hw05ceroc" path="res://Audio/sfx/Shuffle.tres" id="11_6dw6b"]
 [ext_resource type="Texture2D" uid="uid://b6kejcvarih2b" path="res://UI/Assets/nightcount.png" id="11_yqd36"]
 [ext_resource type="AudioStream" uid="uid://bdq1nbxdckl0r" path="res://Audio/sfx/Card.tres" id="12_yqd36"]
-[ext_resource type="PackedScene" uid="uid://dtxo6oppyymjc" path="res://UI/Scenes/decree.tscn" id="13_lpmf3"]
 [ext_resource type="AudioStream" uid="uid://bxpbo04dxxuf4" path="res://Audio/sfx/Button.tres" id="15_8g5lr"]
 [ext_resource type="AudioStream" uid="uid://c8brf7l45q10r" path="res://Audio/music/crtrnight.tres" id="19_gu1s8"]
 [ext_resource type="AudioStream" uid="uid://u2y0bys67ovo" path="res://Audio/music/crtrday.tres" id="20_8g5lr"]
@@ -595,10 +594,6 @@ mouse_filter = 2
 theme_override_constants/separation = 22
 alignment = 1
 
-[node name="Decree" parent="Decrees/VBoxContainer" instance=ExtResource("13_lpmf3")]
-layout_mode = 2
-type = 10
-
 [node name="Hand" type="Control" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -679,6 +674,7 @@ focus_mode = 0
 flat = true
 
 [node name="load" type="Button" parent="mainmenu/main"]
+visible = false
 offset_left = 184.167
 offset_top = 129.5
 offset_right = 226.167
@@ -821,7 +817,6 @@ bus_name = "SFX"
 
 [node name="gameover" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -829,6 +824,7 @@ offset_bottom = 40.0
 mouse_filter = 2
 
 [node name="over" type="Sprite2D" parent="gameover"]
+unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
 texture = ExtResource("7_ftqev")
 offset = Vector2(960, 540)

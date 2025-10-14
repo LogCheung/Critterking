@@ -53,6 +53,8 @@ func _ready() -> void:
 		if !c is Control: continue
 		c.hide()
 	mainmenu.show()
+	
+
 
 func play_song(song : AudioStreamPlayer) -> void:
 	for s : AudioStreamPlayer in songs:
@@ -107,12 +109,27 @@ func show_hand() -> void:
 func on_game_over() -> void:
 	hand.hide()
 	gameover.show()
+	
+	%over.texture = load("res://UI/Assets/menus/gameover.png")
+	%nights.visible = true
 	$AnimationPlayer.play("Lose")
 	await anim.animation_finished
 	%crtrNight.stop()
 	%crtrDay.stop()
 	%crtrOver.play()
 	%nights.text = str(Global.nights)
+
+func victory() -> void:
+	hand.hide()
+	gameover.show()
+	
+	%over.texture = load("res://UI/Assets/menus/gwj2win.png")
+	%nights.visible = false
+	anim.play("Lose")
+	await anim.animation_finished
+	%crtrNight.stop()
+	%crtrDay.stop()
+	%crtrOver.play()
 
 func _on_show_pressed() -> void:
 	# when deck of cards is clicked, show anim will play
@@ -205,6 +222,7 @@ func _on_newgame_pressed() -> void:
 	%crtrOver.stop()
 	gameover.hide()
 	world.new_game()
+	await anim.animation_finished
 	world.start_day()
 	%crtrDay.play()
 	$AnimationPlayer.play("RESET")
@@ -218,7 +236,6 @@ func _on_title_pressed() -> void:
 	gameover.hide()
 	%crtrMenu.play()
 	$AnimationPlayer.play("RESET")
-
 
 func _on_continue_pressed() -> void:
 	%Button.play()

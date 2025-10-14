@@ -130,7 +130,8 @@ func handle_action(delta) -> void:
 			return
 	
 	_handle_navigation_path()
-	move_to(self.global_position.direction_to(nav.get_next_path_position()), delta)
+	if next_path_pos:
+		move_to(self.global_position.direction_to(next_path_pos), delta)
 	
 func _handle_navigation_path() -> void:
 	if is_active : return
