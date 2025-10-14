@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://0aaq2moh04q8" path="res://UI/Assets/alerts/houseInHand.png" id="5_ia477"]
 [ext_resource type="Texture2D" uid="uid://ce2faiksbdbqw" path="res://UI/Assets/menus/settings.png" id="5_kd6an"]
 [ext_resource type="Texture2D" uid="uid://bfqdqavdl2kr3" path="res://UI/Assets/menus/pause.png" id="5_n2q0n"]
-[ext_resource type="Texture2D" uid="uid://drytwq44nae6t" path="res://UI/Assets/menus/discoveryshow.png" id="5_oemsu"]
 [ext_resource type="Texture2D" uid="uid://e0lt6th6b1bi" path="res://UI/Assets/alerts/wavetimeAlert.png" id="6_ia477"]
 [ext_resource type="Texture2D" uid="uid://dwseh6hsy3l77" path="res://UI/Assets/menus/gameover.png" id="7_ftqev"]
 [ext_resource type="Texture2D" uid="uid://3it4y7vqlqgb" path="res://UI/Assets/alerts/swarmAlert.png" id="7_l2k1h"]
@@ -29,6 +28,9 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_yqd36"]
 font = ExtResource("7_titua")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ia477"]
+load_path = "res://.godot/imported/discoveryshow.png-7553562f97402277057b194b770f9c25.ctex"
 
 [sub_resource type="LabelSettings" id="LabelSettings_ftqev"]
 font = ExtResource("7_titua")
@@ -511,9 +513,9 @@ metadata/_edit_use_anchors_ = true
 [node name="CardShow" type="Sprite2D" parent="Cards"]
 unique_name_in_owner = true
 scale = Vector2(3, 3)
-texture = ExtResource("5_oemsu")
+texture = SubResource("CompressedTexture2D_ia477")
 offset = Vector2(320, 180)
-hframes = 40
+hframes = 20
 
 [node name="Show" type="Button" parent="Cards/CardShow"]
 anchors_preset = -1
@@ -564,7 +566,7 @@ being_charmed = true
 [node name="Discoveryshow" type="Sprite2D" parent="Cards"]
 visible = false
 position = Vector2(591, 633)
-texture = ExtResource("5_oemsu")
+texture = SubResource("CompressedTexture2D_ia477")
 
 [node name="Decrees" type="Control" parent="."]
 unique_name_in_owner = true

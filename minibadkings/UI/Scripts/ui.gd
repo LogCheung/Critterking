@@ -142,7 +142,7 @@ func _on_show_pressed() -> void:
 	
 	if rolltype == Card.ROLLTYPE.CHARM:
 		%CardShow.texture = preload("res://UI/Assets/menus/discoveryshow.png")
-		%CardShow.hframes = 40
+		%CardShow.hframes = 20
 		if !Global.cardsDispatched.is_empty() : 
 			%Card3.type = Global.cardsDispatched.front().type
 		%Card3.match_sprite_type()
