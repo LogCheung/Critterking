@@ -12,6 +12,8 @@ var isActive : bool = false
 func _ready() -> void:
 	super._ready()
 	type = randi_range(Unit.TYPE.MELEE,Unit.TYPE.CRAZED)
+	while Global.nights <= 3 and (type == Unit.TYPE.RANGED or type == Unit.TYPE.BOMBER):
+		type = randi_range(Unit.TYPE.MELEE,Unit.TYPE.CRAZED)
 	tile = tileWorld.ground.local_to_map(global_position)
 	create_formation(ENEMY)
 	at_border.connect(activate_units)

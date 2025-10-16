@@ -676,7 +676,6 @@ focus_mode = 0
 flat = true
 
 [node name="load" type="Button" parent="mainmenu/main"]
-visible = false
 offset_left = 184.167
 offset_top = 129.5
 offset_right = 226.167

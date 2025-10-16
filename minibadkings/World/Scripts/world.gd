@@ -68,7 +68,7 @@ func new_game() -> void:
 	
 	
 	# add house card
-	for i in range(1):
+	for i in range(2):
 		add_house_card()
 	#for i in range(1):
 		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()

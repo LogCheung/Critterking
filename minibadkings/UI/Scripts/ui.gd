@@ -104,7 +104,9 @@ func show_hand() -> void:
 	if world.dispatchDay: dispatch.show()
 	
 	refresh_positions()
-	#_on_save_pressed()
+	for i in range(5):
+		await get_tree().process_frame
+	_on_save_pressed()
 
 func on_game_over() -> void:
 	hand.hide()
@@ -319,6 +321,7 @@ func load_world() -> void:
 	world.tileWorld.obstacles.tile_map_data = SaveLoad.SaveFileData.obstacles
 	world.tileWorld.ring.tile_map_data  = SaveLoad.SaveFileData.ring
 	Global.nights = SaveLoad.SaveFileData.nights
+	rollArray = SaveLoad.SaveFileData.rolls
 	
 	# load cards
 	for card : Card in SaveLoad.SaveFileData.cardsInHand:
@@ -336,6 +339,11 @@ func load_world() -> void:
 	world.tileWorld.set_up_astar()
 	for unit in get_tree().get_nodes_in_group("ALLY"):
 		unit._ready()
+		
+	if !rollArray.is_empty():
+		cards.show()
+		hand.hide()
+		end_turn.hide()
 	#if !FileAccess.file_exists("res://saves/savefile.tscn"):
 		#return
 	#else:

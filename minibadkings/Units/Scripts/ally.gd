@@ -7,12 +7,9 @@ signal healthchange
 const MELEENORMALSE = preload("res://Units/Assets/AllyMelee/AllyMeleeNormalSE.png")
 const RANGEDNORMALSE = preload("res://Units/Assets/AllyRanged/AllyRangedNormalSE.png")
 const SHIELDEDNORMALSE = preload("res://Units/Assets/AllyShield/AllyShieldNormalSE.png")
-const CRAZEDNORMALSE = preload("res://Units/Assets/AllyCrazed/AllyCrazedNormalSE.png")
-const MELEENORMALNW = preload("res://Units/Assets/AllyMelee/AllyMeleeNormalNW.png")
-const RANGEDNORMALNW = preload("res://Units/Assets/AllyRanged/AllyRangedNormalNW.png")
-const SHIELDEDNORMALNW = preload("res://Units/Assets/AllyShield/AllyShieldNormalNW.png")
-const BOMBERNORMALSE = preload("res://Units/Assets/AllyBombardier/AllyBombardierSE.png")
-const FLYINGNORMALSE = preload("res://Units/Assets/AllyFlying/AllyFlyingSE.png")
+const CRAZEDNORMALSE = preload("res://Units/Assets/AllyCrazed/AllyNormalCrazed.png")
+const BOMBERNORMALSE = preload("res://Units/Assets/AllyBombardier/AllyNormalBomber.png")
+const FLYINGNORMALSE = preload("res://Units/Assets/AllyFlying/AllyNormalFlying.png")
 const PARALYTICNORMALSE = preload("res://Units/Assets/AllyParalytic/AllyNormalParalytic.png")
 const RESILIENTNORMALSE = preload("res://Units/Assets/AllyResilient/AllyNormalResilient.png")
 const STINGERNORMALSE = preload("res://Units/Assets/AllyStinger/AllyNormalStinger.png")
@@ -20,12 +17,9 @@ const STINGERNORMALSE = preload("res://Units/Assets/AllyStinger/AllyNormalStinge
 const UPMELEENORMALSE = preload("res://Units/Assets/AllyMelee/AllyMeleeUpgradedSE.png")
 const UPRANGEDNORMALSE = preload("res://Units/Assets/AllyRanged/AllyRangedUpgradedSE.png")
 const UPSHIELDEDNORMALSE = preload("res://Units/Assets/AllyShield/AllyShieldUpgradedSE.png")
-const UPCRAZEDNORMALSE = preload("res://Units/Assets/AllyCrazed/AllyCrazedUpgradedSE.png")
-const UPMELEENORMALNW = preload("res://Units/Assets/AllyMelee/AllyMeleeUpgradedNW.png")
-const UPRANGEDNORMALNW = preload("res://Units/Assets/AllyRanged/AllyRangedUpgradedNW.png")
-const UPSHIELDEDNORMALNW = preload("res://Units/Assets/AllyShield/AllyShieldUpgradedNW.png")
-const UPBOMBERNORMALSE = preload("res://Units/Assets/AllyBombardier/AllyBombardierUpgradedSE.png")
-const UPFLYINGNORMALSE = preload("res://Units/Assets/AllyFlying/AllyFlyingUpgradedSE.png")
+const UPCRAZEDNORMALSE = preload("res://Units/Assets/AllyCrazed/AllyUpgradedCrazed.png")
+const UPBOMBERNORMALSE = preload("res://Units/Assets/AllyBombardier/AllyUpgradedBomber.png")
+const UPFLYINGNORMALSE = preload("res://Units/Assets/AllyFlying/AllyUpgradedFlying.png")
 const UPPARALYTICNORMALSE = preload("res://Units/Assets/AllyParalytic/AllyUpgradedParalytic.png")
 const UPRESILIENTNORMALSE = preload("res://Units/Assets/AllyResilient/AllyUpgradedResilient.png")
 const UPSTINGERNORMALSE = preload("res://Units/Assets/AllyStinger/AllyUpgradedStinger.png")
@@ -260,6 +254,12 @@ func match_type() -> void:
 			attack_cd.wait_time = .5
 			visionRange = 200
 	set_up_vision()
+	
+	if type > Unit.TYPE.RANGED:
+		var path : String = "res://Units/Assets/AllyResilient/Ally"
+		path += "Normal" if level <= 1 else "Upgraded"
+		
+		sprite_2d.texture 
 
 #func on_health_change() -> void:
 	#var farms = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()

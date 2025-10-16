@@ -48,8 +48,9 @@ func _ready() -> void:
 	if type == TYPE.TRAP : tileWorld.ground.set_cell(tile,0,Vector2(0,0),3)
 	
 	doorstepTile = tile + Vector2i(1,0)
-	%Build.play()
-	anim.play("build")
+	if health == max_health:
+		%Build.play()
+		anim.play("build")
 
 func _process(delta: float) -> void:
 	if health <= 0:
