@@ -1,6 +1,6 @@
 extends Node
 
-const save_location = "res://saves/SaveFile.tres"
+const save_location = "user://SaveFile.tres"
 
 var SaveFileData : SaveDataResource = SaveDataResource.new()
 

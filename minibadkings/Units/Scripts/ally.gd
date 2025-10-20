@@ -258,8 +258,9 @@ func match_type() -> void:
 	if type > Unit.TYPE.RANGED:
 		var path : String = "res://Units/Assets/AllyResilient/Ally"
 		path += "Normal" if level <= 1 else "Upgraded"
+		path += str(TYPE.keys()[type]).to_lower()
 		
-		sprite_2d.texture 
+		sprite_2d.texture
 
 #func on_health_change() -> void:
 	#var farms = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()

@@ -31,6 +31,7 @@ var dispatchDay : bool = false
 
 var night_is_expansion: bool = false
 func _ready() -> void:
+	
 	night_started.connect(on_night_started)
 	night_ended.connect(on_night_ended)
 	enemy_group_eliminated.connect(on_enemy_group_eliminated)
