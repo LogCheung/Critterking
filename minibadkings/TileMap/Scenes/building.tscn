@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://cct0mtgpy7ut6"]
 
 [ext_resource type="Script" uid="uid://dpq0gk0d460fx" path="res://TileMap/Scripts/building.gd" id="1_mpr6t"]
-[ext_resource type="Texture2D" uid="uid://b413rrkmvwwc8" path="res://TileMap/Assets/storageBuild.png" id="2_j1jnl"]
+[ext_resource type="Texture2D" uid="uid://b2tb0eb75whjr" path="res://TileMap/Assets/buildCampfire.png" id="2_j1jnl"]
 [ext_resource type="Texture2D" uid="uid://du3cwfifspbnp" path="res://UI/Assets/HealingUnder.png" id="3_i4c7k"]
 [ext_resource type="Texture2D" uid="uid://bv3jqqow41vyp" path="res://UI/Assets/HealingOver.png" id="4_5rqce"]
 [ext_resource type="Texture2D" uid="uid://ba2e2y1w34bcg" path="res://UI/Assets/HealingProgress.png" id="5_j1jnl"]
@@ -78,12 +78,13 @@ offset = Vector2(0, -12)
 hframes = 8
 frame = 1
 
+[node name="Entrance" type="Node2D" parent="Sprite2D"]
+unique_name_in_owner = true
+position = Vector2(13, 10)
+
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
 position = Vector2(1, 0)
 polygon = PackedVector2Array(28, 0, -1, -15, -28, 0, -1, 15)
-
-[node name="Entrance" type="Node2D" parent="."]
-position = Vector2(13, 10)
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="."]
 visible = false

@@ -14,9 +14,15 @@ const SAPSTORE = preload("res://TileMap/Assets/sapBuild.png")
 const CARE = preload("res://TileMap/Assets/careBuild.png")
 const NURSERY = preload("res://TileMap/Assets/nurseryBuild.png")
 const STORAGE = preload("res://TileMap/Assets/storageBuild.png")
+const TUNNELA = preload("res://TileMap/Assets/buildTunnelA.png")
+const TUNNELB = preload("res://TileMap/Assets/buildTunnelB.png")
+const FORT = preload("res://TileMap/Assets/fort.png")
+const CAMPFIRE = preload("res://TileMap/Assets/buildCampfire.png")
+const CLIFF = preload("res://TileMap/Assets/buildCliff.png")
 
 enum TYPE {
-	NONE, HOUSE, TRAP, FARM, SAPSTORE, RUINS, CARE, NURSERY, STORAGE
+	NONE, TRAP, HOUSE,CARE,  FARM, SAPSTORE,  TUNNEL, FORT, CAMPFIRE, CLIFF,
+	 NURSERY, STORAGE, RUINS,
 }
 
 @export var type : TYPE
@@ -25,7 +31,7 @@ enum TYPE {
 @export var max_health : int = 20
 @export var temporary : bool = false
 
-@onready var entrance: Node2D = $Entrance
+@onready var entrance: Node2D = %Entrance
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var bar: TextureProgressBar = $TextureProgressBar
 @onready var sprite_2d: Sprite2D = $Sprite2D
@@ -40,15 +46,14 @@ var highlightSprite : Sprite2D
 
 func _ready() -> void:
 	# set up position and blocking navigation
-	match_type()
 	tile = tileWorld.ground.local_to_map(global_position)
 	if temporary : prevTileType = tileWorld.ground.get_cell_alternative_tile(tile)
 	tileWorld.ground.set_cell(tile,0,Vector2(0,0),2)
-	
-	if type == TYPE.TRAP : tileWorld.ground.set_cell(tile,0,Vector2(0,0),3)
-	
 	doorstepTile = tile + Vector2i(1,0)
-	if health == max_health:
+	match_type()
+	
+	if health > 0:
+		visible = true
 		%Build.play()
 		anim.play("build")
 
@@ -86,6 +91,7 @@ func match_type() -> void:
 			sprite_2d.texture = TRAPA if randi() % 2 == 0 else TRAPB
 			sprite_2d.offset = Vector2.ZERO
 			z_index = 0
+			tileWorld.ground.set_cell(tile,0,Vector2(0,0),3)
 		TYPE.CARE:
 			sprite_2d.texture = CARE
 			sprite_2d.offset = Vector2(1,-9)
@@ -108,6 +114,17 @@ func match_type() -> void:
 		TYPE.STORAGE:
 			sprite_2d.texture = STORAGE
 			sprite_2d.flip_h = true
+		TYPE.TUNNEL:
+			sprite_2d.texture = TUNNELB
+			sprite_2d.offset = Vector2(0,-8)
+		TYPE.FORT:
+			sprite_2d.texture = FORT
+			sprite_2d.offset = Vector2(-1,-10)
+		TYPE.CAMPFIRE:
+			sprite_2d.texture = CAMPFIRE
+			sprite_2d.offset = Vector2(0,-2)
+		TYPE.CLIFF:
+			sprite_2d.texture = CLIFF
 
 func duplicate_sprite() -> void:
 	# used for buildings selected during battle

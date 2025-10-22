@@ -5,13 +5,15 @@ const GROUP = preload("res://Units/Scenes/unit_group.tscn")
 const BUILDING = preload("res://TileMap/Scenes/building.tscn")
 
 # Crazed is border for units, Biter is start
-# Storage is border for buildings, TRAPS is start
+# Destroy is border for buildings, TRAPS is start
 # Nail is border for charms, Heartlocket is start
 enum CARDTYPE {
 	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3, #TRAPJAW, EXPLOSIVE, FUNGI, 
 	PARALYTIC, RESILIENT, STINGER ,BOMBER, FLYING,CRAZED,
 	
-	TRAPS ,DESTROY , HOUSE, CARE , FARM , SAPSTORE, NURSERY, STORAGE, 
+	TRAPS , HOUSE, CARE , FARM , SAPSTORE, TUNNEL, FORT, CAMPFIRE, CLIFF,
+	NURSERY, STORAGE, REFRESH, DESTROY ,
+	
 	HEARTLOCKET, RING, SWORD, FLAG, SODA, ROLLERSKATE, MEDKIT, GLASSES, NAIL,
 	INSPIRATION, DECARE, RECON, DEFENSE, RENOVATE, WAR, CONSCRIPTION, MASTERY, INFLUENCE, CONSTRUCTION
 }
@@ -266,11 +268,11 @@ func randomize_type() -> void:
 	if being_charmed : return
 	match rolltype:
 		ROLLTYPE.GENERAL:
-			type = randi_range(CARDTYPE.BITER,CARDTYPE.STORAGE)
+			type = randi_range(CARDTYPE.BITER,CARDTYPE.DESTROY)
 		ROLLTYPE.UNIT:
 			type = randi_range(CARDTYPE.BITER,CARDTYPE.CRAZED)
 		ROLLTYPE.BUILDINGS:
-			type = randi_range(CARDTYPE.TRAPS,CARDTYPE.STORAGE)
+			type = randi_range(CARDTYPE.TRAPS,CARDTYPE.DESTROY)
 		ROLLTYPE.CHARM:
 			type = randi_range(CARDTYPE.HEARTLOCKET,CARDTYPE.NAIL)#randi_range(CARDTYPE.SWORD,CARDTYPE.FLAG) 
 		ROLLTYPE.BLESSING:
@@ -321,6 +323,15 @@ func add_card_to_hand() -> void:
 			decree.set_owner(get_tree().get_current_scene())
 
 func match_building_type(building : Building) -> Building:
+	building.type = type - CARDTYPE.TRAPS + 1
+	if building.type == Building.TYPE.CARE or building.type == Building.TYPE.HOUSE:
+		if check_if_blocking(tile):
+			sprite_2d.scale = Vector2(1.0,1.0)
+			position = default_position
+			selected = false
+			building = null
+	return building
+	
 	match type:
 		CARDTYPE.TRAPS:
 			building.type = Building.TYPE.TRAP
