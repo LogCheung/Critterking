@@ -20,6 +20,9 @@ signal game_over
 @onready var decrees: Control = %Decrees
 @onready var night_counter: Control = %NightCounter
 @onready var songs : Array = get_tree().get_nodes_in_group("MUSIC")
+@onready var party_current: Label = %PartyCurrent
+@onready var party_limit: Label = %PartyLimit
+@onready var no_space: TextureRect = %noSpace
 
 @export var rollArray : Array = []
 
@@ -44,6 +47,7 @@ func _process(delta: float) -> void:
 	elif !end_turn.visible and !%crtrNight.playing and !control_is_visible():
 		play_song(%crtrNight)
 	%DayNight.text = str(Global.nights)
+	world.handle_party_limit()
 		
 func _ready() -> void:
 	# connect signals

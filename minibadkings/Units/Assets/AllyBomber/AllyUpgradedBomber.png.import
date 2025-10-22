@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dp5ih8lhg6hl3"
-path="res://.godot/imported/EnemyUpgradedBomber.png-438efa79ce1294ba3cd8bc0e317569d0.ctex"
+uid="uid://bwssusg5kylnu"
+path="res://.godot/imported/AllyUpgradedBomber.png-031667ee38d8b4d03456d68b2c63cb61.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Units/Assets/EnemyBombardier/EnemyUpgradedBomber.png"
-dest_files=["res://.godot/imported/EnemyUpgradedBomber.png-438efa79ce1294ba3cd8bc0e317569d0.ctex"]
+source_file="res://Units/Assets/AllyBomber/AllyUpgradedBomber.png"
+dest_files=["res://.godot/imported/AllyUpgradedBomber.png-031667ee38d8b4d03456d68b2c63cb61.ctex"]
 
 [params]
 

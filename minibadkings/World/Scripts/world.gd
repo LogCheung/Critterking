@@ -73,7 +73,7 @@ func new_game() -> void:
 		add_house_card()
 	for i in range(1):
 		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.CLIFF
+		hCard.type = Card.CARDTYPE.FLYING
 		ui.hand.get_child(0).add_child(hCard)
 	#for i in range(1):
 		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
@@ -404,6 +404,17 @@ func expand() -> void:
 	Global.expansions += 1
 	tileWorld.draw_build_area()
 
+func handle_party_limit() -> void:
+	var houseCount = get_tree().get_nodes_in_group("BUILDING")
+	houseCount = houseCount.filter(func(e):return e.type == Building.TYPE.HOUSE)
+	houseCount = houseCount.size()
+	
+	Global.partyCount = get_tree().get_nodes_in_group("ALLYGROUP").size()
+	Global.partyLimit = 2 + (2 * houseCount)
+	
+	ui.party_current.text = str(Global.partyCount)
+	ui.party_limit.text = str(Global.partyLimit)
+	pass
 
 func _on_timer_timeout() -> void:
 	if !is_combat_phase: return

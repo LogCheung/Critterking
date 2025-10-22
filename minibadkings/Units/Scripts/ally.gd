@@ -8,7 +8,7 @@ const MELEENORMALSE = preload("res://Units/Assets/AllyMelee/AllyMeleeNormalSE.pn
 const RANGEDNORMALSE = preload("res://Units/Assets/AllyRanged/AllyRangedNormalSE.png")
 const SHIELDEDNORMALSE = preload("res://Units/Assets/AllyShield/AllyShieldNormalSE.png")
 const CRAZEDNORMALSE = preload("res://Units/Assets/AllyCrazed/AllyNormalCrazed.png")
-const BOMBERNORMALSE = preload("res://Units/Assets/AllyBombardier/AllyNormalBomber.png")
+const BOMBERNORMALSE = preload("res://Units/Assets/AllyBomber/AllyNormalBomber.png")
 const FLYINGNORMALSE = preload("res://Units/Assets/AllyFlying/AllyNormalFlying.png")
 const PARALYTICNORMALSE = preload("res://Units/Assets/AllyParalytic/AllyNormalParalytic.png")
 const RESILIENTNORMALSE = preload("res://Units/Assets/AllyResilient/AllyNormalResilient.png")
@@ -18,7 +18,7 @@ const UPMELEENORMALSE = preload("res://Units/Assets/AllyMelee/AllyMeleeUpgradedS
 const UPRANGEDNORMALSE = preload("res://Units/Assets/AllyRanged/AllyRangedUpgradedSE.png")
 const UPSHIELDEDNORMALSE = preload("res://Units/Assets/AllyShield/AllyShieldUpgradedSE.png")
 const UPCRAZEDNORMALSE = preload("res://Units/Assets/AllyCrazed/AllyUpgradedCrazed.png")
-const UPBOMBERNORMALSE = preload("res://Units/Assets/AllyBombardier/AllyUpgradedBomber.png")
+const UPBOMBERNORMALSE = preload("res://Units/Assets/AllyBomber/AllyUpgradedBomber.png")
 const UPFLYINGNORMALSE = preload("res://Units/Assets/AllyFlying/AllyUpgradedFlying.png")
 const UPPARALYTICNORMALSE = preload("res://Units/Assets/AllyParalytic/AllyUpgradedParalytic.png")
 const UPRESILIENTNORMALSE = preload("res://Units/Assets/AllyResilient/AllyUpgradedResilient.png")
@@ -256,11 +256,19 @@ func match_type() -> void:
 	set_up_vision()
 	
 	if type > Unit.TYPE.RANGED:
-		var path : String = "res://Units/Assets/AllyResilient/Ally"
+		var typeStr = str(TYPE.keys()[type])
+		var path : String = "res://Units/Assets/Ally"
+		# find folder
+		path += typeStr.substr(0,1)
+		path += typeStr.substr(1).to_lower()
+		# find file
+		path += "/Ally"
 		path += "Normal" if level <= 1 else "Upgraded"
-		path += str(TYPE.keys()[type]).to_lower()
+		path += typeStr.substr(0,1)
+		path += typeStr.substr(1).to_lower()
+		path += ".png"
 		
-		sprite_2d.texture
+		sprite_2d.texture = load(path)
 
 #func on_health_change() -> void:
 	#var farms = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()

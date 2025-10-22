@@ -153,6 +153,21 @@ func highlight_tiles() -> void:
 		tileWorld.hover.set_cell(tile,0,Vector2.ZERO,1)
 
 func plop() -> void:
+	if Global.partyCount >= Global.partyLimit and type <= CARDTYPE.CRAZED:
+		# precondition : is unit card and party limit is reached
+		# set to default
+		sprite_2d.scale = Vector2(1.0,1.0)
+		position = default_position
+		selected = false
+		ui.refresh_positions()
+		
+		# make alert visible 
+		if !ui.no_space.visible:
+			ui.no_space.visible = true
+			await get_tree().create_timer(2).timeout
+			ui.no_space.visible = false
+		return
+	
 	tileWorld.handle_navigable_cells()
 	tile = world.tile2
 	var ploppableTiles = tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),1)

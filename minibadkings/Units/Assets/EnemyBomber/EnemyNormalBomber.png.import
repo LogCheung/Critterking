@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnd5aps4g4bww"
-path="res://.godot/imported/AllyNormalBomber.png-de47f18a6b6e142a17f439a055201c28.ctex"
+uid="uid://bweiyyqils3sd"
+path="res://.godot/imported/EnemyNormalBomber.png-5fdad5e6e00a635db4fe7856f1af9b91.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Units/Assets/AllyBombardier/AllyNormalBomber.png"
-dest_files=["res://.godot/imported/AllyNormalBomber.png-de47f18a6b6e142a17f439a055201c28.ctex"]
+source_file="res://Units/Assets/EnemyBomber/EnemyNormalBomber.png"
+dest_files=["res://.godot/imported/EnemyNormalBomber.png-5fdad5e6e00a635db4fe7856f1af9b91.ctex"]
 
 [params]
 

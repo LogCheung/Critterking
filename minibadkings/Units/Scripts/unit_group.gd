@@ -62,6 +62,7 @@ func _input(event: InputEvent) -> void:
 			
 		else: # can go where clicked
 			highlight_houses(false)
+			highlight_tunnels(false)
 			tile = pos
 			pos = tileWorld.ground.map_to_local(pos) # now local map cord
 			global_position = pos
@@ -106,6 +107,7 @@ func check_on_house(mousePos : Vector2) -> void:
 			for unit : Ally in unitsArray:
 				unit.healing = true
 			highlight_houses(false)
+			highlight_tunnels(false)
 			return
 func highlight_houses(highlight : bool = true) -> void:
 	if size == max_size : return
@@ -114,6 +116,13 @@ func highlight_houses(highlight : bool = true) -> void:
 	for h : Building in houses:
 		if h.occupant != null: continue
 		h.sprite_2d.material = h.HIGHLIGHT if highlight else null
+
+func highlight_tunnels(highlight : bool = true) -> void:
+	var tunnels = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
+	tunnels = tunnels.filter(func(b):return b.type == Building.TYPE.TUNNEL)
+	
+	for t : Building in tunnels:
+		t.sprite_2d.material = t.HIGHLIGHT if highlight else null
 
 func on_being_upgraded(incLevel : int) -> void:
 	%Merge.play()

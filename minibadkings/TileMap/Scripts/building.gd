@@ -49,7 +49,9 @@ func _ready() -> void:
 	tile = tileWorld.ground.local_to_map(global_position)
 	if temporary : prevTileType = tileWorld.ground.get_cell_alternative_tile(tile)
 	tileWorld.ground.set_cell(tile,0,Vector2(0,0),2)
-	doorstepTile = tile + Vector2i(1,0)
+	doorstepTile = tileWorld.ground.local_to_map(entrance.global_position)
+	print(doorstepTile)
+	print(tile + Vector2i(0,1))
 	match_type()
 	
 	if health > 0:
@@ -113,7 +115,7 @@ func match_type() -> void:
 			sprite_2d.offset = Vector2(0,-2)
 		TYPE.STORAGE:
 			sprite_2d.texture = STORAGE
-			sprite_2d.flip_h = true
+			sprite_2d.scale.x = -1
 		TYPE.TUNNEL:
 			sprite_2d.texture = TUNNELB
 			sprite_2d.offset = Vector2(0,-8)
