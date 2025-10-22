@@ -50,8 +50,6 @@ func _ready() -> void:
 	if temporary : prevTileType = tileWorld.ground.get_cell_alternative_tile(tile)
 	tileWorld.ground.set_cell(tile,0,Vector2(0,0),2)
 	doorstepTile = tileWorld.ground.local_to_map(entrance.global_position)
-	print(doorstepTile)
-	print(tile + Vector2i(0,1))
 	match_type()
 	
 	if health > 0:

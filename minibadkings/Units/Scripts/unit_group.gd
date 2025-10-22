@@ -20,6 +20,9 @@ func _ready() -> void:
 	%Place.play()
 	selected = false
 	_on_select_area_mouse_exited()
+
+func _process(delta: float) -> void:
+	if selected: highlight_tiles()
 	
 func respawn_units() -> void:
 	create_formation(UNIT)
@@ -104,6 +107,10 @@ func check_on_house(mousePos : Vector2) -> void:
 		if mousePos.distance_to(h.global_position) < 32:
 			h.occupant = self
 			house = h
+			
+			tile = h.doorstepTile
+			global_position = tileWorld.ground.map_to_local(h.doorstepTile) # now local map cord
+			tileWorld.handle_navigable_cells()
 			for unit : Ally in unitsArray:
 				unit.healing = true
 			highlight_houses(false)
@@ -134,6 +141,32 @@ func on_being_upgraded(incLevel : int) -> void:
 			upgraded = true
 			max_size += 3
 	create_formation(UNIT)
+
+func highlight_tiles() -> void:
+	# clear hover tiles
+	for cell in tileWorld.hover.get_used_cells():
+		tileWorld.hover.set_cell(cell,-1)
+	
+	# filter tiles already placed
+	var unit_tiles : Array
+	var unit_groups = get_tree().get_first_node_in_group("GROUPSNODE").get_children()
+	for group : AllyGroup in unit_groups:
+		if !group is AllyGroup : continue
+		group.tile = tileWorld.ground.local_to_map(group.global_position)
+		unit_tiles.append(Vector2i(group.tile))
+	
+	# add appropriate tiles
+	var navTiles = tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),0)
+	navTiles.append_array(tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),1))
+	for cell in navTiles:
+		if unit_tiles.has(cell) : continue
+		tileWorld.hover.set_cell(cell,0,Vector2(0,0),0)
+		tileWorld.hover.visible = true
+	
+	# highlight tile hovered over with card
+	var hoverTile = world.tileWorld.ground.local_to_map(world.get_global_mouse_position())
+	if tileWorld.hover.get_used_cells().has(hoverTile):
+		tileWorld.hover.set_cell(hoverTile,0,Vector2.ZERO,1)
 	
 func apply_charm() -> void:
 	if !is_instance_valid(charm) or !charm: return

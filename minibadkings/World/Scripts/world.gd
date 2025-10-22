@@ -406,11 +406,13 @@ func expand() -> void:
 
 func handle_party_limit() -> void:
 	var houseCount = get_tree().get_nodes_in_group("BUILDING")
+	var campCount = houseCount.filter(func(e):return e.type == Building.TYPE.CAMPFIRE)
 	houseCount = houseCount.filter(func(e):return e.type == Building.TYPE.HOUSE)
 	houseCount = houseCount.size()
+	campCount = campCount.size()
 	
 	Global.partyCount = get_tree().get_nodes_in_group("ALLYGROUP").size()
-	Global.partyLimit = 2 + (2 * houseCount)
+	Global.partyLimit = 2 + (2 * houseCount) + (1 * campCount)
 	
 	ui.party_current.text = str(Global.partyCount)
 	ui.party_limit.text = str(Global.partyLimit)
