@@ -21,7 +21,7 @@ const CAMPFIRE = preload("res://TileMap/Assets/buildCampfire.png")
 const CLIFF = preload("res://TileMap/Assets/buildCliff.png")
 
 enum TYPE {
-	NONE, TRAP, HOUSE,CARE,  FARM, SAPSTORE,  TUNNEL, FORT, CAMPFIRE, CLIFF,
+	NONE, TRAP, HOUSE,CARE,  FARM, SAPSTORE, # TUNNEL, FORT, CAMPFIRE, CLIFF,
 	 NURSERY, STORAGE, RUINS,
 }
 
@@ -114,17 +114,17 @@ func match_type() -> void:
 		TYPE.STORAGE:
 			sprite_2d.texture = STORAGE
 			sprite_2d.scale.x = -1
-		TYPE.TUNNEL:
-			sprite_2d.texture = TUNNELB
-			sprite_2d.offset = Vector2(0,-8)
-		TYPE.FORT:
-			sprite_2d.texture = FORT
-			sprite_2d.offset = Vector2(-1,-10)
-		TYPE.CAMPFIRE:
-			sprite_2d.texture = CAMPFIRE
-			sprite_2d.offset = Vector2(0,-2)
-		TYPE.CLIFF:
-			sprite_2d.texture = CLIFF
+		#TYPE.TUNNEL:
+			#sprite_2d.texture = TUNNELB
+			#sprite_2d.offset = Vector2(0,-8)
+		#TYPE.FORT:
+			#sprite_2d.texture = FORT
+			#sprite_2d.offset = Vector2(-1,-10)
+		#TYPE.CAMPFIRE:
+			#sprite_2d.texture = CAMPFIRE
+			#sprite_2d.offset = Vector2(0,-2)
+		#TYPE.CLIFF:
+			#sprite_2d.texture = CLIFF
 
 func duplicate_sprite() -> void:
 	# used for buildings selected during battle

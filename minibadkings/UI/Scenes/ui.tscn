@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=42 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Texture2D" uid="uid://luuqbnbqgyao" path="res://UI/Assets/menus/mainmenu.png" id="3_2fejo"]
@@ -9,7 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://0aaq2moh04q8" path="res://UI/Assets/alerts/houseInHand.png" id="5_ia477"]
 [ext_resource type="Texture2D" uid="uid://ce2faiksbdbqw" path="res://UI/Assets/menus/settings.png" id="5_kd6an"]
 [ext_resource type="Texture2D" uid="uid://bfqdqavdl2kr3" path="res://UI/Assets/menus/pause.png" id="5_n2q0n"]
+[ext_resource type="Texture2D" uid="uid://cbfi3jolrr55m" path="res://UI/Assets/cards/tutorialText.png" id="5_nvxdf"]
 [ext_resource type="Texture2D" uid="uid://e0lt6th6b1bi" path="res://UI/Assets/alerts/wavetimeAlert.png" id="6_ia477"]
+[ext_resource type="FontFile" uid="uid://ggtewla8581f" path="res://Units/Debug/aseprite.otf" id="6_t0wgx"]
 [ext_resource type="Texture2D" uid="uid://dwseh6hsy3l77" path="res://UI/Assets/menus/gameover.png" id="7_ftqev"]
 [ext_resource type="Texture2D" uid="uid://3it4y7vqlqgb" path="res://UI/Assets/alerts/swarmAlert.png" id="7_l2k1h"]
 [ext_resource type="Texture2D" uid="uid://djapvfxyk1cj0" path="res://UI/Assets/alerts/maxPop.png" id="7_nvxdf"]
@@ -24,7 +26,6 @@
 [ext_resource type="AudioStream" uid="uid://cwx4hw05ceroc" path="res://Audio/sfx/Shuffle.tres" id="11_6dw6b"]
 [ext_resource type="Texture2D" uid="uid://b6kejcvarih2b" path="res://UI/Assets/nightcount.png" id="11_yqd36"]
 [ext_resource type="AudioStream" uid="uid://bdq1nbxdckl0r" path="res://Audio/sfx/Card.tres" id="12_yqd36"]
-[ext_resource type="PackedScene" uid="uid://dtxo6oppyymjc" path="res://UI/Scenes/decree.tscn" id="13_nvxdf"]
 [ext_resource type="AudioStream" uid="uid://bxpbo04dxxuf4" path="res://Audio/sfx/Button.tres" id="15_8g5lr"]
 [ext_resource type="AudioStream" uid="uid://c8brf7l45q10r" path="res://Audio/music/crtrnight.tres" id="19_gu1s8"]
 [ext_resource type="AudioStream" uid="uid://u2y0bys67ovo" path="res://Audio/music/crtrday.tres" id="20_8g5lr"]
@@ -340,7 +341,6 @@ _data = {
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_44q3l")
-rollArray = null
 
 [node name="NightCounter" type="Control" parent="."]
 unique_name_in_owner = true
@@ -394,8 +394,45 @@ label_settings = SubResource("LabelSettings_lpmf3")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Tutorial" type="Control" parent="."]
+unique_name_in_owner = true
+z_index = 4096
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="box" type="Sprite2D" parent="Tutorial"]
+position = Vector2(1775, 481)
+scale = Vector2(2, 2)
+texture = ExtResource("5_nvxdf")
+
+[node name="TutorialTitle" type="RichTextLabel" parent="Tutorial/box"]
+unique_name_in_owner = true
+offset_left = -69.0
+offset_top = -106.0
+offset_right = 69.5
+offset_bottom = -80.0
+theme_override_fonts/normal_font = ExtResource("6_t0wgx")
+theme_override_font_sizes/normal_font_size = 14
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TutorialText" type="RichTextLabel" parent="Tutorial/box"]
+unique_name_in_owner = true
+offset_left = -50.5
+offset_top = -71.99999
+offset_right = 99.5
+offset_bottom = 132.00003
+scale = Vector2(0.75, 0.75)
+theme_override_fonts/normal_font = ExtResource("6_t0wgx")
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "we"
+
 [node name="EndTurn" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
@@ -649,9 +686,6 @@ mouse_filter = 2
 theme_override_constants/separation = 22
 alignment = 1
 
-[node name="Decree4" parent="Decrees/VBoxContainer" instance=ExtResource("13_nvxdf")]
-layout_mode = 2
-
 [node name="Hand" type="Control" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -732,6 +766,7 @@ focus_mode = 0
 flat = true
 
 [node name="load" type="Button" parent="mainmenu/main"]
+visible = false
 offset_left = 184.167
 offset_top = 129.5
 offset_right = 226.167

@@ -3,3 +3,6 @@ class_name ProfileDataResource
 
 @export var wins : int 
 @export var nights : int
+@export var tutorial : bool = true
+@export var tutorialCharm : bool = true
+@export var tutorialDecree : bool = true

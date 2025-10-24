@@ -6,3 +6,6 @@ extends Node
 @export var cardsDispatched : Array
 @export var partyCount : int
 @export var partyLimit : int
+@export var tutorial : bool = true
+@export var tutorialCharm : bool = true
+@export var tutorialDecree : bool = true

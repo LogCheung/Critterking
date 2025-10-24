@@ -69,12 +69,12 @@ func new_game() -> void:
 	
 	
 	# add house card
-	for i in range(2):
-		add_house_card()
 	for i in range(1):
-		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.FLYING
-		ui.hand.get_child(0).add_child(hCard)
+		add_house_card()
+	#for i in range(1):
+		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.FLYING
+		#ui.hand.get_child(0).add_child(hCard)
 	#for i in range(1):
 		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 		#hCard.type = Card.CARDTYPE.DESTROY
@@ -362,6 +362,7 @@ func _input(event: InputEvent) -> void:
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
+		Engine.time_scale = 8
 		return
 		#new_game()
 		#Engine.time_scale = 8
@@ -406,21 +407,25 @@ func expand() -> void:
 
 func handle_party_limit() -> void:
 	var houseCount = get_tree().get_nodes_in_group("BUILDING")
-	var campCount = houseCount.filter(func(e):return e.type == Building.TYPE.CAMPFIRE)
+	#var campCount = houseCount.filter(func(e):return e.type == Building.TYPE.CAMPFIRE)
 	houseCount = houseCount.filter(func(e):return e.type == Building.TYPE.HOUSE)
 	houseCount = houseCount.size()
-	campCount = campCount.size()
+	#campCount = campCount.size()
 	
 	Global.partyCount = get_tree().get_nodes_in_group("ALLYGROUP").size()
-	Global.partyLimit = 2 + (2 * houseCount) + (1 * campCount)
+	Global.partyLimit = 2 + (2 * houseCount) #+ (1 * campCount)
 	
 	ui.party_current.text = str(Global.partyCount)
 	ui.party_limit.text = str(Global.partyLimit)
+	
+	if Global.partyCount >= Global.partyLimit:
+		ui.no_space.show()
 	pass
 
 func _on_timer_timeout() -> void:
 	if !is_combat_phase: return
 	var enemies = get_tree().get_nodes_in_group("ENEMY")
+	enemies = enemies.filter(func(e : Enemy):return !e.dead)
 	if spawned_parties >= enemy_parties:
 		if enemies.is_empty(): 
 			night_ended.emit()

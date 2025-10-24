@@ -275,6 +275,9 @@ func start_death(destroy : bool = false) -> void:
 	group.deadUnitsArray.append(self)
 	
 	%Death.play()
+	if self is Ally :
+		var ui : UI = get_tree().get_first_node_in_group("UI")
+		ui.ally_died.emit()
 	#queue_free()
 
 func take_knockback(dir : Vector2) -> void:

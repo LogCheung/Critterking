@@ -21,6 +21,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if !approaching : return
 	for unit in unitsArray:
+		if !unit : continue
 		if !unit.in_formation:
 			return
 	at_border.emit()

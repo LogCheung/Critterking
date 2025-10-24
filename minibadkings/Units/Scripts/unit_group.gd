@@ -125,11 +125,12 @@ func highlight_houses(highlight : bool = true) -> void:
 		h.sprite_2d.material = h.HIGHLIGHT if highlight else null
 
 func highlight_tunnels(highlight : bool = true) -> void:
-	var tunnels = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
-	tunnels = tunnels.filter(func(b):return b.type == Building.TYPE.TUNNEL)
-	
-	for t : Building in tunnels:
-		t.sprite_2d.material = t.HIGHLIGHT if highlight else null
+	return
+	#var tunnels = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
+	#tunnels = tunnels.filter(func(b):return b.type == Building.TYPE.TUNNEL)
+	#
+	#for t : Building in tunnels:
+		#t.sprite_2d.material = t.HIGHLIGHT if highlight else null
 
 func on_being_upgraded(incLevel : int) -> void:
 	%Merge.play()

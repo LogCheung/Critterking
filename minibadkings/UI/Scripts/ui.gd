@@ -3,6 +3,11 @@ class_name UI
 
 signal game_over
 
+# for tutorial purposes
+signal card_placed
+signal ally_died
+signal unit_healed
+
 @onready var cards: Control = %Cards
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var hand: Control = %Hand
@@ -58,8 +63,6 @@ func _ready() -> void:
 		c.hide()
 	mainmenu.show()
 	
-
-
 func play_song(song : AudioStreamPlayer) -> void:
 	for s : AudioStreamPlayer in songs:
 		s.stop()
@@ -94,6 +97,8 @@ func show_hand() -> void:
 		return
 	
 	cards.hide()
+	%Tutorial.hide()
+	
 	hand.show()
 	end_turn.show()
 	decrees.show()
@@ -105,12 +110,40 @@ func show_hand() -> void:
 		c.set_up()
 		c.refreshing = true
 	
-	if world.dispatchDay: dispatch.show()
+	if world.dispatchDay: 
+		dispatch.show()
 	
 	refresh_positions()
 	for i in range(5):
 		await get_tree().process_frame
 	_on_save_pressed()
+	
+	if world.dispatchDay and Global.tutorialCharm:
+		%Tutorial.show()
+		%TutorialTitle.text = "Discoveries"
+		%TutorialText.text = "You can choose a unit card to send on an expedition"
+		%TutorialText.text += "\n\nThey will be disabled for a night, but will come back tomorrow with an upgrade"
+		%TutorialText.text += "\n\nYou can continue without selecting if you choose."
+		Global.tutorialCharm = false
+		return
+	
+	if Global.tutorial:
+		%Tutorial.show()
+		%TutorialTitle.text = "Placing"
+		%TutorialText.text = "Place your cards by dragging them from your hand onto the map!"
+		%TutorialText.text += "\n\nIf you have two of the same unit card, you can merge them!"
+		
+		await card_placed
+		await card_placed
+		
+		%TutorialTitle.text = "Unit Types"
+		%TutorialText.text = "Units tend to fall into categories, offensive, defensive, and ranged"
+		%TutorialText.text += "\n\nDuring battle, strategize carefully to ensure a favorable matchup!"
+		
+		await card_placed
+		%TutorialTitle.text = "Camera"
+		%TutorialText.text = "\nUse WASD to move your camera. Hold down shift to speed up the camera!"
+		
 
 func on_game_over() -> void:
 	hand.hide()
@@ -152,12 +185,20 @@ func _on_show_pressed() -> void:
 		if !Global.cardsDispatched.is_empty() : 
 			%Card3.type = Global.cardsDispatched.front().type
 		%Card3.match_sprite_type()
-	
 	else:
 		%CardShow.texture = preload("res://UI/Assets/menus/cardshow.png")
 		%CardShow.hframes = 20
+		
+		# tutorial for decrees
+		if rolltype == Card.ROLLTYPE.BLESSING and Global.tutorialDecree:
+			%Tutorial.show()
+			%TutorialTitle.text = "Decrees"
+			%TutorialText.text = "Decrees are active abilities that can be used during the night."
+			%TutorialText.text += "\n\nOnce used they will be on cooldown for a number of nights but can greatly help your defense."
+			%TutorialText.text += "\n\nAfter picking one, they will be displayed on the left."
+			Global.tutorialDecree = false
+			pass
 	anim.play("cardshow")
-
 
 func _on_play_pressed() -> void:
 	if anim.is_playing() : return
@@ -171,6 +212,11 @@ func _on_play_pressed() -> void:
 	%crtrDay.play()
 	$AnimationPlayer.play("RESET")
 
+	if Global.tutorial:
+		%Tutorial.show()
+		%TutorialTitle.text = "Cards"
+		%TutorialText.text = "Every night you will be able to draw a card, click the deck and make your selection!"
+		%TutorialText.text += "\n\nThe first night you will be able draw twice!"
 
 func _on_help_pressed() -> void:
 	%Button.play()
@@ -221,6 +267,23 @@ func _on_endturn_pressed() -> void:
 		u.speedchange.emit()
 	world.night_started.emit()
 	%noHouse.hide()
+	
+	if Global.tutorial:
+		%Tutorial.show()
+		%TutorialTitle.text = "Commanding"
+		%TutorialText.text = " Click on a unit group to select them! Click a tile to move the group there."
+		%TutorialText.text += "\n\nEnemies will approach from all sides, assume a defensive position!"
+		%TutorialText.text += "\n\nDefeat them to survive the night!"
+		await ally_died
+		
+		%TutorialTitle.text = "Healing"
+		%TutorialText.text = "One of your unit groups has suffered losses."
+		%TutorialText.text += "\n\nClick on them and click on your house to heal them."
+		%TutorialText.text += "\n\nBe careful as they will be temporarily out of the battle."
+		
+		await world.night_ended
+		%Tutorial.hide()
+		Global.tutorial = false
 
 func _on_newgame_pressed() -> void:
 	$AnimationPlayer.play("playAgain")
