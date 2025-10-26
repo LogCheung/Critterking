@@ -90,6 +90,7 @@ func display_cards(display : bool) -> void:
 		
 func show_hand() -> void:
 	# when card is chosen from deck of cards
+	save_game_delayed()
 	rollArray.pop_front()
 	if rollArray.size() > 0:
 		cards.show()
@@ -114,9 +115,6 @@ func show_hand() -> void:
 		dispatch.show()
 	
 	refresh_positions()
-	for i in range(5):
-		await get_tree().process_frame
-	_on_save_pressed()
 	
 	if world.dispatchDay and Global.tutorialCharm:
 		%Tutorial.show()
@@ -143,7 +141,11 @@ func show_hand() -> void:
 		await card_placed
 		%TutorialTitle.text = "Camera"
 		%TutorialText.text = "\nUse WASD to move your camera. Hold down shift to speed up the camera!"
-		
+
+func save_game_delayed() -> void:
+	for i in range(5):
+		await get_tree().process_frame
+	_on_save_pressed()
 
 func on_game_over() -> void:
 	hand.hide()
@@ -274,11 +276,10 @@ func _on_endturn_pressed() -> void:
 		%TutorialText.text = " Click on a unit group to select them! Click a tile to move the group there."
 		%TutorialText.text += "\n\nEnemies will approach from all sides, assume a defensive position!"
 		%TutorialText.text += "\n\nDefeat them to survive the night!"
-		await ally_died
+		await get_tree().create_timer(15).timeout
 		
 		%TutorialTitle.text = "Healing"
-		%TutorialText.text = "One of your unit groups has suffered losses."
-		%TutorialText.text += "\n\nClick on them and click on your house to heal them."
+		%TutorialText.text = "If one of your unit groups has lost units. Click on them and click on your house to heal them."
 		%TutorialText.text += "\n\nBe careful as they will be temporarily out of the battle."
 		
 		await world.night_ended
@@ -311,6 +312,7 @@ func _on_continue_pressed() -> void:
 	handle_pause()
 
 func _on_dispatch_end_pressed() -> void:
+	world.dispatchDay = false
 	dispatch.hide()
 	dispatchAmt = 0
 	
@@ -322,7 +324,9 @@ func _on_dispatch_end_pressed() -> void:
 			newCard.level = c.level
 			Global.cardsDispatched.append(newCard)
 			c.queue_free()
-			
+	
+	refresh_positions()
+	
 func refresh_positions() -> void:
 	# Add and remove dummy card to refresh positions
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
@@ -362,7 +366,11 @@ func _on_save_pressed() -> void:
 	var obstacles = world.tileWorld.obstacles.tile_map_data
 	var ring = world.tileWorld.ring.tile_map_data
 	
-	SaveLoad._save(scene,rollArray,walls,ground,obstacles,ring)
+	SaveLoad._save(scene,rollArray,walls,ground,obstacles,ring,world.dispatchDay)
+	
+	# Save profile data
+	SaveLoad._save_profile(self)
+	
 	#ResourceSaver.save(scene,"res://saves/savefile.tscn")
 
 func _on_load_pressed() -> void:
@@ -387,6 +395,7 @@ func load_world() -> void:
 	world.tileWorld.ground.tile_map_data = SaveLoad.SaveFileData.ground
 	world.tileWorld.obstacles.tile_map_data = SaveLoad.SaveFileData.obstacles
 	world.tileWorld.ring.tile_map_data  = SaveLoad.SaveFileData.ring
+	world.dispatchDay = SaveLoad.SaveFileData.dispatchDay
 	Global.nights = SaveLoad.SaveFileData.nights
 	rollArray = SaveLoad.SaveFileData.rolls
 	
@@ -411,6 +420,8 @@ func load_world() -> void:
 		cards.show()
 		hand.hide()
 		end_turn.hide()
+	elif world.dispatchDay:
+		dispatch.show()
 	#if !FileAccess.file_exists("res://saves/savefile.tscn"):
 		#return
 	#else:

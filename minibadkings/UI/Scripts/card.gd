@@ -162,10 +162,10 @@ func plop() -> void:
 		ui.refresh_positions()
 		
 		# make alert visible 
-		if !ui.no_space.visible:
-			ui.no_space.visible = true
-			await get_tree().create_timer(2).timeout
-			ui.no_space.visible = false
+		#if !ui.no_space.visible:
+			#ui.no_space.visible = true
+			#await get_tree().create_timer(2).timeout
+			#ui.no_space.visible = false
 		return
 	
 	tileWorld.handle_navigable_cells()

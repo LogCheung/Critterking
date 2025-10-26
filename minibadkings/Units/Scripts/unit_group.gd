@@ -81,6 +81,10 @@ func _on_select_area_input_event(viewport: Node, event: InputEvent, shape_idx: i
 			else:
 				unzoom_camera()
 func on_selected() -> void:
+	if house:
+		selected = false
+		tileWorld.hover.visible = false
+		return
 	# zoom camera
 	var cam : Camera2D = get_tree().get_first_node_in_group("CAMERA")
 	cam.zoom += Vector2(0.075,0.075)
@@ -108,13 +112,13 @@ func check_on_house(mousePos : Vector2) -> void:
 			h.occupant = self
 			house = h
 			
-			tile = h.doorstepTile
-			global_position = tileWorld.ground.map_to_local(h.doorstepTile) # now local map cord
-			tileWorld.handle_navigable_cells()
 			for unit : Ally in unitsArray:
 				unit.healing = true
 			highlight_houses(false)
 			highlight_tunnels(false)
+			tile = h.tile
+			global_position = tileWorld.ground.map_to_local(h.tile) # now local map cord
+			tileWorld.handle_navigable_cells()
 			return
 func highlight_houses(highlight : bool = true) -> void:
 	if size == max_size : return

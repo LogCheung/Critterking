@@ -10,3 +10,4 @@ class_name SaveDataResource
 @export var ground : PackedByteArray
 @export var obstacles : PackedByteArray
 @export var ring : PackedByteArray
+@export var dispatchDay : bool

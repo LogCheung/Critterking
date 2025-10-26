@@ -1,11 +1,14 @@
 extends Node
 
 const save_location = "user://SaveFile.tres"
+const prof_location = "user://ProfileFile.tres"
 
 var SaveFileData : SaveDataResource = SaveDataResource.new()
+var ProfFileData : ProfileDataResource = ProfileDataResource.new()
 
 func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
-		ground : PackedByteArray, obstacles : PackedByteArray, ring : PackedByteArray ):
+		ground : PackedByteArray, obstacles : PackedByteArray, ring : PackedByteArray,
+		dispatchDay : bool ):
 	SaveFileData.scene = scene
 	SaveFileData.nights = Global.nights
 	SaveFileData.rolls = rollArray
@@ -13,6 +16,7 @@ func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 	SaveFileData.ground = ground
 	SaveFileData.obstacles = obstacles
 	SaveFileData.ring = ring
+	SaveFileData.dispatchDay = dispatchDay
 	
 	# save cards
 	SaveFileData.cardsInHand.clear()
@@ -25,8 +29,16 @@ func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 		dupe.for_show = false
 	
 	ResourceSaver.save(SaveFileData,save_location)
+
+func _save_profile(ui : UI) -> void:
+	ProfFileData.tutorial = Global.tutorial
+	ProfFileData.tutorialCharm = Global.tutorialCharm
+	ProfFileData.tutorialDecree = Global.tutorialDecree
 	
-func _load() :
+	ResourceSaver.save(ProfFileData,prof_location)
+	pass
+
+func _load() -> void:
 	if FileAccess.file_exists(save_location):
 		SaveFileData = ResourceLoader.load(save_location).duplicate(true)
 		
@@ -35,3 +47,11 @@ func _load() :
 		await get_tree().process_frame
 		var ui = get_tree().get_first_node_in_group("UI")
 		ui.load_world()
+
+func _load_profile() -> void:
+	if FileAccess.file_exists(prof_location):
+		ProfFileData = ResourceLoader.load(prof_location).duplicate(true)
+		
+		Global.tutorial = ProfFileData.tutorial
+		Global.tutorialCharm = ProfFileData.tutorialCharm
+		Global.tutorialDecree = ProfFileData.tutorialDecree

@@ -31,7 +31,10 @@ var dispatchDay : bool = false
 
 var night_is_expansion: bool = false
 func _ready() -> void:
+	# Load profile data
+	SaveLoad._load_profile()
 	
+	# connect signals
 	night_started.connect(on_night_started)
 	night_ended.connect(on_night_ended)
 	enemy_group_eliminated.connect(on_enemy_group_eliminated)
@@ -51,7 +54,7 @@ func new_game() -> void:
 	%SpawnTimer.wait_time = 10
 	enemy_parties = 3
 	upgraded_parties = 0
-	dispatchDay = false
+	dispatchDay = true
 	tileWorld.activeDecree = Decree.TYPE.NONE
 	Global.nights = 0
 	Global.expansions = 0
@@ -219,10 +222,6 @@ func on_enemy_group_eliminated() -> void:
 		night_ended.emit()
 		
 func on_night_ended() -> void:
-	# Reset after dispatch day
-	if dispatchDay:
-		dispatchDay = false
-	
 	# Reset after swarm of expansion
 	if night_is_expansion:
 		night_is_expansion = false
@@ -295,7 +294,7 @@ func start_day() -> void:
 	
 func unit_to_card(g : Group) -> void:
 	# create card of group
-	var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
+	var newCard = load("res://UI/Scenes/card.tscn").instantiate()
 	newCard.type = g.type
 	#newCard = match_unit_to_card(newCard,g.type)
 	if g.charm : newCard = preserve_charm_in_card(newCard,g.charm.type)
@@ -362,7 +361,6 @@ func _input(event: InputEvent) -> void:
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
-		Engine.time_scale = 8
 		return
 		#new_game()
 		#Engine.time_scale = 8
@@ -420,6 +418,9 @@ func handle_party_limit() -> void:
 	
 	if Global.partyCount >= Global.partyLimit:
 		ui.no_space.show()
+	else:
+		ui.no_space.hide()
+		
 	pass
 
 func _on_timer_timeout() -> void:

@@ -64,7 +64,7 @@ unique_name_in_owner = true
 process_mode = 3
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 15.0
+wait_time = 10.0
 autostart = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
