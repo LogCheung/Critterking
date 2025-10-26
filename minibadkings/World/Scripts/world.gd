@@ -34,7 +34,7 @@ func _ready() -> void:
 	# Load profile data
 	Global.unlockedCards = Card.DEFAULT_CARDS
 	SaveLoad._load_profile()
-	#unlock_every_card()
+	unlock_every_card()
 	
 	# connect signals
 	night_started.connect(on_night_started)
@@ -56,7 +56,7 @@ func new_game() -> void:
 	%SpawnTimer.wait_time = 10
 	enemy_parties = 3
 	upgraded_parties = 0
-	dispatchDay = true
+	dispatchDay = false
 	tileWorld.activeDecree = Decree.TYPE.NONE
 	Global.nights = 0
 	Global.expansions = 0

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ceysdmn7jpa1c"
-path="res://.godot/imported/AllyNormalFungipng.png-ed52b6a1142f84eb943ca28d1498361d.ctex"
+uid="uid://llpa0245hfr2"
+path="res://.godot/imported/explosiveCard.png-4eae1b01d9aa3993e019691617e6c7dd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Units/Assets/AllyFungi/AllyNormalFungipng.png"
-dest_files=["res://.godot/imported/AllyNormalFungipng.png-ed52b6a1142f84eb943ca28d1498361d.ctex"]
+source_file="res://UI/Assets/cards/explosiveCard.png"
+dest_files=["res://.godot/imported/explosiveCard.png-4eae1b01d9aa3993e019691617e6c7dd.ctex"]
 
 [params]
 

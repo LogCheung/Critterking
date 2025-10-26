@@ -5,7 +5,7 @@ enum ACTION {
 	NONE,FORM, FIGHT, RAID, STRAFE, HEAL, STUNNED, DEAD
 }
 enum TYPE {
-	NONE, MELEE, SHIELDED, RANGED, #TRAPJAW, EXPLOSIVE, FUNGI, 
+	NONE, MELEE, SHIELDED, RANGED, TRAPJAW, EXPLOSIVE, FUNGI, 
 	PARALYTIC, RESILIENT, STINGER,BOMBER,FLYING,CRAZED, ZOMBIFIED
 }
 enum STATUS {
@@ -283,7 +283,7 @@ func start_death(destroy : bool = false) -> void:
 func take_knockback(dir : Vector2) -> void:
 	knocked = true
 	dir = dir.normalized()
-	var knockSpeed = 40
+	var knockSpeed = 60
 	velocity = dir * knockSpeed
 	move_and_slide()
 	

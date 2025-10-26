@@ -28,6 +28,9 @@ signal unit_healed
 @onready var party_current: Label = %PartyCurrent
 @onready var party_limit: Label = %PartyLimit
 @onready var no_space: TextureRect = %noSpace
+@onready var master: HSlider = %Master
+@onready var music: HSlider = %Music
+@onready var sfx: HSlider = %SFX
 
 @export var rollArray : Array = []
 

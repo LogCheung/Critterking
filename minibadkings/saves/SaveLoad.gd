@@ -35,6 +35,12 @@ func _save_profile(ui : UI) -> void:
 	ProfFileData.tutorialCharm = Global.tutorialCharm
 	ProfFileData.tutorialDecree = Global.tutorialDecree
 	
+	ProfFileData.unlockedCards = Global.unlockedCards
+	
+	ProfFileData.masterVol = ui.master.value
+	ProfFileData.musicVol = ui.music.value
+	ProfFileData.sfxrVol = ui.sfx.value
+	
 	ResourceSaver.save(ProfFileData,prof_location)
 	pass
 
@@ -55,3 +61,10 @@ func _load_profile() -> void:
 		Global.tutorial = ProfFileData.tutorial
 		Global.tutorialCharm = ProfFileData.tutorialCharm
 		Global.tutorialDecree = ProfFileData.tutorialDecree
+		
+		Global.unlockedCards = ProfFileData.unlockedCards
+
+		var ui = get_tree().get_first_node_in_group("UI")
+		ui.master.value = ProfFileData.masterVol
+		ui.music.value = ProfFileData.musicVol
+		ui.sfx.value = ProfFileData.sfxrVol

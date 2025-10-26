@@ -229,23 +229,23 @@ func match_type() -> void:
 			damage = 1
 			attack_cd.wait_time = 2
 			poison_chance = 100
-		#TYPE.TRAPJAW:
-			#health = 4
-			#damage = 1.5
-			#knock_chance = 100
-			#attack_cd.wait_time = 2
-		#TYPE.EXPLOSIVE:
-			#health = 3
-			#damage = 1
-			#attack_cd.wait_time = 2
-			#var death = anim.get_animation("death")
-			#death.length = 1
-		#TYPE.FUNGI:
-			#health = 2
-			#damage = 1
-			#attack_cd.wait_time = 2
-			#var death = anim.get_animation("death")
-			#death.length = 1
+		TYPE.TRAPJAW:
+			health = 4
+			damage = 1.5
+			knock_chance = 100
+			attack_cd.wait_time = 2
+		TYPE.EXPLOSIVE:
+			health = 3
+			damage = 1
+			attack_cd.wait_time = 2
+			var death = anim.get_animation("death")
+			death.length = 1
+		TYPE.FUNGI:
+			health = 2
+			damage = 1
+			attack_cd.wait_time = 2
+			var death = anim.get_animation("death")
+			death.length = 1
 		TYPE.ZOMBIFIED:
 			sprite_2d.texture = CRAZEDNORMALSE if level < 2 else UPCRAZEDNORMALSE
 			health = 1
