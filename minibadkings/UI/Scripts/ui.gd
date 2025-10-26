@@ -268,6 +268,10 @@ func _on_settingsback_pressed() -> void:
 	settings.hide()
 	if !pausemenu.visible:
 		mainmenu.show()
+	if %EnableTutorial.button_pressed:
+		Global.tutorial = false
+		Global.tutorialCharm = false
+		Global.tutorialDecree = false
 	pass # Replace with function body.
 
 func _on_endturn_pressed() -> void:

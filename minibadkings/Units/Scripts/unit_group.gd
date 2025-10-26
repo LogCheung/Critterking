@@ -209,4 +209,8 @@ func apply_charm() -> void:
 			Charm.TYPE.NAIL:
 				unit.stun_chance += 20
 				pass # allow for stun
+			Charm.TYPE.POISON:
+				unit.poison_chance += 20
+			Charm.TYPE.REGEN:
+				pass
 		

@@ -210,6 +210,7 @@ func plop() -> void:
 	else:
 		if check_if_merge(tile) : remove_self()
 		if check_destroy(tile): remove_self()
+		#if check_general() : remove_self()
 		sprite_2d.scale = Vector2(1.0,1.0)
 		position = default_position
 		selected = false
@@ -251,6 +252,14 @@ func check_if_blocking(plopTile : Vector2) -> bool:
 		takenTiles.append(Vector2i(t.x-1,t.y))
 	if takenTiles.has(Vector2i(plopTile)): return true
 	return false
+
+func check_general() -> bool:
+	#if type == CARDTYPE.REFRESH:
+	for decree : Decree in get_tree().get_nodes_in_group("DECREE"):
+		decree.time -= 1
+		decree.update_cooldown()
+	return true # type == CARDTYPE.REFRESH:
+	pass
 
 func check_destroy(plopTile : Vector2) -> bool:
 	var buildTiles = tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),2)
@@ -363,33 +372,6 @@ func match_building_type(building : Building) -> Building:
 			selected = false
 			building = null
 	return building
-	
-	#match type:
-		#CARDTYPE.TRAPS:
-			#building.type = Building.TYPE.TRAP
-		#CARDTYPE.HOUSE:
-			#building.type = Building.TYPE.HOUSE
-			#if check_if_blocking(tile):
-				#sprite_2d.scale = Vector2(1.0,1.0)
-				#position = default_position
-				#selected = false
-				#building = null
-		#CARDTYPE.CARE:
-			#building.type = Building.TYPE.CARE
-			#if check_if_blocking(tile):
-				#sprite_2d.scale = Vector2(1.0,1.0)
-				#position = default_position
-				#selected = false
-				#building = null
-		#CARDTYPE.FARM:
-			#building.type = Building.TYPE.FARM
-		#CARDTYPE.SAPSTORE:
-			#building.type = Building.TYPE.SAPSTORE
-		#CARDTYPE.NURSERY:
-			#building.type = Building.TYPE.NURSERY
-		#CARDTYPE.STORAGE:
-			#building.type = Building.TYPE.STORAGE
-	#return building
 
 func _on_selected_pressed() -> void:
 	if choice_picked : return
