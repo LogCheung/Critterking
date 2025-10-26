@@ -31,10 +31,12 @@
 [ext_resource type="AudioStream" uid="uid://u2y0bys67ovo" path="res://Audio/music/crtrday.tres" id="20_8g5lr"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_yqd36"]
-font = ExtResource("7_titua")
+font = ExtResource("6_t0wgx")
+font_size = 14
 
 [sub_resource type="LabelSettings" id="LabelSettings_lpmf3"]
-font = ExtResource("7_titua")
+font = ExtResource("6_t0wgx")
+font_size = 14
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ia477"]
 load_path = "res://.godot/imported/discoveryshow.png-7553562f97402277057b194b770f9c25.ctex"
@@ -356,10 +358,11 @@ texture = ExtResource("11_yqd36")
 
 [node name="DayNight" type="Label" parent="NightCounter/Sprite2D"]
 unique_name_in_owner = true
-offset_left = -11.5
-offset_top = -11.25
-offset_right = 28.5
-offset_bottom = 11.75
+offset_left = -23.666668
+offset_top = -16.0
+offset_right = 16.333332
+offset_bottom = 7.0
+scale = Vector2(1.5, 1.5)
 text = "1"
 label_settings = SubResource("LabelSettings_yqd36")
 horizontal_alignment = 1
@@ -372,11 +375,10 @@ texture = ExtResource("4_lpmf3")
 
 [node name="PartyCurrent" type="Label" parent="NightCounter/Lim"]
 unique_name_in_owner = true
-offset_left = -7.333333
-offset_top = -10.333335
-offset_right = 8.666667
-offset_bottom = 5.666665
-scale = Vector2(0.75, 0.75)
+offset_left = -10.0
+offset_top = -10.333332
+offset_right = 6.0
+offset_bottom = 5.666668
 text = "1"
 label_settings = SubResource("LabelSettings_lpmf3")
 horizontal_alignment = 1
@@ -384,11 +386,10 @@ vertical_alignment = 1
 
 [node name="PartyLimit" type="Label" parent="NightCounter/Lim"]
 unique_name_in_owner = true
-offset_left = 12.333335
-offset_top = -1.666667
-offset_right = 28.333336
-offset_bottom = 14.333333
-scale = Vector2(0.75, 0.75)
+offset_left = 9.666668
+offset_top = -3.3333325
+offset_right = 25.666668
+offset_bottom = 12.666668
 text = "1"
 label_settings = SubResource("LabelSettings_lpmf3")
 horizontal_alignment = 1
@@ -722,6 +723,7 @@ position = Vector2(964, 1080)
 
 [node name="mainmenu" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0

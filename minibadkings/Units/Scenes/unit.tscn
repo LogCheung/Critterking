@@ -3,7 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://ddc6mf0gqftb" path="res://Units/Scenes/hit_box.tscn" id="1_pm8qt"]
 [ext_resource type="Script" uid="uid://13y7jtc01ydv" path="res://Units/Scripts/ally.gd" id="1_q458e"]
 [ext_resource type="Texture2D" uid="uid://bn4niwqkt8x3n" path="res://Units/Assets/Status/defense.png" id="2_lx5cy"]
-[ext_resource type="Texture2D" uid="uid://derf24r2nwwjt" path="res://Units/Assets/AllyMelee/AllyMeleeNormalSE.png" id="3_amxnv"]
 [ext_resource type="Texture2D" uid="uid://cb4h4e5bevpjt" path="res://Units/Assets/Status/attack.png" id="3_n3b5d"]
 [ext_resource type="Texture2D" uid="uid://b3o0d2bjk4dj6" path="res://Units/Assets/Status/mastery.png" id="4_frfv4"]
 [ext_resource type="Texture2D" uid="uid://d317xtem80gob" path="res://Units/Assets/Status/promptSelect.png" id="5_lx5cy"]
@@ -13,6 +12,7 @@
 [ext_resource type="Script" uid="uid://bpvkdlp8jw4sj" path="res://addons/utility_ai/actions/action.gd" id="6_m88pn"]
 [ext_resource type="Script" uid="uid://dojkyt7skh8fh" path="res://addons/utility_ai/considerations/consideration_from_node.gd" id="7_m88pn"]
 [ext_resource type="Texture2D" uid="uid://ciy8dhlplknc5" path="res://Units/Assets/Status/stun.png" id="7_n3b5d"]
+[ext_resource type="Texture2D" uid="uid://s7otrxkg42rm" path="res://Units/Assets/AllyAcidic/AllyNormalAcidic.png" id="8_n3b5d"]
 [ext_resource type="Script" uid="uid://b2f8vq1st70r0" path="res://addons/utility_ai/considerations/aggregation.gd" id="9_daau3"]
 [ext_resource type="Script" uid="uid://c4w8b5x2jd5q3" path="res://Units/Scripts/considerType.gd" id="9_jqc0h"]
 [ext_resource type="AudioStream" uid="uid://51wb2nkn3yoe" path="res://Audio/sfx/Attack.tres" id="10_t5nd1"]
@@ -406,13 +406,13 @@ size = Vector2(10, 10)
 script/source = "extends Area2D
 class_name VisionShape
 
-@export var range : float
+@export var visRange : float
 
 @onready var vision_shape: CollisionShape2D = %VisionShape
 
 
-func set_range(radius : float = range) -> void:
-	vision_shape.shape.radius = range
+func set_range(radius : float = visRange) -> void:
+	vision_shape.shape.radius = visRange
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yd6on"]
@@ -640,7 +640,7 @@ shape = SubResource("CapsuleShape2D_daau3")
 [node name="Sprite2D" type="Sprite2D" parent="Flip"]
 unique_name_in_owner = true
 process_mode = 3
-texture = ExtResource("3_amxnv")
+texture = ExtResource("8_n3b5d")
 hframes = 30
 frame = 1
 
@@ -780,8 +780,6 @@ metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
 [node name="is_ranged" type="Node" parent="UtilityAiAgent/strafe/UtilityAiAggregation2"]
 script = ExtResource("9_jqc0h")
-type = 3
-secondType = 7
 curve = SubResource("Curve_8nglq")
 metadata/_custom_type_script = "uid://ds3cm31xh6g85"
 

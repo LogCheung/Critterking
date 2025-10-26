@@ -724,8 +724,6 @@ metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
 [node name="is_ranged" type="Node" parent="UtilityAiAgent/strafe/UtilityAiAggregation2"]
 script = ExtResource("10_1flw5")
-type = 3
-secondType = 7
 curve = SubResource("Curve_0wncj")
 metadata/_custom_type_script = "uid://ds3cm31xh6g85"
 

@@ -6,7 +6,7 @@ const BUILDING = preload("res://TileMap/Scenes/building.tscn")
 const DEFAULT_CARDS : Array = [
 # units
 CARDTYPE.BITER, CARDTYPE.PLATED, CARDTYPE.SPITTER,
-CARDTYPE.BOMBER, CARDTYPE.FLYING, CARDTYPE.CRAZED, 
+CARDTYPE.ACIDIC, CARDTYPE.FLYING, CARDTYPE.CRAZED, 
 # buildings
 CARDTYPE.TRAPS, CARDTYPE.HOUSE, CARDTYPE.CARE, CARDTYPE.FARM, CARDTYPE.SAPSTORE,
 CARDTYPE.NURSERY, CARDTYPE.STORAGE, CARDTYPE.DESTROY,
@@ -24,7 +24,8 @@ CARDTYPE.CONSTRUCTION
 # Nail is border for charms, Heartlocket is start
 enum CARDTYPE {
 	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3, TRAPJAW, EXPLOSIVE, FUNGI, 
-	PARALYTIC, RESILIENT, STINGER ,BOMBER, FLYING,CRAZED,
+	PARALYTIC, RESILIENT, STINGER , ACIDIC, #BOMBER, 
+	FLYING,CRAZED,
 	
 	TRAPS , HOUSE, CARE , FARM , SAPSTORE, #TUNNEL, FORT, CAMPFIRE, CLIFF,
 	NURSERY, STORAGE,  DESTROY ,#REFRESH,
@@ -363,32 +364,32 @@ func match_building_type(building : Building) -> Building:
 			building = null
 	return building
 	
-	match type:
-		CARDTYPE.TRAPS:
-			building.type = Building.TYPE.TRAP
-		CARDTYPE.HOUSE:
-			building.type = Building.TYPE.HOUSE
-			if check_if_blocking(tile):
-				sprite_2d.scale = Vector2(1.0,1.0)
-				position = default_position
-				selected = false
-				building = null
-		CARDTYPE.CARE:
-			building.type = Building.TYPE.CARE
-			if check_if_blocking(tile):
-				sprite_2d.scale = Vector2(1.0,1.0)
-				position = default_position
-				selected = false
-				building = null
-		CARDTYPE.FARM:
-			building.type = Building.TYPE.FARM
-		CARDTYPE.SAPSTORE:
-			building.type = Building.TYPE.SAPSTORE
-		CARDTYPE.NURSERY:
-			building.type = Building.TYPE.NURSERY
-		CARDTYPE.STORAGE:
-			building.type = Building.TYPE.STORAGE
-	return building
+	#match type:
+		#CARDTYPE.TRAPS:
+			#building.type = Building.TYPE.TRAP
+		#CARDTYPE.HOUSE:
+			#building.type = Building.TYPE.HOUSE
+			#if check_if_blocking(tile):
+				#sprite_2d.scale = Vector2(1.0,1.0)
+				#position = default_position
+				#selected = false
+				#building = null
+		#CARDTYPE.CARE:
+			#building.type = Building.TYPE.CARE
+			#if check_if_blocking(tile):
+				#sprite_2d.scale = Vector2(1.0,1.0)
+				#position = default_position
+				#selected = false
+				#building = null
+		#CARDTYPE.FARM:
+			#building.type = Building.TYPE.FARM
+		#CARDTYPE.SAPSTORE:
+			#building.type = Building.TYPE.SAPSTORE
+		#CARDTYPE.NURSERY:
+			#building.type = Building.TYPE.NURSERY
+		#CARDTYPE.STORAGE:
+			#building.type = Building.TYPE.STORAGE
+	#return building
 
 func _on_selected_pressed() -> void:
 	if choice_picked : return

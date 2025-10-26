@@ -6,7 +6,8 @@ enum ACTION {
 }
 enum TYPE {
 	NONE, MELEE, SHIELDED, RANGED, TRAPJAW, EXPLOSIVE, FUNGI, 
-	PARALYTIC, RESILIENT, STINGER,BOMBER,FLYING,CRAZED, ZOMBIFIED
+	PARALYTIC, RESILIENT, STINGER, ACIDIC, 
+	FLYING,CRAZED, ZOMBIFIED, BOMBER,
 }
 enum STATUS {
 	NONE, STUNNED, POISONED, REGEN
@@ -33,6 +34,7 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @export var type : TYPE = TYPE.MELEE
 @export var decree : Decree.TYPE
 @export var upgraded : bool = false
+@export var ranged : bool = false
 @export var statusArray : Array
 
 @onready var sprite_2d: Sprite2D = %Sprite2D
@@ -160,24 +162,38 @@ func attack_finished() -> void:
 	dashing = false
 	# Custom attacks such as ranged or dash attacks
 	if !target : return
-	if type == TYPE.RANGED:
-		var proj = load("res://Units/Scenes/projectile.tscn").instantiate()
-		proj.DIRECTION = global_position.direction_to(target.global_position)
-		proj.global_position = global_position
-		proj.damage = damage
-		proj.raiding = action == ACTION.RAID
-		#proj.is_fungus = true # type == TYPE.FUNGI
-		proj.is_enemy = self is Enemy
-		get_tree().get_first_node_in_group("WORLD").add_child(proj)
-		proj.set_owner(get_tree().get_current_scene())
-	elif type == TYPE.BOMBER:
-		var proj = load("res://Units/Scenes/bombard.tscn").instantiate()
-		proj.global_position = global_position
-		proj._target = target.global_position
-		proj.damage = damage
-		proj.is_enemy = self is Enemy
-		get_tree().get_first_node_in_group("WORLD").add_child(proj)
-		proj.set_owner(get_tree().get_current_scene())
+	match type:
+		TYPE.RANGED, TYPE.FUNGI:
+			var proj = load("res://Units/Scenes/projectile.tscn").instantiate()
+			proj.DIRECTION = global_position.direction_to(target.global_position)
+			proj.type = type
+			proj.global_position = global_position
+			proj.damage = damage
+			proj.raiding = action == ACTION.RAID
+			proj.is_fungus = type == TYPE.FUNGI
+			proj.is_enemy = self is Enemy
+			get_tree().get_first_node_in_group("WORLD").add_child(proj)
+			proj.set_owner(get_tree().get_current_scene())
+		TYPE.BOMBER:
+			var proj = load("res://Units/Scenes/bombard.tscn").instantiate()
+			proj.global_position = global_position
+			proj._target = target.global_position
+			proj.damage = damage
+			proj.is_enemy = self is Enemy
+			get_tree().get_first_node_in_group("WORLD").add_child(proj)
+			proj.set_owner(get_tree().get_current_scene())
+		TYPE.ACIDIC:
+			for i in range(3):
+				var proj = load("res://Units/Scenes/projectile.tscn").instantiate()
+				proj.DIRECTION = global_position.direction_to(target.global_position)
+				proj.type = type
+				proj.global_position = global_position - Vector2(0,8)
+				proj.global_position += (Vector2(0,8) * i)
+				proj.damage = damage
+				proj.raiding = action == ACTION.RAID
+				proj.is_enemy = self is Enemy
+				get_tree().get_first_node_in_group("WORLD").add_child(proj)
+				proj.set_owner(get_tree().get_current_scene())
 func find_target() -> void:
 	target = null
 	if !vision.monitoring: return

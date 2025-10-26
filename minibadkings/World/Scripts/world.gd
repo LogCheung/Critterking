@@ -77,8 +77,8 @@ func new_game() -> void:
 	for i in range(1):
 		add_house_card()
 	#for i in range(1):
-		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.FLYING
+		#var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.ACIDIC
 		#ui.hand.get_child(0).add_child(hCard)
 	#for i in range(1):
 		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
@@ -306,7 +306,6 @@ func unit_to_card(g : Group) -> void:
 	# create card of group
 	var newCard = load("res://UI/Scenes/card.tscn").instantiate()
 	newCard.type = g.type
-	#newCard = match_unit_to_card(newCard,g.type)
 	if g.charm : newCard = preserve_charm_in_card(newCard,g.charm.type)
 	newCard.level = g.level
 	
@@ -340,22 +339,6 @@ func _on_spawn_timer_timeout() -> void:
 	await get_tree().create_timer(.5).timeout
 	if spawned_parties >= enemy_parties:
 		%SpawnTimer.stop()
-
-func match_unit_to_card(card : Card,unitType : Unit.TYPE) -> Card:
-	match unitType:
-		Unit.TYPE.MELEE:
-			card.type = Card.CARDTYPE.BITER
-		Unit.TYPE.RANGED:
-			card.type = Card.CARDTYPE.SPITTER
-		Unit.TYPE.SHIELDED:
-			card.type = Card.CARDTYPE.PLATED
-		Unit.TYPE.CRAZED:
-			card.type = Card.CARDTYPE.CRAZED
-		Unit.TYPE.BOMBER:
-			card.type = Card.CARDTYPE.BOMBER
-		Unit.TYPE.FLYING:
-			card.type = Card.CARDTYPE.FLYING
-	return card
 func preserve_charm_in_card(card : Card, charmType : Charm.TYPE) -> Card:
 	var dupeCharm : Charm = preload("res://Units/Scenes/charm.tscn").instantiate()
 	dupeCharm.type = charmType

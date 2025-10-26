@@ -4,7 +4,8 @@ extends Area2D
 @export var RANGE : float
 @export var DIRECTION : Vector2
 @export var damage : float
-@export var is_fungus : bool
+@export var type : Unit.TYPE
+@export var is_fungus : bool = false
 @export var is_enemy : bool
 @export var raiding : bool
 
@@ -21,6 +22,9 @@ func _ready() -> void:
 		set_collision_mask_value(2,true)
 	else:
 		set_collision_mask_value(3, true)
+	
+	if type == Unit.TYPE.ACIDIC:
+		$Sprite2D.texture = load("res://Units/Assets/AllyAcid.png") if !is_enemy else load("res://Units/Assets/EnemyAcid.png")
 
 func _process(delta):
 	position += DIRECTION * SPEED * delta
@@ -37,7 +41,7 @@ func _on_area_entered(area: Area2D) -> void:
 		if target.decree == Decree.TYPE.DEFENSE:
 			damage -= .25
 		if target.type == Unit.TYPE.SHIELDED: 
-			damage -= .5
+			damage -= .5 if type == Unit.TYPE.RANGED else .25
 		if target.dodge < (randi() % 100 + 1):
 		 # chance to ignore damage while also having reduced damage
 			#var rand = randi()

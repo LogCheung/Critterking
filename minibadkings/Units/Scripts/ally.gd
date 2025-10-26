@@ -110,7 +110,7 @@ func handle_action(delta) -> void:
 				if type == TYPE.CRAZED : anim.speed_scale = 2
 				anim.play("attack")
 				dashing = type == TYPE.FLYING
-				if type== TYPE.RANGED or type == TYPE.BOMBER:
+				if ranged:
 					%Shoot.play()
 				else:
 					%Attack.play()
@@ -184,6 +184,7 @@ func match_type() -> void:
 			attackRange = 80
 			visionRange = 100
 			attack_cd.wait_time = 2
+			ranged = true
 		TYPE.SHIELDED:
 			visionRange = 32
 			damage = 1
@@ -202,6 +203,7 @@ func match_type() -> void:
 			attackRange = 80
 			visionRange = 100
 			attack_cd.wait_time = 3
+			ranged = true
 		TYPE.FLYING:
 			sprite_2d.texture = FLYINGNORMALSE if level < 2 else UPFLYINGNORMALSE
 			speed = 40
@@ -238,14 +240,22 @@ func match_type() -> void:
 			health = 3
 			damage = 1
 			attack_cd.wait_time = 2
-			var death = anim.get_animation("death")
-			death.length = 1
+			var deathAnim = anim.get_animation("death")
+			deathAnim.length = 1
 		TYPE.FUNGI:
 			health = 2
 			damage = 1
 			attack_cd.wait_time = 2
-			var death = anim.get_animation("death")
-			death.length = 1
+			var deathAnim = anim.get_animation("death")
+			deathAnim.length = 1
+			ranged = true
+		TYPE.ACIDIC:
+			health = 2
+			damage = .5
+			attackRange = 50
+			visionRange = 75
+			attack_cd.wait_time = 2.5
+			ranged = true
 		TYPE.ZOMBIFIED:
 			sprite_2d.texture = CRAZEDNORMALSE if level < 2 else UPCRAZEDNORMALSE
 			health = 1
@@ -255,6 +265,7 @@ func match_type() -> void:
 			visionRange = 200
 	set_up_vision()
 	
+	# Find sprite file
 	if type > Unit.TYPE.RANGED:
 		var typeStr = str(TYPE.keys()[type])
 		var path : String = "res://Units/Assets/Ally"

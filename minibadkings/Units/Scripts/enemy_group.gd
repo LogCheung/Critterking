@@ -34,6 +34,7 @@ func highlight_units(highlight : bool) -> void:
 func activate_units() -> void:
 	isActive = true
 	for unit : Enemy in unitsArray:
+		if !unit: continue
 		unit.become_active()
 
 func _on_timer_timeout() -> void:

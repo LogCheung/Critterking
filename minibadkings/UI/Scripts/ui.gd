@@ -330,8 +330,8 @@ func _on_dispatch_end_pressed() -> void:
 	dispatch.hide()
 	dispatchAmt = 0
 	
-	var cards = get_tree().get_nodes_in_group("CARD")
-	for c : Card in cards:
+	var cardsInHand = get_tree().get_nodes_in_group("CARD")
+	for c : Card in cardsInHand:
 		if c.dispatchSelected:
 			var newCard = preload("res://UI/Scenes/card.tscn").instantiate()
 			newCard.type = c.type
