@@ -3,6 +3,21 @@ class_name Card
 
 const GROUP = preload("res://Units/Scenes/unit_group.tscn")
 const BUILDING = preload("res://TileMap/Scenes/building.tscn")
+const DEFAULT_CARDS : Array = [
+# units
+CARDTYPE.BITER, CARDTYPE.PLATED, CARDTYPE.SPITTER,
+CARDTYPE.BOMBER, CARDTYPE.FLYING, CARDTYPE.CRAZED, 
+# buildings
+CARDTYPE.TRAPS, CARDTYPE.HOUSE, CARDTYPE.CARE, CARDTYPE.FARM, CARDTYPE.SAPSTORE,
+CARDTYPE.NURSERY, CARDTYPE.STORAGE, CARDTYPE.DESTROY,
+# charms
+CARDTYPE.HEARTLOCKET, CARDTYPE.RING, CARDTYPE.SWORD, CARDTYPE.FLAG, CARDTYPE.SODA, 
+CARDTYPE.ROLLERSKATE, CARDTYPE.MEDKIT, CARDTYPE.GLASSES, CARDTYPE.NAIL,
+# decrees
+CARDTYPE.INSPIRATION, CARDTYPE.DECARE, CARDTYPE.RECON, CARDTYPE.DEFENSE, CARDTYPE.RENOVATE,
+CARDTYPE.WAR, CARDTYPE.CONSCRIPTION, CARDTYPE.MASTERY, CARDTYPE.INFLUENCE, 
+CARDTYPE.CONSTRUCTION
+]
 
 # Crazed is border for units, Biter is start
 # Destroy is border for buildings, TRAPS is start
@@ -300,7 +315,7 @@ func randomize_type() -> void:
 	cards = cards.filter(func(c):return c.for_show)
 	for card : Card in cards:
 		if card == self: continue
-		if card.type == type:
+		if card.type == type or !Global.unlockedCards.has(type):
 			randomize_type()
 			return
 	match_sprite_type()

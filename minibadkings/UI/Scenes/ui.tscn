@@ -396,6 +396,7 @@ vertical_alignment = 1
 
 [node name="Tutorial" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 z_index = 4096
 layout_mode = 3
 anchors_preset = 0
@@ -721,12 +722,10 @@ position = Vector2(964, 1080)
 
 [node name="mainmenu" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 2
+offset_right = 1920.0
+offset_bottom = 1080.0
 
 [node name="main" type="Sprite2D" parent="mainmenu"]
 scale = Vector2(6, 6)
@@ -771,6 +770,8 @@ offset_top = 129.5
 offset_right = 226.167
 offset_bottom = 160.5
 text = "load"
+
+[node name="Sprite2D" type="Sprite2D" parent="mainmenu"]
 
 [node name="pausemenu" type="Control" parent="."]
 unique_name_in_owner = true
@@ -996,6 +997,7 @@ bus = &"SFX"
 [connection signal="pressed" from="EndTurn/Sprite2D/endturn" to="." method="_on_endturn_pressed"]
 [connection signal="pressed" from="Dispatch/Sprite2D/dispatchEnd" to="." method="_on_dispatch_end_pressed"]
 [connection signal="pressed" from="Cards/CardShow/Show" to="." method="_on_show_pressed"]
+[connection signal="mouse_entered" from="mainmenu" to="." method="_on_mainmenu_mouse_entered"]
 [connection signal="pressed" from="mainmenu/main/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="mainmenu/main/Help" to="." method="_on_help_pressed"]
 [connection signal="pressed" from="mainmenu/main/Settings" to="." method="_on_settings_pressed"]

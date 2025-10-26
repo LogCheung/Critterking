@@ -32,7 +32,9 @@ var dispatchDay : bool = false
 var night_is_expansion: bool = false
 func _ready() -> void:
 	# Load profile data
+	Global.unlockedCards = Card.DEFAULT_CARDS
 	SaveLoad._load_profile()
+	#unlock_every_card()
 	
 	# connect signals
 	night_started.connect(on_night_started)
@@ -87,6 +89,14 @@ func add_house_card() -> void:
 	hCard.type = Card.CARDTYPE.HOUSE
 	ui.hand.get_child(0).add_child(hCard)
 	hCard.set_owner(get_tree().get_current_scene())
+	
+func unlock_every_card() -> void:
+	# unlock every card
+	var arr = []
+	for i in Card.CARDTYPE.size():
+		arr.append(i)
+	Global.unlockedCards = arr
+	
 func clear_perimeters() -> void:
 	# clear children
 	outerFollow = null
@@ -308,8 +318,6 @@ func unit_to_card(g : Group) -> void:
 		newCard.charm.set_owner(get_tree().get_current_scene())
 	newCard.for_show = false
 	newCard.set_owner(get_tree().get_current_scene())
-
-	
 	
 func check_extra_roll(extraRolltype : Card.ROLLTYPE,buildingArray : Array, chance : float) -> void:
 	var extraChance = chance * buildingArray.size()

@@ -9,3 +9,4 @@ extends Node
 @export var tutorial : bool = true
 @export var tutorialCharm : bool = true
 @export var tutorialDecree : bool = true
+@export var unlockedCards : Array = []

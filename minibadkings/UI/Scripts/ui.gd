@@ -239,6 +239,17 @@ func _on_settings_pressed() -> void:
 
 
 func _on_quit_pressed() -> void:
+	if pausemenu.visible:
+		%Button.play()
+		mainmenu.show()
+		pausemenu.hide()
+		$AnimationPlayer.play("RESET")
+		_on_save_pressed()
+		for c in get_children():
+			if !c is Control: continue
+			c.hide()
+		mainmenu.show()
+		return
 	get_tree().quit()
 
 
@@ -274,7 +285,7 @@ func _on_endturn_pressed() -> void:
 		%Tutorial.show()
 		%TutorialTitle.text = "Commanding"
 		%TutorialText.text = " Click on a unit group to select them! Click a tile to move the group there."
-		%TutorialText.text += "\n\nEnemies will approach from all sides, assume a defensive position!"
+		%TutorialText.text += "\n\nEnemies will approach from all xsides, assume a defensive position!"
 		%TutorialText.text += "\n\nDefeat them to survive the night!"
 		await get_tree().create_timer(15).timeout
 		
@@ -427,3 +438,9 @@ func load_world() -> void:
 	#else:
 		#var new_scene = ResourceLoader.load("res://saves/savefile.tscn")
 		#get_tree().change_scene_to_packed(new_scene)
+
+
+func _on_mainmenu_mouse_entered() -> void:
+	# check if main menu in on screen
+	print("ok")
+	pass # Replace with function body.
