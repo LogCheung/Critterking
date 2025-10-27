@@ -62,7 +62,7 @@ func _process(delta: float) -> void:
 	if type == TYPE.ZOMBIFIED : in_combat = true
 	
 	# check if enemy is too close
-	if type == TYPE.RANGED or type == TYPE.BOMBER:
+	if ranged:
 		if is_instance_valid(target):
 			var distToTarget = global_position.distance_to(target.global_position)
 			too_close = distToTarget < ranged_buffer
@@ -111,7 +111,6 @@ func handle_action(delta) -> void:
 				if anim.is_playing() and type != TYPE.ZOMBIFIED: return
 				if type == TYPE.CRAZED : anim.speed_scale = 2
 				
-				anim.stop()
 				anim.play("attack")
 				dashing = type == TYPE.FLYING
 				if ranged: %Shoot.play()
@@ -231,10 +230,10 @@ func match_type() -> void:
 			attack_cd.wait_time = 2
 		TYPE.STINGER:
 			sprite_2d.texture = STINGERNORMALSE if !upgraded else UPSTINGERNORMALSE
-			health = 3
+			health = 4
 			damage = 1
 			attack_cd.wait_time = 2
-			attackRange = 20
+			attackRange = 15
 			poison_chance = 100
 		TYPE.TRAPJAW:
 			health = 4
@@ -245,11 +244,11 @@ func match_type() -> void:
 			health = 3
 			damage = 1
 			attack_cd.wait_time = 2
-			var deathAnim = anim.get_animation("death")
-			deathAnim.length = 1
+			var deathAnim = self.anim.get_animation("death")
+			self.deathAnim.length = 1
 		TYPE.FUNGI:
 			health = 2
-			damage = 1
+			damage = .75
 			attack_cd.wait_time = 2
 			attackRange = 80
 			visionRange = 100
@@ -259,12 +258,12 @@ func match_type() -> void:
 			damage = .5
 			attackRange = 50
 			visionRange = 75
-			attack_cd.wait_time = 2.5
+			attack_cd.wait_time = 3
 			ranged = true
 		TYPE.ZOMBIFIED:
 			sprite_2d.texture = CRAZEDNORMALSE if level < 2 else UPCRAZEDNORMALSE
 			health = .25
-			damage = 0.75
+			damage = 0.5
 			speed = 60
 			attack_cd.wait_time = .5
 			visionRange = 400

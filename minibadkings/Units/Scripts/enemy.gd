@@ -43,6 +43,9 @@ func _ready() -> void:
 	health = max_health
 	house_destroyed.connect(find_building)
 	aStar = tileWorld.aStar
+	
+	# enemy debuff
+	health -= .5
 
 func _process(delta: float) -> void:
 	super._process(delta)
@@ -87,12 +90,13 @@ func handle_action(delta) -> void:
 			if target == null: target_in_range = false
 			if distToTarget <= attackRange :
 				if !attack_cd.time_left <= 0 : return
-				if type == TYPE.RANGED or type == TYPE.BOMBER:
+				if ranged:
 					too_close = distToTarget < ranged_buffer
 				if type == TYPE.CRAZED : anim.speed_scale = 2
+				
 				anim.play("attack")
 				dashing = type == TYPE.FLYING
-				if type== TYPE.RANGED:
+				if ranged:
 					%Shoot.play()
 				else:
 					%Attack.play()
@@ -106,7 +110,7 @@ func handle_action(delta) -> void:
 		ACTION.RAID:
 			if distToTarget <= 22:
 				anim.play("attack")
-				if type== TYPE.RANGED:
+				if ranged:
 					%Shoot.play()
 				else:
 					%Attack.play()
@@ -237,23 +241,21 @@ func match_type() -> void:
 			health = 3
 			damage = 1
 			attack_cd.wait_time = 2
-			var deathAnim = anim.get_animation("death")
-			deathAnim.length = 1
+			var deathAnim = self.anim.get_animation("death")
+			self.deathAnim.length = 1
 		TYPE.FUNGI:
 			health = 2
-			damage = 1
+			damage = .75
 			attack_cd.wait_time = 2
 			attackRange = 80
 			visionRange = 100
-			var deathAnim = anim.get_animation("death")
-			deathAnim.length = 1
 			ranged = true
 		TYPE.ACIDIC:
 			health = 2
 			damage = .5
 			attackRange = 50
 			visionRange = 75
-			attack_cd.wait_time = 2.5
+			attack_cd.wait_time = 3
 			ranged = true
 		TYPE.ZOMBIFIED:
 			sprite_2d.texture = CRAZEDNORMALSE if level < 2 else UPCRAZEDNORMALSE

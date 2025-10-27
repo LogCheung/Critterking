@@ -199,9 +199,9 @@ func on_night_started() -> void:
 	ui.hand.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	ui.decrees.process_mode = Node.PROCESS_MODE_PAUSABLE
 	if night_is_expansion:
-		%SpawnTimer.wait_time -= 1.5
-		enemy_parties += 4
-		upgraded_parties += 2
+		%SpawnTimer.wait_time -= 1
+		enemy_parties += 3
+		upgraded_parties += 1
 	
 	# set upgrade number
 	upgrade_nums.clear()
@@ -235,9 +235,9 @@ func on_night_ended() -> void:
 	# Reset after swarm of expansion
 	if night_is_expansion:
 		night_is_expansion = false
-		enemy_parties -= 4
-		upgraded_parties -= 2
-		%SpawnTimer.wait_time += 1.5
+		enemy_parties -= 3
+		upgraded_parties -= 1
+		%SpawnTimer.wait_time += 1
 		
 	# clear dead enemies
 	var enemies = get_tree().get_nodes_in_group("ENEMY")
@@ -389,7 +389,7 @@ func check_nights() -> void:
 		expand()
 		
 	if Global.nights % 10 == 0:
-		%SpawnTimer.wait_time -= 1.5
+		%SpawnTimer.wait_time -= 1
 		
 	if Global.nights == 30:
 		
