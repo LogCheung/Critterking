@@ -155,6 +155,7 @@ func on_game_over() -> void:
 	gameover.show()
 	
 	%over.texture = load("res://UI/Assets/menus/gameover.png")
+	%endless.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	%nights.visible = true
 	$AnimationPlayer.play("Lose")
 	await anim.animation_finished
@@ -164,16 +165,24 @@ func on_game_over() -> void:
 	%nights.text = str(Global.nights)
 
 func victory() -> void:
+	_on_save_pressed()
 	hand.hide()
 	gameover.show()
 	
 	%over.texture = load("res://UI/Assets/menus/gwj2win.png")
+	%endless.process_mode = Node.PROCESS_MODE_INHERIT
 	%nights.visible = false
 	anim.play("Lose")
 	await anim.animation_finished
 	%crtrNight.stop()
 	%crtrDay.stop()
 	%crtrOver.play()
+
+func _on_endless_pressed() -> void:
+	%gameover.hide()
+	hand.show()
+	end_turn.show()
+	pass # Replace with function body.
 
 func _on_show_pressed() -> void:
 	# when deck of cards is clicked, show anim will play

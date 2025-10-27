@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=45 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Texture2D" uid="uid://luuqbnbqgyao" path="res://UI/Assets/menus/mainmenu.png" id="3_2fejo"]
@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://cbfi3jolrr55m" path="res://UI/Assets/cards/tutorialText.png" id="5_nvxdf"]
 [ext_resource type="Texture2D" uid="uid://e0lt6th6b1bi" path="res://UI/Assets/alerts/wavetimeAlert.png" id="6_ia477"]
 [ext_resource type="FontFile" uid="uid://ggtewla8581f" path="res://Units/Debug/aseprite.otf" id="6_t0wgx"]
-[ext_resource type="Texture2D" uid="uid://dwseh6hsy3l77" path="res://UI/Assets/menus/gameover.png" id="7_ftqev"]
 [ext_resource type="Texture2D" uid="uid://3it4y7vqlqgb" path="res://UI/Assets/alerts/swarmAlert.png" id="7_l2k1h"]
 [ext_resource type="Texture2D" uid="uid://djapvfxyk1cj0" path="res://UI/Assets/alerts/maxPop.png" id="7_nvxdf"]
 [ext_resource type="FontFile" uid="uid://dqt550qq7jmvu" path="res://Units/Debug/PressStart2P.ttf" id="7_titua"]
@@ -28,8 +27,10 @@
 [ext_resource type="AudioStream" uid="uid://bdq1nbxdckl0r" path="res://Audio/sfx/Card.tres" id="12_yqd36"]
 [ext_resource type="AudioStream" uid="uid://bxpbo04dxxuf4" path="res://Audio/sfx/Button.tres" id="15_8g5lr"]
 [ext_resource type="PackedScene" uid="uid://dtxo6oppyymjc" path="res://UI/Scenes/decree.tscn" id="15_48uhk"]
+[ext_resource type="Texture2D" uid="uid://l1xrje5n2dl7" path="res://UI/Assets/menus/unlock.png" id="17_onxes"]
 [ext_resource type="AudioStream" uid="uid://c8brf7l45q10r" path="res://Audio/music/crtrnight.tres" id="19_gu1s8"]
 [ext_resource type="AudioStream" uid="uid://u2y0bys67ovo" path="res://Audio/music/crtrday.tres" id="20_8g5lr"]
+[ext_resource type="Texture2D" uid="uid://yt0a66vbd4j7" path="res://UI/Assets/menus/gwj2win.png" id="22_onxes"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_yqd36"]
 font = ExtResource("6_t0wgx")
@@ -237,6 +238,18 @@ tracks/6/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("mainmenu/unlock:frame")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_titua"]
 resource_name = "cardhide"
@@ -304,6 +317,23 @@ tracks/1/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_onxes"]
+resource_name = "cardunlock"
+length = 1.05
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("mainmenu/unlock:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45000002, 0.5, 0.55, 0.6, 0.65000004, 0.7, 0.75, 0.8, 0.85, 0.90000004, 0.95, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 32]
+}
+
 [sub_resource type="Animation" id="Animation_yqd36"]
 resource_name = "playAgain"
 tracks/0/type = "value"
@@ -339,6 +369,7 @@ _data = {
 &"RESET": SubResource("Animation_2fejo"),
 &"cardhide": SubResource("Animation_titua"),
 &"cardshow": SubResource("Animation_rbgpe"),
+&"cardunlock": SubResource("Animation_onxes"),
 &"playAgain": SubResource("Animation_yqd36")
 }
 
@@ -435,7 +466,6 @@ text = "we"
 
 [node name="EndTurn" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
@@ -783,7 +813,13 @@ offset_right = 226.167
 offset_bottom = 160.5
 text = "load"
 
-[node name="Sprite2D" type="Sprite2D" parent="mainmenu"]
+[node name="unlock" type="Sprite2D" parent="mainmenu"]
+visible = false
+scale = Vector2(3, 3)
+texture = ExtResource("17_onxes")
+offset = Vector2(320, 180)
+hframes = 6
+vframes = 6
 
 [node name="pausemenu" type="Control" parent="."]
 unique_name_in_owner = true
@@ -863,6 +899,7 @@ flat = true
 
 [node name="Settings" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -935,7 +972,6 @@ flat = true
 
 [node name="gameover" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -945,7 +981,7 @@ mouse_filter = 2
 [node name="over" type="Sprite2D" parent="gameover"]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
-texture = ExtResource("7_ftqev")
+texture = ExtResource("22_onxes")
 offset = Vector2(960, 540)
 
 [node name="newgame" type="Button" parent="gameover/over"]
@@ -953,6 +989,15 @@ offset_left = 13.0
 offset_top = 877.0
 offset_right = 587.0
 offset_bottom = 1076.0
+focus_mode = 0
+flat = true
+
+[node name="endless" type="Button" parent="gameover/over"]
+unique_name_in_owner = true
+offset_left = 734.0
+offset_top = 871.0
+offset_right = 1308.0
+offset_bottom = 1070.0
 focus_mode = 0
 flat = true
 
@@ -1037,4 +1082,5 @@ bus = &"SFX"
 [connection signal="pressed" from="Help/help/Backhelp" to="." method="_on_backhelp_pressed"]
 [connection signal="pressed" from="Settings/settings/settingsback" to="." method="_on_settingsback_pressed"]
 [connection signal="pressed" from="gameover/over/newgame" to="." method="_on_newgame_pressed"]
+[connection signal="pressed" from="gameover/over/endless" to="." method="_on_endless_pressed"]
 [connection signal="pressed" from="gameover/over/title" to="." method="_on_title_pressed"]

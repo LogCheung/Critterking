@@ -25,6 +25,8 @@ func _ready() -> void:
 	
 	if type == Unit.TYPE.ACIDIC:
 		$Sprite2D.texture = load("res://Units/Assets/AllyAcid.png") if !is_enemy else load("res://Units/Assets/EnemyAcid.png")
+	elif type == Unit.TYPE.FUNGI:
+		$Sprite2D.texture = load("res://Units/Assets/allyspore.png") if !is_enemy else load("res://Units/Assets/enemyspore.png")
 
 func _process(delta):
 	position += DIRECTION * SPEED * delta
@@ -39,9 +41,11 @@ func _on_area_entered(area: Area2D) -> void:
 		var target : Unit = area.owner
 		# for shielded
 		if target.decree == Decree.TYPE.DEFENSE:
-			damage -= .25
+			damage -= .25 if type == Unit.TYPE.RANGED else 0.0
 		if target.type == Unit.TYPE.SHIELDED: 
 			damage -= .5 if type == Unit.TYPE.RANGED else .25
+		if target.type == Unit.TYPE.RESILIENT: 
+			damage -= .25 if type == Unit.TYPE.RANGED else 0.0
 		if target.dodge < (randi() % 100 + 1):
 		 # chance to ignore damage while also having reduced damage
 			#var rand = randi()
@@ -56,6 +60,8 @@ func _on_area_entered(area: Area2D) -> void:
 			
 			# create a zombified (crazed-like) ally at position if fungus
 			if is_fungus:
+				if target.type == Unit.TYPE.ZOMBIFIED : return
+				if randi_range(1,100) <= 30 : return
 				var unitsNode : UnitsNode = get_tree().get_first_node_in_group("UNITSNODE")
 				unitsNode.create_zombified(target.global_position,is_enemy)
 		queue_free()

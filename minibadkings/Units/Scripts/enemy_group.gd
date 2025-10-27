@@ -33,7 +33,7 @@ func highlight_units(highlight : bool) -> void:
 
 func activate_units() -> void:
 	isActive = true
-	for unit : Enemy in unitsArray:
+	for unit in unitsArray:
 		if !unit: continue
 		unit.become_active()
 

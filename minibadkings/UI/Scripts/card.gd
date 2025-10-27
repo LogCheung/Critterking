@@ -259,7 +259,6 @@ func check_general() -> bool:
 		decree.time -= 1
 		decree.update_cooldown()
 	return true # type == CARDTYPE.REFRESH:
-	pass
 
 func check_destroy(plopTile : Vector2) -> bool:
 	var buildTiles = tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),2)

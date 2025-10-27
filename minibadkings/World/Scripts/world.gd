@@ -76,10 +76,10 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	#for i in range(1):
-		#var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.ACIDIC
-		#ui.hand.get_child(0).add_child(hCard)
+	for i in range(1):
+		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.FUNGI
+		ui.hand.get_child(0).add_child(hCard)
 	#for i in range(1):
 		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 		#hCard.type = Card.CARDTYPE.DESTROY
@@ -281,6 +281,10 @@ func start_day() -> void:
 	for card : Card in Global.cardsDispatched:
 		ui.rollArray.append(Card.ROLLTYPE.CHARM)
 	
+	# clear zombified 
+	for unit in get_tree().get_first_node_in_group("UNITSNODE").get_children():
+		if unit.type == Unit.TYPE.ZOMBIFIED : unit.queue_free()
+	
 	# repair buildings
 	# jk we don't do that anymore
 	# run chance for extra roll
@@ -352,13 +356,13 @@ func _input(event: InputEvent) -> void:
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
-		return
 		#new_game()
-		#Engine.time_scale = 8
+		#return
+		Engine.time_scale = 8
 		#expand()
 		#print(ui.rollArray)
-		Global.nights += 29
-		check_nights()
+		#Global.nights += 29
+		#check_nights()
 
 func world_start() -> void:
 	game.process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -388,7 +392,9 @@ func check_nights() -> void:
 		%SpawnTimer.wait_time -= 1.5
 		
 	if Global.nights == 30:
+		
 		ui.victory()
+		
 
 func expand() -> void:
 	Global.expansions += 1

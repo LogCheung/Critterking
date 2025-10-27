@@ -53,6 +53,7 @@ func _process(delta: float) -> void:
 	handle_approach()
 	check_houses()
 func handle_action(delta) -> void:
+	if dead:return
 	var distToTarget = global_position.distance_to(nav.target_position)
 	if knocked: 
 		move_and_slide()
@@ -61,6 +62,7 @@ func handle_action(delta) -> void:
 			find_target()
 			dashing = false
 			return
+		if distToTarget < 5 : dashing = false
 		var dir = global_position.direction_to(target.global_position)
 		move_to(dir,delta)
 		return
@@ -80,7 +82,6 @@ func handle_action(delta) -> void:
 				anim.play("walk")
 				in_formation = false
 		ACTION.FIGHT:
-
 			if attacking : return
 			find_target()
 			if target == null: target_in_range = false
@@ -225,6 +226,7 @@ func match_type() -> void:
 			health = 3
 			damage = 1
 			attack_cd.wait_time = 2
+			attackRange = 20
 			poison_chance = 100
 		TYPE.TRAPJAW:
 			health = 4
@@ -241,6 +243,8 @@ func match_type() -> void:
 			health = 2
 			damage = 1
 			attack_cd.wait_time = 2
+			attackRange = 80
+			visionRange = 100
 			var deathAnim = anim.get_animation("death")
 			deathAnim.length = 1
 			ranged = true
@@ -257,9 +261,28 @@ func match_type() -> void:
 			damage = 0.75
 			speed = 60
 			attack_cd.wait_time = .5
-			visionRange = 200
+			visionRange = 400
+			sprite_2d.modulate = Color(0.994, 0.834, 0.588, 1.0)
 			become_active()
-
+			return
+			
+	# Find sprite file
+	if type > Unit.TYPE.RANGED:
+		var typeStr = str(TYPE.keys()[type])
+		if type == Unit.TYPE.ZOMBIFIED: typeStr = "FUNGI"
+			
+		var path : String = "res://Units/Assets/Enemy"
+		# find folder
+		path += typeStr.substr(0,1)
+		path += typeStr.substr(1).to_lower()
+		# find file
+		path += "/Enemy"
+		path += "Normal" if level <= 1 else "Upgraded"
+		path += typeStr.substr(0,1)
+		path += typeStr.substr(1).to_lower()
+		path += ".png"
+		
+		sprite_2d.texture = load(path)
 func find_building() -> void:
 	var buildings = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
 	buildings = buildings.filter(func(b):return b.type != Building.TYPE.TRAP)

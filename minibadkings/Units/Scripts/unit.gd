@@ -226,6 +226,10 @@ func on_hurt_box_land(area : Area2D) -> void:
 			enemy.hitAnim(true)
 		else: enemy.hitAnim(false)
 		
+		if enemy.health <= 0:
+			# trigger death anim
+			enemy.start_death()
+		
 		# check for knockback
 		if knock_chance >= (randi() % 100 + 1):
 			var dir = -enemy.global_position.direction_to(global_position)
@@ -242,9 +246,6 @@ func on_hurt_box_land(area : Area2D) -> void:
 			enemy.statusArray.append(Unit.STATUS.STUNNED)
 		
 		hurtbox_cd.start()
-		if enemy.health <= 0:
-			# trigger death anim
-			enemy.start_death()
 func on_hurt_box_building_land(body : Node2D):
 	if body is Building and action == ACTION.RAID:
 		if body.type != Building.TYPE.TRAP or body.type != Building.TYPE.RUINS:
@@ -284,7 +285,9 @@ func start_death(destroy : bool = false) -> void:
 	modulate.a8 = 200
 	
 	# remove from group unless is zombified
-	if type == TYPE.ZOMBIFIED : return
+	if type == TYPE.ZOMBIFIED :
+		queue_free()
+		return
 	var unitArr = group.unitsArray
 	if unitArr.find(self) != -1 : unitArr.remove_at(unitArr.find(self))
 	group.unit_died.emit()
@@ -317,7 +320,7 @@ func on_stun_finished() -> void:
 	pass
 
 func explode_on_death() -> void:
-	#if type != TYPE.EXPLOSIVE : return # check is explosive
+	if type != TYPE.EXPLOSIVE : return # check is explosive
 	# create explosion hurtbox area
 	var area = Area2D.new()
 	var col = CollisionShape2D.new()
@@ -353,6 +356,9 @@ func explode_on_death() -> void:
 			# trigger death anim
 			print("noob get killed by explosion")
 			enemy.start_death()
+	
+	# destroy self
+	queue_free()
 	pass
 func on_damage_timer() -> void:
 	if statusArray.has(STATUS.POISONED):

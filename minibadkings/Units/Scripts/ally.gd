@@ -54,11 +54,12 @@ func _process(delta: float) -> void:
 		handle_behind_wall()
 		
 	# Check if in combat
-	if vision.has_overlapping_areas(): # inside sight of ally
+	if vision and vision.has_overlapping_areas(): # inside sight of ally
 		for area in vision.get_overlapping_areas(): # not dead and not in walls
 			in_combat = is_instance_valid(area.owner) and area.owner.is_active
 	else:
 		in_combat = false
+	if type == TYPE.ZOMBIFIED : in_combat = true
 	
 	# check if enemy is too close
 	if type == TYPE.RANGED or type == TYPE.BOMBER:
@@ -77,6 +78,7 @@ func handle_action(delta) -> void:
 			find_target()
 			dashing = false
 			return
+		if distToTarget < 5 : dashing = false
 		var dir = global_position.direction_to(target.global_position)
 		move_to(dir,delta)
 		return
@@ -106,14 +108,15 @@ func handle_action(delta) -> void:
 			find_target()
 			if distToTarget <= attackRange :
 				if !attack_cd.time_left <= 0 : return
-				if anim.is_playing() : return
+				if anim.is_playing() and type != TYPE.ZOMBIFIED: return
 				if type == TYPE.CRAZED : anim.speed_scale = 2
+				
+				anim.stop()
 				anim.play("attack")
 				dashing = type == TYPE.FLYING
-				if ranged:
-					%Shoot.play()
-				else:
-					%Attack.play()
+				if ranged: %Shoot.play()
+				else: %Attack.play()
+				
 				await anim.animation_finished
 				anim.speed_scale = 1
 				velocity = Vector2.ZERO
@@ -138,6 +141,7 @@ func handle_action(delta) -> void:
 				hit_box.set_collision_layer_value(2,false)
 				return
 		ACTION.STUNNED:
+			if dead:return
 			if stun_cd.is_stopped() : stun_cd.start()
 			status_sprite.visible = true
 			status_sprite.play("stun")
@@ -230,6 +234,7 @@ func match_type() -> void:
 			health = 3
 			damage = 1
 			attack_cd.wait_time = 2
+			attackRange = 20
 			poison_chance = 100
 		TYPE.TRAPJAW:
 			health = 4
@@ -246,8 +251,8 @@ func match_type() -> void:
 			health = 2
 			damage = 1
 			attack_cd.wait_time = 2
-			var deathAnim = anim.get_animation("death")
-			deathAnim.length = 1
+			attackRange = 80
+			visionRange = 100
 			ranged = true
 		TYPE.ACIDIC:
 			health = 2
@@ -258,17 +263,22 @@ func match_type() -> void:
 			ranged = true
 		TYPE.ZOMBIFIED:
 			sprite_2d.texture = CRAZEDNORMALSE if level < 2 else UPCRAZEDNORMALSE
-			health = 1
+			health = .25
 			damage = 0.75
 			speed = 60
 			attack_cd.wait_time = .5
-			visionRange = 200
+			visionRange = 400
+			sprite_2d.modulate = Color(0.994, 0.834, 0.588, 1.0)
+			set_up_vision()
+			return
 	set_up_vision()
 	
 	# Find sprite file
 	if type > Unit.TYPE.RANGED:
 		var typeStr = str(TYPE.keys()[type])
 		var path : String = "res://Units/Assets/Ally"
+		
+		if type == Unit.TYPE.ZOMBIFIED: typeStr = "FUNGI"
 		# find folder
 		path += typeStr.substr(0,1)
 		path += typeStr.substr(1).to_lower()
