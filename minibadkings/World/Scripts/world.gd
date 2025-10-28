@@ -33,7 +33,7 @@ var night_is_expansion: bool = false
 func _ready() -> void:
 	# Load profile data
 	Global.unlockedCards = Card.DEFAULT_CARDS
-	SaveLoad._load_profile()
+	#SaveLoad._load_profile()
 	ui._on_mainmenu_mouse_entered()
 	#unlock_every_card()
 	
@@ -360,8 +360,8 @@ func _input(event: InputEvent) -> void:
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
 		#new_game()
-		return
-		#Engine.time_scale = 8
+		#return
+		Engine.time_scale = 8
 		#expand()
 		#print(ui.rollArray)
 		#Global.nights += 29

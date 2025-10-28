@@ -318,13 +318,14 @@ func randomize_type() -> void:
 		ROLLTYPE.BLESSING:
 			type = randi_range(CARDTYPE.INSPIRATION,CARDTYPE.CONSTRUCTION)
 	if type == CARDTYPE.HOUSE : randomize_type()
+	if !Global.unlockedCards.has(type) : randomize_type()
 	
 	# check if not same as other card
 	var cards = get_tree().get_nodes_in_group("CARD")
 	cards = cards.filter(func(c):return c.for_show)
 	for card : Card in cards:
 		if card == self: continue
-		if card.type == type or !Global.unlockedCards.has(type):
+		if card.type == type:
 			randomize_type()
 			return
 	match_sprite_type()

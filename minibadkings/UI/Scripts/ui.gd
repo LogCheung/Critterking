@@ -254,15 +254,8 @@ func _on_settings_pressed() -> void:
 
 func _on_quit_pressed() -> void:
 	if pausemenu.visible:
-		%Button.play()
-		mainmenu.show()
-		pausemenu.hide()
-		$AnimationPlayer.play("RESET")
 		_on_save_pressed()
-		for c in get_children():
-			if !c is Control: continue
-			c.hide()
-		mainmenu.show()
+		get_tree().change_scene_to_file("res://World/Scenes/world.tscn")
 		return
 	get_tree().quit()
 

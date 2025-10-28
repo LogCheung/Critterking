@@ -80,3 +80,6 @@ func _reset_profile() -> void:
 		ProfFileData.unlockedCards = Card.DEFAULT_CARDS
 		
 		ResourceSaver.save(ProfFileData,prof_location)
+	
+	SaveFileData = SaveDataResource.new()
+	ResourceSaver.save(SaveFileData,save_location)

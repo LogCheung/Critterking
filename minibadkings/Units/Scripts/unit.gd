@@ -364,6 +364,7 @@ func explode_on_death() -> void:
 			enemy.start_death()
 	
 	# destroy self
+	await get_tree().create_timer(.5).timeout
 	queue_free()
 	pass
 func on_damage_timer() -> void:
