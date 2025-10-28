@@ -34,7 +34,9 @@ func _ready() -> void:
 	# Load profile data
 	Global.unlockedCards = Card.DEFAULT_CARDS
 	SaveLoad._load_profile()
-	unlock_every_card()
+	ui._on_mainmenu_mouse_entered()
+	#unlock_every_card()
+	
 	
 	# connect signals
 	night_started.connect(on_night_started)
@@ -76,10 +78,10 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	for i in range(1):
-		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.FUNGI
-		ui.hand.get_child(0).add_child(hCard)
+	#for i in range(1):
+		#var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.FUNGI
+		#ui.hand.get_child(0).add_child(hCard)
 	#for i in range(1):
 		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 		#hCard.type = Card.CARDTYPE.DESTROY
@@ -353,16 +355,19 @@ func preserve_charm_in_card(card : Card, charmType : Charm.TYPE) -> Card:
 var tile2
 func _input(event: InputEvent) -> void:
 	if event.is_action_released("select") or event.is_action_pressed("select"):
+		if ui.unlock.visible and !ui.anim.is_playing(): ui.hide_unlocks()
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
 		#new_game()
-		#return
-		Engine.time_scale = 8
+		return
+		#Engine.time_scale = 8
 		#expand()
 		#print(ui.rollArray)
 		#Global.nights += 29
 		#check_nights()
+	#if event.is_action_pressed("cancel"):
+		#SaveLoad._reset_profile()
 
 func world_start() -> void:
 	game.process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -392,7 +397,6 @@ func check_nights() -> void:
 		%SpawnTimer.wait_time -= 1
 		
 	if Global.nights == 30:
-		
 		ui.victory()
 		
 
@@ -421,6 +425,7 @@ func handle_party_limit() -> void:
 	pass
 
 func _on_timer_timeout() -> void:
+	SaveLoad._save_profile(ui)
 	if !is_combat_phase: return
 	var enemies = get_tree().get_nodes_in_group("ENEMY")
 	enemies = enemies.filter(func(e : Enemy):return !e.dead)

@@ -31,6 +31,7 @@ signal unit_healed
 @onready var master: HSlider = %Master
 @onready var music: HSlider = %Music
 @onready var sfx: HSlider = %SFX
+@onready var unlock: Sprite2D = %unlock
 
 @export var rollArray : Array = []
 
@@ -47,9 +48,9 @@ func _process(delta: float) -> void:
 	if mainmenu.visible and !%crtrMenu.playing:
 		play_song(%crtrMenu)
 	elif settings.visible and !%crtrPause.playing:
-		play_song(%pausemenu)
+		play_song(%crtrPause)
 	elif help.visible and !%crtrPause.playing:
-		play_song(%pausemenu)
+		play_song(%crtrPause)
 	elif end_turn.visible and !%crtrDay.playing:
 		play_song(%crtrDay)
 	elif !end_turn.visible and !%crtrNight.playing and !control_is_visible():
@@ -165,6 +166,7 @@ func on_game_over() -> void:
 	%nights.text = str(Global.nights)
 
 func victory() -> void:
+	Global.wins += 1
 	_on_save_pressed()
 	hand.hide()
 	gameover.show()
@@ -277,7 +279,7 @@ func _on_settingsback_pressed() -> void:
 	settings.hide()
 	if !pausemenu.visible:
 		mainmenu.show()
-	if %EnableTutorial.button_pressed:
+	if %DisableTutorial.button_pressed:
 		Global.tutorial = false
 		Global.tutorialCharm = false
 		Global.tutorialDecree = false
@@ -458,5 +460,29 @@ func load_world() -> void:
 
 func _on_mainmenu_mouse_entered() -> void:
 	# check if main menu in on screen
-	print("ok")
+	if %unlock.visible: return
+	if Global.wins -1 > Global.UNLOCK.size() or Global.wins <= 0 : return
+	if Global.unlockedCards.has(Global.UNLOCK[Global.wins - 1][0]): return
+	%unlock.visible = true
+	anim.play("cardunlock")
 	pass # Replace with function body.
+
+func show_unlocks() -> void:
+	var unlockCards = mainmenu.get_children()
+	unlockCards = unlockCards.filter(func(e):return e is Card)
+	var i : int  = 0 
+	for card : Card in unlockCards:
+		card.visible = true
+		card.type = Global.UNLOCK[Global.wins - 1][i]
+		card.match_sprite_type()
+		
+		Global.unlockedCards.append(Global.UNLOCK[Global.wins - 1][i])
+		i += 1
+
+func hide_unlocks() -> void:
+	var unlockCards = mainmenu.get_children()
+	unlockCards = unlockCards.filter(func(e):return e is Card)
+	var i : int  = 0 
+	for card : Card in unlockCards:
+		card.visible = false
+	unlock.hide()

@@ -68,3 +68,15 @@ func _load_profile() -> void:
 		ui.master.value = ProfFileData.masterVol
 		ui.music.value = ProfFileData.musicVol
 		ui.sfx.value = ProfFileData.sfxrVol
+
+func _reset_profile() -> void:
+	if FileAccess.file_exists(prof_location):
+		ProfFileData = ResourceLoader.load(prof_location).duplicate(true)
+		
+		ProfFileData.tutorial = true
+		ProfFileData.tutorialCharm = true
+		ProfFileData.tutorialDecree = true
+		
+		ProfFileData.unlockedCards = Card.DEFAULT_CARDS
+		
+		ResourceSaver.save(ProfFileData,prof_location)

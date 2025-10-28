@@ -187,11 +187,17 @@ func attack_finished() -> void:
 				var proj = load("res://Units/Scenes/projectile.tscn").instantiate()
 				proj.DIRECTION = global_position.direction_to(target.global_position)
 				proj.type = type
-				proj.global_position = global_position - Vector2(0,8)
-				proj.global_position += (Vector2(0,8) * i)
 				proj.damage = damage
 				proj.raiding = action == ACTION.RAID
 				proj.is_enemy = self is Enemy
+				
+				if abs(global_position.y - target.global_position.y) < 20 :
+					proj.global_position = global_position - Vector2(0,8)
+					proj.global_position += (Vector2(0,8) * i)
+				else:
+					proj.global_position = global_position - Vector2(8,0)
+					proj.global_position += (Vector2(8,0) * i)
+				
 				get_tree().get_first_node_in_group("WORLD").add_child(proj)
 				proj.set_owner(get_tree().get_current_scene())
 func find_target() -> void:

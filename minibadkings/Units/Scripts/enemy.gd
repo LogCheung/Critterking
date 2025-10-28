@@ -65,7 +65,7 @@ func handle_action(delta) -> void:
 			find_target()
 			dashing = false
 			return
-		if distToTarget < 5 : dashing = false
+		if distToTarget < 8 : dashing = false
 		var dir = global_position.direction_to(target.global_position)
 		move_to(dir,delta)
 		return
@@ -89,17 +89,17 @@ func handle_action(delta) -> void:
 			find_target()
 			if target == null: target_in_range = false
 			if distToTarget <= attackRange :
-				if !attack_cd.time_left <= 0 : return
-				if ranged:
-					too_close = distToTarget < ranged_buffer
+				if !attack_cd.time_left <= 0 : 
+					if type == TYPE.FLYING : anim.play("idle")
+					return
+				if ranged: too_close = distToTarget < ranged_buffer
 				if type == TYPE.CRAZED : anim.speed_scale = 2
 				
 				anim.play("attack")
 				dashing = type == TYPE.FLYING
-				if ranged:
-					%Shoot.play()
-				else:
-					%Attack.play()
+				if ranged: %Shoot.play()
+				else: %Attack.play()
+				
 				await anim.animation_finished
 				anim.speed_scale = 1
 				attack_cd.start()
@@ -242,7 +242,7 @@ func match_type() -> void:
 			damage = 1
 			attack_cd.wait_time = 2
 			var deathAnim = self.anim.get_animation("death")
-			self.deathAnim.length = 1
+			deathAnim.length = 1
 		TYPE.FUNGI:
 			health = 2
 			damage = .75

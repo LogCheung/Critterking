@@ -5,6 +5,7 @@ signal formation_finished
 signal at_border
 
 const ENEMY : PackedScene = preload("res://Units/Scenes/enemy.tscn")
+const RANGEDCLASS = [Unit.TYPE.RANGED,Unit.TYPE.BOMBER,Unit.TYPE.ACIDIC,Unit.TYPE.FUNGI]
 
 var approaching : bool = true
 var isActive : bool = false
@@ -12,7 +13,7 @@ var isActive : bool = false
 func _ready() -> void:
 	super._ready()
 	type = randi_range(Unit.TYPE.MELEE,Unit.TYPE.CRAZED)
-	while Global.nights <= 3 and (type == Unit.TYPE.RANGED or type == Unit.TYPE.BOMBER):
+	while Global.nights <= 3 and RANGEDCLASS.has(type):
 		type = randi_range(Unit.TYPE.MELEE,Unit.TYPE.CRAZED)
 	tile = tileWorld.ground.local_to_map(global_position)
 	create_formation(ENEMY)
