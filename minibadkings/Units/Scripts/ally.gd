@@ -47,6 +47,7 @@ func _ready() -> void:
 	
 	await get_tree().create_timer(.5).timeout
 	set_collision_layer_value(1,true)
+	
 
 func _process(delta: float) -> void:
 	super._process(delta)
@@ -244,8 +245,8 @@ func match_type() -> void:
 			health = 3
 			damage = 1
 			attack_cd.wait_time = 2
-			var deathAnim = self.anim.get_animation("death")
-			deathAnim.length = 1
+			#var deathAnim = self.anim.get_animation("death")
+			#deathAnim.length = 1
 		TYPE.FUNGI:
 			health = 2
 			damage = .75
@@ -308,6 +309,7 @@ func match_decree_status() -> void:
 		Decree.TYPE.NONE:
 			return
 		Decree.TYPE.INSPIRATION:
+			status_sprite.visible = true
 			status_sprite.play("inspiration")
 			damage += .5
 		Decree.TYPE.DECARE:

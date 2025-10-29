@@ -83,7 +83,10 @@ func _ready() -> void:
 	healing_timer.timeout.connect(on_healing_timer)
 	%HurtBox.area_entered.connect(on_hurt_box_land)
 	%HurtBox.body_entered.connect(on_hurt_box_building_land)
-	pass
+	
+	if type == TYPE.ZOMBIFIED:
+		await get_tree().create_timer(7.5).timeout
+		start_death()
 
 func _process(_delta: float) -> void:
 	is_stunned = statusArray.has(STATUS.STUNNED)
@@ -308,7 +311,7 @@ func start_death(destroy : bool = false) -> void:
 func take_knockback(dir : Vector2) -> void:
 	knocked = true
 	dir = dir.normalized()
-	var knockSpeed = 60
+	var knockSpeed = 150
 	velocity = dir * knockSpeed
 	move_and_slide()
 	

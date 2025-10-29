@@ -241,8 +241,8 @@ func match_type() -> void:
 			health = 3
 			damage = 1
 			attack_cd.wait_time = 2
-			var deathAnim = self.anim.get_animation("death")
-			deathAnim.length = 1
+			#var deathAnim = self.anim.get_animation("death")
+			#deathAnim.length = 1
 		TYPE.FUNGI:
 			health = 2
 			damage = .75
