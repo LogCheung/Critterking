@@ -262,15 +262,12 @@ func match_type() -> void:
 			attack_cd.wait_time = 3
 			ranged = true
 		TYPE.ZOMBIFIED:
-			sprite_2d.texture = CRAZEDNORMALSE if level < 2 else UPCRAZEDNORMALSE
 			health = .25
 			damage = 0.5
 			speed = 60
 			attack_cd.wait_time = .5
 			visionRange = 400
-			sprite_2d.modulate = Color(0.994, 0.834, 0.588, 1.0)
-			set_up_vision()
-			return
+			#sprite_2d.modulate = Color(0.994, 0.834, 0.588, 1.0)
 	set_up_vision()
 	
 	# Find sprite file

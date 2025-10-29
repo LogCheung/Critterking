@@ -33,8 +33,8 @@ var night_is_expansion: bool = false
 func _ready() -> void:
 	# Load profile data
 	Global.unlockedCards = Card.DEFAULT_CARDS
-	#SaveLoad._load_profile()
-	#ui._on_mainmenu_mouse_entered()
+	SaveLoad._load_profile()
+	ui._on_mainmenu_mouse_entered()
 	unlock_every_card()
 	
 	
@@ -88,10 +88,10 @@ func new_game() -> void:
 		hCard.type = Card.CARDTYPE.SAPSTORE
 		ui.hand.get_child(0).add_child(hCard)
 		if i == 1:hCard.charm.queue_free()
-	#for i in range(1):
-		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.DESTROY
-		#ui.hand.get_child(0).add_child(hCard)
+	for i in range(1):
+		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.STORAGE
+		ui.hand.get_child(0).add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE

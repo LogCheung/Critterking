@@ -74,7 +74,7 @@ type = 1
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
 texture = ExtResource("2_j1jnl")
-offset = Vector2(0, -12)
+offset = Vector2(0, -16)
 hframes = 8
 frame = 1
 

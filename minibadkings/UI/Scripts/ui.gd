@@ -256,6 +256,7 @@ func _on_quit_pressed() -> void:
 	if pausemenu.visible:
 		get_tree().change_scene_to_file("res://World/Scenes/world.tscn")
 		return
+	SaveLoad._save_profile(self)
 	get_tree().quit()
 
 

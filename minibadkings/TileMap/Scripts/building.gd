@@ -95,13 +95,11 @@ func match_type() -> void:
 			tileWorld.ground.set_cell(tile,0,Vector2(0,0),3)
 		TYPE.CARE:
 			sprite_2d.texture = CARE
-			sprite_2d.offset = Vector2(1,-9)
 			
 			await anim.animation_finished
 			duplicate_sprite()
 		TYPE.SAPSTORE:
 			sprite_2d.texture = SAPSTORE
-			sprite_2d.offset = Vector2(0,-6)
 			for x in range(tile.x-1,tile.x+2):
 				for y in range(tile.y-1,tile.y+2):
 					if Vector2i(x,y) == tile : continue
@@ -109,7 +107,6 @@ func match_type() -> void:
 			tileWorld.buffed_tiles.append_array(buff_tiles)
 		TYPE.FARM:
 			sprite_2d.texture = FARM
-			sprite_2d.offset = Vector2(0,-4)
 			for x in range(tile.x-1,tile.x+2):
 				if tile.x  == x : continue
 				buff_tiles.append(Vector2i(x,tile.y))
