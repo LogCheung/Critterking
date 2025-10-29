@@ -94,7 +94,7 @@ func display_cards(display : bool) -> void:
 		
 func show_hand() -> void:
 	# when card is chosen from deck of cards
-	save_game_delayed()
+	#save_game_delayed()
 	rollArray.pop_front()
 	if rollArray.size() > 0:
 		cards.show()
@@ -147,7 +147,7 @@ func show_hand() -> void:
 		%TutorialText.text = "\nUse WASD to move your camera. Hold down shift to speed up the camera!"
 
 func save_game_delayed() -> void:
-	for i in range(5):
+	for i in range(10):
 		await get_tree().process_frame
 	_on_save_pressed()
 
@@ -209,7 +209,7 @@ func _on_show_pressed() -> void:
 		if rolltype == Card.ROLLTYPE.BLESSING and Global.tutorialDecree:
 			%Tutorial.show()
 			%TutorialTitle.text = "Decrees"
-			%TutorialText.text = "Decrees are active abilities that can be used during the night."
+			%TutorialText.text = "Decrees are [color=yellow]active[/color] abilities that can be used during the night."
 			%TutorialText.text += "\n\nOnce used they will be on cooldown for a number of nights but can greatly help your defense."
 			%TutorialText.text += "\n\nAfter picking one, they will be displayed on the left."
 			Global.tutorialDecree = false
@@ -254,7 +254,6 @@ func _on_settings_pressed() -> void:
 
 func _on_quit_pressed() -> void:
 	if pausemenu.visible:
-		_on_save_pressed()
 		get_tree().change_scene_to_file("res://World/Scenes/world.tscn")
 		return
 	get_tree().quit()
@@ -295,9 +294,9 @@ func _on_endturn_pressed() -> void:
 	if Global.tutorial:
 		%Tutorial.show()
 		%TutorialTitle.text = "Commanding"
-		%TutorialText.text = " Click on a unit group to select them! Click a tile to move the group there."
-		%TutorialText.text += "\n\nEnemies will approach from all xsides, assume a defensive position!"
-		%TutorialText.text += "\n\nDefeat them to survive the night!"
+		%TutorialText.text = "Click on a unit group to select them! [color=yellow]Click a tile to move the group there.[/color]"
+		%TutorialText.text += "\n\nEnemies will approach from all sides,[color=red] keep your houses safe[/color]!"
+		%TutorialText.text += "\n\nMove your units, defeat enemies, survive!"
 		await get_tree().create_timer(15).timeout
 		
 		%TutorialTitle.text = "Healing"
@@ -380,6 +379,8 @@ func handle_pause() -> void:
 
 
 func _on_save_pressed() -> void:
+	return # disable saving
+	world = get_tree().get_first_node_in_group("WORLD")
 	var scene = PackedScene.new()
 	scene.pack(world)
 	

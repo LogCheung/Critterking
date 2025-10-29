@@ -33,11 +33,9 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_yqd36"]
 font = ExtResource("6_t0wgx")
-font_size = 14
 
 [sub_resource type="LabelSettings" id="LabelSettings_lpmf3"]
 font = ExtResource("6_t0wgx")
-font_size = 14
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ia477"]
 load_path = "res://.godot/imported/discoveryshow.png-7553562f97402277057b194b770f9c25.ctex"
@@ -448,7 +446,6 @@ vertical_alignment = 1
 
 [node name="Tutorial" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 z_index = 4096
 layout_mode = 3
 anchors_preset = 0
@@ -467,7 +464,7 @@ offset_top = -106.0
 offset_right = 69.5
 offset_bottom = -80.0
 theme_override_fonts/normal_font = ExtResource("6_t0wgx")
-theme_override_font_sizes/normal_font_size = 14
+theme_override_font_sizes/normal_font_size = 16
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -475,11 +472,11 @@ vertical_alignment = 1
 unique_name_in_owner = true
 offset_left = -50.5
 offset_top = -71.99999
-offset_right = 99.5
-offset_bottom = 132.00003
-scale = Vector2(0.75, 0.75)
+offset_right = 110.33325
+offset_bottom = 176.33331
+scale = Vector2(0.6, 0.6)
 theme_override_fonts/normal_font = ExtResource("6_t0wgx")
-theme_override_font_sizes/normal_font_size = 14
+theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
 text = "we"
 
@@ -644,6 +641,7 @@ stretch_mode = 4
 
 [node name="Cards" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -711,6 +709,7 @@ texture = SubResource("CompressedTexture2D_ia477")
 
 [node name="Decrees" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(32, 500)
 layout_mode = 3
 anchors_preset = 6
@@ -772,6 +771,7 @@ position = Vector2(964, 1080)
 
 [node name="mainmenu" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
@@ -815,6 +815,7 @@ focus_mode = 0
 flat = true
 
 [node name="load" type="Button" parent="mainmenu/main"]
+visible = false
 offset_left = 184.167
 offset_top = 129.5
 offset_right = 226.167

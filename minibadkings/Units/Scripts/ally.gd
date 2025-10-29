@@ -233,7 +233,7 @@ func match_type() -> void:
 			health = 4
 			damage = 1
 			attack_cd.wait_time = 2
-			attackRange = 15
+			attackRange = 10
 			poison_chance = 100
 		TYPE.TRAPJAW:
 			health = 4

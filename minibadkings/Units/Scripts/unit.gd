@@ -323,7 +323,6 @@ func on_stun_finished() -> void:
 	status_sprite.visible = false
 	attack_cd.paused = false
 	is_stunned = false
-	pass
 
 func explode_on_death() -> void:
 	if type != TYPE.EXPLOSIVE : return # check is explosive
@@ -355,7 +354,7 @@ func explode_on_death() -> void:
 		var enemy : Unit = a.owner
 		%Hurt.play()
 		if enemy.dodge < (randi() % 100 + 1): 
-			enemy.health -= 1.0 
+			enemy.health -= 0.5 
 			enemy.hitAnim(true)
 		else:enemy.hitAnim(false)
 		if enemy.health <= 0:

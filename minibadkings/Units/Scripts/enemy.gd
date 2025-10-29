@@ -184,7 +184,7 @@ func match_type() -> void:
 			else: sprite_2d.texture = RANGEDNORMALSE
 			health = 2
 			damage = 1.5
-			attackRange = 100
+			attackRange = 70
 			var visionShape : CollisionShape2D = vision.get_child(0)
 			visionShape.shape.radius = 120
 			attack_cd.wait_time = 2
@@ -210,7 +210,7 @@ func match_type() -> void:
 		TYPE.FLYING:
 			sprite_2d.texture = FLYINGNORMALSE if !upgraded else UPFLYINGNORMALSE
 			health = 3
-			damage = 1.5
+			damage = 1.25
 			attackRange = 30
 			visionRange = 60
 			attack_cd.wait_time = 2.5
@@ -230,7 +230,7 @@ func match_type() -> void:
 			health = 3
 			damage = 1
 			attack_cd.wait_time = 2
-			attackRange = 20
+			attackRange = 10
 			poison_chance = 100
 		TYPE.TRAPJAW:
 			health = 4
@@ -247,7 +247,7 @@ func match_type() -> void:
 			health = 2
 			damage = .75
 			attack_cd.wait_time = 2
-			attackRange = 80
+			attackRange = 70
 			visionRange = 100
 			ranged = true
 		TYPE.ACIDIC:

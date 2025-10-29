@@ -34,8 +34,8 @@ func _ready() -> void:
 	# Load profile data
 	Global.unlockedCards = Card.DEFAULT_CARDS
 	#SaveLoad._load_profile()
-	ui._on_mainmenu_mouse_entered()
-	#unlock_every_card()
+	#ui._on_mainmenu_mouse_entered()
+	unlock_every_card()
 	
 	
 	# connect signals
@@ -54,6 +54,7 @@ func new_game() -> void:
 	ui.rollArray.append(Card.ROLLTYPE.UNIT)
 	
 	await get_tree().create_timer(.125).timeout
+	# reset data
 	%SpawnTimer.stop()
 	%SpawnTimer.wait_time = 10
 	enemy_parties = 3
@@ -63,7 +64,11 @@ func new_game() -> void:
 	Global.nights = 0
 	Global.expansions = 0
 	Global.cardsInHand.clear()
-	Global.cardsDispatched.clear()	
+	Global.cardsDispatched.clear()
+	for decree in get_tree().get_nodes_in_group("DECREE"):
+		decree.queue_free()
+	
+	
 	# map gen with tilemap patterns
 	clear_world()
 	await get_tree().create_timer(.125).timeout
@@ -107,6 +112,7 @@ func clear_perimeters() -> void:
 		path.queue_free()
 
 func clear_world() -> void:
+	is_combat_phase = false
 	# groups
 	for group : Group in groupNode.get_children():
 		group.terminate()
@@ -304,9 +310,7 @@ func start_day() -> void:
 			
 	tileWorld.handle_navigable_cells()
 	
-	for i in range(20):
-		await get_tree().process_frame
-	ui._on_save_pressed()
+	ui.save_game_delayed()
 	
 func unit_to_card(g : Group) -> void:
 	# create card of group
@@ -360,8 +364,8 @@ func _input(event: InputEvent) -> void:
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
 		#new_game()
-		#return
-		Engine.time_scale = 8
+		return
+		#Engine.time_scale = 8
 		#expand()
 		#print(ui.rollArray)
 		#Global.nights += 29

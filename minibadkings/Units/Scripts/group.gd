@@ -85,6 +85,7 @@ func terminate() -> void:
 	for unit in unitsArray:
 		unit.queue_free()
 	for unit in deadUnitsArray:
+		if !unit : continue
 		unit.queue_free()
 	queue_free()
 	

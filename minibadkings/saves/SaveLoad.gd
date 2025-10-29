@@ -45,6 +45,8 @@ func _save_profile(ui : UI) -> void:
 	pass
 
 func _load() -> void:
+	get_tree().get_first_node_in_group("WORLD").clear_world()
+	
 	if FileAccess.file_exists(save_location):
 		SaveFileData = ResourceLoader.load(save_location).duplicate(true)
 		
