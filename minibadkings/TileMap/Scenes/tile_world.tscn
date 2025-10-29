@@ -16,6 +16,11 @@ texture_region_size = Vector2i(64, 64)
 0:0/0/modulate = Color(1, 1, 1, 0.266667)
 0:0/1 = 1
 0:0/1/modulate = Color(4.45484, 4.45484, 4.45484, 0.8509804)
+0:1/next_alternative_id = 2
+0:1/0 = 0
+0:1/0/modulate = Color(1, 1, 1, 0.26666668)
+0:1/1 = 1
+0:1/1/modulate = Color(1.1374342, 1.1374342, 1.1374342, 1)
 
 [sub_resource type="TileSet" id="TileSet_c7ucq"]
 tile_shape = 1

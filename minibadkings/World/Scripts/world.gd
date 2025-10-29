@@ -83,11 +83,11 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	#for i in range(2):
-		#var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.PLATED
-		#ui.hand.get_child(0).add_child(hCard)
-		#if i == 1:hCard.charm.queue_free()
+	for i in range(1):
+		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.SAPSTORE
+		ui.hand.get_child(0).add_child(hCard)
+		if i == 1:hCard.charm.queue_free()
 	#for i in range(1):
 		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 		#hCard.type = Card.CARDTYPE.DESTROY

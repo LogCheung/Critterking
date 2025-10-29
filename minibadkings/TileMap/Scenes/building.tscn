@@ -105,7 +105,6 @@ libraries = {
 }
 
 [node name="HurtBox" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 6
 input_pickable = false
@@ -124,7 +123,6 @@ input_pickable = false
 polygon = PackedVector2Array(0, -48, -96, 0, 0, 48, 96, 0)
 
 [node name="Orth" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 6
 input_pickable = false
@@ -134,7 +132,6 @@ position = Vector2(288, 144)
 polygon = PackedVector2Array(-320, -176, -352, -160, -320, -144, -352, -128, -320, -112, -288, -128, -256, -112, -224, -128, -256, -144, -224, -160, -256, -176, -288, -160)
 
 [node name="trans" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 6
 input_pickable = false

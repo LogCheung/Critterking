@@ -163,12 +163,15 @@ func highlight_tiles() -> void:
 	for cell in tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),1):
 		if unit_tiles.has(cell) : continue
 		tileWorld.hover.set_cell(cell,0,Vector2(0,0),0)
+		if tileWorld.buffed_tiles.has(cell):
+			tileWorld.hover.set_cell(cell,0,Vector2(0,1),0)
 		tileWorld.hover.visible = true
 	
 	# highlight tile hovered over with card
-	tile = tileWorld.ground.local_to_map(world.get_global_mouse_position())
-	if tileWorld.hover.get_used_cells().has(tile):
-		tileWorld.hover.set_cell(tile,0,Vector2.ZERO,1)
+	var hoverTile = world.tileWorld.ground.local_to_map(world.get_global_mouse_position())
+	if tileWorld.hover.get_used_cells().has(hoverTile):
+		var atlas = tileWorld.hover.get_cell_atlas_coords(hoverTile)
+		tileWorld.hover.set_cell(hoverTile,0,atlas,1)
 
 func plop() -> void:
 	if Global.partyCount >= Global.partyLimit and type <= CARDTYPE.CRAZED:

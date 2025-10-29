@@ -39,6 +39,7 @@ enum TYPE {
 @onready var ui : UI = get_tree().get_first_node_in_group("UI")
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
 
+var buff_tiles : Array
 var tile : Vector2i
 var prevTileType : int
 var doorstepTile : Vector2i
@@ -61,7 +62,7 @@ func _process(delta: float) -> void:
 	if health <= 0:
 		on_destroyed()
 	if health <= 10 and health > 0:
-		sprite_2d.modulate.v = .3
+		sprite_2d.modulate.v = .3	
 	else:
 		sprite_2d.modulate.v = 1
 	if occupants_inside():
@@ -101,9 +102,21 @@ func match_type() -> void:
 		TYPE.SAPSTORE:
 			sprite_2d.texture = SAPSTORE
 			sprite_2d.offset = Vector2(0,-6)
+			for x in range(tile.x-1,tile.x+2):
+				for y in range(tile.y-1,tile.y+2):
+					if Vector2i(x,y) == tile : continue
+					buff_tiles.append(Vector2i(x,y))
+			tileWorld.buffed_tiles.append_array(buff_tiles)
 		TYPE.FARM:
 			sprite_2d.texture = FARM
 			sprite_2d.offset = Vector2(0,-4)
+			for x in range(tile.x-1,tile.x+2):
+				if tile.x  == x : continue
+				buff_tiles.append(Vector2i(x,tile.y))
+			for y in range(tile.y-1,tile.y+2):
+				if tile.y == y : continue
+				buff_tiles.append(Vector2i(tile.x,y))
+			tileWorld.buffed_tiles.append_array(buff_tiles)
 		TYPE.RUINS:
 			sprite_2d.texture = HOUSEA
 			sprite_2d.frame = 1
@@ -163,6 +176,9 @@ func on_destroyed() -> void:
 	# kill unit inside if group is healing
 	if occupants_inside():
 		occupant.terminate()
+	# remove buffed tiles
+	for t in buff_tiles:
+		tileWorld.buffed_tiles.remove_at(tileWorld.buffed_tiles.find(t))
 	
 func remove() -> void:
 	tileWorld.ground.set_cell(tile,0,Vector2(0,0),1)
@@ -187,14 +203,15 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 		if enemy.health <= 0:
 			enemy.start_death()
 func _on_adj_area_entered(area: Area2D) -> void:
-	if world.is_combat_phase == true: return
+	if world.is_combat_phase: return
 	if area.owner is Ally:
 		var target : Unit = area.owner
-		if type == TYPE.SAPSTORE: target.speed += 6
-		if type == TYPE.RUINS: target.speed -= 6
+		if type == TYPE.SAPSTORE: 
+			target.speed += 6
+		#if type == TYPE.RUINS: target.speed -= 6
 
 func _on_orth_area_entered(area: Area2D) -> void:
-	if world.is_combat_phase == true: return
+	if world.is_combat_phase: return
 	if area.owner is Ally:
 		var target : Unit = area.owner
 		if type == TYPE.FARM: 

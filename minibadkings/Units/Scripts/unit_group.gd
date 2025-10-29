@@ -171,7 +171,8 @@ func highlight_tiles() -> void:
 	# highlight tile hovered over with card
 	var hoverTile = world.tileWorld.ground.local_to_map(world.get_global_mouse_position())
 	if tileWorld.hover.get_used_cells().has(hoverTile):
-		tileWorld.hover.set_cell(hoverTile,0,Vector2.ZERO,1)
+		var atlas = tileWorld.hover.get_cell_atlas_coords(hoverTile)
+		tileWorld.hover.set_cell(hoverTile,0,atlas,1)
 	
 func apply_charm() -> void:
 	if !is_instance_valid(charm) or !charm: return

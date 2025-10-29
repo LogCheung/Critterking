@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=45 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Texture2D" uid="uid://luuqbnbqgyao" path="res://UI/Assets/menus/mainmenu.png" id="3_2fejo"]
@@ -26,7 +26,6 @@
 [ext_resource type="Texture2D" uid="uid://b6kejcvarih2b" path="res://UI/Assets/nightcount.png" id="11_yqd36"]
 [ext_resource type="AudioStream" uid="uid://bdq1nbxdckl0r" path="res://Audio/sfx/Card.tres" id="12_yqd36"]
 [ext_resource type="AudioStream" uid="uid://bxpbo04dxxuf4" path="res://Audio/sfx/Button.tres" id="15_8g5lr"]
-[ext_resource type="PackedScene" uid="uid://dtxo6oppyymjc" path="res://UI/Scenes/decree.tscn" id="15_onxes"]
 [ext_resource type="Texture2D" uid="uid://l1xrje5n2dl7" path="res://UI/Assets/menus/unlock.png" id="17_onxes"]
 [ext_resource type="AudioStream" uid="uid://c8brf7l45q10r" path="res://Audio/music/crtrnight.tres" id="19_gu1s8"]
 [ext_resource type="AudioStream" uid="uid://u2y0bys67ovo" path="res://Audio/music/crtrday.tres" id="20_8g5lr"]
@@ -737,9 +736,6 @@ mouse_filter = 2
 theme_override_constants/separation = 22
 alignment = 1
 
-[node name="Decree" parent="Decrees/VBoxContainer" instance=ExtResource("15_onxes")]
-layout_mode = 2
-
 [node name="Hand" type="Control" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -769,10 +765,9 @@ mouse_filter = 2
 theme_override_constants/separation = 15
 alignment = 1
 
-[node name="Card" parent="Hand/HBoxContainer" node_paths=PackedStringArray("charm") instance=ExtResource("3_bujes")]
+[node name="Card" parent="Hand/HBoxContainer" instance=ExtResource("3_bujes")]
 layout_mode = 2
 type = 2
-charm = NodePath("")
 
 [node name="HandOrigin" type="Node2D" parent="Hand"]
 unique_name_in_owner = true

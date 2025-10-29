@@ -17,6 +17,7 @@ var aStar : AStarGrid2D
 
 var using_decree : bool
 
+var buffed_tiles : Array = []
 var wall_tiles : Array
 var start_wall_tiles : Array
 var unit_tiles : Array
