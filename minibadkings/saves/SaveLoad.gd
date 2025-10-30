@@ -11,7 +11,7 @@ const prof_location = "user://ProfileFile.tres"
 
 func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 		ground : PackedByteArray, obstacles : PackedByteArray, ring : PackedByteArray,
-		dispatchDay : bool ):
+		dispatchDay : bool):
 			
 	Global.cardsDispatched.clear()
 	SaveFileData = SaveDataResource.new()
@@ -34,7 +34,19 @@ func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 		SaveFileData.cardsInHand.append(dupe)
 		dupe.for_show = false
 	
-	if SaveFileData == null : return
+	# save decrees 
+	SaveFileData.decreesEquipped.clear()
+	for d : Decree in Global.decreesEquipped:
+		var dupe : Decree = load("res://UI/Scenes/decree.tscn").instantiate()
+		dupe.type = d.type
+		dupe.time = d.time
+		dupe.cooldown = d.cooldown
+		SaveFileData.decreesEquipped.append(dupe)
+		
+	
+	if SaveFileData == null : 
+		print("wow")
+		return
 	ResourceSaver.save(SaveFileData,save_location)
 
 func _save_profile(ui : UI) -> void:

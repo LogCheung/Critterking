@@ -6,6 +6,7 @@ class_name SaveDataResource
 @export var rolls : Array
 @export var cardtypeArray : Array
 @export var cardsInHand : Array = []
+@export var decreesEquipped : Array = []
 @export var walls : PackedByteArray
 @export var ground : PackedByteArray
 @export var obstacles : PackedByteArray

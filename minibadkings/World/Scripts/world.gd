@@ -61,6 +61,7 @@ func new_game() -> void:
 	upgraded_parties = 0
 	dispatchDay = false
 	tileWorld.activeDecree = Decree.TYPE.NONE
+	tileWorld.buffed_tiles.clear()
 	Global.nights = 0
 	Global.expansions = 0
 	Global.cardsInHand.clear()

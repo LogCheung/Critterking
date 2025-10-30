@@ -312,6 +312,7 @@ func _on_endturn_pressed() -> void:
 		Global.tutorial = false
 
 func _on_newgame_pressed() -> void:
+	Global.nights = 0
 	$AnimationPlayer.play("playAgain")
 	await anim.animation_finished
 	%crtrOver.stop()
@@ -383,7 +384,7 @@ func handle_pause() -> void:
 
 
 func _on_save_pressed() -> void:
-	#return # disable saving
+	return # disable saving
 	world = get_tree().get_first_node_in_group("WORLD")
 	var scene = PackedScene.new()
 	scene.pack(world)
@@ -439,6 +440,16 @@ func load_world() -> void:
 	for card : Card in hand_container.get_children():
 		card.set_up()
 		
+	# load decrees
+	for d : Decree in SaveLoad.SaveFileData.decreesEquipped:
+		var dupe : Decree = load("res://UI/Scenes/decree.tscn").instantiate()
+		dupe.type = d.type
+		dupe.time = d.time
+		dupe.cooldown = d.cooldown
+		%DecreeContainer.append(dupe)
+	
+	
+	
 	# verify data of units
 	world.tileWorld.set_up_astar()
 	for unit in get_tree().get_nodes_in_group("ALLY"):

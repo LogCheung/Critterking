@@ -120,7 +120,7 @@ func match_type() -> void:
 			sprite_2d.offset = Vector2(0,-12)
 		TYPE.NURSERY:
 			sprite_2d.texture = NURSERY
-			sprite_2d.offset = Vector2(0,-2)
+			#sprite_2d.offset = Vector2(0,-2)
 		TYPE.STORAGE:
 			sprite_2d.texture = STORAGE
 			sprite_2d.scale.x = -1

@@ -368,6 +368,7 @@ func add_card_to_hand() -> void:
 			decree.type = type - CARDTYPE.INSPIRATION + 1
 			ui.decrees.get_child(0).add_child(decree)
 			decree.set_owner(get_tree().get_current_scene())
+			Global.decreesEquipped.append(decree)
 
 func match_building_type(building : Building) -> Building:
 	building.type = type - CARDTYPE.TRAPS + 1

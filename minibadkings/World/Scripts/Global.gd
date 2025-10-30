@@ -6,6 +6,7 @@ extends Node
 @export var saveNights : int = 0
 @export var cardsInHand : Array
 @export var cardsDispatched : Array
+@export var decreesEquipped : Array
 @export var partyCount : int
 @export var partyLimit : int
 @export var tutorial : bool = true
