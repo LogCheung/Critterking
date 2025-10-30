@@ -30,6 +30,7 @@ func _ready() -> void:
 func create_formation(unit_type : PackedScene) -> void:
 	# clear all units and create new formation based on size
 	for child : Unit in unitsArray:
+		if !child : continue
 		if child.formation_position : child.formation_position.queue_free()
 		child.queue_free()
 	unitsArray.clear()

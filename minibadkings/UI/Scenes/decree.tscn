@@ -17,8 +17,6 @@ focus_mode = 0
 flat = true
 script = ExtResource("1_e1hmt")
 type = 1
-time = null
-cooldown = null
 
 [node name="Icon" type="Sprite2D" parent="."]
 texture = ExtResource("2_l0dgt")

@@ -45,7 +45,7 @@ func _ready() -> void:
 	aStar = tileWorld.aStar
 	
 	# enemy debuff
-	health -= .5
+	health -= .5 if type != TYPE.ZOMBIFIED else 0.0
 
 func _process(delta: float) -> void:
 	super._process(delta)
@@ -258,7 +258,7 @@ func match_type() -> void:
 			attack_cd.wait_time = 3
 			ranged = true
 		TYPE.ZOMBIFIED:
-			health = 1
+			health = .5
 			damage = 0.75
 			speed = 60
 			attack_cd.wait_time = .5

@@ -13,7 +13,6 @@ func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 		ground : PackedByteArray, obstacles : PackedByteArray, ring : PackedByteArray,
 		dispatchDay : bool):
 			
-	Global.cardsDispatched.clear()
 	SaveFileData = SaveDataResource.new()
 	SaveFileData.scene = scene
 	SaveFileData.nights = Global.nights
@@ -36,7 +35,8 @@ func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 	
 	# save decrees 
 	SaveFileData.decreesEquipped.clear()
-	for d : Decree in Global.decreesEquipped:
+	for d in Global.decreesEquipped:
+		if !d : continue
 		var dupe : Decree = load("res://UI/Scenes/decree.tscn").instantiate()
 		dupe.type = d.type
 		dupe.time = d.time

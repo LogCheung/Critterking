@@ -248,11 +248,14 @@ func on_night_ended() -> void:
 		enemy_parties -= 3
 		upgraded_parties -= 1
 		%SpawnTimer.wait_time += 1
-		
+	
 	# clear dead enemies
 	var enemies = get_tree().get_nodes_in_group("ENEMY")
 	for enemy in enemies:
 		enemy.queue_free()
+	#var enemGroups = get_tree().get_first_node_in_group("ENEMYGRPNODE")
+	#for grp in enemGroups.get_children():
+		#grp.queue_free()
 	
 	# remove cooldown for decrees
 	for d : Decree in get_tree().get_nodes_in_group("DECREE"):
@@ -287,6 +290,11 @@ func start_day() -> void:
 			continue
 		unit_to_card(g)
 		g.terminate()
+		
+	# clear dead allies
+	var allies = get_tree().get_nodes_in_group("ALLY")
+	for a : Ally in allies:
+		if a.dead: a.queue_free()
 		
 	for card : Card in Global.cardsDispatched:
 		ui.rollArray.append(Card.ROLLTYPE.CHARM)
@@ -372,8 +380,8 @@ func _input(event: InputEvent) -> void:
 		#print(ui.rollArray)
 		#Global.nights += 29
 		#check_nights()
-	if event.is_action_pressed("cancel"):
-		SaveLoad._reset_profile()
+	#if event.is_action_pressed("cancel"):
+		#SaveLoad._reset_profile()
 
 func world_start() -> void:
 	game.process_mode = Node.PROCESS_MODE_PAUSABLE

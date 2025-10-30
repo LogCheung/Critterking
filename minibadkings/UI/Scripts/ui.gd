@@ -384,7 +384,7 @@ func handle_pause() -> void:
 
 
 func _on_save_pressed() -> void:
-	return # disable saving
+	#return # disable saving
 	world = get_tree().get_first_node_in_group("WORLD")
 	var scene = PackedScene.new()
 	scene.pack(world)
@@ -410,6 +410,7 @@ func load_world() -> void:
 		if unit.dead or !unit.group: unit.queue_free()
 	
 	# load data from save
+	world.on_night_ended()
 	world.game.process_mode = Node.PROCESS_MODE_PAUSABLE
 	world.create_enemy_perimeter(12 + Global.expansions, true)
 	world.create_enemy_perimeter(11 + Global.expansions, false)
@@ -432,10 +433,17 @@ func load_world() -> void:
 	for card : Card in SaveLoad.SaveFileData.cardsInHand:
 		var dupe : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 		dupe.type = card.type
+		dupe.level = card.level
+		dupe.charm = card.charm
+		
 		Global.cardsInHand.append(dupe)
 		dupe.for_show = false
 		hand_container.add_child(dupe) # container
 		dupe.set_owner(get_tree().get_current_scene())
+		
+		if dupe.charm : 
+			dupe.charm_pos.add_child(dupe.charm)
+			dupe.charm.set_owner(get_tree().get_current_scene())
 	await get_tree().process_frame
 	for card : Card in hand_container.get_children():
 		card.set_up()
@@ -446,7 +454,7 @@ func load_world() -> void:
 		dupe.type = d.type
 		dupe.time = d.time
 		dupe.cooldown = d.cooldown
-		%DecreeContainer.append(dupe)
+		%DecreeContainer.add_child(dupe)
 	
 	
 	

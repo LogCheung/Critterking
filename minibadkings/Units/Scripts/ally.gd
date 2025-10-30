@@ -162,6 +162,8 @@ func on_unselected() -> void:
 	sprite_2d.material = null
 
 func set_up_vision() -> void:
+	if vision: vision.queue_free()
+	
 	var newVision = Area2D.new()
 	var col = CollisionShape2D.new()
 	var shape = CircleShape2D.new()
@@ -324,9 +326,7 @@ func match_decree_status() -> void:
 			health = max_health
 		Decree.TYPE.RECON:
 			status_sprite.play("recon")
-			visionRange += 15
-			attackRange += 10
-			vision.queue_free()
+			visionRange += 25
 			set_up_vision()
 		Decree.TYPE.DEFENSE:
 			status_sprite.play("defense")

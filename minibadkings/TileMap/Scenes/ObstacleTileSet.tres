@@ -1,7 +1,7 @@
 [gd_resource type="TileSet" load_steps=56 format=3 uid="uid://d2t0jti0abk2d"]
 
 [ext_resource type="Texture2D" uid="uid://cx0b0ucjd4cee" path="res://TileMap/Assets/tiles.png" id="1_7bp73"]
-[ext_resource type="Texture2D" uid="uid://mg1gku362mus" path="res://UI/Scripts/gwj2obstacles.png" id="2_5edhi"]
+[ext_resource type="Texture2D" uid="uid://mg1gku362mus" path="res://UI/Assets/gwj2obstacles.png" id="2_5edhi"]
 [ext_resource type="Texture2D" uid="uid://d06rjt2g5bhak" path="res://TileMap/Assets/test.png" id="3_3ax6m"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_h7hr0"]
