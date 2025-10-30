@@ -1,4 +1,4 @@
-[gd_scene load_steps=94 format=3 uid="uid://dkqw1dmj0wkgb"]
+[gd_scene load_steps=92 format=3 uid="uid://dkqw1dmj0wkgb"]
 
 [ext_resource type="PackedScene" uid="uid://ddc6mf0gqftb" path="res://Units/Scenes/hit_box.tscn" id="1_pm8qt"]
 [ext_resource type="Script" uid="uid://13y7jtc01ydv" path="res://Units/Scripts/ally.gd" id="1_q458e"]
@@ -402,22 +402,6 @@ size = Vector2(5, 7)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yd6on"]
 size = Vector2(10, 10)
 
-[sub_resource type="GDScript" id="GDScript_amxnv"]
-script/source = "extends Area2D
-class_name VisionShape
-
-@export var visRange : float
-
-@onready var vision_shape: CollisionShape2D = %VisionShape
-
-
-func set_range(radius : float = visRange) -> void:
-	vision_shape.shape.radius = visRange
-"
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_yd6on"]
-radius = 32.0
-
 [sub_resource type="Curve" id="Curve_yd6on"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1.1), 0.0, 0.0, 0, 0]
 point_count = 2
@@ -676,16 +660,6 @@ collision_mask = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="behindWall"]
 position = Vector2(0, 3)
 shape = SubResource("RectangleShape2D_yd6on")
-
-[node name="Vision" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 4
-script = SubResource("GDScript_amxnv")
-
-[node name="VisionShape" type="CollisionShape2D" parent="Vision"]
-unique_name_in_owner = true
-shape = SubResource("CircleShape2D_yd6on")
-debug_color = Color(0, 0.6, 0.701961, 0.141176)
 
 [node name="UtilityAiAgent" type="Node" parent="."]
 script = ExtResource("5_t35g5")

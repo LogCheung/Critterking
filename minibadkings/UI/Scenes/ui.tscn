@@ -792,7 +792,6 @@ position = Vector2(964, 1080)
 
 [node name="mainmenu" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
@@ -803,7 +802,7 @@ scale = Vector2(6, 6)
 texture = ExtResource("3_2fejo")
 offset = Vector2(160, 90)
 
-[node name="Play" type="Button" parent="mainmenu/main"]
+[node name="PlayMenu" type="Button" parent="mainmenu/main"]
 offset_left = 258.0
 offset_top = 2.0
 offset_right = 317.0
@@ -1133,7 +1132,7 @@ bus = &"SFX"
 [connection signal="pressed" from="Dispatch/Sprite2D/dispatchEnd" to="." method="_on_dispatch_end_pressed"]
 [connection signal="pressed" from="Cards/CardShow/Show" to="." method="_on_show_pressed"]
 [connection signal="mouse_entered" from="mainmenu" to="." method="_on_mainmenu_mouse_entered"]
-[connection signal="pressed" from="mainmenu/main/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="mainmenu/main/PlayMenu" to="." method="_on_play_menu_pressed"]
 [connection signal="pressed" from="mainmenu/main/Help" to="." method="_on_help_pressed"]
 [connection signal="pressed" from="mainmenu/main/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="mainmenu/main/Quit" to="." method="_on_quit_pressed"]

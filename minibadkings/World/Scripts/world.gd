@@ -253,9 +253,9 @@ func on_night_ended() -> void:
 	var enemies = get_tree().get_nodes_in_group("ENEMY")
 	for enemy in enemies:
 		enemy.queue_free()
-	#var enemGroups = get_tree().get_first_node_in_group("ENEMYGRPNODE")
-	#for grp in enemGroups.get_children():
-		#grp.queue_free()
+	var enemGroups = get_tree().get_first_node_in_group("ENEMYGRPNODE")
+	for grp in enemGroups.get_children():
+		grp.queue_free()
 	
 	# remove cooldown for decrees
 	for d : Decree in get_tree().get_nodes_in_group("DECREE"):
@@ -375,9 +375,11 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		#new_game()
 		#return
-		Engine.time_scale = 8
+		#Engine.time_scale = 8
 		#expand()
 		#print(ui.rollArray)
+		ui._on_endturn_pressed()
+		on_night_ended()
 		#Global.nights += 29
 		#check_nights()
 	#if event.is_action_pressed("cancel"):

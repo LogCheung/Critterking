@@ -70,6 +70,7 @@ func create_formation(unit_type : PackedScene) -> void:
 			
 		last_pos += Vector2(abs(x_sep) * 2.75,-y_sep) # add margin for next row
 		last_pos -= Vector2(x_sep,y_sep) # new row margin
+	size = unitsArray.size()
 
 func _on_unit_died() -> void:
 	size = unitsArray.size()

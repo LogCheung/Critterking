@@ -222,6 +222,7 @@ func _on_play_pressed() -> void:
 	if anim.is_playing() : return
 	%Button.play()
 	$AnimationPlayer.play("MainToGame")
+	Global.nights = 0
 	world.new_game()
 	await anim.animation_finished
 	%crtrMenu.stop()
@@ -235,7 +236,8 @@ func _on_play_pressed() -> void:
 		%TutorialTitle.text = "Cards"
 		%TutorialText.text = "Every night you will be able to draw a card, click the deck and make your selection!"
 		%TutorialText.text += "\n\nThe first night you will be able draw twice!"
-
+func _on_play_menu_pressed() -> void:
+	_on_play_pressed()
 func _on_help_pressed() -> void:
 	%Button.play()
 	if !%crtrPause.playing:
@@ -402,6 +404,9 @@ func _on_save_pressed() -> void:
 	#ResourceSaver.save(scene,"res://saves/savefile.tscn")
 
 func _on_load_pressed() -> void:
+	for i in range(10):
+		await get_tree().process_frame
+	world.clear_world()
 	SaveLoad._load()
 
 func load_world() -> void:
