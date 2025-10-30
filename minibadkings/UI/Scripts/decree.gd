@@ -3,7 +3,8 @@ class_name Decree
 
 enum TYPE  {
 	NONE, INSPIRATION, DECARE, RECON, DEFENSE, RENOVATE, WAR, 
-	CONSCRIPTION, MASTERY, INFLUENCE, CONSTRUCTION
+	CONSCRIPTION, MASTERY, #INFLUENCE, 
+	CONSTRUCTION
 }
 
 @export var type : TYPE
@@ -69,8 +70,8 @@ func match_sprite() -> void:
 			sprite.texture = preload("res://UI/Assets/decrees/conscriptionIco.png")
 		TYPE.MASTERY:
 			sprite.texture = preload("res://UI/Assets/decrees/masteryIco.png")
-		TYPE.INFLUENCE:
-			sprite.texture = preload("res://UI/Assets/decrees/influenceIco.png")
+ 		#TYPE.INFLUENCE:
+			#sprite.texture = preload("res://UI/Assets/decrees/influenceIco.png")
 		TYPE.CONSTRUCTION:
 			sprite.texture = preload("res://UI/Assets/decrees/constructionIco.png")
 		

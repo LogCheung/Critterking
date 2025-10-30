@@ -280,17 +280,17 @@ func handle_decree() -> void:
 		Decree.TYPE.CONSCRIPTION:
 			# highlight buildings, no hover
 			highlight_buildings(true,Building.TYPE.HOUSE)
-		Decree.TYPE.INFLUENCE:
-			# Highlight enemy units, no hover
-			var enemGroups = get_tree().get_first_node_in_group("ENEMYGRPNODE")
-			enemGroups = enemGroups.get_children()
-			for grp : Group in enemGroups:
-				# find first unit and set arrow above them
-				# but instead of first just do every one
-				for unit in grp.unitsArray:
-					if !is_instance_valid(unit) : return
-					unit.status_sprite.visible = true
-					unit.status_sprite.play("promptSelect")
+		#Decree.TYPE.INFLUENCE:
+			## Highlight enemy units, no hover
+			#var enemGroups = get_tree().get_first_node_in_group("ENEMYGRPNODE")
+			#enemGroups = enemGroups.get_children()
+			#for grp : Group in enemGroups:
+				## find first unit and set arrow above them
+				## but instead of first just do every one
+				#for unit in grp.unitsArray:
+					#if !is_instance_valid(unit) : return
+					#unit.status_sprite.visible = true
+					#unit.status_sprite.play("promptSelect")
 		
 	# handle input
 	if using_decree and Input.is_action_just_released("select"):
@@ -350,16 +350,16 @@ func handle_decree_action(mouseTile : Vector2i) -> void:
 					#u.visible = false
 				
 				highlight_buildings(false,Building.TYPE.NONE)
-		Decree.TYPE.INFLUENCE:
-			var enemGroups = get_tree().get_first_node_in_group("ENEMYGRPNODE")
-			enemGroups = enemGroups.get_children()
-			# remove prompt select from each enemy
-			for grp : Group in enemGroups:
-				for unit in grp.unitsArray:
-					if !is_instance_valid(unit) : return
-					unit.status_sprite.visible = false
-					unit.status_sprite.play("promptSelect")
-			pass
+		#Decree.TYPE.INFLUENCE:
+			#var enemGroups = get_tree().get_first_node_in_group("ENEMYGRPNODE")
+			#enemGroups = enemGroups.get_children()
+			## remove prompt select from each enemy
+			#for grp : Group in enemGroups:
+				#for unit in grp.unitsArray:
+					#if !is_instance_valid(unit) : return
+					#unit.status_sprite.visible = false
+					#unit.status_sprite.play("promptSelect")
+			#pass
 		Decree.TYPE.CONSTRUCTION:
 			var usableTiles = ground.get_used_cells_by_id(0,Vector2(0,0),0)
 			usableTiles.append_array(ground.get_used_cells_by_id(0,Vector2(0,0),1))
@@ -416,8 +416,8 @@ func handle_stat_modifying_decree() -> void:
 			unit.decree = activeDecree
 			unit.match_decree_status()
 			affectedArray.append(unit)
-		elif unit is Enemy and activeDecree == Decree.TYPE.INFLUENCE:
-			affectedArray.append(unit)
+ 		#elif unit is Enemy and activeDecree == Decree.TYPE.INFLUENCE:
+			#affectedArray.append(unit)
 		
 	area.queue_free()
 

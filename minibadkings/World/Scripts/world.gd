@@ -81,17 +81,17 @@ func new_game() -> void:
 	
 	
 	# add house card
-	for i in range(4):
+	for i in range(1):
 		add_house_card()
-	for i in range(1):
-		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.TRAPJAW
-		ui.hand_container.add_child(hCard)
-		if i == 1:hCard.charm.queue_free()
-	for i in range(1):
-		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.STORAGE
-		ui.hand_container.add_child(hCard)
+	#for i in range(1):
+		#var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.TRAPJAW
+		#ui.hand_container.add_child(hCard)
+		#if i == 1:hCard.charm.queue_free()
+	#for i in range(1):
+		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.STORAGE
+		#ui.hand_container.add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
@@ -113,7 +113,6 @@ func clear_perimeters() -> void:
 		path.queue_free()
 
 func clear_world() -> void:
-	is_combat_phase = false
 	# groups
 	for group : Group in groupNode.get_children():
 		group.terminate()
@@ -205,6 +204,7 @@ func spawn_enemy() -> void:
 	
 
 func on_night_started() -> void:
+	%Failcheck.start()
 	ui.hand.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	ui.decrees.process_mode = Node.PROCESS_MODE_PAUSABLE
 	if night_is_expansion:
@@ -365,14 +365,14 @@ func _input(event: InputEvent) -> void:
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
 		#new_game()
-		return
-		#Engine.time_scale = 8
+		#return
+		Engine.time_scale = 8
 		#expand()
 		#print(ui.rollArray)
 		#Global.nights += 29
 		#check_nights()
-	#if event.is_action_pressed("cancel"):
-		#SaveLoad._reset_profile()
+	if event.is_action_pressed("cancel"):
+		SaveLoad._reset_profile()
 
 func world_start() -> void:
 	game.process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -430,6 +430,7 @@ func handle_party_limit() -> void:
 	pass
 
 func _on_timer_timeout() -> void:
+	print("check")
 	SaveLoad._save_profile(ui)
 	if !is_combat_phase: return
 	var enemies = get_tree().get_nodes_in_group("ENEMY")

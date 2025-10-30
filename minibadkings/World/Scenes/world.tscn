@@ -63,7 +63,8 @@ environment = SubResource("Environment_fdxdb")
 unique_name_in_owner = true
 process_mode = 3
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Failcheck" type="Timer" parent="."]
+unique_name_in_owner = true
 wait_time = 10.0
 autostart = true
 
@@ -77,4 +78,4 @@ mouse_filter = 2
 color = Color(0.171203, 0.130829, 0.151204, 1)
 
 [connection signal="timeout" from="Game/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Failcheck" to="." method="_on_timer_timeout"]

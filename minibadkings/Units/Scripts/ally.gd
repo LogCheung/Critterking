@@ -302,6 +302,9 @@ func match_type() -> void:
 		#speed = speed + 3
 
 func match_decree_status() -> void:
+	if dead : 
+		status_sprite.visible = false
+		return
 	match decree:
 		Decree.TYPE.NONE:
 			return
@@ -341,8 +344,6 @@ func match_decree_status() -> void:
 			max_health = max_health + 0.5
 			health = max_health
 			damage = damage + 0.5
-		Decree.TYPE.INFLUENCE:
-			pass # do nothing
 		Decree.TYPE.CONSTRUCTION:
 			pass # do nothing
 	status_sprite.visible = true 

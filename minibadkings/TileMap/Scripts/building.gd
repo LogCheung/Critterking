@@ -90,7 +90,7 @@ func match_type() -> void:
 			duplicate_sprite()
 		TYPE.TRAP:
 			sprite_2d.texture = TRAPA if randi() % 2 == 0 else TRAPB
-			sprite_2d.offset = Vector2.ZERO
+			#sprite_2d.offset = Vector2.ZERO
 			z_index = 0
 			tileWorld.ground.set_cell(tile,0,Vector2(0,0),3)
 		TYPE.CARE:

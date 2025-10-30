@@ -3,12 +3,18 @@ extends Node
 const save_location = "user://SaveFile.tres"
 const prof_location = "user://ProfileFile.tres"
 
-var SaveFileData : SaveDataResource = SaveDataResource.new()
-var ProfFileData : ProfileDataResource = ProfileDataResource.new()
+@export var SaveFileData : SaveDataResource = null:
+	set(value):
+		SaveFileData = value
+
+@export var ProfFileData : ProfileDataResource = ProfileDataResource.new()
 
 func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 		ground : PackedByteArray, obstacles : PackedByteArray, ring : PackedByteArray,
 		dispatchDay : bool ):
+			
+	Global.cardsDispatched.clear()
+	SaveFileData = SaveDataResource.new()
 	SaveFileData.scene = scene
 	SaveFileData.nights = Global.nights
 	SaveFileData.rolls = rollArray
@@ -28,6 +34,7 @@ func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 		SaveFileData.cardsInHand.append(dupe)
 		dupe.for_show = false
 	
+	if SaveFileData == null : return
 	ResourceSaver.save(SaveFileData,save_location)
 
 func _save_profile(ui : UI) -> void:
@@ -80,6 +87,10 @@ func _reset_profile() -> void:
 		ProfFileData.tutorialDecree = true
 		
 		ProfFileData.unlockedCards = Card.DEFAULT_CARDS
+		
+		ProfFileData.masterVol = .5
+		ProfFileData.musicVol = .5
+		ProfFileData.sfxrVol = .5
 		
 		ResourceSaver.save(ProfFileData,prof_location)
 	

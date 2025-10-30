@@ -33,9 +33,11 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_yqd36"]
 font = ExtResource("6_t0wgx")
+font_size = 14
 
 [sub_resource type="LabelSettings" id="LabelSettings_lpmf3"]
 font = ExtResource("6_t0wgx")
+font_size = 14
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ia477"]
 load_path = "res://.godot/imported/discoveryshow.png-7553562f97402277057b194b770f9c25.ctex"
@@ -418,9 +420,9 @@ texture = ExtResource("11_yqd36")
 
 [node name="DayNight" type="Label" parent="NightCounter/Sprite2D"]
 unique_name_in_owner = true
-offset_left = -23.666668
+offset_left = -25.333334
 offset_top = -16.0
-offset_right = 16.333332
+offset_right = 14.666666
 offset_bottom = 7.0
 scale = Vector2(1.5, 1.5)
 text = "1"
@@ -475,19 +477,19 @@ offset_top = -106.0
 offset_right = 69.5
 offset_bottom = -80.0
 theme_override_fonts/normal_font = ExtResource("6_t0wgx")
-theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/normal_font_size = 14
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TutorialText" type="RichTextLabel" parent="Tutorial/box"]
 unique_name_in_owner = true
-offset_left = -50.5
+offset_left = -52.99994
 offset_top = -71.99999
-offset_right = 110.33325
-offset_bottom = 176.33331
-scale = Vector2(0.6, 0.6)
+offset_right = 86.33331
+offset_bottom = 139.33334
+scale = Vector2(0.75, 0.75)
 theme_override_fonts/normal_font = ExtResource("6_t0wgx")
-theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/normal_font_size = 14
 bbcode_enabled = true
 text = "we"
 
@@ -783,9 +785,6 @@ offset_bottom = 981.5384
 mouse_filter = 2
 theme_override_constants/separation = 20
 
-[node name="Card" parent="Hand/ScrollContainer/ScrollControl/HandContainer" instance=ExtResource("3_bujes")]
-layout_mode = 2
-
 [node name="HandOrigin" type="Node2D" parent="Hand"]
 unique_name_in_owner = true
 position = Vector2(964, 1080)
@@ -836,7 +835,6 @@ focus_mode = 0
 flat = true
 
 [node name="load" type="Button" parent="mainmenu/main"]
-visible = false
 offset_left = 184.167
 offset_top = 129.5
 offset_right = 226.167

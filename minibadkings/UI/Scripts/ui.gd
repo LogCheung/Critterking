@@ -98,7 +98,7 @@ func display_cards(display : bool) -> void:
 		
 func show_hand() -> void:
 	# when card is chosen from deck of cards
-	#save_game_delayed()
+	save_game_delayed()
 	rollArray.pop_front()
 	if rollArray.size() > 0:
 		cards.show()
@@ -126,8 +126,7 @@ func show_hand() -> void:
 	if world.dispatchDay and Global.tutorialCharm:
 		%Tutorial.show()
 		%TutorialTitle.text = "Discoveries"
-		%TutorialText.text = "You can choose a unit card to send on an expedition"
-		%TutorialText.text += "\n\nThey will be disabled for a night, but will come back tomorrow with an upgrade"
+		%TutorialText.text = "Units sent out will be disabled for a night, but will come back tomorrow with an upgrade"
 		%TutorialText.text += "\n\nYou can continue without selecting if you choose."
 		Global.tutorialCharm = false
 		return
@@ -150,7 +149,7 @@ func show_hand() -> void:
 		%TutorialText.text = "\nUse WASD to move your camera. Hold down shift to speed up the camera!"
 
 func save_game_delayed() -> void:
-	for i in range(10):
+	for i in range(5):
 		await get_tree().process_frame
 	_on_save_pressed()
 
@@ -257,6 +256,7 @@ func _on_settings_pressed() -> void:
 
 func _on_quit_pressed() -> void:
 	if pausemenu.visible:
+		world.clear_world()
 		get_tree().change_scene_to_file("res://World/Scenes/world.tscn")
 		return
 	SaveLoad._save_profile(self)
@@ -383,7 +383,7 @@ func handle_pause() -> void:
 
 
 func _on_save_pressed() -> void:
-	return # disable saving
+	#return # disable saving
 	world = get_tree().get_first_node_in_group("WORLD")
 	var scene = PackedScene.new()
 	scene.pack(world)
@@ -418,6 +418,7 @@ func load_world() -> void:
 	hand.show()
 	decrees.show()
 	
+	Global.cardsDispatched.clear()
 	world.tileWorld.wall.tile_map_data = SaveLoad.SaveFileData.walls
 	world.tileWorld.ground.tile_map_data = SaveLoad.SaveFileData.ground
 	world.tileWorld.obstacles.tile_map_data = SaveLoad.SaveFileData.obstacles
