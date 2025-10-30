@@ -77,6 +77,7 @@ func set_up() -> void:
 var selected : bool = false
 var tile : Vector2i
 func _process(delta: float) -> void:
+	#top_level = selected
 	if setting_up : return
 	handle_drag()
 	
@@ -108,7 +109,7 @@ func handle_drag() -> void:
 			set_to_default()
 			selected = true
 	if Input.is_action_pressed("select") and selected:
-		sprite_2d.scale = Vector2(.4,.4)
+		sprite_2d.scale = Vector2(.6,.6)
 		global_position = get_global_mouse_position()
 		highlight_tiles()
 	elif Input.is_action_just_released("select") and selected:
@@ -223,7 +224,7 @@ func plop() -> void:
 	tileWorld.handle_navigable_cells()
 
 func remove_self() -> void:
-	var cards = ui.hand.get_child(0).get_children()
+	var cards = ui.hand_container.get_children()
 	for c : Card in cards:
 		c.refreshing = true
 	selected = false
@@ -342,7 +343,7 @@ func add_card_to_hand() -> void:
 			dupe.type = type
 			Global.cardsInHand.append(dupe)
 			dupe.for_show = false
-			ui.hand.get_child(0).add_child(dupe) # container
+			ui.hand_container.add_child(dupe) # container
 			dupe.set_owner(get_tree().get_current_scene())
 		ROLLTYPE.CHARM:
 			var card : Card = Global.cardsDispatched.front()
@@ -354,7 +355,7 @@ func add_card_to_hand() -> void:
 			newCharm.type = type - CARDTYPE.HEARTLOCKET
 			
 			Global.cardsInHand.append(newCard)
-			ui.hand.get_child(0).add_child(newCard)
+			ui.hand_container.add_child(newCard)
 			newCard.set_owner(get_tree().get_current_scene())
 			Global.cardsDispatched.remove_at(Global.cardsDispatched.find(card))
 			

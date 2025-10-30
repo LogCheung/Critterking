@@ -32,6 +32,7 @@ signal unit_healed
 @onready var music: HSlider = %Music
 @onready var sfx: HSlider = %SFX
 @onready var unlock: Sprite2D = %unlock
+@onready var hand_container: HBoxContainer = %HandContainer
 
 @export var rollArray : Array = []
 
@@ -44,7 +45,7 @@ var dispatchAmt = 0
 var dispatchLimit = 1
 
 func _process(delta: float) -> void:
-	Global.cardsInHand = hand.get_child(0).get_children()
+	Global.cardsInHand = hand_container.get_children()
 	if mainmenu.visible and !%crtrMenu.playing:
 		play_song(%crtrMenu)
 	elif settings.visible and !%crtrPause.playing:
@@ -57,6 +58,9 @@ func _process(delta: float) -> void:
 		play_song(%crtrNight)
 	%DayNight.text = str(Global.nights)
 	world.handle_party_limit()
+	
+	%ScrollControl.custom_minimum_size.x = 128 * hand_container.get_children().size()
+	%ScrollControl.custom_minimum_size.x += 20 * hand_container.get_children().size() - 1
 		
 func _ready() -> void:
 	# connect signals
@@ -109,9 +113,8 @@ func show_hand() -> void:
 	decrees.show()
 	night_counter.show()
 	displaying_cards = false
-	var container = %Hand.get_child(0) # Hboxcontainer
 	await get_tree().create_timer(.05).timeout
-	for c : Card in container.get_children():
+	for c : Card in hand_container.get_children():
 		c.set_up()
 		c.refreshing = true
 	
@@ -352,12 +355,12 @@ func _on_dispatch_end_pressed() -> void:
 func refresh_positions() -> void:
 	# Add and remove dummy card to refresh positions
 	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-	hand.get_child(0).add_child(hCard)
+	hand_container.add_child(hCard)
 	#hCard.set_owner(get_tree().get_current_scene())
 	hCard.set_up()
 	hCard.remove_self()
 	
-	var cardsInHand = hand.get_child(0).get_children()
+	var cardsInHand = hand_container.get_children()
 	for c : Card in cardsInHand:
 		c.set_up()
 func _input(event: InputEvent) -> void:
@@ -429,10 +432,10 @@ func load_world() -> void:
 		dupe.type = card.type
 		Global.cardsInHand.append(dupe)
 		dupe.for_show = false
-		hand.get_child(0).add_child(dupe) # container
+		hand_container.add_child(dupe) # container
 		dupe.set_owner(get_tree().get_current_scene())
 	await get_tree().process_frame
-	for card : Card in hand.get_child(0).get_children():
+	for card : Card in hand_container.get_children():
 		card.set_up()
 		
 	# verify data of units

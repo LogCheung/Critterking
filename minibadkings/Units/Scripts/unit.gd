@@ -230,7 +230,11 @@ func on_hurt_box_land(area : Area2D) -> void:
 		var enemy : Unit = area.owner
 		
 		%Hurt.play()
+		
 		if enemy.dodge < (randi() % 100 + 1): # check for miss
+			if knock_chance >= (randi() % 100 + 1):
+				var dir = -enemy.global_position.direction_to(global_position)
+				enemy.take_knockback(dir)
 			enemy.health -= damage 
 			enemy.hitAnim(true)
 		else: enemy.hitAnim(false)
@@ -240,9 +244,6 @@ func on_hurt_box_land(area : Area2D) -> void:
 			enemy.start_death()
 		
 		# check for knockback
-		if knock_chance >= (randi() % 100 + 1):
-			var dir = -enemy.global_position.direction_to(global_position)
-			enemy.take_knockback(dir)
 		
 		# check for poison
 		if poison_chance >= (randi() % 100 + 1):
@@ -311,11 +312,11 @@ func start_death(destroy : bool = false) -> void:
 func take_knockback(dir : Vector2) -> void:
 	knocked = true
 	dir = dir.normalized()
-	var knockSpeed = 150
+	var knockSpeed = 250
 	velocity = dir * knockSpeed
 	move_and_slide()
 	
-	await get_tree().create_timer(.125).timeout
+	await get_tree().create_timer(.175).timeout
 	knocked = false
 	pass
 

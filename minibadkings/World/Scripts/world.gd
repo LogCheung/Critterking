@@ -81,21 +81,21 @@ func new_game() -> void:
 	
 	
 	# add house card
-	for i in range(1):
+	for i in range(4):
 		add_house_card()
 	for i in range(1):
 		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.SAPSTORE
-		ui.hand.get_child(0).add_child(hCard)
+		hCard.type = Card.CARDTYPE.TRAPJAW
+		ui.hand_container.add_child(hCard)
 		if i == 1:hCard.charm.queue_free()
 	for i in range(1):
 		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 		hCard.type = Card.CARDTYPE.STORAGE
-		ui.hand.get_child(0).add_child(hCard)
+		ui.hand_container.add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
-	ui.hand.get_child(0).add_child(hCard)
+	ui.hand_container.add_child(hCard)
 	hCard.set_owner(get_tree().get_current_scene())
 	
 func unlock_every_card() -> void:
@@ -322,7 +322,7 @@ func unit_to_card(g : Group) -> void:
 	
 	# add card to hand
 	Global.cardsInHand.append(newCard)
-	ui.hand.get_child(0).add_child(newCard)
+	ui.hand_container.add_child(newCard)
 	if newCard.charm : 
 		newCard.charm_pos.add_child(newCard.charm)
 		newCard.charm.set_owner(get_tree().get_current_scene())

@@ -26,7 +26,7 @@ enum TYPE {
 }
 
 @export var type : TYPE
-@export var occupant : Group 
+@export var occupant : AllyGroup 
 @export var health : int = 20
 @export var max_health : int = 20
 @export var temporary : bool = false
@@ -235,6 +235,7 @@ func _on_timer_timeout() -> void:
 		else:
 			occupant.max_size = 12 if occupant.level == 3 else 9
 		occupant.respawn_units()
+		occupant.house = null
 		for unit : Ally in occupant.unitsArray:
 			unit.healing = false
 			unit.visible = true

@@ -34,6 +34,7 @@ var is_under_mouse : bool = false
 
 func _on_select_area_mouse_entered() -> void:
 	if tileWorld.using_decree : return
+	if house : return
 	if !world.is_combat_phase: return
 	is_under_mouse = true
 	for unit : Ally in unitsArray:
@@ -50,6 +51,7 @@ func _on_select_area_mouse_exited() -> void:
 			return
 		unit.unselected.emit()
 func _input(event: InputEvent) -> void:
+	if house : return
 	if tileWorld.using_decree : return
 	if !world.is_combat_phase: return
 	if event.is_action_pressed("select") and selected:
@@ -73,6 +75,7 @@ func _input(event: InputEvent) -> void:
 func _on_select_area_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if tileWorld.using_decree : return
 	if !world.is_combat_phase: return
+	if house : return
 	if event.is_action_pressed("select"):
 		if is_under_mouse:
 			selected = !selected
