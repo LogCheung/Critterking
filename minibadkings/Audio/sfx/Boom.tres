@@ -1,0 +1,10 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=3 format=3 uid="uid://btw5xhp28lsrh"]
+
+[ext_resource type="AudioStream" uid="uid://dei3seqs6thi4" path="res://Audio/sfx/Boom1.wav" id="1_tbeh0"]
+[ext_resource type="AudioStream" uid="uid://b078s2ikn08qu" path="res://Audio/sfx/Boom2.wav" id="2_7kp4n"]
+
+[resource]
+playback_mode = 1
+streams_count = 2
+stream_0/stream = ExtResource("1_tbeh0")
+stream_1/stream = ExtResource("2_7kp4n")

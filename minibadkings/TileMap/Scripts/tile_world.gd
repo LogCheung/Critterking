@@ -311,6 +311,7 @@ func handle_decree() -> void:
 
 func handle_decree_action(mouseTile : Vector2i) -> void:
 	# executed when clicked and decree is being used
+	%Decree.play()
 	match activeDecree:
 		Decree.TYPE.NONE:
 			return

@@ -230,7 +230,6 @@ func on_hurt_box_land(area : Area2D) -> void:
 	if area.owner is Unit:
 		var enemy : Unit = area.owner
 		
-		%Hurt.play()
 		
 		if enemy.dodge < (randi() % 100 + 1): # check for miss
 			if knock_chance >= (randi() % 100 + 1):
@@ -278,10 +277,12 @@ func hitAnim(hit : bool, status : STATUS = STATUS.NONE) -> void:
 			mod = Color(0,2.0,0)
 			
 	if hit:
+		%Hurt.play()
 		modulate = mod
 		await get_tree().create_timer(.05).timeout
 		set_modulate(reg)
 	else: # dodged
+		%Dodge.play()
 		modulate.a = 0.8
 		await get_tree().create_timer(.05).timeout
 		modulate.a = 1

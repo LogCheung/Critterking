@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://y0ju1mi4ih78"]
+[gd_scene load_steps=15 format=4 uid="uid://y0ju1mi4ih78"]
 
 [ext_resource type="Script" uid="uid://d3yteynx5bbfn" path="res://TileMap/Scripts/tile_world.gd" id="1_leqhe"]
 [ext_resource type="TileSet" uid="uid://bxsbqepu6rxgc" path="res://TileMap/Scenes/WorldTileSet.tres" id="2_jb8ou"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dchtcmyjxapii" path="res://TileMap/Assets/activeHover.png" id="4_fl1qv"]
 [ext_resource type="Texture2D" uid="uid://khwrwj4va25l" path="res://TileMap/Assets/hover.png" id="4_h7jyf"]
 [ext_resource type="Texture2D" uid="uid://txld43tibnow" path="res://TileMap/Assets/ringTerrain.png" id="7_ftxe1"]
+[ext_resource type="AudioStream" uid="uid://vu5m6xgexa76" path="res://Audio/sfx/Decree.tres" id="8_3cgbr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fl1qv"]
 texture = ExtResource("4_h7jyf")
@@ -274,3 +275,8 @@ tile_set = SubResource("TileSet_ftxe1")
 
 [node name="Center" type="Node2D" parent="."]
 position = Vector2(32, 80)
+
+[node name="Decree" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("8_3cgbr")
+bus = &"Music"

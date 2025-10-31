@@ -1,0 +1,10 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=3 format=3 uid="uid://vu5m6xgexa76"]
+
+[ext_resource type="AudioStream" uid="uid://dv0sd357xvyfu" path="res://Audio/sfx/Decree1.wav" id="1_xxe7v"]
+[ext_resource type="AudioStream" uid="uid://mp3xps4unwwc" path="res://Audio/sfx/Decree2.wav" id="2_0nxhk"]
+
+[resource]
+playback_mode = 1
+streams_count = 2
+stream_0/stream = ExtResource("1_xxe7v")
+stream_1/stream = ExtResource("2_0nxhk")

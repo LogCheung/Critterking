@@ -1,0 +1,10 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=3 format=3 uid="uid://byew5tl7rjt0"]
+
+[ext_resource type="AudioStream" uid="uid://h2cq34qudgvp" path="res://Audio/sfx/Dodge1.wav" id="1_q3w70"]
+[ext_resource type="AudioStream" uid="uid://dxt4bsix8ljc5" path="res://Audio/sfx/Dodge2.wav" id="2_84kxl"]
+
+[resource]
+playback_mode = 1
+streams_count = 2
+stream_0/stream = ExtResource("1_q3w70")
+stream_1/stream = ExtResource("2_84kxl")

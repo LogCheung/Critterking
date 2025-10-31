@@ -27,6 +27,10 @@ shape = SubResource("RectangleShape2D_6y74n")
 unique_name_in_owner = true
 stream = ExtResource("3_w2vby")
 
+[node name="Dodge" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
+unique_name_in_owner = true
+stream = ExtResource("3_w2vby")
+
 [node name="Death" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
 unique_name_in_owner = true
 stream = ExtResource("4_1hxdr")
