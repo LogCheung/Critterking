@@ -3,6 +3,10 @@ class_name UI
 
 signal game_over
 
+enum CHALLENGE {
+	NONE, JUICED, DOUBLETROUBLE, TOWERDEFENSE, MINIMALIST, CEASELESSWAR
+}
+
 # for tutorial purposes
 signal card_placed
 signal ally_died
@@ -36,6 +40,9 @@ signal unit_healed
 @onready var settB = settings.get_children()
 
 @export var rollArray : Array = []
+@export var currentAscn : int = 0
+@export var currentChal : CHALLENGE = CHALLENGE.NONE
+
 var rolltype : Card.ROLLTYPE
 var extraRolls : int = 0
 var rollingExtraTime : bool = false
@@ -565,6 +572,7 @@ func _on_back_pressed() -> void:
 
 # lights for play menu
 func _on_adapt_pressed() -> void:
+	%ascensions.show()
 	pass
 
 func _on_adapt_mouse_entered() -> void:
@@ -580,3 +588,8 @@ func _on_load_mouse_entered() -> void:
 
 func _on_play_mouse_entered() -> void:
 	%playmenu.frame = 1
+
+# ascn menu
+func _on_ascnback_pressed() -> void:
+	%ascensions.hide()
+	pass # Replace with function body.

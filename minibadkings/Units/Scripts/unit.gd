@@ -381,7 +381,11 @@ func on_damage_timer() -> void:
 		statusArray.remove_at(statusArray.find(STATUS.POISONED))
 	pass
 func on_healing_timer() -> void:
-	if type == TYPE.RESILIENT: statusArray.append(STATUS.REGEN)
+	if type == TYPE.RESILIENT: 
+		statusArray.append(STATUS.REGEN)
+	elif group and group.charm and group.charm.type == Charm.TYPE.PILLS:
+		statusArray.append(STATUS.REGEN)
+	
 	if statusArray.has(STATUS.REGEN):
 		if health >= max_health : return
 		health += .5

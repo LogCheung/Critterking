@@ -73,6 +73,12 @@ func _process(delta: float) -> void:
 		%Timer.stop()
 		bar.value = 0
 		bar.visible = false
+		
+	if type == TYPE.FORT:
+		if !world.is_combat_phase:
+			tileWorld.ground.set_cell(tile,0,Vector2(0,0),2)
+		else:
+			tileWorld.ground.set_cell(tile,0,Vector2(0,0),0)
 func occupants_inside() -> bool:
 	if !occupant : return false
 	#if type != TYPE.HOUSE || type != TYPE.CARE : return false
@@ -130,6 +136,7 @@ func match_type() -> void:
 		TYPE.FORT:
 			sprite_2d.texture = FORT
 			sprite_2d.offset = Vector2(-1,-10)
+			set_collision_layer_value(2,false)
 		TYPE.CAMPFIRE:
 			sprite_2d.texture = CAMPFIRE
 			sprite_2d.offset = Vector2(0,-2)
@@ -203,13 +210,13 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 		if type == TYPE.FORT:
 			var target: Unit = area.owner
 			target.resistance += .25
-			print("safe")
+			#print("safe")
 func _on_hurt_box_area_exited(area: Area2D) -> void:
 	if area.owner is Ally:
 		if type == TYPE.FORT:
 			var target: Unit = area.owner
 			target.resistance -= .25
-			print("unsafe")
+			#print("unsafe")
 
 func _on_adj_area_entered(area: Area2D) -> void:
 	if world.is_combat_phase: return

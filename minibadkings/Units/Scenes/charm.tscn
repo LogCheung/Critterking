@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cvvp4qfrbhp5o"]
 
-[ext_resource type="Script" path="res://Units/Scripts/charm.gd" id="1_486ah"]
+[ext_resource type="Script" uid="uid://b1lrabe1xnvcn" path="res://Units/Scripts/charm.gd" id="1_486ah"]
 [ext_resource type="Texture2D" uid="uid://eugvatb0clr2" path="res://UI/Assets/charms/medkitIcon.png" id="1_dguic"]
 
 [node name="Charm" type="Sprite2D"]

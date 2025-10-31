@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=51 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Texture2D" uid="uid://luuqbnbqgyao" path="res://UI/Assets/menus/mainmenu.png" id="3_2fejo"]
@@ -24,7 +24,9 @@
 [ext_resource type="Texture2D" uid="uid://b6kejcvarih2b" path="res://UI/Assets/nightcount.png" id="11_yqd36"]
 [ext_resource type="AudioStream" uid="uid://bdq1nbxdckl0r" path="res://Audio/sfx/Card.tres" id="12_yqd36"]
 [ext_resource type="AudioStream" uid="uid://bxpbo04dxxuf4" path="res://Audio/sfx/Button.tres" id="15_8g5lr"]
+[ext_resource type="PackedScene" uid="uid://dtxo6oppyymjc" path="res://UI/Scenes/decree.tscn" id="15_fjuqv"]
 [ext_resource type="Texture2D" uid="uid://diy1h5txvm2w4" path="res://UI/Assets/menus/playMenu.png" id="16_onxes"]
+[ext_resource type="Texture2D" uid="uid://cylbaiyq4q8a6" path="res://UI/Assets/menus/ascensionMenuB.png" id="17_j4cnt"]
 [ext_resource type="Texture2D" uid="uid://l1xrje5n2dl7" path="res://UI/Assets/menus/unlock.png" id="17_onxes"]
 [ext_resource type="AudioStream" uid="uid://c8brf7l45q10r" path="res://Audio/music/crtrnight.tres" id="19_gu1s8"]
 [ext_resource type="Texture2D" uid="uid://brux81s76i64r" path="res://UI/Assets/menus/helpMenu.png" id="19_onxes"]
@@ -752,6 +754,14 @@ mouse_filter = 2
 theme_override_constants/separation = 22
 alignment = 1
 
+[node name="Decree" parent="Decrees/DecreeContainer" instance=ExtResource("15_fjuqv")]
+layout_mode = 2
+type = 10
+
+[node name="Decree2" parent="Decrees/DecreeContainer" instance=ExtResource("15_fjuqv")]
+layout_mode = 2
+type = 9
+
 [node name="Hand" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 3
@@ -882,6 +892,40 @@ rotation = -0.2617994
 focus_mode = 0
 flat = true
 
+[node name="ascensions" type="Control" parent="mainmenu/playmenu"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 179.83334
+mouse_filter = 2
+
+[node name="ascnMenu" type="Sprite2D" parent="mainmenu/playmenu/ascensions"]
+unique_name_in_owner = true
+texture = ExtResource("17_j4cnt")
+offset = Vector2(160, 90)
+
+[node name="ascnback" type="Button" parent="mainmenu/playmenu/ascensions"]
+layout_mode = 0
+offset_left = 260.1667
+offset_top = 148.0
+offset_right = 320.0
+offset_bottom = 179.83334
+focus_mode = 0
+flat = true
+
+[node name="adapt" type="ScrollContainer" parent="mainmenu/playmenu/ascensions"]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 0
+offset_left = 0.33333334
+offset_top = 22.5
+offset_right = 125.333336
+offset_bottom = 180.333
+
+[node name="VBoxContainer" type="VBoxContainer" parent="mainmenu/playmenu/ascensions/adapt"]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 2
+
 [node name="unlock" type="Sprite2D" parent="mainmenu"]
 unique_name_in_owner = true
 visible = false
@@ -1010,6 +1054,7 @@ flat = true
 
 [node name="Settings" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -1279,6 +1324,7 @@ bus = &"SFX"
 [connection signal="mouse_entered" from="mainmenu/playmenu/load" to="." method="_on_load_mouse_entered"]
 [connection signal="mouse_exited" from="mainmenu/playmenu/load" to="." method="_on_button_mouse_exited"]
 [connection signal="pressed" from="mainmenu/playmenu/load" to="." method="_on_load_pressed"]
+[connection signal="pressed" from="mainmenu/playmenu/ascensions/ascnback" to="." method="_on_ascnback_pressed"]
 [connection signal="pressed" from="pausemenu/pause/continue" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="pausemenu/pause/Help" to="." method="_on_help_pressed"]
 [connection signal="pressed" from="pausemenu/pause/Settings" to="." method="_on_settings_pressed"]

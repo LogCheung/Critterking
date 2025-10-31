@@ -4,7 +4,7 @@ class_name Charm
 enum TYPE {
 	HEARTLOCKET, RING, SWORD, FLAG, 
 	SODA, ROLLERSKATE, MEDKIT, GLASSES, NAIL,
-	POISON, REGEN
+	BERRIES, PILLS
 }
 
 @export var type : TYPE
@@ -29,3 +29,7 @@ func _ready() -> void:
 			texture = preload("res://UI/Assets/charms/glassesIcon.png")
 		TYPE.NAIL:
 			texture = preload("res://UI/Assets/charms/nailsIcon.png")
+		TYPE.BERRIES:
+			texture = preload("res://UI/Assets/charms/berriesIcon.png")
+		TYPE.PILLS:
+			texture = preload("res://UI/Assets/charms/pillsIcon.png")

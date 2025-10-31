@@ -2,7 +2,10 @@ extends Node
 
 @export var expansions : int = 0
 @export var nights : int = 0
+
+@export var maxAscension : int = 0
 @export var wins : int = 0
+
 @export var saveNights : int = 0
 @export var cardsInHand : Array
 @export var cardsDispatched : Array
@@ -17,8 +20,9 @@ extends Node
 # unlocks after each win
 var UNLOCK : Array = [
 	[Card.CARDTYPE.STINGER, Card.CARDTYPE.RESILIENT,Card.CARDTYPE.PARALYTIC], # first win
-	#[Card.CARDTYPE.TUNNEL, Card.CARDTYPE.CLIFF, Card.CARDTYPE.FORTIFY], # second win
+	#[Card.CARDTYPE.FORT, Card.CARDTYPE.CAMPFIRE, Card.CARDTYPE.REFRESH], # second win
 	[Card.CARDTYPE.FUNGI, Card.CARDTYPE.TRAPJAW, Card.CARDTYPE.EXPLOSIVE], # third win
-	#[Card.CARDTYPE.FORT, Card.CARDTYPE.CAMPFIRE, Card.CARDTYPE.REFRESH], # 4
+	[Card.CARDTYPE.PILLS, Card.CARDTYPE.BERRIES, Card.CARDTYPE.SABOTAGE] # 4
+	#[Card.CARDTYPE.TUNNEL, Card.CARDTYPE.CLIFF, Card.CARDTYPE.FORTIFY], # 5
 	
 ]

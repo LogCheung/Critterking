@@ -268,24 +268,21 @@ func handle_decree() -> void:
 			add_hover_tiles(1,1,mouseTile) # 2x2
 		Decree.TYPE.MASTERY:
 			add_hover_tiles(0,1,mouseTile)
-		Decree.TYPE.RECON:
-			# Global
-			var units = get_tree().get_nodes_in_group("ALLY")
-			for unit in units:
-				unit.decree = activeDecree
-				unit.match_decree_status()
-			
-			activeDecree = Decree.TYPE.NONE
-			decree.time = decree.cooldown
-			decree.update_cooldown()
-			decree = null
-			return
 		Decree.TYPE.RENOVATE:
 			# highlight buildings, no hover
 			highlight_buildings(true,Building.TYPE.NONE)
 		Decree.TYPE.CONSCRIPTION:
 			# highlight buildings, no hover
 			highlight_buildings(true,Building.TYPE.HOUSE)
+		Decree.TYPE.TERROR,Decree.TYPE.SABOTAGE,Decree.TYPE.RECON:
+			using_decree = false
+			handle_decree_action(mouseTile)
+			
+			activeDecree = Decree.TYPE.NONE
+			decree.time = decree.cooldown
+			decree._on_mouse_exited()
+			decree.update_cooldown()
+			decree = null
 		#Decree.TYPE.INFLUENCE:
 			## Highlight enemy units, no hover
 			#var enemGroups = get_tree().get_first_node_in_group("ENEMYGRPNODE")
@@ -327,6 +324,11 @@ func handle_decree_action(mouseTile : Vector2i) -> void:
 			add_child(bombard)
 			bombard.set_owner(get_tree().get_current_scene())
 		Decree.TYPE.RECON:
+			# Global
+			var units = get_tree().get_nodes_in_group("ALLY")
+			for unit in units:
+				unit.decree = activeDecree
+				unit.match_decree_status()
 			pass # do nothing
 		Decree.TYPE.RENOVATE:
 			# highlight buildings, no hover
@@ -380,7 +382,17 @@ func handle_decree_action(mouseTile : Vector2i) -> void:
 				trap.global_position = ground.map_to_local(tile)
 				buildingNode.add_child(trap)
 				trap.set_owner(get_tree().get_current_scene())
-				
+		Decree.TYPE.SABOTAGE:
+			var world : World = get_tree().get_first_node_in_group("WORLD")
+			world.spawnTimer.wait_time += 2
+			await world.night_ended
+			world.spawnTimer.wait_time -= 2
+		Decree.TYPE.TERROR:
+			var enems = get_tree().get_nodes_in_group("ENEMY")
+			for e : Enemy in enems:
+				if e.dead : continue
+				if !e.is_active : continue
+				e.statusArray.append(Unit.STATUS.STUNNED)
 			
 	highlight_buildings(false,Building.TYPE.NONE)
 	

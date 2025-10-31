@@ -19,6 +19,7 @@ signal mouse_clicked
 @onready var ui: UI = get_tree().get_first_node_in_group("UI")
 @onready var game: Node2D = %Game
 @onready var camera: Camera2D = %Camera2D
+@onready var spawnTimer : Timer = %SpawnTimer
 
 var outerFollow : PathFollow2D
 var innerFollow : PathFollow2D
@@ -67,6 +68,7 @@ func new_game() -> void:
 	Global.cardsInHand.clear()
 	Global.cardsDispatched.clear()
 	for decree in get_tree().get_nodes_in_group("DECREE"):
+		continue
 		decree.queue_free()
 	
 	
@@ -89,10 +91,10 @@ func new_game() -> void:
 		hCard.type = Card.CARDTYPE.FORT
 		ui.hand_container.add_child(hCard)
 		if i == 1:hCard.charm.queue_free()
-	for i in range(1):
-		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.TRAPS
-		ui.hand_container.add_child(hCard)
+	#for i in range(1):
+		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.TRAPS
+		#ui.hand_container.add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
@@ -374,9 +376,10 @@ func _input(event: InputEvent) -> void:
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
+		print(spawnTimer.wait_time)
 		#new_game()
 		#return
-		Engine.time_scale = 12
+		# Engine.time_scale = 12
 		#expand()
 		#print(ui.rollArray)
 		#ui._on_endturn_pressed()
