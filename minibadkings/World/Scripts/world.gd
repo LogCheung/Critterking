@@ -18,7 +18,7 @@ signal mouse_clicked
 @onready var groupNode : Node2D = get_tree().get_first_node_in_group("GROUPSNODE")
 @onready var ui: UI = get_tree().get_first_node_in_group("UI")
 @onready var game: Node2D = %Game
-
+@onready var camera: Camera2D = %Camera2D
 
 var outerFollow : PathFollow2D
 var innerFollow : PathFollow2D

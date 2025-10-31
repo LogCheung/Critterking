@@ -33,9 +33,9 @@ signal unit_healed
 @onready var sfx: HSlider = %SFX
 @onready var unlock: Sprite2D = %unlock
 @onready var hand_container: HBoxContainer = %HandContainer
+@onready var settB = settings.get_children()
 
 @export var rollArray : Array = []
-
 var rolltype : Card.ROLLTYPE
 var extraRolls : int = 0
 var rollingExtraTime : bool = false
@@ -63,6 +63,10 @@ func _process(delta: float) -> void:
 	%ScrollControl.custom_minimum_size.x += 20 * hand_container.get_children().size() - 1
 		
 func _ready() -> void:
+	#get settings menu
+	settB.append_array(%settingsMenu.get_children())
+	settB = settB.filter(func(b):return b != %settingsback)
+	settB = settB.filter(func(b):return b != %settingsMenu)
 	# connect signals
 	game_over.connect(on_game_over)
 	# hide all but show main menu
@@ -255,6 +259,7 @@ func _on_settings_pressed() -> void:
 		%crtrPause.play()
 	%crtrMenu.stop()
 	settings.show()
+	%settingsMenu.frame = 3
 	mainmenu.hide()
 	pass # Replace with function body.
 
@@ -267,25 +272,65 @@ func _on_quit_pressed() -> void:
 	SaveLoad._save_profile(self)
 	get_tree().quit()
 
-
+# Help Menu
 func _on_backhelp_pressed() -> void:
 	%Button.play()
 	help.hide()
 	if !pausemenu.visible:
 		mainmenu.show()
-	pass # Replace with function body.
+
+func _on_forward_pressed() -> void:
+	%Button.play()
+	if %Help/help.frame == 0: %Help/help.frame += 1
+	else: %Help/help.frame -= 1
+
+
+# Settings Menu
 
 func _on_settingsback_pressed() -> void:
 	%Button.play()
-	settings.hide()
-	if !pausemenu.visible:
-		mainmenu.show()
+	if %settingsMenu.frame == 3: 
+		settings.hide()
+		if !pausemenu.visible: mainmenu.show()
+	else:
+		for b in settB: b.hide()
+		%settingsMenu.frame = 3
+		%audioB.show()
+		%videoB.show()
+		%gameplayB.show()
 	if %DisableTutorial.button_pressed:
 		Global.tutorial = false
 		Global.tutorialCharm = false
 		Global.tutorialDecree = false
-	pass # Replace with function body.
 
+func _on_audio_b_pressed() -> void:
+	for b in settB: b.hide()
+	%settingsMenu.frame = 0
+	%Master.show()
+	%Music.show()
+	%SFX.show()
+
+
+func _on_video_b_pressed() -> void:
+	for b in settB: b.hide()
+	%settingsMenu.frame = 1
+	%resolution.show()
+	%format.show()
+
+
+func _on_gameplay_b_pressed() -> void:
+	for b in settB: b.hide()
+	%settingsMenu.frame = 2
+	%DisableTutorial.show()
+	%camSpeed.show()
+
+
+func _on_cam_speed_value_changed(new_value: float) -> void:
+	world.camera.move_speed = new_value
+
+
+	#Daytime Menu
+	
 func _on_endturn_pressed() -> void:
 	# check if house is not placed
 	%Button.play()

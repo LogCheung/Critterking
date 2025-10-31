@@ -4,10 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://luuqbnbqgyao" path="res://UI/Assets/menus/mainmenu.png" id="3_2fejo"]
 [ext_resource type="PackedScene" uid="uid://bjjg37vgshqt6" path="res://UI/Scenes/card.tscn" id="3_bujes"]
 [ext_resource type="Texture2D" uid="uid://dbhxoj0r1rhrv" path="res://UI/Assets/partyLimit.png" id="4_lpmf3"]
-[ext_resource type="Texture2D" uid="uid://cq8c1lx28bb3u" path="res://UI/Assets/menus/help.png" id="4_pyqth"]
 [ext_resource type="Texture2D" uid="uid://brierbf6c6biv" path="res://UI/Assets/alerts/upgradedAlert.png" id="5_1rapc"]
 [ext_resource type="Texture2D" uid="uid://0aaq2moh04q8" path="res://UI/Assets/alerts/houseInHand.png" id="5_ia477"]
-[ext_resource type="Texture2D" uid="uid://ce2faiksbdbqw" path="res://UI/Assets/menus/settings.png" id="5_kd6an"]
 [ext_resource type="Texture2D" uid="uid://bfqdqavdl2kr3" path="res://UI/Assets/menus/pause.png" id="5_n2q0n"]
 [ext_resource type="Texture2D" uid="uid://cbfi3jolrr55m" path="res://UI/Assets/cards/tutorialText.png" id="5_nvxdf"]
 [ext_resource type="Texture2D" uid="uid://e0lt6th6b1bi" path="res://UI/Assets/alerts/wavetimeAlert.png" id="6_ia477"]
@@ -29,7 +27,9 @@
 [ext_resource type="Texture2D" uid="uid://diy1h5txvm2w4" path="res://UI/Assets/menus/playMenu.png" id="16_onxes"]
 [ext_resource type="Texture2D" uid="uid://l1xrje5n2dl7" path="res://UI/Assets/menus/unlock.png" id="17_onxes"]
 [ext_resource type="AudioStream" uid="uid://c8brf7l45q10r" path="res://Audio/music/crtrnight.tres" id="19_gu1s8"]
+[ext_resource type="Texture2D" uid="uid://brux81s76i64r" path="res://UI/Assets/menus/helpMenu.png" id="19_onxes"]
 [ext_resource type="AudioStream" uid="uid://u2y0bys67ovo" path="res://Audio/music/crtrday.tres" id="20_8g5lr"]
+[ext_resource type="Texture2D" uid="uid://b8dona41iybku" path="res://UI/Assets/menus/settingsMenu.png" id="20_onxes"]
 [ext_resource type="Texture2D" uid="uid://yt0a66vbd4j7" path="res://UI/Assets/menus/gwj2win.png" id="22_onxes"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_yqd36"]
@@ -988,8 +988,9 @@ mouse_filter = 2
 
 [node name="help" type="Sprite2D" parent="Help"]
 scale = Vector2(6, 6)
-texture = ExtResource("4_pyqth")
+texture = ExtResource("19_onxes")
 offset = Vector2(160, 90)
+hframes = 2
 
 [node name="Backhelp" type="Button" parent="Help/help"]
 offset_left = 241.0
@@ -999,21 +1000,33 @@ offset_bottom = 180.0
 focus_mode = 0
 flat = true
 
+[node name="Forward" type="Button" parent="Help/help"]
+offset_left = 268.0
+offset_top = 76.833336
+offset_right = 285.0
+offset_bottom = 107.0
+focus_mode = 0
+flat = true
+
 [node name="Settings" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
 
-[node name="settings" type="Sprite2D" parent="Settings"]
+[node name="settingsMenu" type="Sprite2D" parent="Settings"]
+unique_name_in_owner = true
 scale = Vector2(6, 6)
-texture = ExtResource("5_kd6an")
+texture = ExtResource("20_onxes")
 offset = Vector2(160, 90)
+hframes = 2
+vframes = 2
+frame = 1
 
-[node name="settingsback" type="Button" parent="Settings/settings"]
+[node name="settingsback" type="Button" parent="Settings/settingsMenu"]
+unique_name_in_owner = true
 offset_left = 131.0
 offset_top = 127.0
 offset_right = 189.0
@@ -1021,8 +1034,36 @@ offset_bottom = 147.0
 focus_mode = 0
 flat = true
 
+[node name="audioB" type="Button" parent="Settings/settingsMenu"]
+unique_name_in_owner = true
+offset_left = 95.666664
+offset_top = 65.833336
+offset_right = 144.33334
+offset_bottom = 75.33333
+focus_mode = 0
+flat = true
+
+[node name="videoB" type="Button" parent="Settings/settingsMenu"]
+unique_name_in_owner = true
+offset_left = 95.166664
+offset_top = 81.833336
+offset_right = 144.83334
+offset_bottom = 91.16667
+focus_mode = 0
+flat = true
+
+[node name="gameplayB" type="Button" parent="Settings/settingsMenu"]
+unique_name_in_owner = true
+offset_left = 95.83333
+offset_top = 97.16667
+offset_right = 174.5
+offset_bottom = 107.66667
+focus_mode = 0
+flat = true
+
 [node name="Master" type="HSlider" parent="Settings"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_left = 924.0
 offset_top = 447.0
@@ -1037,6 +1078,7 @@ bus_name = "Master"
 
 [node name="Music" type="HSlider" parent="Settings"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_left = 924.0
 offset_top = 543.0
@@ -1051,6 +1093,7 @@ bus_name = "Music"
 
 [node name="SFX" type="HSlider" parent="Settings"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_left = 924.0
 offset_top = 638.0
@@ -1063,15 +1106,64 @@ value = 0.5
 script = ExtResource("8_6dw6b")
 bus_name = "SFX"
 
+[node name="camSpeed" type="HSlider" parent="Settings"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 577.0
+offset_top = 662.0
+offset_right = 699.0
+offset_bottom = 678.0
+scale = Vector2(3, 3)
+min_value = 3.75
+max_value = 11.25
+step = 0.25
+value = 7.5
+
 [node name="DisableTutorial" type="CheckBox" parent="Settings"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
-offset_left = 589.0
-offset_top = 711.0
-offset_right = 613.0
-offset_bottom = 735.0
+offset_left = 584.0
+offset_top = 519.0
+offset_right = 608.0
+offset_bottom = 543.0
+scale = Vector2(2, 2)
 flat = true
+
+[node name="resolution" type="OptionButton" parent="Settings"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 574.00006
+offset_top = 523.0
+offset_right = 775.00006
+offset_bottom = 554.0
+scale = Vector2(1.5, 1.5)
+item_count = 3
+popup/item_0/text = "1920 x 1080"
+popup/item_0/id = 0
+popup/item_1/text = "1600 x 900"
+popup/item_1/id = 1
+popup/item_2/text = "1280 x 720"
+popup/item_2/id = 2
+
+[node name="format" type="OptionButton" parent="Settings"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 577.0
+offset_top = 665.0
+offset_right = 778.0
+offset_bottom = 696.0
+scale = Vector2(1.5, 1.5)
+item_count = 3
+popup/item_0/text = "Fullscreen"
+popup/item_0/id = 0
+popup/item_1/text = "Windowed"
+popup/item_1/id = 1
+popup/item_2/text = "Windowed Borderless"
+popup/item_2/id = 2
 
 [node name="gameover" type="Control" parent="."]
 unique_name_in_owner = true
@@ -1193,7 +1285,12 @@ bus = &"SFX"
 [connection signal="pressed" from="pausemenu/pause/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="pausemenu/pause/Save" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="Help/help/Backhelp" to="." method="_on_backhelp_pressed"]
-[connection signal="pressed" from="Settings/settings/settingsback" to="." method="_on_settingsback_pressed"]
+[connection signal="pressed" from="Help/help/Forward" to="." method="_on_forward_pressed"]
+[connection signal="pressed" from="Settings/settingsMenu/settingsback" to="." method="_on_settingsback_pressed"]
+[connection signal="pressed" from="Settings/settingsMenu/audioB" to="." method="_on_audio_b_pressed"]
+[connection signal="pressed" from="Settings/settingsMenu/videoB" to="." method="_on_video_b_pressed"]
+[connection signal="pressed" from="Settings/settingsMenu/gameplayB" to="." method="_on_gameplay_b_pressed"]
+[connection signal="value_changed" from="Settings/camSpeed" to="." method="_on_cam_speed_value_changed"]
 [connection signal="pressed" from="gameover/over/newgame" to="." method="_on_newgame_pressed"]
 [connection signal="pressed" from="gameover/over/endless" to="." method="_on_endless_pressed"]
 [connection signal="pressed" from="gameover/over/title" to="." method="_on_title_pressed"]
