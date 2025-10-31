@@ -1,10 +1,11 @@
-[gd_scene load_steps=93 format=3 uid="uid://dkqw1dmj0wkgb"]
+[gd_scene load_steps=102 format=3 uid="uid://dkqw1dmj0wkgb"]
 
 [ext_resource type="PackedScene" uid="uid://ddc6mf0gqftb" path="res://Units/Scenes/hit_box.tscn" id="1_pm8qt"]
 [ext_resource type="Script" uid="uid://13y7jtc01ydv" path="res://Units/Scripts/ally.gd" id="1_q458e"]
 [ext_resource type="Texture2D" uid="uid://bn4niwqkt8x3n" path="res://Units/Assets/Status/defense.png" id="2_lx5cy"]
 [ext_resource type="Texture2D" uid="uid://derf24r2nwwjt" path="res://Units/Assets/AllyMelee/AllyMeleeNormalSE.png" id="3_amxnv"]
 [ext_resource type="Texture2D" uid="uid://cb4h4e5bevpjt" path="res://Units/Assets/Status/attack.png" id="3_n3b5d"]
+[ext_resource type="Texture2D" uid="uid://b6jokp1ntpdr7" path="res://Units/Assets/Status/hardy.png" id="3_uum83"]
 [ext_resource type="Texture2D" uid="uid://b3o0d2bjk4dj6" path="res://Units/Assets/Status/mastery.png" id="4_frfv4"]
 [ext_resource type="Texture2D" uid="uid://d317xtem80gob" path="res://Units/Assets/Status/promptSelect.png" id="5_lx5cy"]
 [ext_resource type="Script" uid="uid://bxew2mys8y8u8" path="res://addons/utility_ai/agent/agent.gd" id="5_t35g5"]
@@ -51,6 +52,38 @@ region = Rect2(192, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i8s7h"]
 atlas = ExtResource("2_lx5cy")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y6pw5"]
+atlas = ExtResource("3_uum83")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ag76k"]
+atlas = ExtResource("3_uum83")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhvkc"]
+atlas = ExtResource("3_uum83")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vnc4i"]
+atlas = ExtResource("3_uum83")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m68g0"]
+atlas = ExtResource("3_uum83")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3b6d4"]
+atlas = ExtResource("3_uum83")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flf4y"]
+atlas = ExtResource("3_uum83")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_onwn5"]
+atlas = ExtResource("3_uum83")
 region = Rect2(224, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_efy0x"]
@@ -243,6 +276,35 @@ animations = [{
 "loop": true,
 "name": &"defense",
 "speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y6pw5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ag76k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qhvkc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vnc4i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m68g0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3b6d4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flf4y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_onwn5")
+}],
+"loop": true,
+"name": &"hardy",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -611,8 +673,7 @@ unique_name_in_owner = true
 visible = false
 position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_ssb4e")
-animation = &"stun"
-frame_progress = 0.203235
+animation = &"hardy"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

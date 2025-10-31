@@ -264,7 +264,7 @@ func handle_decree() -> void:
 			return
 		Decree.TYPE.INSPIRATION, Decree.TYPE.CONSTRUCTION:
 			add_hover_tiles(1,2,mouseTile) # 3x3 area
-		Decree.TYPE.DECARE, Decree.TYPE.DEFENSE, Decree.TYPE.WAR:
+		Decree.TYPE.DECARE, Decree.TYPE.DEFENSE, Decree.TYPE.WAR, Decree.TYPE.FORTITUDE:
 			add_hover_tiles(1,1,mouseTile) # 2x2
 		Decree.TYPE.MASTERY:
 			add_hover_tiles(0,1,mouseTile)
@@ -315,7 +315,7 @@ func handle_decree_action(mouseTile : Vector2i) -> void:
 	match activeDecree:
 		Decree.TYPE.NONE:
 			return
-		Decree.TYPE.INSPIRATION, Decree.TYPE.DEFENSE,Decree.TYPE.MASTERY:
+		Decree.TYPE.INSPIRATION, Decree.TYPE.DEFENSE,Decree.TYPE.MASTERY,Decree.TYPE.FORTITUDE:
 			handle_stat_modifying_decree()
 		Decree.TYPE.DECARE:
 			handle_stat_modifying_decree()

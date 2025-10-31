@@ -230,6 +230,8 @@ func _on_orth_area_entered(area: Area2D) -> void:
 	if world.is_combat_phase: return
 	if area.owner is Ally:
 		var target : Unit = area.owner
+		if target.charm and target.charm.type == Charm.TYPE.DOLLHOUSE:
+			target.attack_cd.wait_time -= .2
 		if type == TYPE.FARM: 
 			target.max_health = target.max_health + 0.5
 			target.health = target.max_health
@@ -244,8 +246,12 @@ func _on_trans_area_exited(area: Area2D) -> void:
 	pass # Replace with function body.
 
 func _on_timer_timeout() -> void:
-	bar.value += 1.25 #if occupant.max_size <= 9 else .12345
-	if type == TYPE.CARE: bar.value += .75
+	if ui.currentAscn >= 1:
+		bar.value += 1
+		if type == TYPE.CARE: bar.value += .5
+	else:
+		bar.value += 1.25 #if occupant.max_size <= 9 else .12345
+		if type == TYPE.CARE: bar.value += .75
 	if occupant.charm and occupant.charm.type == Charm.TYPE.MEDKIT: bar.value += .5
 	if bar.value >= bar.max_value:
 		occupant.global_position = tileWorld.ground.map_to_local(doorstepTile)

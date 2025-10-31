@@ -25,6 +25,8 @@ const UPPARALYTICNORMALSE = preload("res://Units/Assets/EnemyParalytic/EnemyUpgr
 const UPRESILIENTNORMALSE = preload("res://Units/Assets/EnemyResilient/EnemyUpgradedResilient.png")
 const UPSTINGERNORMALSE = preload("res://Units/Assets/EnemyStinger/EnemyUpgradedStinger.png")
 
+@onready var ui: UI = get_tree().get_first_node_in_group("UI")
+
 var target_in_range : bool
 var is_active : bool = false
 var houses_exist : bool = true
@@ -46,6 +48,11 @@ func _ready() -> void:
 	
 	# enemy debuff
 	health -= .5 if type != TYPE.ZOMBIFIED else 0.0
+	
+	# ascension changes
+	if ui.currentAscn >= 2: speed += 9
+	if ui.currentAscn >= 4: health += .5 if type != TYPE.ZOMBIFIED else 0.0
+
 
 func _process(delta: float) -> void:
 	super._process(delta)

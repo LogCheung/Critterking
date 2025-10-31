@@ -9,6 +9,7 @@ var UNIT : PackedScene = load("res://Units/Scenes/unit.tscn")
 @export var conscripted : bool
 
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
+@onready var ui: UI = get_tree().get_first_node_in_group("UI")
 
 func _ready() -> void:
 	super._ready()
@@ -55,7 +56,8 @@ func _input(event: InputEvent) -> void:
 	if tileWorld.using_decree : return
 	if !world.is_combat_phase: return
 	if event.is_action_pressed("select") and selected:
-		Engine.time_scale = 1
+		if ui.currentChal == UI.CHALLENGE.JUICED: Engine.time_scale = 2.5
+		else: Engine.time_scale = 1
 		var mouse_pos = get_global_mouse_position()
 		var pos = tileWorld.ground.local_to_map(mouse_pos) # now tile cord
 		if !tileWorld.hover.get_used_cells().has(Vector2i(pos)): # can't go to where clicked
@@ -95,7 +97,8 @@ func on_selected() -> void:
 	tileWorld.handle_navigable_cells()
 	%Select.play()
 	highlight_houses()
-	Engine.time_scale = .1
+	if ui.currentChal == UI.CHALLENGE.JUICED: Engine.time_scale = 1.5
+	else: Engine.time_scale = .1
 	_on_select_area_mouse_exited()
 	tileWorld.hover.visible = true
 	
@@ -217,4 +220,7 @@ func apply_charm() -> void:
 				unit.poison_chance += 20
 			Charm.TYPE.PILLS:
 				pass
-		
+			Charm.TYPE.DOLLHOUSE:
+				pass # building buffs
+			Charm.TYPE.EDRINK:
+				unit.anim.speed_scale = 1.5

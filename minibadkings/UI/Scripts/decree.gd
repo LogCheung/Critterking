@@ -3,7 +3,7 @@ class_name Decree
 
 enum TYPE  {
 	NONE, INSPIRATION, DECARE, RECON, DEFENSE, RENOVATE, WAR, 
-	CONSCRIPTION, MASTERY, TERROR, SABOTAGE, #INFLUENCE,
+	CONSCRIPTION, MASTERY, TERROR, SABOTAGE, FORTITUDE, #INFLUENCE,
 	CONSTRUCTION
 }
 
@@ -87,4 +87,6 @@ func match_sprite() -> void:
 		TYPE.TERROR:
 			cooldown = 2
 			sprite.texture = preload("res://UI/Assets/decrees/terrorIco.png")
-		
+		TYPE.FORTITUDE:
+			cooldown = 3
+			sprite.texture = preload("res://UI/Assets/decrees/fortitudeIco.png")
