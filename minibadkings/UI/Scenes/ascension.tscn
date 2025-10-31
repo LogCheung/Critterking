@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://jeilrtnq0c6k"]
+
+[ext_resource type="Script" uid="uid://b37qoe788uqjs" path="res://UI/Scripts/ascension.gd" id="1_gtbw5"]
+[ext_resource type="Texture2D" uid="uid://dcv4745g0ev8e" path="res://UI/Assets/menus/ascensions.png" id="2_3n1p2"]
+
+[node name="Ascension" type="Control" groups=["ASCEN"]]
+custom_minimum_size = Vector2(120, 48)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 120.0
+offset_bottom = 48.0
+script = ExtResource("1_gtbw5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+texture = ExtResource("2_3n1p2")
+offset = Vector2(60, 24)
+hframes = 3
+vframes = 4
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

@@ -3,7 +3,7 @@ extends Node
 @export var expansions : int = 0
 @export var nights : int = 0
 
-@export var maxAscension : int = 0
+@export var maxAscension : int = 5
 @export var wins : int = 0
 
 @export var saveNights : int = 0

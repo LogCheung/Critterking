@@ -71,7 +71,8 @@ func new_game() -> void:
 		continue
 		decree.queue_free()
 	
-	
+	print(ui.currentAscn)
+	print(ui.currentChal)
 	# map gen with tilemap patterns
 	clear_world()
 	await get_tree().create_timer(.125).timeout

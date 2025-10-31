@@ -38,6 +38,7 @@ signal unit_healed
 @onready var unlock: Sprite2D = %unlock
 @onready var hand_container: HBoxContainer = %HandContainer
 @onready var settB = settings.get_children()
+@onready var ascensions: Control = %ascensions
 
 @export var rollArray : Array = []
 @export var currentAscn : int = 0
@@ -81,6 +82,7 @@ func _ready() -> void:
 		if !c is Control: continue
 		c.hide()
 	%playmenu.hide()
+	ascensions.hide()
 	mainmenu.show()
 	
 func play_song(song : AudioStreamPlayer) -> void:
