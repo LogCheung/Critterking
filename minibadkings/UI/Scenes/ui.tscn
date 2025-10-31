@@ -24,13 +24,14 @@
 [ext_resource type="Texture2D" uid="uid://b6kejcvarih2b" path="res://UI/Assets/nightcount.png" id="11_yqd36"]
 [ext_resource type="AudioStream" uid="uid://bdq1nbxdckl0r" path="res://Audio/sfx/Card.tres" id="12_yqd36"]
 [ext_resource type="AudioStream" uid="uid://bxpbo04dxxuf4" path="res://Audio/sfx/Button.tres" id="15_8g5lr"]
-[ext_resource type="PackedScene" uid="uid://dtxo6oppyymjc" path="res://UI/Scenes/decree.tscn" id="15_fjuqv"]
 [ext_resource type="Texture2D" uid="uid://diy1h5txvm2w4" path="res://UI/Assets/menus/playMenu.png" id="16_onxes"]
 [ext_resource type="Texture2D" uid="uid://cylbaiyq4q8a6" path="res://UI/Assets/menus/ascensionMenuB.png" id="17_j4cnt"]
 [ext_resource type="Texture2D" uid="uid://l1xrje5n2dl7" path="res://UI/Assets/menus/unlock.png" id="17_onxes"]
 [ext_resource type="AudioStream" uid="uid://c8brf7l45q10r" path="res://Audio/music/crtrnight.tres" id="19_gu1s8"]
 [ext_resource type="Texture2D" uid="uid://brux81s76i64r" path="res://UI/Assets/menus/helpMenu.png" id="19_onxes"]
+[ext_resource type="PackedScene" uid="uid://jeilrtnq0c6k" path="res://UI/Scenes/ascension.tscn" id="19_yp0y7"]
 [ext_resource type="AudioStream" uid="uid://u2y0bys67ovo" path="res://Audio/music/crtrday.tres" id="20_8g5lr"]
+[ext_resource type="PackedScene" uid="uid://rjequp8d1siy" path="res://UI/Scenes/challenge.tscn" id="20_d7er5"]
 [ext_resource type="Texture2D" uid="uid://b8dona41iybku" path="res://UI/Assets/menus/settingsMenu.png" id="20_onxes"]
 [ext_resource type="Texture2D" uid="uid://yt0a66vbd4j7" path="res://UI/Assets/menus/gwj2win.png" id="22_onxes"]
 [ext_resource type="AudioStream" uid="uid://cxcri28sgiysb" path="res://Audio/music/crtrwin.wav" id="28_yp0y7"]
@@ -165,6 +166,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [0.0, -80.0]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("mainmenu/playmenu:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_2fejo"]
 length = 0.001
@@ -251,6 +264,18 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("mainmenu/playmenu:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_titua"]
@@ -755,14 +780,6 @@ mouse_filter = 2
 theme_override_constants/separation = 22
 alignment = 1
 
-[node name="Decree" parent="Decrees/DecreeContainer" instance=ExtResource("15_fjuqv")]
-layout_mode = 2
-type = 10
-
-[node name="Decree2" parent="Decrees/DecreeContainer" instance=ExtResource("15_fjuqv")]
-layout_mode = 2
-type = 9
-
 [node name="Hand" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 3
@@ -909,7 +926,7 @@ offset = Vector2(160, 90)
 [node name="ascnback" type="Button" parent="mainmenu/playmenu/ascensions"]
 layout_mode = 0
 offset_left = 260.1667
-offset_top = 148.0
+offset_top = 147.83334
 offset_right = 320.0
 offset_bottom = 179.83334
 focus_mode = 0
@@ -920,12 +937,84 @@ custom_minimum_size = Vector2(125, 0)
 layout_mode = 0
 offset_left = 0.33333334
 offset_top = 22.5
-offset_right = 125.333336
+offset_right = 133.33333
 offset_bottom = 180.333
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="mainmenu/playmenu/ascensions/adapt"]
+clip_contents = true
 custom_minimum_size = Vector2(125, 0)
 layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Ascension" parent="mainmenu/playmenu/ascensions/adapt/VBoxContainer" instance=ExtResource("19_yp0y7")]
+layout_mode = 2
+number = 1
+
+[node name="Ascension2" parent="mainmenu/playmenu/ascensions/adapt/VBoxContainer" instance=ExtResource("19_yp0y7")]
+layout_mode = 2
+number = 2
+
+[node name="Ascension3" parent="mainmenu/playmenu/ascensions/adapt/VBoxContainer" instance=ExtResource("19_yp0y7")]
+layout_mode = 2
+number = 3
+
+[node name="Ascension4" parent="mainmenu/playmenu/ascensions/adapt/VBoxContainer" instance=ExtResource("19_yp0y7")]
+layout_mode = 2
+number = 4
+
+[node name="Ascension5" parent="mainmenu/playmenu/ascensions/adapt/VBoxContainer" instance=ExtResource("19_yp0y7")]
+layout_mode = 2
+number = 5
+
+[node name="Ascension6" parent="mainmenu/playmenu/ascensions/adapt/VBoxContainer" instance=ExtResource("19_yp0y7")]
+layout_mode = 2
+number = 6
+
+[node name="Ascension7" parent="mainmenu/playmenu/ascensions/adapt/VBoxContainer" instance=ExtResource("19_yp0y7")]
+layout_mode = 2
+number = 7
+
+[node name="Ascension8" parent="mainmenu/playmenu/ascensions/adapt/VBoxContainer" instance=ExtResource("19_yp0y7")]
+layout_mode = 2
+number = 8
+
+[node name="Ascension9" parent="mainmenu/playmenu/ascensions/adapt/VBoxContainer" instance=ExtResource("19_yp0y7")]
+layout_mode = 2
+number = 9
+
+[node name="Ascension10" parent="mainmenu/playmenu/ascensions/adapt/VBoxContainer" instance=ExtResource("19_yp0y7")]
+layout_mode = 2
+number = 10
+
+[node name="environments" type="ScrollContainer" parent="mainmenu/playmenu/ascensions"]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 0
+offset_left = 133.50002
+offset_top = 22.5
+offset_right = 260.0
+offset_bottom = 180.333
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="mainmenu/playmenu/ascensions/environments"]
+clip_contents = true
+custom_minimum_size = Vector2(125, 120)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Challenge2" parent="mainmenu/playmenu/ascensions/environments/VBoxContainer" instance=ExtResource("20_d7er5")]
+layout_mode = 2
+type = 4
+
+[node name="Challenge3" parent="mainmenu/playmenu/ascensions/environments/VBoxContainer" instance=ExtResource("20_d7er5")]
+layout_mode = 2
+type = 3
+
+[node name="Challenge" parent="mainmenu/playmenu/ascensions/environments/VBoxContainer" instance=ExtResource("20_d7er5")]
+layout_mode = 2
+type = 1
 
 [node name="unlock" type="Sprite2D" parent="mainmenu"]
 unique_name_in_owner = true

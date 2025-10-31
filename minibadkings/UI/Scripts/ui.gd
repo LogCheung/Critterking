@@ -38,6 +38,7 @@ signal unit_healed
 @onready var unlock: Sprite2D = %unlock
 @onready var hand_container: HBoxContainer = %HandContainer
 @onready var settB = settings.get_children()
+@onready var ascensions: Control = %ascensions
 
 @export var rollArray : Array = []
 @export var currentAscn : int = 0
@@ -81,6 +82,7 @@ func _ready() -> void:
 		if !c is Control: continue
 		c.hide()
 	%playmenu.hide()
+	ascensions.hide()
 	mainmenu.show()
 	
 func play_song(song : AudioStreamPlayer) -> void:
@@ -515,6 +517,7 @@ func load_world() -> void:
 		dupe.type = d.type
 		dupe.time = d.time
 		dupe.cooldown = d.cooldown
+		dupe.update_cooldown()
 		%DecreeContainer.add_child(dupe)
 	
 	
@@ -536,7 +539,7 @@ func load_world() -> void:
 		#var new_scene = ResourceLoader.load("res://saves/savefile.tscn")
 		#get_tree().change_scene_to_packed(new_scene)
 
-
+# unlocking new cards
 func _on_mainmenu_mouse_entered() -> void:
 	# check if main menu in on screen
 	if %unlock.visible: return

@@ -28,7 +28,7 @@ enum CARDTYPE {
 	FLYING,CRAZED,
 	
 	TRAPS , HOUSE, CARE , FARM , SAPSTORE, FORT, CAMPFIRE,# CLIFF, TUNNEL
-	NURSERY, STORAGE,  DESTROY ,#REFRESH,
+	NURSERY, STORAGE, PONDER, DESTROY,
 	
 	HEARTLOCKET, RING, SWORD, FLAG, 
 	SODA, ROLLERSKATE, MEDKIT, GLASSES, NAIL, BERRIES, PILLS, DOLLHOUSE, EDRINK,
@@ -200,6 +200,9 @@ func plop() -> void:
 	var groupNode = get_tree().get_first_node_in_group("GROUPSNODE")
 	
 	if ploppableTiles.has(tile):
+		if check_general() : 
+			remove_self()
+			return
 		if type > Unit.TYPE.CRAZED:
 			plop_building()
 			return
@@ -218,7 +221,7 @@ func plop() -> void:
 	else:
 		if check_if_merge(tile) : remove_self()
 		if check_destroy(tile): remove_self()
-		#if check_general() : remove_self()
+		if check_general() : remove_self()
 		sprite_2d.scale = Vector2(1.0,1.0)
 		position = default_position
 		selected = false
@@ -262,11 +265,11 @@ func check_if_blocking(plopTile : Vector2) -> bool:
 	return false
 
 func check_general() -> bool:
-	#if type == CARDTYPE.REFRESH:
-	for decree : Decree in get_tree().get_nodes_in_group("DECREE"):
-		decree.time -= 1
-		decree.update_cooldown()
-	return true # type == CARDTYPE.REFRESH:
+	if type == CARDTYPE.PONDER:
+		for decree : Decree in get_tree().get_nodes_in_group("DECREE"):
+			decree.time -= 1
+			decree.update_cooldown()
+	return type == CARDTYPE.PONDER
 
 func check_destroy(plopTile : Vector2) -> bool:
 	var buildTiles = tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),2)
@@ -326,6 +329,7 @@ func randomize_type() -> void:
 		ROLLTYPE.BLESSING:
 			type = randi_range(CARDTYPE.INSPIRATION,CARDTYPE.CONSTRUCTION)
 	if type == CARDTYPE.HOUSE : randomize_type()
+	if type == CARDTYPE.FLAG : randomize_type() # nuke flag
 	if !Global.unlockedCards.has(type) : randomize_type()
 	
 	# check if not same as other card

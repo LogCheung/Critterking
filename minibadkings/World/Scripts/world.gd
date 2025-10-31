@@ -36,7 +36,7 @@ func _ready() -> void:
 	Global.unlockedCards = Card.DEFAULT_CARDS
 	SaveLoad._load_profile()
 	ui._on_mainmenu_mouse_entered()
-	unlock_every_card()
+	#unlock_every_card()
 	
 	
 	# connect signals
@@ -71,10 +71,10 @@ func new_game() -> void:
 	Global.cardsInHand.clear()
 	Global.cardsDispatched.clear()
 	for decree in get_tree().get_nodes_in_group("DECREE"):
-		continue
 		decree.queue_free()
 	
-	
+	print(ui.currentAscn)
+	print(ui.currentChal)
 	# map gen with tilemap patterns
 	clear_world()
 	await get_tree().create_timer(.125).timeout
@@ -94,8 +94,6 @@ func new_game() -> void:
 	if ui.currentChal == UI.CHALLENGE.JUICED: Engine.time_scale = 2.5
 	else: Engine.time_scale = 1
 	if ui.currentChal == UI.CHALLENGE.TOWERDEFENSE: expand()
-	
-	
 	
 func add_house_card() -> void:
 	var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
