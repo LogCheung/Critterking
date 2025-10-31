@@ -516,6 +516,7 @@ func load_world() -> void:
 		dupe.type = d.type
 		dupe.time = d.time
 		dupe.cooldown = d.cooldown
+		dupe.update_cooldown()
 		%DecreeContainer.add_child(dupe)
 	
 	

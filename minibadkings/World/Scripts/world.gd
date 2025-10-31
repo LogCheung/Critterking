@@ -89,7 +89,7 @@ func new_game() -> void:
 		add_house_card()
 	for i in range(1):
 		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.FORT
+		hCard.type = Card.CARDTYPE.PONDER
 		ui.hand_container.add_child(hCard)
 		if i == 1:hCard.charm.queue_free()
 	#for i in range(1):
