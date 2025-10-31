@@ -58,13 +58,16 @@ func new_game() -> void:
 	# reset data
 	%SpawnTimer.stop()
 	%SpawnTimer.wait_time = 10
+	if ui.currentAscn >= 8: %SpawnTimer.wait_time -= 1
 	enemy_parties = 3
+	if ui.currentAscn >= 6: enemy_parties += 1
 	upgraded_parties = 0
 	dispatchDay = false
 	tileWorld.activeDecree = Decree.TYPE.NONE
 	tileWorld.buffed_tiles.clear()
 	Global.nights = 0
 	Global.expansions = 0
+	if ui.currentAscn >= 7: Global.expansions -= 1
 	Global.cardsInHand.clear()
 	Global.cardsDispatched.clear()
 	for decree in get_tree().get_nodes_in_group("DECREE"):
@@ -86,15 +89,12 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	#for i in range(1):
-		#var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.PONDER
-		#ui.hand_container.add_child(hCard)
-		#if i == 1:hCard.charm.queue_free()
-	#for i in range(1):
-		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.TRAPS
-		#ui.hand_container.add_child(hCard)
+		
+	#Challenges
+	if ui.currentChal == UI.CHALLENGE.JUICED: Engine.time_scale = 2.5
+	else: Engine.time_scale = 1
+	if ui.currentChal == UI.CHALLENGE.TOWERDEFENSE: expand()
+	
 func add_house_card() -> void:
 	var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
@@ -212,8 +212,12 @@ func on_night_started() -> void:
 	ui.decrees.process_mode = Node.PROCESS_MODE_PAUSABLE
 	if night_is_expansion:
 		%SpawnTimer.wait_time -= 1
-		enemy_parties += 3
-		upgraded_parties += 1
+		if ui.currentAscn >= 10:
+			enemy_parties += 4
+			upgraded_parties += 2
+		else:
+			enemy_parties += 3
+			upgraded_parties += 1
 	
 	# set upgrade number
 	upgrade_nums.clear()
@@ -247,8 +251,12 @@ func on_night_ended() -> void:
 	# Reset after swarm of expansion
 	if night_is_expansion:
 		night_is_expansion = false
-		enemy_parties -= 3
-		upgraded_parties -= 1
+		if ui.currentAscn >= 10:
+			enemy_parties -= 4
+			upgraded_parties -= 2
+		else:
+			enemy_parties -= 3
+			upgraded_parties -= 1
 		%SpawnTimer.wait_time += 1
 	
 	# clear dead enemies
@@ -400,12 +408,13 @@ func world_start() -> void:
 func check_nights() -> void:
 	if Global.nights % 2 == 0:
 		enemy_parties += 1
-	
-	if Global.nights % 3 == 0:
-		dispatchDay = true
+	if ui.currentAscn <= 5: 
+		if Global.nights % 3 == 0:
+			dispatchDay = true
 	
 	if Global.nights % 4 == 0:
 		upgraded_parties += 1
+		if ui.currentAscn >= 5: dispatchDay = true 
 	
 	if Global.nights % 6 == 0:
 		night_is_expansion = true
@@ -416,11 +425,16 @@ func check_nights() -> void:
 	if Global.nights % 10 == 0:
 		%SpawnTimer.wait_time -= 1
 		
-	if Global.nights == 30:
+	if Global.nights == 24 && ui.currentChal == UI.CHALLENGE.JUICED:
+		ui.victory()
+	if Global.nights == 18 && ui.currentChal == UI.CHALLENGE.MINIMALIST or UI.CHALLENGE.TOWERDEFENSE:
+		ui.victory()
+	if Global.nights == 30 && ui.currentChal == UI.CHALLENGE.NONE:
 		ui.victory()
 		
 
 func expand() -> void:
+	if ui.currentChal == UI.CHALLENGE.MINIMALIST: return
 	Global.expansions += 1
 	tileWorld.draw_build_area()
 
@@ -432,7 +446,10 @@ func handle_party_limit() -> void:
 	campCount = campCount.size()
 	
 	Global.partyCount = get_tree().get_nodes_in_group("ALLYGROUP").size()
-	Global.partyLimit = 2 + (2 * houseCount) + (1 * campCount)
+	if ui.currentAscn >= 3: 
+		Global.partyLimit = 2 + (1 * houseCount) + (1 * campCount)
+	else: 
+		Global.partyLimit = 2 + (2 * houseCount) + (1 * campCount)
 	
 	ui.party_current.text = str(Global.partyCount)
 	ui.party_limit.text = str(Global.partyLimit)

@@ -183,7 +183,8 @@ func on_game_over() -> void:
 	_on_save_pressed()
 
 func victory() -> void:
-	Global.wins += 1
+	if currentChal == CHALLENGE.NONE: Global.wins += 1
+	if currentAscn == Global.maxAscension: Global.maxAscension += 1
 	_on_save_pressed()
 	hand.hide()
 	gameover.show()
@@ -195,7 +196,7 @@ func victory() -> void:
 	await anim.animation_finished
 	%crtrNight.stop()
 	%crtrDay.stop()
-	%crtrOver.play()
+	%crtrWin.play()
 
 func _on_endless_pressed() -> void:
 	%gameover.hide()

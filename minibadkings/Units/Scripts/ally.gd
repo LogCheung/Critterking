@@ -25,6 +25,7 @@ const UPRESILIENTNORMALSE = preload("res://Units/Assets/AllyResilient/AllyUpgrad
 const UPSTINGERNORMALSE = preload("res://Units/Assets/AllyStinger/AllyUpgradedStinger.png")
 
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
+@onready var ui: UI = get_tree().get_first_node_in_group("UI")
 
 var allyGroup : AllyGroup
 var healing : bool
@@ -35,8 +36,14 @@ func _ready() -> void:
 		max_health = max_health + 0.5
 		damage = damage + 0.5
 		upgraded = true
-		
-	
+	#challenge changes
+	if ui.currentChal == UI.CHALLENGE.TOWERDEFENSE:
+		speed *= .33
+		max_health = max_health + 2
+		visionRange *= 1.5
+	#ascension changes
+	if ui.currentAscn >= 9: 
+		max_health -= .25 if type != TYPE.ZOMBIFIED else 0.0
 	super._ready()
 	selected.connect(on_selected)
 	#healthchange.connect(on_health_change)
@@ -349,6 +356,15 @@ func match_decree_status() -> void:
 			damage = damage + 0.5
 		Decree.TYPE.CONSTRUCTION:
 			pass # do nothing
+		Decree.TYPE.FORTITUDE:
+			print("hardy")
+			status_sprite.visible = true
+			status_sprite.play("hardy")
+			damage += .5
+			visionRange *= 1.5
+			max_health += 2
+			health += 2
+			speed *= .33
 	status_sprite.visible = true 
 
 func _on_utility_ai_agent_top_score_action_changed(top_action_id: Variant) -> void:
