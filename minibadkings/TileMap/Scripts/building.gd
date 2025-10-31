@@ -21,7 +21,7 @@ const CAMPFIRE = preload("res://TileMap/Assets/buildCampfire.png")
 const CLIFF = preload("res://TileMap/Assets/buildCliff.png")
 
 enum TYPE {
-	NONE, TRAP, HOUSE,CARE,  FARM, SAPSTORE, # TUNNEL, FORT, CAMPFIRE, CLIFF,
+	NONE, TRAP, HOUSE,CARE,  FARM, SAPSTORE, FORT, CAMPFIRE, #CLIFF,  TUNNEL, 
 	 NURSERY, STORAGE, RUINS,
 }
 
@@ -127,12 +127,12 @@ func match_type() -> void:
 		#TYPE.TUNNEL:
 			#sprite_2d.texture = TUNNELB
 			#sprite_2d.offset = Vector2(0,-8)
-		#TYPE.FORT:
-			#sprite_2d.texture = FORT
-			#sprite_2d.offset = Vector2(-1,-10)
-		#TYPE.CAMPFIRE:
-			#sprite_2d.texture = CAMPFIRE
-			#sprite_2d.offset = Vector2(0,-2)
+		TYPE.FORT:
+			sprite_2d.texture = FORT
+			sprite_2d.offset = Vector2(-1,-10)
+		TYPE.CAMPFIRE:
+			sprite_2d.texture = CAMPFIRE
+			sprite_2d.offset = Vector2(0,-2)
 		#TYPE.CLIFF:
 			#sprite_2d.texture = CLIFF
 
@@ -191,14 +191,26 @@ func remove() -> void:
 			ui.game_over.emit()
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
-	if !type == TYPE.TRAP : return
 	if area.owner is Unit:
-		var enemy : Unit = area.owner
-		enemy.health -= 1.5
-		enemy.hurt.play()
-		enemy.hitAnim(true)
-		if enemy.health <= 0:
-			enemy.start_death()
+		if type == TYPE.TRAP:
+			var enemy : Unit = area.owner
+			enemy.health -= 1.5
+			enemy.hurt.play()
+			enemy.hitAnim(true)
+			if enemy.health <= 0:
+				enemy.start_death()
+	if area.owner is Ally:
+		if type == TYPE.FORT:
+			var target: Unit = area.owner
+			target.resistance += .25
+			print("safe")
+func _on_hurt_box_area_exited(area: Area2D) -> void:
+	if area.owner is Ally:
+		if type == TYPE.FORT:
+			var target: Unit = area.owner
+			target.resistance -= .25
+			print("unsafe")
+
 func _on_adj_area_entered(area: Area2D) -> void:
 	if world.is_combat_phase: return
 	if area.owner is Ally:

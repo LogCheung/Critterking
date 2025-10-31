@@ -20,6 +20,7 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 
 @export var health : float = 4
 @export var max_health : float = 4
+@export var resistance : float = 0
 @export var damage : float = 2
 @export var speed : float = 30
 @export var attackRange : float = 10
@@ -235,7 +236,8 @@ func on_hurt_box_land(area : Area2D) -> void:
 			if knock_chance >= (randi() % 100 + 1):
 				var dir = -enemy.global_position.direction_to(global_position)
 				enemy.take_knockback(dir)
-			enemy.health -= damage 
+			enemy.health -= damage - enemy.resistance
+			print(enemy.resistance)
 			enemy.hitAnim(true)
 		else: enemy.hitAnim(false)
 		

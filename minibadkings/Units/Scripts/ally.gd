@@ -332,6 +332,7 @@ func match_decree_status() -> void:
 			set_up_vision()
 		Decree.TYPE.DEFENSE:
 			status_sprite.play("defense")
+			resistance += .25
 		Decree.TYPE.RENOVATE:
 			pass # do nothing
 		Decree.TYPE.WAR:
