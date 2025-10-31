@@ -69,6 +69,7 @@ func _ready() -> void:
 	for c in get_children():
 		if !c is Control: continue
 		c.hide()
+	%playmenu.hide()
 	mainmenu.show()
 	
 func play_song(song : AudioStreamPlayer) -> void:
@@ -237,7 +238,8 @@ func _on_play_pressed() -> void:
 		%TutorialText.text = "Every night you will be able to draw a card, click the deck and make your selection!"
 		%TutorialText.text += "\n\nThe first night you will be able draw twice!"
 func _on_play_menu_pressed() -> void:
-	_on_play_pressed()
+	%mainsprite.hide()
+	%playmenu.show()
 func _on_help_pressed() -> void:
 	%Button.play()
 	if !%crtrPause.playing:
@@ -426,6 +428,7 @@ func load_world() -> void:
 	decrees.show()
 	
 	Global.cardsDispatched.clear()
+	if rollArray.has(Card.ROLLTYPE.CHARM) : rollArray.remove_at(rollArray.find(Card.ROLLTYPE.CHARM))
 	world.tileWorld.wall.tile_map_data = SaveLoad.SaveFileData.walls
 	world.tileWorld.ground.tile_map_data = SaveLoad.SaveFileData.ground
 	world.tileWorld.obstacles.tile_map_data = SaveLoad.SaveFileData.obstacles
@@ -509,3 +512,26 @@ func hide_unlocks() -> void:
 	for card : Card in unlockCards:
 		card.visible = false
 	unlock.hide()
+
+
+func _on_back_pressed() -> void:
+	%playmenu.hide()
+	%mainsprite.show()
+
+# lights for play menu
+func _on_adapt_pressed() -> void:
+	pass
+
+func _on_adapt_mouse_entered() -> void:
+	%playmenu.frame = 3
+	pass # Replace with function body.
+
+func _on_button_mouse_exited() -> void:
+	%playmenu.frame = 0
+	pass # Replace with function body.
+
+func _on_load_mouse_entered() -> void:
+	%playmenu.frame = 2
+
+func _on_play_mouse_entered() -> void:
+	%playmenu.frame = 1

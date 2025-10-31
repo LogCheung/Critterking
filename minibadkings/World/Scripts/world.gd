@@ -375,11 +375,11 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		#new_game()
 		#return
-		#Engine.time_scale = 8
+		Engine.time_scale = 12
 		#expand()
 		#print(ui.rollArray)
-		ui._on_endturn_pressed()
-		on_night_ended()
+		#ui._on_endturn_pressed()
+		#on_night_ended()
 		#Global.nights += 29
 		#check_nights()
 	#if event.is_action_pressed("cancel"):

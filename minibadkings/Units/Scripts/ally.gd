@@ -162,7 +162,7 @@ func on_unselected() -> void:
 	sprite_2d.material = null
 
 func set_up_vision() -> void:
-	if vision: vision.queue_free()
+	if self.vision: self.vision.queue_free()
 	
 	var newVision = Area2D.new()
 	var col = CollisionShape2D.new()
@@ -174,7 +174,7 @@ func set_up_vision() -> void:
 	newVision.set_collision_mask_value(3,true)
 	add_child(newVision)
 	newVision.add_child(col)
-	vision = newVision
+	self.vision = newVision
 	vision.visible = false
 
 
@@ -311,6 +311,7 @@ func match_decree_status() -> void:
 		Decree.TYPE.NONE:
 			return
 		Decree.TYPE.INSPIRATION:
+			print("yesss")
 			status_sprite.visible = true
 			status_sprite.play("inspiration")
 			damage += .5
@@ -325,6 +326,7 @@ func match_decree_status() -> void:
 			dead = false
 			health = max_health
 		Decree.TYPE.RECON:
+			print("ok")
 			status_sprite.play("recon")
 			visionRange += 25
 			set_up_vision()

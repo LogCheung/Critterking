@@ -274,6 +274,12 @@ func handle_decree() -> void:
 			for unit in units:
 				unit.decree = activeDecree
 				unit.match_decree_status()
+			
+			activeDecree = Decree.TYPE.NONE
+			decree.time = decree.cooldown
+			decree.update_cooldown()
+			decree = null
+			return
 		Decree.TYPE.RENOVATE:
 			# highlight buildings, no hover
 			highlight_buildings(true,Building.TYPE.NONE)
@@ -294,6 +300,7 @@ func handle_decree() -> void:
 		
 	# handle input
 	if using_decree and Input.is_action_just_released("select"):
+		using_decree = false
 		handle_decree_action(mouseTile)
 		
 		await get_tree().create_timer(.1).timeout

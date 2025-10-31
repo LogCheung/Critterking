@@ -114,7 +114,6 @@ unique_name_in_owner = true
 polygon = PackedVector2Array(0, -15, -31, 0, 0, 15, 31, 0)
 
 [node name="Adj" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 6
 input_pickable = false

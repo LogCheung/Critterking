@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=49 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Texture2D" uid="uid://luuqbnbqgyao" path="res://UI/Assets/menus/mainmenu.png" id="3_2fejo"]
@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://b6kejcvarih2b" path="res://UI/Assets/nightcount.png" id="11_yqd36"]
 [ext_resource type="AudioStream" uid="uid://bdq1nbxdckl0r" path="res://Audio/sfx/Card.tres" id="12_yqd36"]
 [ext_resource type="AudioStream" uid="uid://bxpbo04dxxuf4" path="res://Audio/sfx/Button.tres" id="15_8g5lr"]
+[ext_resource type="Texture2D" uid="uid://diy1h5txvm2w4" path="res://UI/Assets/menus/playMenu.png" id="16_onxes"]
 [ext_resource type="Texture2D" uid="uid://l1xrje5n2dl7" path="res://UI/Assets/menus/unlock.png" id="17_onxes"]
 [ext_resource type="AudioStream" uid="uid://c8brf7l45q10r" path="res://Audio/music/crtrnight.tres" id="19_gu1s8"]
 [ext_resource type="AudioStream" uid="uid://u2y0bys67ovo" path="res://Audio/music/crtrday.tres" id="20_8g5lr"]
@@ -113,7 +114,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("mainmenu/main:modulate")
+tracks/1/path = NodePath("mainmenu/mainsprite:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -140,7 +141,7 @@ resource_name = "MainToGame"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("mainmenu/main:modulate")
+tracks/0/path = NodePath("mainmenu/mainsprite:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -179,7 +180,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("mainmenu/main:modulate")
+tracks/1/path = NodePath("mainmenu/mainsprite:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -459,6 +460,7 @@ vertical_alignment = 1
 
 [node name="Tutorial" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 z_index = 4096
 layout_mode = 3
 anchors_preset = 0
@@ -796,13 +798,15 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
+mouse_filter = 2
 
-[node name="main" type="Sprite2D" parent="mainmenu"]
+[node name="mainsprite" type="Sprite2D" parent="mainmenu"]
+unique_name_in_owner = true
 scale = Vector2(6, 6)
 texture = ExtResource("3_2fejo")
 offset = Vector2(160, 90)
 
-[node name="PlayMenu" type="Button" parent="mainmenu/main"]
+[node name="PlayMenu" type="Button" parent="mainmenu/mainsprite"]
 offset_left = 258.0
 offset_top = 2.0
 offset_right = 317.0
@@ -810,7 +814,7 @@ offset_bottom = 44.0
 focus_mode = 0
 flat = true
 
-[node name="Help" type="Button" parent="mainmenu/main"]
+[node name="Help" type="Button" parent="mainmenu/mainsprite"]
 offset_left = 258.0
 offset_top = 46.5
 offset_right = 317.0
@@ -818,7 +822,7 @@ offset_bottom = 88.5
 focus_mode = 0
 flat = true
 
-[node name="Settings" type="Button" parent="mainmenu/main"]
+[node name="Settings" type="Button" parent="mainmenu/mainsprite"]
 offset_left = 257.833
 offset_top = 91.5
 offset_right = 316.833
@@ -826,7 +830,7 @@ offset_bottom = 133.5
 focus_mode = 0
 flat = true
 
-[node name="Quit" type="Button" parent="mainmenu/main"]
+[node name="Quit" type="Button" parent="mainmenu/mainsprite"]
 offset_left = 258.167
 offset_top = 136.667
 offset_right = 317.167
@@ -834,12 +838,49 @@ offset_bottom = 178.667
 focus_mode = 0
 flat = true
 
-[node name="load" type="Button" parent="mainmenu/main"]
-offset_left = 184.167
-offset_top = 129.5
-offset_right = 226.167
-offset_bottom = 160.5
-text = "load"
+[node name="playmenu" type="Sprite2D" parent="mainmenu"]
+unique_name_in_owner = true
+scale = Vector2(6, 6)
+texture = ExtResource("16_onxes")
+offset = Vector2(160, 90)
+hframes = 2
+vframes = 2
+frame = 3
+
+[node name="adapt" type="Button" parent="mainmenu/playmenu"]
+offset_left = 8.333333
+offset_top = 22.166666
+offset_right = 130.66667
+offset_bottom = 58.166664
+rotation = -0.08726646
+focus_mode = 0
+flat = true
+
+[node name="back" type="Button" parent="mainmenu/playmenu"]
+offset_left = 3.0
+offset_top = 158.66667
+offset_right = 52.833336
+offset_bottom = 179.66667
+focus_mode = 0
+flat = true
+
+[node name="play" type="Button" parent="mainmenu/playmenu"]
+offset_left = 231.00002
+offset_top = 15.666668
+offset_right = 339.96863
+offset_bottom = 73.44889
+rotation = 0.5235988
+focus_mode = 0
+flat = true
+
+[node name="load" type="Button" parent="mainmenu/playmenu"]
+offset_left = 26.166668
+offset_top = 91.50001
+offset_right = 150.33467
+offset_bottom = 127.50001
+rotation = -0.2617994
+focus_mode = 0
+flat = true
 
 [node name="unlock" type="Sprite2D" parent="mainmenu"]
 unique_name_in_owner = true
@@ -1132,11 +1173,20 @@ bus = &"SFX"
 [connection signal="pressed" from="Dispatch/Sprite2D/dispatchEnd" to="." method="_on_dispatch_end_pressed"]
 [connection signal="pressed" from="Cards/CardShow/Show" to="." method="_on_show_pressed"]
 [connection signal="mouse_entered" from="mainmenu" to="." method="_on_mainmenu_mouse_entered"]
-[connection signal="pressed" from="mainmenu/main/PlayMenu" to="." method="_on_play_menu_pressed"]
-[connection signal="pressed" from="mainmenu/main/Help" to="." method="_on_help_pressed"]
-[connection signal="pressed" from="mainmenu/main/Settings" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="mainmenu/main/Quit" to="." method="_on_quit_pressed"]
-[connection signal="pressed" from="mainmenu/main/load" to="." method="_on_load_pressed"]
+[connection signal="pressed" from="mainmenu/mainsprite/PlayMenu" to="." method="_on_play_menu_pressed"]
+[connection signal="pressed" from="mainmenu/mainsprite/Help" to="." method="_on_help_pressed"]
+[connection signal="pressed" from="mainmenu/mainsprite/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="mainmenu/mainsprite/Quit" to="." method="_on_quit_pressed"]
+[connection signal="mouse_entered" from="mainmenu/playmenu/adapt" to="." method="_on_adapt_mouse_entered"]
+[connection signal="mouse_exited" from="mainmenu/playmenu/adapt" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="mainmenu/playmenu/adapt" to="." method="_on_adapt_pressed"]
+[connection signal="pressed" from="mainmenu/playmenu/back" to="." method="_on_back_pressed"]
+[connection signal="mouse_entered" from="mainmenu/playmenu/play" to="." method="_on_play_mouse_entered"]
+[connection signal="mouse_exited" from="mainmenu/playmenu/play" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="mainmenu/playmenu/play" to="." method="_on_play_pressed"]
+[connection signal="mouse_entered" from="mainmenu/playmenu/load" to="." method="_on_load_mouse_entered"]
+[connection signal="mouse_exited" from="mainmenu/playmenu/load" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="mainmenu/playmenu/load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="pausemenu/pause/continue" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="pausemenu/pause/Help" to="." method="_on_help_pressed"]
 [connection signal="pressed" from="pausemenu/pause/Settings" to="." method="_on_settings_pressed"]
