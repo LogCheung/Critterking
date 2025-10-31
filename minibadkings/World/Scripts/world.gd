@@ -18,7 +18,7 @@ signal mouse_clicked
 @onready var groupNode : Node2D = get_tree().get_first_node_in_group("GROUPSNODE")
 @onready var ui: UI = get_tree().get_first_node_in_group("UI")
 @onready var game: Node2D = %Game
-
+@onready var camera: Camera2D = %Camera2D
 
 var outerFollow : PathFollow2D
 var innerFollow : PathFollow2D
@@ -84,15 +84,15 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	#for i in range(1):
-		#var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.TRAPJAW
-		#ui.hand_container.add_child(hCard)
-		#if i == 1:hCard.charm.queue_free()
-	#for i in range(1):
-		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.STORAGE
-		#ui.hand_container.add_child(hCard)
+	for i in range(1):
+		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.FORT
+		ui.hand_container.add_child(hCard)
+		if i == 1:hCard.charm.queue_free()
+	for i in range(1):
+		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.TRAPS
+		ui.hand_container.add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
@@ -423,13 +423,13 @@ func expand() -> void:
 
 func handle_party_limit() -> void:
 	var houseCount = get_tree().get_nodes_in_group("BUILDING")
-	#var campCount = houseCount.filter(func(e):return e.type == Building.TYPE.CAMPFIRE)
+	var campCount = houseCount.filter(func(e):return e.type == Building.TYPE.CAMPFIRE)
 	houseCount = houseCount.filter(func(e):return e.type == Building.TYPE.HOUSE)
 	houseCount = houseCount.size()
-	#campCount = campCount.size()
+	campCount = campCount.size()
 	
 	Global.partyCount = get_tree().get_nodes_in_group("ALLYGROUP").size()
-	Global.partyLimit = 2 + (2 * houseCount) #+ (1 * campCount)
+	Global.partyLimit = 2 + (2 * houseCount) + (1 * campCount)
 	
 	ui.party_current.text = str(Global.partyCount)
 	ui.party_limit.text = str(Global.partyLimit)

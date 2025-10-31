@@ -30,6 +30,7 @@ script = ExtResource("2_xvb7p")
 [node name="TileWorld" parent="Game" instance=ExtResource("1_jamle")]
 
 [node name="Camera2D" type="Camera2D" parent="Game" groups=["CAMERA"]]
+unique_name_in_owner = true
 position = Vector2(32, 80)
 zoom = Vector2(2, 2)
 limit_left = -800

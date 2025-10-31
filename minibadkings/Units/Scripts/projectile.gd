@@ -40,8 +40,6 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.owner is Unit:
 		var target : Unit = area.owner
 		# for shielded
-		if target.decree == Decree.TYPE.DEFENSE:
-			damage -= .25 if type == Unit.TYPE.RANGED else 0.0
 		if target.type == Unit.TYPE.SHIELDED: 
 			damage -= .5 if type == Unit.TYPE.RANGED else .25
 		if target.type == Unit.TYPE.RESILIENT: 
@@ -51,7 +49,8 @@ func _on_area_entered(area: Area2D) -> void:
 			#var rand = randi()
 			#if rand % 2 == 0: 
 			%Hurt.play()
-			target.health -= damage
+			if damage - target.resistance > 0: target.health -= damage - target.resistance
+			else: target.health -= damage
 			target.hitAnim(true)
 		else:
 			target.hitAnim(false)

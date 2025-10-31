@@ -154,6 +154,7 @@ one_shot = true
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="area_exited" from="HurtBox" to="." method="_on_hurt_box_area_exited"]
 [connection signal="area_entered" from="Adj" to="." method="_on_adj_area_entered"]
 [connection signal="area_entered" from="Orth" to="." method="_on_orth_area_entered"]
 [connection signal="area_entered" from="trans" to="." method="_on_trans_area_entered"]
