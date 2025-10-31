@@ -12,3 +12,4 @@ class_name SaveDataResource
 @export var obstacles : PackedByteArray
 @export var ring : PackedByteArray
 @export var dispatchDay : bool
+@export var defeated : bool

@@ -11,8 +11,8 @@ const prof_location = "user://ProfileFile.tres"
 
 func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 		ground : PackedByteArray, obstacles : PackedByteArray, ring : PackedByteArray,
-		dispatchDay : bool):
-			
+		dispatchDay : bool, defeated : bool):
+	
 	SaveFileData = SaveDataResource.new()
 	SaveFileData.scene = scene
 	SaveFileData.nights = Global.nights
@@ -22,6 +22,7 @@ func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 	SaveFileData.obstacles = obstacles
 	SaveFileData.ring = ring
 	SaveFileData.dispatchDay = dispatchDay
+	SaveFileData.defeated = defeated
 	
 	# save cards
 	SaveFileData.cardsInHand.clear()
@@ -66,6 +67,14 @@ func _save_profile(ui : UI) -> void:
 func _load() -> void:
 	if FileAccess.file_exists(save_location):
 		SaveFileData = ResourceLoader.load(save_location).duplicate(true)
+		if SaveFileData.nights == 0 : return
+		if SaveFileData.defeated: return
+		
+		# clear world
+		for i in range(10):
+			await get_tree().process_frame
+		var world = get_tree().get_first_node_in_group("WORLD")
+		world.clear_world()
 		
 		get_tree().change_scene_to_packed(SaveFileData.scene)
 		await get_tree().process_frame

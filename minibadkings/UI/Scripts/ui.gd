@@ -167,6 +167,7 @@ func on_game_over() -> void:
 	%crtrDay.stop()
 	%crtrOver.play()
 	%nights.text = str(Global.nights)
+	_on_save_pressed()
 
 func victory() -> void:
 	Global.wins += 1
@@ -397,8 +398,10 @@ func _on_save_pressed() -> void:
 	var ground = world.tileWorld.ground.tile_map_data
 	var obstacles = world.tileWorld.obstacles.tile_map_data
 	var ring = world.tileWorld.ring.tile_map_data
+	var defeated = gameover.visible
 	
-	SaveLoad._save(scene,rollArray,walls,ground,obstacles,ring,world.dispatchDay)
+	SaveLoad._save(scene,rollArray,walls,ground,obstacles,
+	ring,world.dispatchDay,defeated)
 	
 	# Save profile data
 	SaveLoad._save_profile(self)
@@ -406,9 +409,6 @@ func _on_save_pressed() -> void:
 	#ResourceSaver.save(scene,"res://saves/savefile.tscn")
 
 func _on_load_pressed() -> void:
-	for i in range(10):
-		await get_tree().process_frame
-	world.clear_world()
 	SaveLoad._load()
 
 func load_world() -> void:
