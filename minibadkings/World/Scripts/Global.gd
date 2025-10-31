@@ -26,3 +26,7 @@ var UNLOCK : Array = [
 	#[Card.CARDTYPE.TUNNEL, Card.CARDTYPE.CLIFF, Card.CARDTYPE.FORTIFY], # 5
 	
 ]
+# unlocks from challenge
+var UNLOCK_ACHIEVE : Array = [
+	[] # 
+]
