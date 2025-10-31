@@ -237,7 +237,6 @@ func on_hurt_box_land(area : Area2D) -> void:
 				var dir = -enemy.global_position.direction_to(global_position)
 				enemy.take_knockback(dir)
 			enemy.health -= damage - enemy.resistance
-			print(enemy.resistance)
 			enemy.hitAnim(true)
 		else: enemy.hitAnim(false)
 		
@@ -354,7 +353,6 @@ func explode_on_death() -> void:
 	for i in range(3):
 		await get_tree().process_frame
 	# check for enemies under explosion
-	print(area.get_overlapping_areas())
 	for a in area.get_overlapping_areas():
 		if !a or !a.owner is Unit: continue
 		var enemy : Unit = a.owner
@@ -365,7 +363,6 @@ func explode_on_death() -> void:
 		else:enemy.hitAnim(false)
 		if enemy.health <= 0:
 			# trigger death anim
-			print("noob get killed by explosion")
 			enemy.start_death()
 	
 	# destroy self

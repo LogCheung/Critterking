@@ -46,7 +46,6 @@ func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 		
 	
 	if SaveFileData == null : 
-		print("wow")
 		return
 	ResourceSaver.save(SaveFileData,save_location)
 

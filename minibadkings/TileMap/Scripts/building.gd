@@ -82,6 +82,7 @@ func occupants_inside() -> bool:
 	return true
 
 func match_type() -> void:
+	%fire.hide()
 	match type:
 		TYPE.HOUSE:
 			sprite_2d.texture = HOUSEA if randi() % 2 == 0 else HOUSEB
@@ -132,7 +133,8 @@ func match_type() -> void:
 			sprite_2d.offset = Vector2(-1,-10)
 		TYPE.CAMPFIRE:
 			sprite_2d.texture = CAMPFIRE
-			sprite_2d.offset = Vector2(0,-2)
+			%fire.show()
+			%fire.play("default")
 		#TYPE.CLIFF:
 			#sprite_2d.texture = CLIFF
 
@@ -203,13 +205,13 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 		if type == TYPE.FORT:
 			var target: Unit = area.owner
 			target.resistance += .25
-			print("safe")
+			
 func _on_hurt_box_area_exited(area: Area2D) -> void:
 	if area.owner is Ally:
 		if type == TYPE.FORT:
 			var target: Unit = area.owner
 			target.resistance -= .25
-			print("unsafe")
+			
 
 func _on_adj_area_entered(area: Area2D) -> void:
 	if world.is_combat_phase: return

@@ -243,6 +243,8 @@ func _on_play_pressed() -> void:
 		%TutorialText.text = "Every night you will be able to draw a card, click the deck and make your selection!"
 		%TutorialText.text += "\n\nThe first night you will be able draw twice!"
 func _on_play_menu_pressed() -> void:
+	_on_play_pressed()
+	return
 	%mainsprite.hide()
 	%playmenu.show()
 func _on_help_pressed() -> void:
@@ -259,7 +261,7 @@ func _on_settings_pressed() -> void:
 		%crtrPause.play()
 	%crtrMenu.stop()
 	settings.show()
-	%settingsMenu.frame = 3
+	_on_audio_b_pressed()
 	mainmenu.hide()
 	pass # Replace with function body.
 
@@ -289,15 +291,9 @@ func _on_forward_pressed() -> void:
 
 func _on_settingsback_pressed() -> void:
 	%Button.play()
-	if %settingsMenu.frame == 3: 
-		settings.hide()
-		if !pausemenu.visible: mainmenu.show()
-	else:
-		for b in settB: b.hide()
-		%settingsMenu.frame = 3
-		%audioB.show()
-		%videoB.show()
-		%gameplayB.show()
+	settings.hide()
+	if !pausemenu.visible: mainmenu.show()
+	
 	if %DisableTutorial.button_pressed:
 		Global.tutorial = false
 		Global.tutorialCharm = false
@@ -434,7 +430,7 @@ func handle_pause() -> void:
 
 
 func _on_save_pressed() -> void:
-	#return # disable saving
+	return # disable saving
 	world = get_tree().get_first_node_in_group("WORLD")
 	var scene = PackedScene.new()
 	scene.pack(world)

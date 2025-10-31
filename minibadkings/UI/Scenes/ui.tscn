@@ -1023,7 +1023,6 @@ texture = ExtResource("20_onxes")
 offset = Vector2(160, 90)
 hframes = 2
 vframes = 2
-frame = 1
 
 [node name="settingsback" type="Button" parent="Settings/settingsMenu"]
 unique_name_in_owner = true

@@ -33,8 +33,8 @@ var night_is_expansion: bool = false
 func _ready() -> void:
 	# Load profile data
 	Global.unlockedCards = Card.DEFAULT_CARDS
-	SaveLoad._load_profile()
-	ui._on_mainmenu_mouse_entered()
+	#SaveLoad._load_profile()
+	#ui._on_mainmenu_mouse_entered()
 	unlock_every_card()
 	
 	
@@ -84,15 +84,15 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	for i in range(1):
-		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.FORT
-		ui.hand_container.add_child(hCard)
-		if i == 1:hCard.charm.queue_free()
-	for i in range(1):
-		var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.TRAPS
-		ui.hand_container.add_child(hCard)
+	#for i in range(1):
+		#var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.FORT
+		#ui.hand_container.add_child(hCard)
+		#if i == 1:hCard.charm.queue_free()
+	#for i in range(1):
+		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.TRAPS
+		#ui.hand_container.add_child(hCard)
 func add_house_card() -> void:
 	var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
 	hCard.type = Card.CARDTYPE.HOUSE
@@ -103,6 +103,9 @@ func unlock_every_card() -> void:
 	# unlock every card
 	var arr = []
 	for i in Card.CARDTYPE.size():
+		if i == Card.CARDTYPE.FORT:
+			print("ok")
+			continue
 		arr.append(i)
 	Global.unlockedCards = arr
 	
@@ -375,8 +378,8 @@ func _input(event: InputEvent) -> void:
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
 		#new_game()
-		#return
-		Engine.time_scale = 12
+		return
+		#Engine.time_scale = 12
 		#expand()
 		#print(ui.rollArray)
 		#ui._on_endturn_pressed()
@@ -442,7 +445,6 @@ func handle_party_limit() -> void:
 	pass
 
 func _on_timer_timeout() -> void:
-	print("check")
 	SaveLoad._save_profile(ui)
 	if !is_combat_phase: return
 	var enemies = get_tree().get_nodes_in_group("ENEMY")
