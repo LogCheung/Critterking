@@ -48,7 +48,6 @@ func _on_area_entered(area: Area2D) -> void:
 		 # chance to ignore damage while also having reduced damage
 			#var rand = randi()
 			#if rand % 2 == 0: 
-			%Hurt.play()
 			if damage - target.resistance > 0: target.health -= damage - target.resistance
 			else: target.health -= damage
 			target.hitAnim(true)

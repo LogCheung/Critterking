@@ -1,12 +1,16 @@
-[gd_resource type="AudioStreamRandomizer" load_steps=4 format=3 uid="uid://c8brf7l45q10r"]
+[gd_resource type="AudioStreamRandomizer" load_steps=6 format=3 uid="uid://c8brf7l45q10r"]
 
 [ext_resource type="AudioStream" uid="uid://cqs4ssc2g47ia" path="res://Audio/music/crtrnight1.wav" id="1_f7hlf"]
 [ext_resource type="AudioStream" uid="uid://bcobvmc77ka6h" path="res://Audio/music/crtrnight2.wav" id="2_rjk2v"]
 [ext_resource type="AudioStream" uid="uid://ct5subkcjhhsl" path="res://Audio/music/crtrnight3.wav" id="3_t24vh"]
+[ext_resource type="AudioStream" uid="uid://7tqbisd5xiri" path="res://Audio/music/crtrnight4.wav" id="4_t24vh"]
+[ext_resource type="AudioStream" uid="uid://c16j6muf83s2f" path="res://Audio/music/crtrnight5.wav" id="5_vyf02"]
 
 [resource]
 playback_mode = 1
-streams_count = 3
+streams_count = 5
 stream_0/stream = ExtResource("1_f7hlf")
 stream_1/stream = ExtResource("2_rjk2v")
 stream_2/stream = ExtResource("3_t24vh")
+stream_3/stream = ExtResource("4_t24vh")
+stream_4/stream = ExtResource("5_vyf02")
