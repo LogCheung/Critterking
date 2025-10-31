@@ -265,6 +265,7 @@ func on_night_ended() -> void:
 		pass
 	
 	if is_combat_phase == false : return
+	if ui.anim.is_playing():return
 	ui.rollArray.append(Card.ROLLTYPE.GENERAL)
 	start_day()
 	tileWorld.activeDecree = Decree.TYPE.NONE

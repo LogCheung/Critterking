@@ -316,13 +316,13 @@ func _on_endturn_pressed() -> void:
 		Global.tutorial = false
 
 func _on_newgame_pressed() -> void:
+	if anim.is_playing() : return
 	Global.nights = 0
 	$AnimationPlayer.play("playAgain")
+	world.new_game()
 	await anim.animation_finished
 	%crtrOver.stop()
 	gameover.hide()
-	world.new_game()
-	await anim.animation_finished
 	world.start_day()
 	%crtrDay.play()
 	$AnimationPlayer.play("RESET")
