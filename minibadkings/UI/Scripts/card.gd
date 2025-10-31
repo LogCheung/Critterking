@@ -329,6 +329,7 @@ func randomize_type() -> void:
 		ROLLTYPE.BLESSING:
 			type = randi_range(CARDTYPE.INSPIRATION,CARDTYPE.CONSTRUCTION)
 	if type == CARDTYPE.HOUSE : randomize_type()
+	if type == CARDTYPE.FLAG : randomize_type() # nuke flag
 	if !Global.unlockedCards.has(type) : randomize_type()
 	
 	# check if not same as other card

@@ -36,7 +36,7 @@ func _ready() -> void:
 	Global.unlockedCards = Card.DEFAULT_CARDS
 	SaveLoad._load_profile()
 	ui._on_mainmenu_mouse_entered()
-	unlock_every_card()
+	#unlock_every_card()
 	
 	
 	# connect signals
@@ -68,7 +68,6 @@ func new_game() -> void:
 	Global.cardsInHand.clear()
 	Global.cardsDispatched.clear()
 	for decree in get_tree().get_nodes_in_group("DECREE"):
-		continue
 		decree.queue_free()
 	
 	print(ui.currentAscn)
@@ -87,11 +86,11 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	for i in range(1):
-		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.PONDER
-		ui.hand_container.add_child(hCard)
-		if i == 1:hCard.charm.queue_free()
+	#for i in range(1):
+		#var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.PONDER
+		#ui.hand_container.add_child(hCard)
+		#if i == 1:hCard.charm.queue_free()
 	#for i in range(1):
 		#var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
 		#hCard.type = Card.CARDTYPE.TRAPS

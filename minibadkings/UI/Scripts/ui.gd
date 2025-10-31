@@ -538,7 +538,7 @@ func load_world() -> void:
 		#var new_scene = ResourceLoader.load("res://saves/savefile.tscn")
 		#get_tree().change_scene_to_packed(new_scene)
 
-
+# unlocking new cards
 func _on_mainmenu_mouse_entered() -> void:
 	# check if main menu in on screen
 	if %unlock.visible: return
