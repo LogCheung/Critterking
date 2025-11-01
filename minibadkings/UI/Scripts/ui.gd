@@ -113,6 +113,7 @@ func display_cards(display : bool) -> void:
 		
 func show_hand() -> void:
 	# when card is chosen from deck of cards
+	print("BITER BUGGG")
 	save_game_delayed()
 	rollArray.pop_front()
 	if rollArray.size() > 0:
