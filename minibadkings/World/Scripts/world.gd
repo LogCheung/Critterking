@@ -35,7 +35,7 @@ func _ready() -> void:
 	# Load profile data
 	Global.unlockedCards = Card.DEFAULT_CARDS
 	SaveLoad._load_profile()
-	#ui._on_mainmenu_mouse_entered()
+	ui._on_mainmenu_mouse_entered()
 	#unlock_every_card()
 	print(Global.unlockedCards)
 	

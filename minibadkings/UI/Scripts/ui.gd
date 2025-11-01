@@ -665,6 +665,8 @@ func _on_ascnback_pressed() -> void:
 
 
 func _on_resolution_item_selected(index: int) -> void:
+	if get_window().mode == Window.MODE_EXCLUSIVE_FULLSCREEN:
+		return
 	match index:
 		0:
 			get_window().size = Vector2i(1920,1080)
@@ -676,7 +678,7 @@ func _on_resolution_item_selected(index: int) -> void:
 func _on_format_item_selected(index: int) -> void:
 	match index:
 		0:
-			get_window().mode = Window.MODE_FULLSCREEN
+			get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN
 		1:
 			get_window().mode = Window.MODE_WINDOWED
 		2:
