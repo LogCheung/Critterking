@@ -4,7 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://bcobvmc77ka6h" path="res://Audio/music/crtrnight2.wav" id="2_rjk2v"]
 [ext_resource type="AudioStream" uid="uid://ct5subkcjhhsl" path="res://Audio/music/crtrnight3.wav" id="3_t24vh"]
 [ext_resource type="AudioStream" uid="uid://7tqbisd5xiri" path="res://Audio/music/crtrnight4.wav" id="4_t24vh"]
-[ext_resource type="AudioStream" uid="uid://c16j6muf83s2f" path="res://Audio/music/crtrnight5.wav" id="5_vyf02"]
+[ext_resource type="AudioStream" uid="uid://b6gkkwx667iqj" path="res://Audio/music/crtrnight5.wav" id="5_vyf02"]
 
 [resource]
 playback_mode = 1
