@@ -35,8 +35,9 @@ func _ready() -> void:
 	# Load profile data
 	Global.unlockedCards = Card.DEFAULT_CARDS
 	SaveLoad._load_profile()
-	ui._on_mainmenu_mouse_entered()
+	#ui._on_mainmenu_mouse_entered()
 	#unlock_every_card()
+	print(Global.unlockedCards)
 	
 	
 	# connect signals
@@ -384,15 +385,15 @@ func _input(event: InputEvent) -> void:
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
-		print(spawnTimer.wait_time)
+		#print(spawnTimer.wait_time)
 		#new_game()
-		#return
+		return
 		# Engine.time_scale = 12
 		#expand()
 		#print(ui.rollArray)
 		#ui._on_endturn_pressed()
 		#on_night_ended()
-		#Global.nights += 29
+		#Global.nights += 23
 		#check_nights()
 	#if event.is_action_pressed("cancel"):
 		#SaveLoad._reset_profile()
@@ -427,7 +428,9 @@ func check_nights() -> void:
 		
 	if Global.nights == 24 && ui.currentChal == UI.CHALLENGE.JUICED:
 		ui.victory()
-	if Global.nights == 18 && ui.currentChal == UI.CHALLENGE.MINIMALIST or UI.CHALLENGE.TOWERDEFENSE:
+	if Global.nights == 18 && ui.currentChal == UI.CHALLENGE.MINIMALIST:
+		ui.victory()
+	if Global.nights == 18 && ui.currentChal == UI.CHALLENGE.TOWERDEFENSE:
 		ui.victory()
 	if Global.nights == 30 && ui.currentChal == UI.CHALLENGE.NONE:
 		ui.victory()

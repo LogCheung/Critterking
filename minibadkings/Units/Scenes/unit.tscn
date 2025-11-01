@@ -463,7 +463,7 @@ size = Vector2(15, 15)
 size = Vector2(5, 7)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yd6on"]
-size = Vector2(10, 10)
+size = Vector2(10, 12)
 
 [sub_resource type="Curve" id="Curve_yd6on"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1.1), 0.0, 0.0, 0, 0]
@@ -720,7 +720,7 @@ collision_layer = 16
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="behindWall"]
-position = Vector2(0, 3)
+position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_yd6on")
 
 [node name="UtilityAiAgent" type="Node" parent="."]

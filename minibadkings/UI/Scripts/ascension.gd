@@ -26,6 +26,10 @@ func _on_gui_input(event: InputEvent) -> void:
 	if event.is_action_pressed("select"):
 		enabled = !enabled
 		
+		var chals = get_tree().get_nodes_in_group("CHAL")
+		for c : Challenge in chals:
+			c.enabled = false
+		
 		var ascens = get_tree().get_nodes_in_group("ASCEN")
 		if enabled:
 			ascens = ascens.filter(func(a):return a.number < number)

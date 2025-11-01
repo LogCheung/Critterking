@@ -23,6 +23,10 @@ func _on_gui_input(event: InputEvent) -> void:
 		ui.currentChal = type
 		enabled = !enabled
 		
+		var ascens = get_tree().get_nodes_in_group("ASCEN")
+		for a : Ascension in ascens:
+			a.enabled = false
+		
 		var chals = get_tree().get_nodes_in_group("CHAL")
 		for c : Challenge in chals:
 			if c == self: continue
