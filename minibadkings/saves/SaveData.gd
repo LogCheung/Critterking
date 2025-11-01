@@ -13,3 +13,5 @@ class_name SaveDataResource
 @export var ring : PackedByteArray
 @export var dispatchDay : bool
 @export var defeated : bool
+@export var ascension : int
+@export var challenge : int

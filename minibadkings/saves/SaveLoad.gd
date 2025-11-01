@@ -11,7 +11,7 @@ const prof_location = "user://ProfileFile.tres"
 
 func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 		ground : PackedByteArray, obstacles : PackedByteArray, ring : PackedByteArray,
-		dispatchDay : bool, defeated : bool):
+		dispatchDay : bool, defeated : bool, ascension : int, challenge : int):
 	
 	SaveFileData = SaveDataResource.new()
 	SaveFileData.scene = scene
@@ -23,7 +23,8 @@ func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 	SaveFileData.ring = ring
 	SaveFileData.dispatchDay = dispatchDay
 	SaveFileData.defeated = defeated
-	
+	SaveFileData.ascension = ascension
+	SaveFileData.challenge = challenge
 	# save cards
 	SaveFileData.cardsInHand.clear()
 	for card in Global.cardsInHand:

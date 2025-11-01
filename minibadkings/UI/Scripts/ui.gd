@@ -460,7 +460,7 @@ func _on_save_pressed() -> void:
 	var defeated = gameover.visible
 	
 	SaveLoad._save(scene,rollArray,walls,ground,obstacles,
-	ring,world.dispatchDay,defeated)
+	ring,world.dispatchDay,defeated,currentAscn,currentChal)
 	
 	# Save profile data
 	SaveLoad._save_profile(self)
@@ -476,6 +476,10 @@ func load_world() -> void:
 		if unit.dead or !unit.group: unit.queue_free()
 	
 	# load data from save
+	currentChal = SaveLoad.SaveFileData.challenge
+	currentAscn = SaveLoad.SaveFileData.ascension
+	print(currentChal)
+	print(currentAscn)
 	world.on_night_ended()
 	world.game.process_mode = Node.PROCESS_MODE_PAUSABLE
 	world.create_enemy_perimeter(12 + Global.expansions, true)
@@ -524,7 +528,9 @@ func load_world() -> void:
 		dupe.update_cooldown()
 		%DecreeContainer.add_child(dupe)
 	
-	
+	#Change time
+	if currentChal == CHALLENGE.JUICED: Engine.time_scale = 2.5
+	else: Engine.time_scale = 1
 	
 	# verify data of units
 	world.tileWorld.set_up_astar()

@@ -277,12 +277,12 @@ func hitAnim(hit : bool, status : STATUS = STATUS.NONE) -> void:
 			mod = Color(0,2.0,0)
 			
 	if hit:
-		%Hurt.play()
+		if %Hurt : %Hurt.play()
 		modulate = mod
 		await get_tree().create_timer(.05).timeout
 		set_modulate(reg)
 	else: # dodged
-		%Dodge.play()
+		if %Dodge : %Dodge.play()
 		modulate.a = 0.8
 		await get_tree().create_timer(.05).timeout
 		modulate.a = 1

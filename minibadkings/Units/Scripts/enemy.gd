@@ -39,20 +39,24 @@ var target_pos
 func _ready() -> void:
 	super._ready()
 	match_type()
+	
+	house_destroyed.connect(find_building)
+	aStar = tileWorld.aStar
 	if upgraded: 
 		max_health = max_health + 0.5
 		damage = damage + 0.5
-	health = max_health
-	house_destroyed.connect(find_building)
-	aStar = tileWorld.aStar
-	
 	# enemy debuff
 	health -= .5 if type != TYPE.ZOMBIFIED else 0.0
 	
+	# challenge changes
+	if ui.currentChal == UI.CHALLENGE.JUICED:
+		speed += 9
+		attack_cd.wait_time -= .2
 	# ascension changes
 	if ui.currentAscn >= 2: speed += 9
 	if ui.currentAscn >= 4: health += .5 if type != TYPE.ZOMBIFIED else 0.0
-
+	health = max_health
+	
 
 func _process(delta: float) -> void:
 	super._process(delta)

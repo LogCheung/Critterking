@@ -32,10 +32,17 @@ var healing : bool
 
 func _ready() -> void:
 	allyGroup = group
+	if level > 1: upgraded = true
+	super._ready()
+	selected.connect(on_selected)
+	#healthchange.connect(on_health_change)
+	#speedchange.connect(on_speed_change)
+	unselected.connect(on_unselected)
+	match_type()
+	
 	if level > 1:  # if upgraded
 		max_health = max_health + 0.5
 		damage = damage + 0.5
-		upgraded = true
 	#challenge changes
 	if ui.currentChal == UI.CHALLENGE.TOWERDEFENSE:
 		speed *= .33
@@ -44,14 +51,7 @@ func _ready() -> void:
 	#ascension changes
 	if ui.currentAscn >= 9: 
 		max_health -= .25 if type != TYPE.ZOMBIFIED else 0.0
-	super._ready()
-	selected.connect(on_selected)
-	#healthchange.connect(on_health_change)
-	#speedchange.connect(on_speed_change)
-	unselected.connect(on_unselected)
-	match_type()
 	health = max_health
-	
 	await get_tree().create_timer(.5).timeout
 	set_collision_layer_value(1,true)
 	

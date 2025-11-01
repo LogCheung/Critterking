@@ -330,7 +330,7 @@ func start_day() -> void:
 			trap.remove()
 			
 	tileWorld.handle_navigable_cells()
-	
+	if ui.currentChal == UI.CHALLENGE.JUICED: Engine.time_scale = 2.5
 	ui.save_game_delayed()
 	
 func unit_to_card(g : Group) -> void:
