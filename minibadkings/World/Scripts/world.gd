@@ -74,8 +74,6 @@ func new_game() -> void:
 	for decree in get_tree().get_nodes_in_group("DECREE"):
 		decree.queue_free()
 	
-	print(ui.currentAscn)
-	print(ui.currentChal)
 	# map gen with tilemap patterns
 	clear_world()
 	await get_tree().create_timer(.125).timeout
@@ -427,14 +425,12 @@ func check_nights() -> void:
 		%SpawnTimer.wait_time -= 1
 		
 	if Global.nights == 24 and ui.currentChal == UI.CHALLENGE.JUICED:
-		print('problem')
 		ui.victory()
 	if Global.nights == 18 && ui.currentChal == UI.CHALLENGE.MINIMALIST:
 		ui.victory()
 	if Global.nights == 18 && ui.currentChal == UI.CHALLENGE.TOWERDEFENSE:
 		ui.victory()
 	if Global.nights == 30 and ui.currentChal == UI.CHALLENGE.NONE:
-		print('problem3')
 		ui.victory()
 		
 
@@ -467,7 +463,6 @@ func handle_party_limit() -> void:
 	pass
 
 func _on_timer_timeout() -> void:
-	print("check")
 	SaveLoad._save_profile(ui)
 	if !is_combat_phase: return
 	var enemies = get_tree().get_nodes_in_group("ENEMY")

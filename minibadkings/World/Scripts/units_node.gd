@@ -11,7 +11,6 @@ func create_zombified(pos : Vector2, is_enemy : bool):
 	if unit is Enemy : unit.is_active = true
 	unit.level = 1
 	unit.global_position = pos
-	print(unit.type)
 	
 	call_deferred("add_child",unit)
 	await get_tree().create_timer(.1).timeout

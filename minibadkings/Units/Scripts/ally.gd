@@ -333,7 +333,6 @@ func match_decree_status() -> void:
 			dead = false
 			health = max_health
 		Decree.TYPE.RECON:
-			print("ok")
 			status_sprite.play("recon")
 			visionRange += 25
 			set_up_vision()

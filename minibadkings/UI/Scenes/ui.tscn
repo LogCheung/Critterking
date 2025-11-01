@@ -1337,6 +1337,7 @@ offset_right = 920.0
 offset_bottom = 510.0
 scale = Vector2(5, 5)
 focus_mode = 0
+button_pressed = true
 flat = true
 
 [node name="resolution" type="OptionButton" parent="Settings"]
