@@ -318,7 +318,7 @@ func match_decree_status() -> void:
 		Decree.TYPE.NONE:
 			return
 		Decree.TYPE.INSPIRATION:
-			print("yesss")
+			#print("yesss")
 			status_sprite.visible = true
 			status_sprite.play("inspiration")
 			damage += .5
@@ -333,7 +333,7 @@ func match_decree_status() -> void:
 			dead = false
 			health = max_health
 		Decree.TYPE.RECON:
-			print("ok")
+			#print("ok")
 			status_sprite.play("recon")
 			visionRange += 25
 			set_up_vision()
@@ -357,7 +357,7 @@ func match_decree_status() -> void:
 		Decree.TYPE.CONSTRUCTION:
 			pass # do nothing
 		Decree.TYPE.FORTITUDE:
-			print("hardy")
+			#print("hardy")
 			status_sprite.visible = true
 			status_sprite.play("hardy")
 			damage += .25

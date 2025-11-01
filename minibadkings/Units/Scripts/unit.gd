@@ -236,7 +236,6 @@ func on_hurt_box_land(area : Area2D) -> void:
 				var dir = -enemy.global_position.direction_to(global_position)
 				enemy.take_knockback(dir)
 			enemy.health -= damage - enemy.resistance
-			print(enemy.resistance)
 			enemy.hitAnim(true)
 		else: enemy.hitAnim(false)
 		
@@ -366,7 +365,7 @@ func explode_on_death() -> void:
 		else:enemy.hitAnim(false)
 		if enemy.health <= 0:
 			# trigger death anim
-			print("noob get killed by explosion")
+			#print("noob get killed by explosion")
 			enemy.start_death()
 	
 	# destroy self
