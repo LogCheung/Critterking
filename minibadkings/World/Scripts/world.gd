@@ -424,13 +424,13 @@ func check_nights() -> void:
 	if Global.nights % 10 == 0:
 		%SpawnTimer.wait_time -= 1
 		
-	if Global.nights == 24 and ui.currentChal == UI.CHALLENGE.JUICED:
+	if Global.nights == 25 and ui.currentChal == UI.CHALLENGE.JUICED:
 		ui.victory()
-	if Global.nights == 18 && ui.currentChal == UI.CHALLENGE.MINIMALIST:
+	if Global.nights == 19 && ui.currentChal == UI.CHALLENGE.MINIMALIST:
 		ui.victory()
-	if Global.nights == 18 && ui.currentChal == UI.CHALLENGE.TOWERDEFENSE:
+	if Global.nights == 19 && ui.currentChal == UI.CHALLENGE.TOWERDEFENSE:
 		ui.victory()
-	if Global.nights == 30 and ui.currentChal == UI.CHALLENGE.NONE:
+	if Global.nights == 31 and ui.currentChal == UI.CHALLENGE.NONE:
 		ui.victory()
 		
 
