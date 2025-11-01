@@ -75,6 +75,7 @@ func _ready() -> void:
 	settB.append_array(%settingsMenu.get_children())
 	settB = settB.filter(func(b):return b != %settingsback)
 	settB = settB.filter(func(b):return b != %settingsMenu)
+	%settingsMenu.frame = 3
 	# connect signals
 	game_over.connect(on_game_over)
 	# hide all but show main menu
@@ -334,6 +335,9 @@ func _on_gameplay_b_pressed() -> void:
 	%DisableTutorial.show()
 	%camSpeed.show()
 
+func _on_credits_b_pressed() -> void:
+	%settingsMenu.frame = 4
+	for b in settB: b.hide()
 
 func _on_cam_speed_value_changed(new_value: float) -> void:
 	world.camera.move_speed = new_value

@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=53 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Texture2D" uid="uid://luuqbnbqgyao" path="res://UI/Assets/menus/mainmenu.png" id="3_2fejo"]
@@ -25,7 +25,7 @@
 [ext_resource type="AudioStream" uid="uid://bdq1nbxdckl0r" path="res://Audio/sfx/Card.tres" id="12_yqd36"]
 [ext_resource type="AudioStream" uid="uid://bxpbo04dxxuf4" path="res://Audio/sfx/Button.tres" id="15_8g5lr"]
 [ext_resource type="Texture2D" uid="uid://diy1h5txvm2w4" path="res://UI/Assets/menus/playMenu.png" id="16_onxes"]
-[ext_resource type="Texture2D" uid="uid://cylbaiyq4q8a6" path="res://UI/Assets/menus/ascensionMenuB.png" id="17_j4cnt"]
+[ext_resource type="Texture2D" uid="uid://baf6ifj1yqp2v" path="res://UI/Assets/menus/ascensionMenuB.png" id="17_j4cnt"]
 [ext_resource type="Texture2D" uid="uid://l1xrje5n2dl7" path="res://UI/Assets/menus/unlock.png" id="17_onxes"]
 [ext_resource type="AudioStream" uid="uid://c8brf7l45q10r" path="res://Audio/music/crtrnight.tres" id="19_gu1s8"]
 [ext_resource type="Texture2D" uid="uid://brux81s76i64r" path="res://UI/Assets/menus/helpMenu.png" id="19_onxes"]
@@ -1144,7 +1144,6 @@ flat = true
 
 [node name="Settings" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -1156,9 +1155,9 @@ unique_name_in_owner = true
 scale = Vector2(6, 6)
 texture = ExtResource("20_onxes")
 offset = Vector2(160, 90)
-hframes = 2
+hframes = 3
 vframes = 2
-frame = 1
+frame = 3
 
 [node name="settingsback" type="Button" parent="Settings/settingsMenu"]
 unique_name_in_owner = true
@@ -1171,28 +1170,37 @@ flat = true
 
 [node name="audioB" type="Button" parent="Settings/settingsMenu"]
 unique_name_in_owner = true
-offset_left = 95.666664
-offset_top = 65.833336
-offset_right = 144.33334
-offset_bottom = 75.33333
+offset_left = 95.667
+offset_top = 57.833
+offset_right = 144.33368
+offset_bottom = 67.33299
 focus_mode = 0
 flat = true
 
 [node name="videoB" type="Button" parent="Settings/settingsMenu"]
 unique_name_in_owner = true
-offset_left = 95.166664
-offset_top = 81.833336
-offset_right = 144.83334
-offset_bottom = 91.16667
+offset_left = 95.167
+offset_top = 73.833
+offset_right = 144.83368
+offset_bottom = 83.166336
 focus_mode = 0
 flat = true
 
 [node name="gameplayB" type="Button" parent="Settings/settingsMenu"]
 unique_name_in_owner = true
-offset_left = 95.83333
-offset_top = 97.16667
-offset_right = 174.5
-offset_bottom = 107.66667
+offset_left = 95.833
+offset_top = 89.167
+offset_right = 174.49966
+offset_bottom = 99.667
+focus_mode = 0
+flat = true
+
+[node name="creditsB" type="Button" parent="Settings/settingsMenu"]
+unique_name_in_owner = true
+offset_left = 95.16667
+offset_top = 105.166664
+offset_right = 164.83334
+offset_bottom = 115.666664
 focus_mode = 0
 flat = true
 
@@ -1431,6 +1439,7 @@ bus = &"SFX"
 [connection signal="pressed" from="Settings/settingsMenu/audioB" to="." method="_on_audio_b_pressed"]
 [connection signal="pressed" from="Settings/settingsMenu/videoB" to="." method="_on_video_b_pressed"]
 [connection signal="pressed" from="Settings/settingsMenu/gameplayB" to="." method="_on_gameplay_b_pressed"]
+[connection signal="pressed" from="Settings/settingsMenu/creditsB" to="." method="_on_credits_b_pressed"]
 [connection signal="value_changed" from="Settings/camSpeed" to="." method="_on_cam_speed_value_changed"]
 [connection signal="pressed" from="gameover/over/newgame" to="." method="_on_newgame_pressed"]
 [connection signal="pressed" from="gameover/over/endless" to="." method="_on_endless_pressed"]

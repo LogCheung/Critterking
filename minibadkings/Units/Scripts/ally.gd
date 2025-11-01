@@ -360,7 +360,7 @@ func match_decree_status() -> void:
 			print("hardy")
 			status_sprite.visible = true
 			status_sprite.play("hardy")
-			damage += .5
+			damage += .25
 			visionRange *= 1.5
 			max_health += 2
 			health += 2
