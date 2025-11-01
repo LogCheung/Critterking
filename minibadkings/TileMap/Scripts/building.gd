@@ -230,8 +230,8 @@ func _on_orth_area_entered(area: Area2D) -> void:
 	if world.is_combat_phase: return
 	if area.owner is Ally:
 		var target : Unit = area.owner
+		if !target.group : return
 		if target.group.charm and target.group.charm.type == Charm.TYPE.DOLLHOUSE:
-			print('happyBirthday')
 			target.attack_cd.wait_time -= .2
 		if type == TYPE.FARM: 
 			target.max_health = target.max_health + 0.5

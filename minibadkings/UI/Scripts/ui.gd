@@ -170,6 +170,8 @@ func save_game_delayed() -> void:
 
 func on_game_over() -> void:
 	hand.hide()
+	end_turn.hide()
+	night_counter.hide()
 	gameover.show()
 	
 	%over.texture = load("res://UI/Assets/menus/gameover.png")
@@ -186,8 +188,10 @@ func on_game_over() -> void:
 func victory() -> void:
 	if currentChal == CHALLENGE.NONE: Global.wins += 1
 	if currentAscn == Global.maxAscension: Global.maxAscension += 1
-	_on_save_pressed()
+	
 	hand.hide()
+	end_turn.hide()
+	night_counter.hide()
 	gameover.show()
 	
 	%over.texture = load("res://UI/Assets/menus/gwj2win.png")
@@ -198,8 +202,33 @@ func victory() -> void:
 	%crtrNight.stop()
 	%crtrDay.stop()
 	%crtrWin.play()
+	match_challenge_unlock()
+	_on_save_pressed()
+
+func match_challenge_unlock() -> void:
+	match currentChal:
+		CHALLENGE.NONE:
+			return
+		CHALLENGE.JUICED:
+			if !Global.unlockedCards.has(Card.CARDTYPE.EDRINK):
+				%unlockC.show()
+				anim.play("unlockC")
+		CHALLENGE.MINIMALIST:
+			if !Global.unlockedCards.has(Card.CARDTYPE.DOLLHOUSE):
+				%unlockC.show()
+				anim.play("unlockC")
+		CHALLENGE.TOWERDEFENSE:
+			if !Global.unlockedCards.has(Card.CARDTYPE.FORTITUDE):
+				%unlockC.show()
+				anim.play("unlockC")
+
 
 func _on_endless_pressed() -> void:
+	if %unlock.visible: return
+	if Global.wins -1 > Global.UNLOCK.size() or Global.wins <= 0 : return
+	if Global.unlockedCards.has(Global.UNLOCK[Global.wins - 1][0]): return
+	%unlock.visible = true
+	anim.play("cardunlock")
 	%gameover.hide()
 	hand.show()
 	end_turn.show()
@@ -245,6 +274,7 @@ func _on_play_pressed() -> void:
 	%crtrMenu.stop()
 	mainmenu.hide()
 	world.start_day()
+	gameover.hide()
 	%crtrDay.play()
 	$AnimationPlayer.play("RESET")
 
@@ -310,6 +340,10 @@ func _on_settingsback_pressed() -> void:
 		%videoB.show()
 		%gameplayB.show()
 	if %DisableTutorial.button_pressed:
+		Global.tutorial = true
+		Global.tutorialCharm = true
+		Global.tutorialDecree = true
+	else:
 		Global.tutorial = false
 		Global.tutorialCharm = false
 		Global.tutorialDecree = false
@@ -431,6 +465,11 @@ func refresh_positions() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		handle_pause()
+	if %unlockC.visible and event.is_action_pressed("select"):
+		anim.play("unlockChide")
+		await anim.animation_finished
+		%unlockC.hide()
+		%Card7.hide()
 func handle_pause() -> void:
 	if mainmenu.visible or gameover.visible or help.visible or settings.visible : return
 	if pausemenu.visible:
@@ -468,6 +507,7 @@ func _on_save_pressed() -> void:
 	#ResourceSaver.save(scene,"res://saves/savefile.tscn")
 
 func _on_load_pressed() -> void:
+	if anim.is_playing() : return
 	SaveLoad._load()
 
 func load_world() -> void:
@@ -528,10 +568,12 @@ func load_world() -> void:
 		dupe.update_cooldown()
 		%DecreeContainer.add_child(dupe)
 	
+
 	#Change time
 	if currentChal == CHALLENGE.JUICED: Engine.time_scale = 2.5
 	else: Engine.time_scale = 1
 	
+
 	# verify data of units
 	world.tileWorld.set_up_astar()
 	for unit in get_tree().get_nodes_in_group("ALLY"):
@@ -560,16 +602,29 @@ func _on_mainmenu_mouse_entered() -> void:
 	pass # Replace with function body.
 
 func show_unlocks() -> void:
-	var unlockCards = mainmenu.get_children()
-	unlockCards = unlockCards.filter(func(e):return e is Card)
-	var i : int  = 0 
-	for card : Card in unlockCards:
-		card.visible = true
-		card.type = Global.UNLOCK[Global.wins - 1][i]
-		card.match_sprite_type()
-		
-		Global.unlockedCards.append(Global.UNLOCK[Global.wins - 1][i])
-		i += 1
+	if gameover.visible:
+		%Card7.visible = true
+		match currentChal:
+			CHALLENGE.JUICED:
+				%Card7.type = Card.CARDTYPE.EDRINK
+			CHALLENGE.MINIMALIST:
+				%Card7.type = Card.CARDTYPE.DOLLHOUSE
+			CHALLENGE.TOWERDEFENSE:
+				%Card7.type = Card.CARDTYPE.FORTITUDE
+		%Card7.match_sprite_type()
+		Global.unlockedCards.append(%Card7.type)
+		SaveLoad._save_profile(self)
+	if mainmenu.visible:
+		var unlockCards = mainmenu.get_children()
+		unlockCards = unlockCards.filter(func(e):return e is Card)
+		var i : int  = 0 
+		for card : Card in unlockCards:
+			card.visible = true
+			card.type = Global.UNLOCK[Global.wins - 1][i]
+			card.match_sprite_type()
+			
+			Global.unlockedCards.append(Global.UNLOCK[Global.wins - 1][i])
+			i += 1
 
 func hide_unlocks() -> void:
 	var unlockCards = mainmenu.get_children()
@@ -586,6 +641,7 @@ func _on_back_pressed() -> void:
 
 # lights for play menu
 func _on_adapt_pressed() -> void:
+	if anim.is_playing() : return
 	%ascensions.show()
 	pass
 
@@ -607,3 +663,23 @@ func _on_play_mouse_entered() -> void:
 func _on_ascnback_pressed() -> void:
 	%ascensions.hide()
 	pass # Replace with function body.
+
+
+func _on_resolution_item_selected(index: int) -> void:
+	match index:
+		0:
+			get_window().size = Vector2i(1920,1080)
+		1:
+			get_window().size = Vector2i(1600,900)
+		2:
+			get_window().size = Vector2i(1280,720)
+
+func _on_format_item_selected(index: int) -> void:
+	match index:
+		0:
+			get_window().mode = Window.MODE_FULLSCREEN
+		1:
+			get_window().mode = Window.MODE_WINDOWED
+		2:
+			get_window().mode = Window.MODE_FULLSCREEN
+			get_window().borderless = true
