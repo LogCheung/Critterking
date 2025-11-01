@@ -69,6 +69,7 @@ func new_game() -> void:
 	Global.nights = 0
 	Global.expansions = 0
 	if ui.currentAscn >= 7: Global.expansions -= 1
+	if ui.currentChal == UI.CHALLENGE.MINIMALIST: Global.expansions -= 1
 	Global.cardsInHand.clear()
 	Global.cardsDispatched.clear()
 	for decree in get_tree().get_nodes_in_group("DECREE"):

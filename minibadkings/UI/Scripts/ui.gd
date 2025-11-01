@@ -174,7 +174,7 @@ func on_game_over() -> void:
 	end_turn.hide()
 	night_counter.hide()
 	gameover.show()
-	
+	%tutorial.hide()
 	%over.texture = load("res://UI/Assets/menus/gameover.png")
 	%endless.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	%nights.visible = true

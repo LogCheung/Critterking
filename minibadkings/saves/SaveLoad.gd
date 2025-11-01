@@ -16,6 +16,7 @@ func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 	SaveFileData = SaveDataResource.new()
 	SaveFileData.scene = scene
 	SaveFileData.nights = Global.nights
+	SaveFileData.maxAscn = Global.maxAscension
 	SaveFileData.rolls = rollArray
 	SaveFileData.walls = walls
 	SaveFileData.ground = ground
@@ -57,6 +58,7 @@ func _save_profile(ui : UI) -> void:
 	ProfFileData.tutorialDecree = Global.tutorialDecree
 	
 	ProfFileData.unlockedCards = Global.unlockedCards
+	ProfFileData.maxAscn = Global.maxAscension
 	
 	ProfFileData.masterVol = ui.master.value
 	ProfFileData.musicVol = ui.music.value
@@ -92,7 +94,8 @@ func _load_profile() -> void:
 		Global.tutorialDecree = ProfFileData.tutorialDecree
 		
 		Global.unlockedCards = ProfFileData.unlockedCards
-
+		Global.maxAscension = ProfFileData.maxAscn 
+		
 		var ui = get_tree().get_first_node_in_group("UI")
 		ui.master.value = ProfFileData.masterVol
 		ui.music.value = ProfFileData.musicVol
