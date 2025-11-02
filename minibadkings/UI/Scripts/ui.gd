@@ -502,6 +502,11 @@ func _on_save_pressed(lost : bool = false) -> void:
 	var ring = world.tileWorld.ring.tile_map_data
 	var defeated = lost
 	
+	Global.decreesEquipped.clear()
+	for d in %DecreeContainer.get_children():
+		if !d is Decree : continue
+		Global.decreesEquipped.append(d)
+	
 	SaveLoad._save(scene,rollArray,walls,ground,obstacles,
 	ring,world.dispatchDay,defeated,currentAscn,currentChal)
 	

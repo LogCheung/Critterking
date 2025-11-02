@@ -38,8 +38,6 @@ func _ready() -> void:
 	SaveLoad._load_profile()
 	ui._on_mainmenu_mouse_entered()
 	#unlock_every_card()
-	print(Global.unlockedCards)
-	print(Global.wins)
 	
 	
 	# connect signals
@@ -75,7 +73,6 @@ func new_game() -> void:
 	Global.cardsInHand.clear()
 	Global.cardsDispatched.clear()
 	for decree in get_tree().get_nodes_in_group("DECREE"):
-		continue
 		decree.queue_free()
 	
 	# map gen with tilemap patterns
@@ -391,7 +388,8 @@ func _input(event: InputEvent) -> void:
 		#new_game()
 		#return
 		# Engine.time_scale = 12
-		expand()
+		var d = load("res://UI/Scenes/decree.tscn").instantiate()
+		ui.decrees.get_child(0).add_child(d)
 		#print(ui.rollArray)
 		#ui._on_endturn_pressed()
 		#on_night_ended()

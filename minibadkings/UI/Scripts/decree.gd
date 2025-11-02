@@ -23,6 +23,9 @@ func _ready() -> void:
 	update_cooldown()
 
 func update_cooldown() -> void:
+	if !bar : 
+		bar = %TextureProgressBar
+		return
 	bar.max_value = cooldown
 	bar.value = time
 	bar.visible = bar.value > 0

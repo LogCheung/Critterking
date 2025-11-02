@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=56 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Texture2D" uid="uid://luuqbnbqgyao" path="res://UI/Assets/menus/mainmenu.png" id="3_2fejo"]
@@ -24,7 +24,6 @@
 [ext_resource type="Texture2D" uid="uid://b6kejcvarih2b" path="res://UI/Assets/nightcount.png" id="11_yqd36"]
 [ext_resource type="AudioStream" uid="uid://bdq1nbxdckl0r" path="res://Audio/sfx/Card.tres" id="12_yqd36"]
 [ext_resource type="AudioStream" uid="uid://bxpbo04dxxuf4" path="res://Audio/sfx/Button.tres" id="15_8g5lr"]
-[ext_resource type="PackedScene" uid="uid://dtxo6oppyymjc" path="res://UI/Scenes/decree.tscn" id="15_h2fog"]
 [ext_resource type="Texture2D" uid="uid://diy1h5txvm2w4" path="res://UI/Assets/menus/playMenu.png" id="16_onxes"]
 [ext_resource type="Texture2D" uid="uid://baf6ifj1yqp2v" path="res://UI/Assets/menus/ascensionMenuB.png" id="17_j4cnt"]
 [ext_resource type="Texture2D" uid="uid://l1xrje5n2dl7" path="res://UI/Assets/menus/unlock.png" id="17_onxes"]
@@ -843,13 +842,6 @@ scale = Vector2(2.5, 2.5)
 mouse_filter = 2
 theme_override_constants/separation = 22
 alignment = 1
-
-[node name="Decree" parent="Decrees/DecreeContainer" instance=ExtResource("15_h2fog")]
-layout_mode = 2
-type = 7
-
-[node name="Decree2" parent="Decrees/DecreeContainer" instance=ExtResource("15_h2fog")]
-layout_mode = 2
 
 [node name="Hand" type="Control" parent="."]
 unique_name_in_owner = true
