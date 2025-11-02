@@ -82,8 +82,8 @@ func new_game() -> void:
 	tileWorld.draw_build_area()
 	
 	ui.cards.show()
-	create_enemy_perimeter(12 + Global.expansions, true)
-	create_enemy_perimeter(11 + Global.expansions, false)
+	create_enemy_perimeter(11 + Global.expansions, true)
+	create_enemy_perimeter(10 + Global.expansions, false)
 	
 	
 	# add house card
@@ -260,12 +260,7 @@ func on_night_ended() -> void:
 		%SpawnTimer.wait_time += 1
 	
 	# clear dead enemies
-	var enemies = get_tree().get_nodes_in_group("ENEMY")
-	for enemy in enemies:
-		enemy.queue_free()
-	var enemGroups = get_tree().get_first_node_in_group("ENEMYGRPNODE")
-	for grp in enemGroups.get_children():
-		grp.queue_free()
+	clear_entities()
 	
 	# remove cooldown for decrees
 	for d : Decree in get_tree().get_nodes_in_group("DECREE"):
@@ -280,19 +275,15 @@ func on_night_ended() -> void:
 	start_day()
 	tileWorld.activeDecree = Decree.TYPE.NONE
 
-func start_day() -> void:
-	ui.crtr_night.stop()
-	ui.crtr_day.play()
-	ui.hand.process_mode = Node.PROCESS_MODE_PAUSABLE
-	ui.decrees.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
-	# progress nights
-	Global.nights += 1 
-	check_nights()
-	# start upgrade sequence
-	is_combat_phase = false
-	
-	ui.cards.show()
-	
+func clear_entities() -> void:
+	# clear dead enemies
+	var enemies = get_tree().get_nodes_in_group("ENEMY")
+	for enemy in enemies:
+		enemy.queue_free()
+	var enemGroups = get_tree().get_first_node_in_group("ENEMYGRPNODE")
+	for grp in enemGroups.get_children():
+		grp.queue_free()
+		
 	# convert units to cards
 	var unitsGroups = get_tree().get_first_node_in_group("GROUPSNODE")
 	for g : Group in unitsGroups.get_children():
@@ -307,12 +298,25 @@ func start_day() -> void:
 	for a : Ally in allies:
 		if a.dead: a.queue_free()
 		
-	for card : Card in Global.cardsDispatched:
-		ui.rollArray.append(Card.ROLLTYPE.CHARM)
-	
 	# clear zombified 
 	for unit in get_tree().get_first_node_in_group("UNITSNODE").get_children():
 		if unit.type == Unit.TYPE.ZOMBIFIED : unit.queue_free()
+
+func start_day() -> void:
+	ui.crtr_night.stop()
+	ui.crtr_day.play()
+	ui.hand.process_mode = Node.PROCESS_MODE_PAUSABLE
+	ui.decrees.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+	# progress nights
+	Global.nights += 1 
+	check_nights()
+	# start upgrade sequence
+	is_combat_phase = false
+	
+	ui.cards.show()
+	
+	for card : Card in Global.cardsDispatched:
+		ui.rollArray.append(Card.ROLLTYPE.CHARM)
 	
 	# repair buildings
 	# jk we don't do that anymore
@@ -392,16 +396,13 @@ func _input(event: InputEvent) -> void:
 		#ui.decrees.get_child(0).add_child(d)
 		#print(ui.rollArray)
 		#ui._on_endturn_pressed()
-		#on_night_ended()
-		Global.nights += 24
-		check_nights()
-	if event.is_action_pressed("cancel"):
+		on_night_ended()
+		#Global.nights += 24
+		#check_nights()
+	#if event.is_action_pressed("cancel"):
 		#print(Global.wins)
-		SaveLoad._reset_profile()
-		SaveLoad._load_profile()
-		print(Global.unlockedCards)
-		print(Global.wins)
-
+		#SaveLoad._reset_profile()
+		#SaveLoad._load_profile()
 func world_start() -> void:
 	game.process_mode = Node.PROCESS_MODE_PAUSABLE
 	ui.crtr_pause.stop()

@@ -185,6 +185,10 @@ func on_game_over() -> void:
 	%crtrDay.stop()
 	%crtrOver.play()
 	%nights.text = str(Global.nights)
+	
+	# not clearing correctly, remove entities to keep files safe
+	world.on_night_ended()
+	await get_tree().create_timer(.125).timeout
 	_on_save_pressed(true)
 
 func victory() -> void:
@@ -308,6 +312,9 @@ func _on_quit_pressed() -> void:
 		world.clear_world()
 		get_tree().change_scene_to_file("res://World/Scenes/world.tscn")
 		return
+	
+	world.clear_entities()
+	await get_tree().create_timer(.125).timeout
 	SaveLoad._save_profile(self)
 	get_tree().quit()
 
