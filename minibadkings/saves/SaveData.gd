@@ -4,6 +4,7 @@ class_name SaveDataResource
 @export var scene : PackedScene
 @export var nights : int
 @export var rolls : Array
+@export var expansions : int
 @export var cardtypeArray : Array
 @export var cardsInHand : Array = []
 @export var decreesEquipped : Array = []

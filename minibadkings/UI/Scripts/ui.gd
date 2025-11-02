@@ -75,6 +75,7 @@ func _ready() -> void:
 	settB.append_array(%settingsMenu.get_children())
 	settB = settB.filter(func(b):return b != %settingsback)
 	settB = settB.filter(func(b):return b != %settingsMenu)
+	settB = settB.filter(func(b):return b != %creditsB)
 	%settingsMenu.frame = 3
 	# connect signals
 	game_over.connect(on_game_over)
@@ -174,7 +175,7 @@ func on_game_over() -> void:
 	end_turn.hide()
 	night_counter.hide()
 	gameover.show()
-	%tutorial.hide()
+	%Tutorial.hide()
 	%over.texture = load("res://UI/Assets/menus/gameover.png")
 	%endless.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	%nights.visible = true
@@ -184,7 +185,7 @@ func on_game_over() -> void:
 	%crtrDay.stop()
 	%crtrOver.play()
 	%nights.text = str(Global.nights)
-	_on_save_pressed()
+	_on_save_pressed(true)
 
 func victory() -> void:
 	if currentChal == CHALLENGE.NONE: Global.wins += 1
@@ -192,6 +193,7 @@ func victory() -> void:
 	
 	hand.hide()
 	end_turn.hide()
+	%Tutorial.hide()
 	night_counter.hide()
 	gameover.show()
 	
@@ -231,8 +233,8 @@ func _on_endless_pressed() -> void:
 	%unlock.visible = true
 	anim.play("cardunlock")
 	%gameover.hide()
-	hand.show()
 	end_turn.show()
+	night_counter.show()
 	pass # Replace with function body.
 
 func _on_show_pressed() -> void:
@@ -425,12 +427,13 @@ func _on_newgame_pressed() -> void:
 func _on_title_pressed() -> void:
 	%Button.play()
 	mainmenu.show()
+	gameover.hide()
 	$AnimationPlayer.play("LoseToTitle")
 	await anim.animation_finished
 	%crtrOver.stop()
-	gameover.hide()
 	%crtrMenu.play()
 	$AnimationPlayer.play("RESET")
+	_on_mainmenu_mouse_entered()
 
 func _on_continue_pressed() -> void:
 	%Button.play()
@@ -487,7 +490,7 @@ func handle_pause() -> void:
 	crtr_pause.play()
 
 
-func _on_save_pressed() -> void:
+func _on_save_pressed(lost : bool = false) -> void:
 	#return # disable saving
 	world = get_tree().get_first_node_in_group("WORLD")
 	var scene = PackedScene.new()
@@ -497,7 +500,7 @@ func _on_save_pressed() -> void:
 	var ground = world.tileWorld.ground.tile_map_data
 	var obstacles = world.tileWorld.obstacles.tile_map_data
 	var ring = world.tileWorld.ring.tile_map_data
-	var defeated = gameover.visible
+	var defeated = lost
 	
 	SaveLoad._save(scene,rollArray,walls,ground,obstacles,
 	ring,world.dispatchDay,defeated,currentAscn,currentChal)
@@ -523,6 +526,7 @@ func load_world() -> void:
 	world.game.process_mode = Node.PROCESS_MODE_PAUSABLE
 	world.create_enemy_perimeter(12 + Global.expansions, true)
 	world.create_enemy_perimeter(11 + Global.expansions, false)
+	
 	mainmenu.hide()
 	night_counter.show()
 	end_turn.show()
@@ -537,8 +541,10 @@ func load_world() -> void:
 	world.tileWorld.ring.tile_map_data  = SaveLoad.SaveFileData.ring
 	world.dispatchDay = SaveLoad.SaveFileData.dispatchDay
 	Global.nights = SaveLoad.SaveFileData.nights
+	Global.expansions = SaveLoad.SaveFileData.expansions
 	rollArray = SaveLoad.SaveFileData.rolls
 	
+	world.tileWorld.draw_build_area()
 	# load cards
 	for card : Card in SaveLoad.SaveFileData.cardsInHand:
 		var dupe : Card = preload("res://UI/Scenes/card.tscn").instantiate()

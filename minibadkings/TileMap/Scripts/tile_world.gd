@@ -305,7 +305,7 @@ func handle_decree() -> void:
 		decree.time = decree.cooldown
 		decree.update_cooldown()
 		decree = null
-	
+		highlight_buildings(false,Building.TYPE.NONE)
 	if using_decree and Input.is_action_just_released("cancel"):
 		activeDecree = Decree.TYPE.NONE
 

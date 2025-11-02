@@ -32,12 +32,14 @@ var dispatchDay : bool = false
 
 var night_is_expansion: bool = false
 func _ready() -> void:
+	
 	# Load profile data
 	Global.unlockedCards = Card.DEFAULT_CARDS
 	SaveLoad._load_profile()
 	ui._on_mainmenu_mouse_entered()
 	#unlock_every_card()
 	print(Global.unlockedCards)
+	print(Global.wins)
 	
 	
 	# connect signals
@@ -73,6 +75,7 @@ func new_game() -> void:
 	Global.cardsInHand.clear()
 	Global.cardsDispatched.clear()
 	for decree in get_tree().get_nodes_in_group("DECREE"):
+		continue
 		decree.queue_free()
 	
 	# map gen with tilemap patterns
@@ -286,7 +289,7 @@ func start_day() -> void:
 	ui.hand.process_mode = Node.PROCESS_MODE_PAUSABLE
 	ui.decrees.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	# progress nights
-	Global.nights += 1
+	Global.nights += 1 
 	check_nights()
 	# start upgrade sequence
 	is_combat_phase = false
@@ -386,16 +389,19 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		#print(spawnTimer.wait_time)
 		#new_game()
-		return
+		#return
 		# Engine.time_scale = 12
-		#expand()
+		expand()
 		#print(ui.rollArray)
 		#ui._on_endturn_pressed()
 		#on_night_ended()
-		#Global.nights += 23
+		#Global.nights += 30
 		#check_nights()
-	#if event.is_action_pressed("cancel"):
-		#SaveLoad._reset_profile()
+	if event.is_action_pressed("cancel"):
+		#print(Global.wins)
+		SaveLoad._reset_profile()
+		SaveLoad._load_profile()
+		print(Global.unlockedCards)
 
 func world_start() -> void:
 	game.process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -464,6 +470,7 @@ func handle_party_limit() -> void:
 	pass
 
 func _on_timer_timeout() -> void:
+	print(Global.wins)
 	SaveLoad._save_profile(ui)
 	if !is_combat_phase: return
 	var enemies = get_tree().get_nodes_in_group("ENEMY")
