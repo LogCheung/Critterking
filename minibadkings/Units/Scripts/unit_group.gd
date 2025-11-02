@@ -106,6 +106,7 @@ func unzoom_camera() -> void:
 	# unzoom camera
 	var cam : Camera2D = get_tree().get_first_node_in_group("CAMERA")
 	cam.zoom -= Vector2(0.075,0.075)
+	tileWorld.hover.visible = false
 
 func check_on_house(mousePos : Vector2) -> void:
 	if size == max_size : return
