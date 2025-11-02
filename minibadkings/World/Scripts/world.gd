@@ -380,7 +380,7 @@ func preserve_charm_in_card(card : Card, charmType : Charm.TYPE) -> Card:
 var tile2
 func _input(event: InputEvent) -> void:
 	if event.is_action_released("select") or event.is_action_pressed("select"):
-		if ui.unlock.visible and !ui.anim.is_playing(): ui.hide_unlocks()
+		#if ui.unlock.visible and !ui.anim.is_playing(): ui.hide_unlocks()
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
@@ -388,18 +388,19 @@ func _input(event: InputEvent) -> void:
 		#new_game()
 		#return
 		# Engine.time_scale = 12
-		var d = load("res://UI/Scenes/decree.tscn").instantiate()
-		ui.decrees.get_child(0).add_child(d)
+		#var d = load("res://UI/Scenes/decree.tscn").instantiate()
+		#ui.decrees.get_child(0).add_child(d)
 		#print(ui.rollArray)
 		#ui._on_endturn_pressed()
 		#on_night_ended()
-		#Global.nights += 30
-		#check_nights()
+		Global.nights += 24
+		check_nights()
 	if event.is_action_pressed("cancel"):
 		#print(Global.wins)
 		SaveLoad._reset_profile()
 		SaveLoad._load_profile()
 		print(Global.unlockedCards)
+		print(Global.wins)
 
 func world_start() -> void:
 	game.process_mode = Node.PROCESS_MODE_PAUSABLE

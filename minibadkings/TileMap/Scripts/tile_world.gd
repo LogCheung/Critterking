@@ -308,6 +308,7 @@ func handle_decree() -> void:
 		highlight_buildings(false,Building.TYPE.NONE)
 	if using_decree and Input.is_action_just_released("cancel"):
 		activeDecree = Decree.TYPE.NONE
+		highlight_buildings(false,Building.TYPE.NONE)
 
 func handle_decree_action(mouseTile : Vector2i) -> void:
 	# executed when clicked and decree is being used

@@ -215,23 +215,18 @@ func match_challenge_unlock() -> void:
 		CHALLENGE.JUICED:
 			if !Global.unlockedCards.has(Card.CARDTYPE.EDRINK):
 				%unlockC.show()
-				anim.play("unlockC")
 		CHALLENGE.MINIMALIST:
 			if !Global.unlockedCards.has(Card.CARDTYPE.DOLLHOUSE):
 				%unlockC.show()
-				anim.play("unlockC")
 		CHALLENGE.TOWERDEFENSE:
 			if !Global.unlockedCards.has(Card.CARDTYPE.FORTITUDE):
 				%unlockC.show()
-				anim.play("unlockC")
-
 
 func _on_endless_pressed() -> void:
 	if %unlock.visible: return
 	if Global.wins -1 > Global.UNLOCK.size() or Global.wins <= 0 : return
 	if Global.unlockedCards.has(Global.UNLOCK[Global.wins - 1][0]): return
 	%unlock.visible = true
-	anim.play("cardunlock")
 	%gameover.hide()
 	end_turn.show()
 	night_counter.show()
@@ -469,11 +464,16 @@ func refresh_positions() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		handle_pause()
-	if %unlockC.visible and event.is_action_pressed("select"):
+	if %Card7.visible and %unlockC.visible and event.is_action_pressed("select"):
 		anim.play("unlockChide")
 		await anim.animation_finished
 		%unlockC.hide()
 		%Card7.hide()
+	if %Card4.visible and unlock.visible and event.is_action_pressed("select"):
+		anim.play("cardunlockhide")
+		hide_unlocks()
+		await anim.animation_finished
+		unlock.hide()
 func handle_pause() -> void:
 	if mainmenu.visible or gameover.visible or help.visible or settings.visible : return
 	if pausemenu.visible:
@@ -608,7 +608,6 @@ func _on_mainmenu_mouse_entered() -> void:
 	if Global.wins -1 > Global.UNLOCK.size() or Global.wins <= 0 : return
 	if Global.unlockedCards.has(Global.UNLOCK[Global.wins - 1][0]): return
 	%unlock.visible = true
-	anim.play("cardunlock")
 	pass # Replace with function body.
 
 func show_unlocks() -> void:
@@ -642,7 +641,6 @@ func hide_unlocks() -> void:
 	var i : int  = 0 
 	for card : Card in unlockCards:
 		card.visible = false
-	unlock.hide()
 
 
 func _on_back_pressed() -> void:
@@ -695,3 +693,13 @@ func _on_format_item_selected(index: int) -> void:
 		2:
 			get_window().mode = Window.MODE_FULLSCREEN
 			get_window().borderless = true
+
+
+func _on_unlock_c_button_pressed() -> void:
+	if !%Card4.visible:
+		anim.play("unlockC")
+	
+
+func _on_unlock_button_pressed() -> void:
+	if !%Card4.visible:
+		anim.play("cardunlock")

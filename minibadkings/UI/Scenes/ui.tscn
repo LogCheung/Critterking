@@ -359,7 +359,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_onxes"]
 resource_name = "cardunlock"
-length = 1.75
+length = 1.25
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -368,7 +368,7 @@ tracks/0/path = NodePath("mainmenu/unlock:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45000002, 0.5, 0.55, 0.6, 0.65000004, 0.7, 0.75, 0.8, 0.85, 0.90000004, 0.95, 1, 1.0500001, 1.1, 1.15, 1.2),
+"times": PackedFloat32Array(0, 0.050000012, 0.100000024, 0.14909363, 0.19909358, 0.24909359, 0.2990936, 0.34909356, 0.39909363, 0.44909358, 0.49818718, 0.5481872, 0.59818727, 0.6481872, 0.6981872, 0.74818724, 0.7981872, 0.8472807, 0.8963744, 0.94637436, 0.9963743, 1.0463743, 1.0963743, 1.1463742, 1.1963744),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
@@ -886,7 +886,6 @@ position = Vector2(964, 1080)
 
 [node name="mainmenu" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
@@ -1091,9 +1090,23 @@ texture = ExtResource("17_onxes")
 offset = Vector2(320, 180)
 hframes = 6
 vframes = 6
-frame = 24
+
+[node name="unlockButton" type="Button" parent="mainmenu/unlock"]
+anchors_preset = -1
+anchor_left = 0.0053124903
+anchor_top = -0.007222197
+anchor_right = 0.81624997
+anchor_bottom = 0.265
+offset_left = -3.399994
+offset_top = 1.5999908
+offset_right = 117.60004
+offset_bottom = 263.6
+focus_mode = 0
+flat = true
+metadata/_edit_use_anchors_ = true
 
 [node name="Card4" parent="mainmenu" instance=ExtResource("3_bujes")]
+unique_name_in_owner = true
 visible = false
 layout_mode = 1
 offset_left = 483.38004
@@ -1381,6 +1394,7 @@ popup/item_2/id = 2
 
 [node name="gameover" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
@@ -1436,6 +1450,21 @@ offset = Vector2(320, 180)
 hframes = 5
 vframes = 5
 frame = 1
+
+[node name="unlockCButton" type="Button" parent="gameover/unlockC"]
+z_index = 4096
+anchors_preset = -1
+anchor_left = 0.0011458397
+anchor_top = 0.017777802
+anchor_right = 0.8110417
+anchor_bottom = 0.29
+offset_left = -0.3999939
+offset_top = -6.400009
+offset_right = 120.60004
+offset_bottom = 255.6
+focus_mode = 0
+flat = true
+metadata/_edit_use_anchors_ = true
 
 [node name="Card7" parent="gameover" instance=ExtResource("3_bujes")]
 unique_name_in_owner = true
@@ -1517,6 +1546,7 @@ bus = &"SFX"
 [connection signal="mouse_exited" from="mainmenu/playmenu/load" to="." method="_on_button_mouse_exited"]
 [connection signal="pressed" from="mainmenu/playmenu/load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="mainmenu/playmenu/ascensions/ascnback" to="." method="_on_ascnback_pressed"]
+[connection signal="pressed" from="mainmenu/unlock/unlockButton" to="." method="_on_unlock_button_pressed"]
 [connection signal="pressed" from="pausemenu/pause/continue" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="pausemenu/pause/Help" to="." method="_on_help_pressed"]
 [connection signal="pressed" from="pausemenu/pause/Settings" to="." method="_on_settings_pressed"]
@@ -1535,3 +1565,4 @@ bus = &"SFX"
 [connection signal="pressed" from="gameover/over/newgame" to="." method="_on_newgame_pressed"]
 [connection signal="pressed" from="gameover/over/endless" to="." method="_on_endless_pressed"]
 [connection signal="pressed" from="gameover/over/title" to="." method="_on_title_pressed"]
+[connection signal="pressed" from="gameover/unlockC/unlockCButton" to="." method="_on_unlock_c_button_pressed"]
