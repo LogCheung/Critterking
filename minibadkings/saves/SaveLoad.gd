@@ -16,7 +16,7 @@ func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 	SaveFileData = SaveDataResource.new()
 	SaveFileData.scene = scene
 	SaveFileData.nights = Global.nights
-	SaveFileData.maxAscn = Global.maxAscension
+	SaveFileData.expansions = Global.expansions
 	SaveFileData.rolls = rollArray
 	SaveFileData.walls = walls
 	SaveFileData.ground = ground
@@ -53,6 +53,8 @@ func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 	ResourceSaver.save(SaveFileData,save_location)
 
 func _save_profile(ui : UI) -> void:
+	ProfFileData.wins = Global.wins
+	
 	ProfFileData.tutorial = Global.tutorial
 	ProfFileData.tutorialCharm = Global.tutorialCharm
 	ProfFileData.tutorialDecree = Global.tutorialDecree
@@ -65,13 +67,19 @@ func _save_profile(ui : UI) -> void:
 	ProfFileData.sfxrVol = ui.sfx.value
 	
 	ResourceSaver.save(ProfFileData,prof_location)
+	
+	_load_profile()
 	pass
 
 func _load() -> void:
 	if FileAccess.file_exists(save_location):
 		SaveFileData = ResourceLoader.load(save_location).duplicate(true)
-		if SaveFileData.nights == 0 : return
-		if SaveFileData.defeated: return
+		if SaveFileData.nights == 0 : 
+			print("night")
+			return
+		if SaveFileData.defeated: 
+			print("huh")
+			return
 		
 		# clear world
 		for i in range(10):
@@ -89,6 +97,8 @@ func _load_profile() -> void:
 	if FileAccess.file_exists(prof_location):
 		ProfFileData = ResourceLoader.load(prof_location).duplicate(true)
 		
+		Global.wins = ProfFileData.wins
+		
 		Global.tutorial = ProfFileData.tutorial
 		Global.tutorialCharm = ProfFileData.tutorialCharm
 		Global.tutorialDecree = ProfFileData.tutorialDecree
@@ -103,7 +113,9 @@ func _load_profile() -> void:
 
 func _reset_profile() -> void:
 	if FileAccess.file_exists(prof_location):
-		ProfFileData = ResourceLoader.load(prof_location).duplicate(true)
+		ProfFileData = ProfileDataResource.new()
+		
+		ProfFileData.wins = 0
 		
 		ProfFileData.tutorial = true
 		ProfFileData.tutorialCharm = true

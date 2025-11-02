@@ -1,4 +1,4 @@
-[gd_scene load_steps=90 format=3 uid="uid://c14eoupysd2xd"]
+[gd_scene load_steps=91 format=3 uid="uid://c14eoupysd2xd"]
 
 [ext_resource type="Texture2D" uid="uid://bn4niwqkt8x3n" path="res://Units/Assets/Status/defense.png" id="2_06wm5"]
 [ext_resource type="Script" uid="uid://bvqtdufd1qjrv" path="res://Units/Scripts/enemy.gd" id="2_mh310"]
@@ -19,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://b7scm4fug5tje" path="res://Audio/sfx/Hurt.tres" id="11_8inca"]
 [ext_resource type="AudioStream" uid="uid://bmrvq8a3r1mcb" path="res://Audio/sfx/Shoot.tres" id="12_7xmed"]
 [ext_resource type="AudioStream" uid="uid://w5s7eos7mc1q" path="res://Audio/sfx/Death.tres" id="13_ohg4d"]
+[ext_resource type="AudioStream" uid="uid://byew5tl7rjt0" path="res://Audio/sfx/Dodge.tres" id="17_00u7o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hqdjd"]
 atlas = ExtResource("2_06wm5")
@@ -831,6 +832,10 @@ autostart = true
 [node name="Attack" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
 unique_name_in_owner = true
 stream = ExtResource("10_0wncj")
+
+[node name="Dodge" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
+unique_name_in_owner = true
+stream = ExtResource("17_00u7o")
 
 [node name="Hurt" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
 unique_name_in_owner = true
