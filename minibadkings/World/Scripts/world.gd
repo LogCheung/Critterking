@@ -301,6 +301,10 @@ func clear_entities() -> void:
 	# clear zombified 
 	for unit in get_tree().get_first_node_in_group("UNITSNODE").get_children():
 		if unit.type == Unit.TYPE.ZOMBIFIED : unit.queue_free()
+		
+	# clear projectiles
+	for p in get_tree().get_nodes_in_group("PROJECTILE"):
+		p.queue_free()
 
 func start_day() -> void:
 	ui.crtr_night.stop()
