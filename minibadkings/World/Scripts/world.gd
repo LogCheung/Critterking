@@ -469,7 +469,6 @@ func handle_party_limit() -> void:
 	pass
 
 func _on_timer_timeout() -> void:
-	print(Global.wins)
 	SaveLoad._save_profile(ui)
 	if !is_combat_phase: return
 	var enemies = get_tree().get_nodes_in_group("ENEMY")

@@ -696,10 +696,12 @@ func _on_format_item_selected(index: int) -> void:
 
 
 func _on_unlock_c_button_pressed() -> void:
+	if anim.is_playing():return
 	if !%Card4.visible:
 		anim.play("unlockC")
 	
 
 func _on_unlock_button_pressed() -> void:
+	if anim.is_playing():return
 	if !%Card4.visible:
 		anim.play("cardunlock")
