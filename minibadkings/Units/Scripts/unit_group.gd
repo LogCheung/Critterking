@@ -224,4 +224,4 @@ func apply_charm() -> void:
 			Charm.TYPE.DOLLHOUSE:
 				pass # building buffs
 			Charm.TYPE.EDRINK:
-				unit.anim.speed_scale = 1.5
+				unit.anim.speed_scale += .5

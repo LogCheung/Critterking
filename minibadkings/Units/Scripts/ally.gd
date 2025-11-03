@@ -117,7 +117,6 @@ func handle_action(delta) -> void:
 			if distToTarget <= attackRange :
 				if !attack_cd.time_left <= 0 : return
 				if anim.is_playing() and type != TYPE.ZOMBIFIED: return
-				if type == TYPE.CRAZED : anim.speed_scale = 2
 				
 				anim.play("attack")
 				dashing = type == TYPE.FLYING
@@ -125,7 +124,6 @@ func handle_action(delta) -> void:
 				else: %Attack.play()
 				
 				await anim.animation_finished
-				anim.speed_scale = 1
 				velocity = Vector2.ZERO
 				attack_cd.start()
 				attacking = true
@@ -209,6 +207,7 @@ func match_type() -> void:
 			speed = 60
 			dodge = 33 if level < 2 else 25
 			attack_cd.wait_time = .5
+			anim.speed_scale = 2
 		TYPE.BOMBER:
 			sprite_2d.texture = BOMBERNORMALSE if level < 2 else UPBOMBERNORMALSE
 			health = 2
