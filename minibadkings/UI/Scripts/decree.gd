@@ -41,6 +41,7 @@ func _on_mouse_entered() -> void:
 	pass # Replace with function body.
 
 func _on_mouse_exited() -> void:
+	if time > 0 or !world.is_combat_phase: return
 	under_mouse = false
 	sprite.material = null
 	custom_minimum_size /= 1.5

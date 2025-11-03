@@ -82,14 +82,18 @@ func new_game() -> void:
 	tileWorld.draw_build_area()
 	
 	ui.cards.show()
-	create_enemy_perimeter(11 + Global.expansions, true)
-	create_enemy_perimeter(10 + Global.expansions, false)
+	create_enemy_perimeter(12 + Global.expansions, true)
+	create_enemy_perimeter(11 + Global.expansions, false)
 	
 	
 	# add house card
 	for i in range(1):
 		add_house_card()
-		
+	#for i in range(1):
+		#var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.DESTROY
+		#ui.hand_container.add_child(hCard)
+		#hCard.set_owner(get_tree().get_current_scene())
 	#Challenges
 	if ui.currentChal == UI.CHALLENGE.JUICED: Engine.time_scale = 2.5
 	else: Engine.time_scale = 1
@@ -268,6 +272,10 @@ func on_night_ended() -> void:
 		d.time -= 1.0
 		d.update_cooldown()
 		pass
+		
+	# remove highlight
+	tileWorld.highlight_buildings(false,Building.TYPE.NONE)
+	tileWorld.hover.visible = false
 	
 	if is_combat_phase == false : return
 	if ui.anim.is_playing():return
@@ -394,13 +402,13 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		#print(spawnTimer.wait_time)
 		#new_game()
-		#return
+		return
 		# Engine.time_scale = 12
 		#var d = load("res://UI/Scenes/decree.tscn").instantiate()
 		#ui.decrees.get_child(0).add_child(d)
 		#print(ui.rollArray)
 		#ui._on_endturn_pressed()
-		on_night_ended()
+		#on_night_ended()
 		#Global.nights += 24
 		#check_nights()
 	#if event.is_action_pressed("cancel"):

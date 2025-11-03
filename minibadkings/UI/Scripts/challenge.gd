@@ -20,8 +20,9 @@ func _process(delta: float) -> void:
 		
 func _on_gui_input(event: InputEvent) -> void:
 	if event.is_action_pressed("select"):
-		ui.currentChal = type
 		enabled = !enabled
+		if enabled : ui.currentChal = type
+		else : ui.currentChal = UI.CHALLENGE.NONE
 		
 		var ascens = get_tree().get_nodes_in_group("ASCEN")
 		for a : Ascension in ascens:

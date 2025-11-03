@@ -171,9 +171,14 @@ func save_game_delayed() -> void:
 	_on_save_pressed()
 
 func on_game_over() -> void:
+	# not clearing correctly, remove entities to keep files safe
+	world.on_night_ended()
 	hand.hide()
 	end_turn.hide()
 	night_counter.hide()
+	decrees.hide()
+	cards.hide()
+	
 	gameover.show()
 	%Tutorial.hide()
 	%over.texture = load("res://UI/Assets/menus/gameover.png")
@@ -186,8 +191,6 @@ func on_game_over() -> void:
 	%crtrOver.play()
 	%nights.text = str(Global.nights)
 	
-	# not clearing correctly, remove entities to keep files safe
-	world.on_night_ended()
 	await get_tree().create_timer(.125).timeout
 	_on_save_pressed(true)
 

@@ -194,7 +194,7 @@ func match_type() -> void:
 			damage = 1.5
 			attackRange = 80
 			visionRange = 100
-			attack_cd.wait_time = 2
+			attack_cd.wait_time = 3
 			ranged = true
 		TYPE.SHIELDED:
 			visionRange = 32

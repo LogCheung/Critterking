@@ -197,7 +197,7 @@ func match_type() -> void:
 			attackRange = 70
 			var visionShape : CollisionShape2D = vision.get_child(0)
 			visionShape.shape.radius = 120
-			attack_cd.wait_time = 2
+			attack_cd.wait_time = 3
 		TYPE.SHIELDED:
 			if upgraded: sprite_2d.texture = UPSHIELDEDNORMALSE
 			else: sprite_2d.texture = SHIELDEDNORMALSE

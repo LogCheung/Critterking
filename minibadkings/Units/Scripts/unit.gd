@@ -276,7 +276,7 @@ func hitAnim(hit : bool, status : STATUS = STATUS.NONE) -> void:
 			mod = Color(0,2.0,0)
 			
 	if hit:
-		if %Hurt : %Hurt.play()
+		if %Hurt and !status == STATUS.REGEN : %Hurt.play()
 		modulate = mod
 		await get_tree().create_timer(.05).timeout
 		set_modulate(reg)
