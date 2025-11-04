@@ -121,7 +121,9 @@ func find_outskirt_tiles() -> void:
 
 func draw_build_area() -> void:
 	var extra = Global.expansions
-	
+
+	for tile in ground.get_used_cells():
+		ground.set_cell(tile,-1)
 	# Battlefield and drawing ring around play area
 	draw_battlefield(extra)
 	
@@ -262,12 +264,12 @@ func handle_decree() -> void:
 	match activeDecree:
 		Decree.TYPE.NONE:
 			return
-		Decree.TYPE.INSPIRATION, Decree.TYPE.CONSTRUCTION:
+		Decree.TYPE.CONSTRUCTION:
 			add_hover_tiles(1,2,mouseTile) # 3x3 area
-		Decree.TYPE.DECARE, Decree.TYPE.DEFENSE, Decree.TYPE.WAR, Decree.TYPE.FORTITUDE:
+		Decree.TYPE.DECARE, Decree.TYPE.DEFENSE, Decree.TYPE.WAR, Decree.TYPE.FORTITUDE,Decree.TYPE.INSPIRATION,Decree.TYPE.MASTERY:
 			add_hover_tiles(1,1,mouseTile) # 2x2
-		Decree.TYPE.MASTERY:
-			add_hover_tiles(0,1,mouseTile)
+		#Decree.TYPE.MASTERY
+			#add_hover_tiles(0,1,mouseTile) # 1x1
 		Decree.TYPE.RENOVATE:
 			# highlight buildings, no hover
 			highlight_buildings(true,Building.TYPE.NONE)
@@ -279,9 +281,9 @@ func handle_decree() -> void:
 			handle_decree_action(mouseTile)
 			
 			activeDecree = Decree.TYPE.NONE
-			decree.time = decree.cooldown
 			decree._on_mouse_exited()
 			decree.update_cooldown()
+			decree.time = decree.cooldown
 			decree = null
 		#Decree.TYPE.INFLUENCE:
 			## Highlight enemy units, no hover
@@ -301,6 +303,7 @@ func handle_decree() -> void:
 		handle_decree_action(mouseTile)
 		
 		await get_tree().create_timer(.1).timeout
+		decree._on_mouse_exited()
 		activeDecree = Decree.TYPE.NONE
 		decree.time = decree.cooldown
 		decree.update_cooldown()

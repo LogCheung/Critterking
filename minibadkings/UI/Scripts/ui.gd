@@ -501,6 +501,7 @@ func handle_pause() -> void:
 
 
 func _on_save_pressed(lost : bool = false) -> void:
+	world.clear_entities()
 	#return # disable saving
 	world = get_tree().get_first_node_in_group("WORLD")
 	var scene = PackedScene.new()
