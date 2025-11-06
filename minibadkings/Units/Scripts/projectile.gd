@@ -29,7 +29,8 @@ func _ready() -> void:
 		$Sprite2D.texture = load("res://Units/Assets/allyspore.png") if !is_enemy else load("res://Units/Assets/enemyspore.png")
 		
 	# run chance for angle offset
-	if randi_range(0,4) == 0 : offset_angle()
+	#if randi_range(0,3) == 0 : 
+	offset_angle()
 
 func _process(delta):
 	position += DIRECTION * SPEED * delta
