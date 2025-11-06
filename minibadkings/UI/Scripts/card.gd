@@ -272,22 +272,36 @@ func check_general() -> bool:
 	return type == CARDTYPE.PONDER
 
 func check_destroy(plopTile : Vector2) -> bool:
+	tileWorld.find_obstacle_tiles()
 	var buildTiles = tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),2)
+	buildTiles.append_array(tileWorld.obstacle_tiles)
 	if type != CARDTYPE.DESTROY : return false
 	if !buildTiles.has(Vector2i(plopTile)): return false
+	
+	var pos = tileWorld.ground.map_to_local(plopTile)
+	# create destruction for organic map obstacles
+	if buildTiles.has(Vector2i(plopTile)):
+		create_destroy(pos)
+		tileWorld.obstacles.set_cell(plopTile,-1)
+		tileWorld.draw_build_area()
+		return true
+	
 	# tile is showing tilemap coords
 	var buildings = get_tree().get_nodes_in_group("BUILDING")
-	
-	# create destruction
-	var des = preload("res://TileMap/Scenes/destroy.tscn").instantiate()
-	des.global_position = tileWorld.ground.map_to_local(plopTile)
-	world.add_child(des)
-	des.set_owner(get_tree().get_current_scene())
+	# create destruction for buildings
+	create_destroy(pos)
 	for b : Building in buildings:
 		if b.tile == Vector2i(plopTile): 
 			b.remove()
 			return true
 	return false
+
+func create_destroy(pos : Vector2) -> void:
+	var des = preload("res://TileMap/Scenes/destroy.tscn").instantiate()
+	des.global_position = pos
+	world.add_child(des)
+	des.set_owner(get_tree().get_current_scene())
+	pass
 
 func check_if_merge(plopTile : Vector2) -> bool:
 	if type > Unit.TYPE.CRAZED: return false

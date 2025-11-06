@@ -320,9 +320,9 @@ func handle_decree_action(mouseTile : Vector2i) -> void:
 		Decree.TYPE.NONE:
 			return
 		Decree.TYPE.INSPIRATION, Decree.TYPE.DEFENSE,Decree.TYPE.MASTERY,Decree.TYPE.FORTITUDE:
-			handle_stat_modifying_decree()
+			handle_stat_modifying_decree(mouseTile)
 		Decree.TYPE.DECARE:
-			handle_stat_modifying_decree()
+			handle_stat_modifying_decree(mouseTile)
 		Decree.TYPE.WAR:
 			var bombard = preload("res://TileMap/Scenes/war_bombard.tscn").instantiate()
 			bombard.global_position = active_hover.map_to_local(mouseTile) - Vector2(0,16)
@@ -401,27 +401,28 @@ func handle_decree_action(mouseTile : Vector2i) -> void:
 			
 	highlight_buildings(false,Building.TYPE.NONE)
 	
-func handle_stat_modifying_decree() -> void:
+func handle_stat_modifying_decree(mouseTile : Vector2i) -> void:
 	# Create affected area
 	var area : Area2D = Area2D.new()
 	var col : CollisionShape2D= CollisionShape2D.new()
 	var shape : ConvexPolygonShape2D = ConvexPolygonShape2D.new()
+	area.global_position = active_hover.map_to_local(mouseTile)
 	
 	# add points for shape
 	var usedRect = active_hover.get_used_rect()
 	var pointsArr : Array = []
 	var tileSize = Vector2i(32,16)
-	pointsArr.append(Vector2i(-usedRect.size.x,0) * tileSize + Vector2i(4,0))
-	pointsArr.append(Vector2i(0,-usedRect.size.y) * tileSize + Vector2i(0,4))
-	pointsArr.append(Vector2i(usedRect.size.x,0) * tileSize + Vector2i(-4,0))
-	pointsArr.append(Vector2i(0,usedRect.size.y) * tileSize + Vector2i(0,-4))
-	pointsArr.append(Vector2i(-usedRect.size.x,0) * tileSize + Vector2i(4,0))
+	pointsArr.append(Vector2i(-usedRect.size.x,0) * tileSize)# + Vector2i(4,0))
+	pointsArr.append(Vector2i(0,-usedRect.size.y) * tileSize)# + Vector2i(0,4))
+	pointsArr.append(Vector2i(usedRect.size.x,0) * tileSize)# + Vector2i(-4,0))
+	pointsArr.append(Vector2i(0,usedRect.size.y) * tileSize)# + Vector2i(0,-4))
+	pointsArr.append(Vector2i(-usedRect.size.x,0) * tileSize)# + Vector2i(4,0))
 	shape.points = pointsArr
 	
 	col.shape = shape
 	area.add_child(col)
-	area.global_position = get_global_mouse_position()
-	area.global_position = active_hover.map_to_local(active_hover.local_to_map(area.global_position))
+	#area.global_position = active_hover.map_to_local(active_hover.local_to_map(area.global_position))
+	area.global_position += Vector2(0,-16)
 	area.set_collision_layer_value(1,false) # no clue but maybe this is good thing to do
 	area.set_collision_mask_value(1,false) # for no reason
 	area.set_collision_mask_value(5,true) # to check for allies
@@ -442,7 +443,8 @@ func handle_stat_modifying_decree() -> void:
 			affectedArray.append(unit)
  		#elif unit is Enemy and activeDecree == Decree.TYPE.INFLUENCE:
 			#affectedArray.append(unit)
-		
+	
+	for i in range(3): await get_tree().process_frame 
 	area.queue_free()
 
 func add_hover_tiles(from : int, to : int,startPos : Vector2i) -> void:
