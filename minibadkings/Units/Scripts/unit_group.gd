@@ -196,7 +196,10 @@ func apply_charm() -> void:
 				unit.max_health += 1
 				unit.health = unit.max_health
 			Charm.TYPE.RING:
-				unit.attack_cd.wait_time -= .5
+				if unit.attack_cd.wait_time > .5: 
+					unit.attack_cd.wait_time -=.5
+				else:
+					unit.attack_cd.wait_time = .1
 			Charm.TYPE.SWORD:
 				unit.damage += .5
 			Charm.TYPE.FLAG:

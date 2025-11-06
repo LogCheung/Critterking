@@ -167,6 +167,7 @@ func show_hand() -> void:
 
 func save_game_delayed() -> void:
 	for i in range(5):
+		if !get_tree(): break
 		await get_tree().process_frame
 	_on_save_pressed()
 

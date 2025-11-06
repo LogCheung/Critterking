@@ -232,7 +232,10 @@ func _on_orth_area_entered(area: Area2D) -> void:
 		var target : Unit = area.owner
 		if !target.group : return
 		if target.group.charm and target.group.charm.type == Charm.TYPE.DOLLHOUSE:
-			target.attack_cd.wait_time -= .2
+			if target.attack_cd.wait_time > .2:
+				target.attack_cd.wait_time -=.2
+			else:
+				target.attack_cd.wait_time = .1
 		if type == TYPE.FARM: 
 			target.max_health = target.max_health + 0.5
 			target.health = target.max_health
