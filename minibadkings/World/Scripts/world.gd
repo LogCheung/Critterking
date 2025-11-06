@@ -73,6 +73,7 @@ func new_game() -> void:
 	Global.cardsInHand.clear()
 	Global.cardsDispatched.clear()
 	for decree in get_tree().get_nodes_in_group("DECREE"):
+		continue
 		decree.queue_free()
 	
 	# map gen with tilemap patterns

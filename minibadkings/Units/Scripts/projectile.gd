@@ -36,6 +36,10 @@ func _process(delta):
 		queue_free()
 
 
+# off angle chance
+func offset_angle() -> void:
+	pass
+
 func _on_area_entered(area: Area2D) -> void:
 	if area.owner is Unit:
 		var target : Unit = area.owner

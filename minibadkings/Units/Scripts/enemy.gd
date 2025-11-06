@@ -178,6 +178,8 @@ func become_active() -> void:
 	%CollisionShape2D.disabled = false
 	set_collision_layer_value(1,true)
 	nav.set_navigation_layer_value(1,true)
+	
+	await get_tree().create_timer(10).timeout
 	nav.set_navigation_layer_value(2,false)
 	
 	# remove nav cells that were created
