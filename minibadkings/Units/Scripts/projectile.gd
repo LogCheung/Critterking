@@ -27,6 +27,9 @@ func _ready() -> void:
 		$Sprite2D.texture = load("res://Units/Assets/AllyAcid.png") if !is_enemy else load("res://Units/Assets/EnemyAcid.png")
 	elif type == Unit.TYPE.FUNGI:
 		$Sprite2D.texture = load("res://Units/Assets/allyspore.png") if !is_enemy else load("res://Units/Assets/enemyspore.png")
+		
+	# run chance for angle offset
+	if randi_range(0,4) == 0 : offset_angle()
 
 func _process(delta):
 	position += DIRECTION * SPEED * delta
@@ -35,9 +38,10 @@ func _process(delta):
 	if travelled_distance > RANGE:
 		queue_free()
 
-
 # off angle chance
 func offset_angle() -> void:
+	var angle : float = 20.0
+	rotation_degrees += angle if randi() % 2 == 0 else -angle
 	pass
 
 func _on_area_entered(area: Area2D) -> void:
