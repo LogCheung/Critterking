@@ -41,8 +41,8 @@ func _process(delta):
 
 # off angle chance
 func offset_angle() -> void:
-	var angle : float = 20.0
-	rotation_degrees += angle if randi() % 2 == 0 else -angle
+	var off : float =  .3
+	DIRECTION += Vector2(randf_range(-off,off),randf_range(-off,off))
 	pass
 
 func _on_area_entered(area: Area2D) -> void:
