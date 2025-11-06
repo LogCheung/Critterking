@@ -57,6 +57,11 @@ func _ready() -> void:
 		visible = true
 		%Build.play()
 		anim.play("build")
+		
+		if type == TYPE.CAMPFIRE:
+			await anim.animation_finished
+			%fire.show()
+			%fire.play("default")
 
 func _process(delta: float) -> void:
 	if health <= 0:
@@ -139,7 +144,7 @@ func match_type() -> void:
 			set_collision_layer_value(2,false)
 		TYPE.CAMPFIRE:
 			sprite_2d.texture = CAMPFIRE
-			sprite_2d.offset = Vector2(0,-2)
+			#sprite_2d.offset = Vector2(0,-2)
 		#TYPE.CLIFF:
 			#sprite_2d.texture = CLIFF
 

@@ -20,6 +20,7 @@ func _ready() -> void:
 	if is_enemy:
 		$Sprite2D.texture = ENEMYPROJ
 		set_collision_mask_value(2,true)
+		set_collision_mask_value(4,true)
 	else:
 		set_collision_mask_value(3, true)
 	

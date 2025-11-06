@@ -1,12 +1,77 @@
-[gd_scene load_steps=12 format=3 uid="uid://cct0mtgpy7ut6"]
+[gd_scene load_steps=22 format=3 uid="uid://cct0mtgpy7ut6"]
 
 [ext_resource type="Script" uid="uid://dpq0gk0d460fx" path="res://TileMap/Scripts/building.gd" id="1_mpr6t"]
+[ext_resource type="Texture2D" uid="uid://dw3xay3qj0ihn" path="res://TileMap/Assets/fire.png" id="2_cb372"]
 [ext_resource type="Texture2D" uid="uid://b2tb0eb75whjr" path="res://TileMap/Assets/buildCampfire.png" id="2_j1jnl"]
 [ext_resource type="Texture2D" uid="uid://du3cwfifspbnp" path="res://UI/Assets/HealingUnder.png" id="3_i4c7k"]
 [ext_resource type="Texture2D" uid="uid://bv3jqqow41vyp" path="res://UI/Assets/HealingOver.png" id="4_5rqce"]
 [ext_resource type="Texture2D" uid="uid://ba2e2y1w34bcg" path="res://UI/Assets/HealingProgress.png" id="5_j1jnl"]
 [ext_resource type="AudioStream" uid="uid://chfwyfove6ddc" path="res://Audio/sfx/Build.tres" id="6_j1jnl"]
 [ext_resource type="AudioStream" uid="uid://drnq56jfobvk6" path="res://Audio/sfx/Break.tres" id="7_cb372"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iqf5p"]
+atlas = ExtResource("2_cb372")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_chsbt"]
+atlas = ExtResource("2_cb372")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g38fe"]
+atlas = ExtResource("2_cb372")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rtof6"]
+atlas = ExtResource("2_cb372")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d75vo"]
+atlas = ExtResource("2_cb372")
+region = Rect2(384, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6hcnv"]
+atlas = ExtResource("2_cb372")
+region = Rect2(480, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vceu0"]
+atlas = ExtResource("2_cb372")
+region = Rect2(576, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rofju"]
+atlas = ExtResource("2_cb372")
+region = Rect2(672, 0, 96, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ofymc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iqf5p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_chsbt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g38fe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rtof6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d75vo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6hcnv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vceu0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rofju")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
 
 [sub_resource type="Animation" id="Animation_5rqce"]
 length = 0.001
@@ -66,10 +131,18 @@ _data = {
 z_index = 2
 z_as_relative = false
 y_sort_enabled = true
-collision_layer = 2
+collision_layer = 10
 input_pickable = true
 script = ExtResource("1_mpr6t")
 type = 1
+
+[node name="fire" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+z_index = 1
+position = Vector2(0, -1)
+sprite_frames = SubResource("SpriteFrames_ofymc")
+frame_progress = 0.55290514
+offset = Vector2(0, -16)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
@@ -83,6 +156,7 @@ unique_name_in_owner = true
 position = Vector2(13, 10)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+visible = false
 position = Vector2(1, 0)
 polygon = PackedVector2Array(28, 0, -1, -15, -28, 0, -1, 15)
 
@@ -105,6 +179,7 @@ libraries = {
 }
 
 [node name="HurtBox" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 6
 input_pickable = false
@@ -114,6 +189,7 @@ unique_name_in_owner = true
 polygon = PackedVector2Array(0, -15, -31, 0, 0, 15, 31, 0)
 
 [node name="Adj" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 6
 input_pickable = false
@@ -122,6 +198,7 @@ input_pickable = false
 polygon = PackedVector2Array(0, -48, -96, 0, 0, 48, 96, 0)
 
 [node name="Orth" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 6
 input_pickable = false
@@ -131,6 +208,7 @@ position = Vector2(288, 144)
 polygon = PackedVector2Array(-320, -176, -352, -160, -320, -144, -352, -128, -320, -112, -288, -128, -256, -112, -224, -128, -256, -144, -224, -160, -256, -176, -288, -160)
 
 [node name="trans" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 6
 input_pickable = false
