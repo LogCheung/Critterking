@@ -46,6 +46,7 @@ var doorstepTile : Vector2i
 var highlightSprite : Sprite2D
 
 func _ready() -> void:
+	%fire.hide()
 	# set up position and blocking navigation
 	tile = tileWorld.ground.local_to_map(global_position)
 	if temporary : prevTileType = tileWorld.ground.get_cell_alternative_tile(tile)

@@ -141,7 +141,7 @@ unique_name_in_owner = true
 z_index = 1
 position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_ofymc")
-frame_progress = 0.55290514
+frame_progress = 0.21439557
 offset = Vector2(0, -16)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
