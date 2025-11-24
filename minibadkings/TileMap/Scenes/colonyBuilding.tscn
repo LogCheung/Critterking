@@ -1,0 +1,239 @@
+[gd_scene load_steps=22 format=3 uid="uid://c37h8qvy4nsbf"]
+
+[ext_resource type="Script" uid="uid://dnda20j22irtp" path="res://TileMap/Scripts/colonyBuilding.gd" id="1_ocaip"]
+[ext_resource type="Texture2D" uid="uid://dw3xay3qj0ihn" path="res://TileMap/Assets/fire.png" id="2_f8lb6"]
+[ext_resource type="Texture2D" uid="uid://b2tb0eb75whjr" path="res://TileMap/Assets/buildCampfire.png" id="3_abe5q"]
+[ext_resource type="Texture2D" uid="uid://du3cwfifspbnp" path="res://UI/Assets/HealingUnder.png" id="4_ef7sn"]
+[ext_resource type="Texture2D" uid="uid://bv3jqqow41vyp" path="res://UI/Assets/HealingOver.png" id="5_vjf8j"]
+[ext_resource type="Texture2D" uid="uid://ba2e2y1w34bcg" path="res://UI/Assets/HealingProgress.png" id="6_7fqhy"]
+[ext_resource type="AudioStream" uid="uid://chfwyfove6ddc" path="res://Audio/sfx/Build.tres" id="7_do5l2"]
+[ext_resource type="AudioStream" uid="uid://drnq56jfobvk6" path="res://Audio/sfx/Break.tres" id="8_a7607"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iqf5p"]
+atlas = ExtResource("2_f8lb6")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_chsbt"]
+atlas = ExtResource("2_f8lb6")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g38fe"]
+atlas = ExtResource("2_f8lb6")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rtof6"]
+atlas = ExtResource("2_f8lb6")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d75vo"]
+atlas = ExtResource("2_f8lb6")
+region = Rect2(384, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6hcnv"]
+atlas = ExtResource("2_f8lb6")
+region = Rect2(480, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vceu0"]
+atlas = ExtResource("2_f8lb6")
+region = Rect2(576, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rofju"]
+atlas = ExtResource("2_f8lb6")
+region = Rect2(672, 0, 96, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ofymc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iqf5p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_chsbt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g38fe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rtof6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d75vo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6hcnv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vceu0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rofju")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="Animation" id="Animation_5rqce"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_i4c7k"]
+resource_name = "build"
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_j1jnl"]
+resource_name = "destroy"
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [7, 6, 5, 4, 3, 2, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j1jnl"]
+_data = {
+&"RESET": SubResource("Animation_5rqce"),
+&"build": SubResource("Animation_i4c7k"),
+&"destroy": SubResource("Animation_j1jnl")
+}
+
+[node name="ColonyBuilding" type="StaticBody2D" groups=["BUILDING", "COLONY"]]
+z_index = 2
+z_as_relative = false
+y_sort_enabled = true
+collision_layer = 10
+input_pickable = true
+script = ExtResource("1_ocaip")
+
+[node name="fire" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+z_index = 1
+position = Vector2(0, -1)
+sprite_frames = SubResource("SpriteFrames_ofymc")
+frame_progress = 0.21439557
+offset = Vector2(0, -16)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
+texture = ExtResource("3_abe5q")
+offset = Vector2(0, -16)
+hframes = 8
+frame = 1
+
+[node name="Entrance" type="Node2D" parent="Sprite2D"]
+unique_name_in_owner = true
+position = Vector2(13, 10)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+visible = false
+position = Vector2(1, 0)
+polygon = PackedVector2Array(28, 0, -1, -15, -28, 0, -1, 15)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+visible = false
+z_index = 4096
+offset_left = -16.0
+offset_top = -59.0
+offset_right = 16.0
+offset_bottom = -19.0
+step = 0.001
+fill_mode = 5
+texture_under = ExtResource("4_ef7sn")
+texture_over = ExtResource("5_vjf8j")
+texture_progress = ExtResource("6_7fqhy")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_j1jnl")
+}
+
+[node name="HurtBox" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 6
+input_pickable = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HurtBox"]
+unique_name_in_owner = true
+polygon = PackedVector2Array(0, -15, -31, 0, 0, 15, 31, 0)
+
+[node name="Adj" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 6
+input_pickable = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Adj"]
+polygon = PackedVector2Array(0, -48, -96, 0, 0, 48, 96, 0)
+
+[node name="Orth" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 6
+input_pickable = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Orth"]
+position = Vector2(288, 144)
+polygon = PackedVector2Array(-320, -176, -352, -160, -320, -144, -352, -128, -320, -112, -288, -128, -256, -112, -224, -128, -256, -144, -224, -160, -256, -176, -288, -160)
+
+[node name="trans" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 6
+input_pickable = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="trans"]
+polygon = PackedVector2Array(0, -24, -40, -4, -16, 7, 0, 0, 16, 7, 40, -4)
+
+[node name="Build" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
+unique_name_in_owner = true
+stream = ExtResource("7_do5l2")
+
+[node name="Break" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
+unique_name_in_owner = true
+stream = ExtResource("8_a7607")
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.125
+one_shot = true
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="area_exited" from="HurtBox" to="." method="_on_hurt_box_area_exited"]
+[connection signal="area_entered" from="Adj" to="." method="_on_adj_area_entered"]
+[connection signal="area_entered" from="Orth" to="." method="_on_orth_area_entered"]
+[connection signal="area_entered" from="trans" to="." method="_on_trans_area_entered"]
+[connection signal="area_exited" from="trans" to="." method="_on_trans_area_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

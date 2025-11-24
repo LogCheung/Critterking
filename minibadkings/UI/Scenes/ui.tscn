@@ -549,6 +549,40 @@ label_settings = SubResource("LabelSettings_lpmf3")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="VBoxContainer" type="VBoxContainer" parent="NightCounter"]
+layout_mode = 0
+offset_top = 97.0
+offset_right = 180.0
+offset_bottom = 267.0
+theme_override_constants/separation = 20
+
+[node name="CultureTrait" type="Label" parent="NightCounter/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CommerceTrait" type="Label" parent="NightCounter/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="FameTrait" type="Label" parent="NightCounter/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ProductivityTrait" type="Label" parent="NightCounter/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="NightCounter"]
+layout_mode = 0
+offset_left = 509.0
+offset_right = 907.0
+offset_bottom = 94.0
+
+[node name="Label" type="Label" parent="NightCounter/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 25)
+layout_mode = 2
+
 [node name="Tutorial" type="Control" parent="."]
 unique_name_in_owner = true
 visible = false

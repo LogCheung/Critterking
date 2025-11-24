@@ -68,6 +68,7 @@ AUDIO=""
 ASCEN=""
 CHAL=""
 PROJECTILE=""
+COLONY=""
 
 [importer_defaults]
 

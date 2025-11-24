@@ -89,11 +89,11 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	for i in range(1):
-		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.CAMPFIRE
-		ui.hand_container.add_child(hCard)
-		hCard.set_owner(get_tree().get_current_scene())
+	#for i in range(1):
+		#var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.CAMPFIRE
+		#ui.hand_container.add_child(hCard)
+		#hCard.set_owner(get_tree().get_current_scene())
 	#Challenges
 	if ui.currentChal == UI.CHALLENGE.JUICED: Engine.time_scale = 2.5
 	else: Engine.time_scale = 1
@@ -285,6 +285,7 @@ func on_night_ended() -> void:
 
 func clear_entities() -> void:
 	# clear dead enemies
+	if !get_tree():return
 	var enemies = get_tree().get_nodes_in_group("ENEMY")
 	for enemy in enemies:
 		enemy.queue_free()

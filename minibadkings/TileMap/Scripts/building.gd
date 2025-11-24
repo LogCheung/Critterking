@@ -22,7 +22,15 @@ const CLIFF = preload("res://TileMap/Assets/buildCliff.png")
 
 enum TYPE {
 	NONE, TRAP, HOUSE,CARE,  FARM, SAPSTORE, FORT, CAMPFIRE, #CLIFF,  TUNNEL, 
-	 NURSERY, STORAGE, RUINS,
+	 NURSERY, STORAGE, 
+	# colony buildings
+	TAVERN, MONUMENT, CASINO, THEATRE, HALL, TRADINGPOST, MARKETPLACE, GARDEN,
+	CUSTOMS, PANTRY, GUILD, FIELD, SCHOOL, POND, BAKERY,
+	
+	RUINS, 
+}
+enum TRAITTYPE {
+	NONE, CULTURE, COMMERCE, FAME, PRODUCTIVITY
 }
 
 @export var type : TYPE
@@ -30,6 +38,8 @@ enum TYPE {
 @export var health : int = 20
 @export var max_health : int = 20
 @export var temporary : bool = false
+@export var traitType : TRAITTYPE = TRAITTYPE.NONE
+@export var traitAmt : int = 0
 
 @onready var entrance: Node2D = %Entrance
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
@@ -148,7 +158,19 @@ func match_type() -> void:
 			#sprite_2d.offset = Vector2(0,-2)
 		#TYPE.CLIFF:
 			#sprite_2d.texture = CLIFF
-
+		TYPE.TAVERN:
+			traitAmt = 1
+			traitType = TRAITTYPE.CULTURE
+		TYPE.MONUMENT:
+			traitAmt = 1
+			traitType = TRAITTYPE.CULTURE
+		TYPE.CASINO:
+			traitAmt = 1
+			traitType = TRAITTYPE.COMMERCE
+		TYPE.THEATRE:
+			traitAmt = 1
+			traitType = TRAITTYPE.CULTURE
+	
 func duplicate_sprite() -> void:
 	# used for buildings selected during battle
 	# allows for highlight when hovered for and making it clearer to player

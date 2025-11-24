@@ -39,6 +39,10 @@ signal unit_healed
 @onready var hand_container: HBoxContainer = %HandContainer
 @onready var settB = settings.get_children()
 @onready var ascensions: Control = %ascensions
+@onready var culture_trait: Label = %CultureTrait
+@onready var commerce_trait: Label = %CommerceTrait
+@onready var fame_trait: Label = %FameTrait
+@onready var productivity_trait: Label = %ProductivityTrait
 
 @export var rollArray : Array = []
 @export var currentAscn : int = 0
@@ -389,6 +393,11 @@ func _on_cam_speed_value_changed(new_value: float) -> void:
 	#Daytime Menu
 	
 func _on_endturn_pressed() -> void:
+	# run colony buildings
+	for b : ColonyBuilding in get_tree().get_nodes_in_group("COLONY"):
+		pass
+	
+	
 	# check if house is not placed
 	%Button.play()
 	for card : Card in Global.cardsInHand:
