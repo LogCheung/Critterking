@@ -43,6 +43,10 @@ signal unit_healed
 @onready var commerce_trait: Label = %CommerceTrait
 @onready var fame_trait: Label = %FameTrait
 @onready var productivity_trait: Label = %ProductivityTrait
+@onready var satisfaction_label: Label = %SatisfactionLabel
+@onready var money_label: Label = %MoneyLabel
+@onready var food_label: Label = %FoodLabel
+@onready var citizen_label: Label = %CitizenLabel
 
 @export var rollArray : Array = []
 @export var currentAscn : int = 0
@@ -395,8 +399,10 @@ func _on_cam_speed_value_changed(new_value: float) -> void:
 func _on_endturn_pressed() -> void:
 	# run colony buildings
 	for b : ColonyBuilding in get_tree().get_nodes_in_group("COLONY"):
-		pass
-	
+		b.day_ended.emit()
+		
+		var bNode : BuildingsNode = get_tree().get_first_node_in_group("BUILDINGSNODE")
+		bNode._update_resources()
 	
 	# check if house is not placed
 	%Button.play()

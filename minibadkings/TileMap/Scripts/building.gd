@@ -32,14 +32,21 @@ enum TYPE {
 enum TRAITTYPE {
 	NONE, CULTURE, COMMERCE, FAME, PRODUCTIVITY
 }
+enum RESOURCETYPE {
+	NONE, SATISFACTION, MONEY, FOOD, CITIZEN
+}
 
 @export var type : TYPE
 @export var occupant : AllyGroup 
 @export var health : int = 20
 @export var max_health : int = 20
 @export var temporary : bool = false
-@export var traitType : TRAITTYPE = TRAITTYPE.NONE
+@export var traitType : TRAITTYPE = TRAITTYPE.CULTURE
 @export var traitAmt : int = 0
+@export var resourceType : RESOURCETYPE = RESOURCETYPE.NONE
+@export var resourceAmt : int = 0
+@export var cooldown : int = 1
+@export var time : int = 0
 
 @onready var entrance: Node2D = %Entrance
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")

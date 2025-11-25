@@ -2,6 +2,14 @@ extends Node
 
 @export var expansions : int = 0
 @export var nights : int = 0
+@export var money : int = 0
+@export var food : int = 0
+@export var satisfaction : int = 0
+@export var citizens : int = 0
+@export var commerce : int = 0 
+@export var culture : int = 0
+@export var fame : int = 0
+@export var productivity : int = 0
 
 @export var maxAscension : int = 0
 @export var wins : int = 0
