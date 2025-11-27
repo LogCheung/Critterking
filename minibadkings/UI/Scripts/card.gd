@@ -3,6 +3,7 @@ class_name Card
 
 const GROUP = preload("res://Units/Scenes/unit_group.tscn")
 const BUILDING = preload("res://TileMap/Scenes/building.tscn")
+const COLONY = preload("res://TileMap/Scenes/colonyBuilding.tscn")
 const DEFAULT_CARDS : Array = [
 # units
 CARDTYPE.BITER, CARDTYPE.PLATED, CARDTYPE.SPITTER,
@@ -10,32 +11,50 @@ CARDTYPE.ACIDIC, CARDTYPE.FLYING, CARDTYPE.CRAZED,
 # buildings
 CARDTYPE.TRAPS, CARDTYPE.HOUSE, CARDTYPE.CARE, CARDTYPE.FARM, CARDTYPE.SAPSTORE,
 CARDTYPE.NURSERY, CARDTYPE.STORAGE, CARDTYPE.DESTROY,
+# colony buildings
+CARDTYPE.TAVERN,  CARDTYPE.MONUMENT, CARDTYPE.CASINO, 
+CARDTYPE.THEATRE, CARDTYPE.HALL, CARDTYPE.TRADINGPOST, 
+CARDTYPE.MARKETPLACE, CARDTYPE.GARDEN,CARDTYPE.CUSTOMS, 
+CARDTYPE.PANTRY, CARDTYPE.GUILD, CARDTYPE.FIELD, 
+CARDTYPE.SCHOOL, CARDTYPE.POND, CARDTYPE.BAKERY,
 # charms
 CARDTYPE.HEARTLOCKET, CARDTYPE.RING, CARDTYPE.SWORD, CARDTYPE.FLAG, CARDTYPE.SODA, 
 CARDTYPE.ROLLERSKATE, CARDTYPE.MEDKIT, CARDTYPE.GLASSES, CARDTYPE.NAIL, 
 # decrees
 CARDTYPE.INSPIRATION, CARDTYPE.DECARE, CARDTYPE.RECON, CARDTYPE.DEFENSE, CARDTYPE.RENOVATE,
 CARDTYPE.WAR, CARDTYPE.CONSCRIPTION, CARDTYPE.MASTERY,  #CARDTYPE.INFLUENCE, 
-CARDTYPE.CONSTRUCTION
+CARDTYPE.CONSTRUCTION,
+
 ]
 
 # Crazed is border for units, Biter is start
 # Destroy is border for buildings, TRAPS is start
 # Nail is border for charms, Heartlocket is start
+# construction is border for decrees, Inspiration is start
+# 
 enum CARDTYPE {
 	NONE = 0, BITER = 1,PLATED = 2,SPITTER = 3, TRAPJAW, EXPLOSIVE, FUNGI, 
 	PARALYTIC, RESILIENT, STINGER , ACIDIC, #BOMBER, 
 	FLYING,CRAZED,
 	
 	TRAPS , HOUSE, CARE , FARM , SAPSTORE, FORT, CAMPFIRE,# CLIFF, TUNNEL
-	NURSERY, STORAGE, PONDER, DESTROY,
+	NURSERY, STORAGE, 
+	
+	TAVERN, MONUMENT, CASINO, 
+	THEATRE, HALL, TRADINGPOST, 
+	MARKETPLACE, GARDEN,CUSTOMS, 
+	PANTRY, GUILD, FIELD, 
+	SCHOOL, POND, BAKERY,
+	# general
+	PONDER, DESTROY,
 	
 	HEARTLOCKET, RING, SWORD, FLAG, 
 	SODA, ROLLERSKATE, MEDKIT, GLASSES, BERRIES, PILLS, DOLLHOUSE, EDRINK, NAIL, 
 	
 	INSPIRATION, DECARE, RECON, DEFENSE, RENOVATE, WAR, CONSCRIPTION, MASTERY,
 	TERROR, SABOTAGE, FORTITUDE, #INFLUENCE, 
-	CONSTRUCTION
+	CONSTRUCTION,
+	
 }
 enum ROLLTYPE {
 	GENERAL, UNIT, BUILDINGS, CHARM, BLESSING
@@ -185,11 +204,6 @@ func plop() -> void:
 		selected = false
 		ui.refresh_positions()
 		
-		# make alert visible 
-		#if !ui.no_space.visible:
-			#ui.no_space.visible = true
-			#await get_tree().create_timer(2).timeout
-			#ui.no_space.visible = false
 		return
 	
 	tileWorld.handle_navigable_cells()
@@ -241,8 +255,9 @@ func plop_building() -> void:
 	if type == CARDTYPE.DESTROY : 
 		if check_destroy(tile) : remove_self()
 		return
+	
 	var buildingNode = get_tree().get_first_node_in_group("BUILDINGSNODE")
-	var building = BUILDING.instantiate()
+	var building = BUILDING.instantiate() if type < CARDTYPE.TAVERN else COLONY.instantiate()
 	building = match_building_type(building)
 	if building == null : return # checking if was invalid spot, then match type would return null
 	
@@ -392,6 +407,7 @@ func add_card_to_hand() -> void:
 
 func match_building_type(building : Building) -> Building:
 	building.type = type - CARDTYPE.TRAPS + 1
+	print(building.type)
 	if building.type == Building.TYPE.CARE or building.type == Building.TYPE.HOUSE:
 		if check_if_blocking(tile):
 			sprite_2d.scale = Vector2(1.0,1.0)
@@ -434,6 +450,7 @@ func _on_selected_mouse_exited() -> void:
 
 func match_sprite_type() -> void:
 	if type == CARDTYPE.NONE : return
+	if type >= CARDTYPE.TAVERN : return
 	var path = "res://UI/Assets/cards/"+str(CARDTYPE.keys()[type]).to_lower()+"Card.png"
 	sprite_2d.texture = load(path)
 	

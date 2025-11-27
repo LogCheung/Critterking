@@ -21,7 +21,7 @@ const CAMPFIRE = preload("res://TileMap/Assets/buildCampfire.png")
 const CLIFF = preload("res://TileMap/Assets/buildCliff.png")
 
 enum TYPE {
-	NONE, TRAP, HOUSE,CARE,  FARM, SAPSTORE, FORT, CAMPFIRE, #CLIFF,  TUNNEL, 
+	NONE, TRAP, HOUSE, CARE,  FARM, SAPSTORE, FORT, CAMPFIRE, #CLIFF,  TUNNEL, 
 	 NURSERY, STORAGE, 
 	# colony buildings
 	TAVERN, MONUMENT, CASINO, THEATRE, HALL, TRADINGPOST, MARKETPLACE, GARDEN,
@@ -168,6 +168,8 @@ func match_type() -> void:
 		TYPE.TAVERN:
 			traitAmt = 1
 			traitType = TRAITTYPE.CULTURE
+			resourceType = RESOURCETYPE.SATISFACTION
+			resourceAmt = 5
 		TYPE.MONUMENT:
 			traitAmt = 1
 			traitType = TRAITTYPE.CULTURE

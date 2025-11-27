@@ -4,6 +4,7 @@ class_name ColonyBuilding
 signal day_ended
 
 func _ready() -> void:
+	super._ready()
 	day_ended.connect(on_day_ended)
 
 func on_day_ended() -> void:

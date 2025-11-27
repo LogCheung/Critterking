@@ -551,8 +551,9 @@ vertical_alignment = 1
 
 [node name="Traits" type="VBoxContainer" parent="NightCounter"]
 layout_mode = 0
+offset_left = 37.0
 offset_top = 97.0
-offset_right = 180.0
+offset_right = 217.0
 offset_bottom = 267.0
 theme_override_constants/separation = 20
 
@@ -574,8 +575,9 @@ layout_mode = 2
 
 [node name="Resources" type="VBoxContainer" parent="NightCounter"]
 layout_mode = 0
+offset_left = 41.0
 offset_top = 300.0
-offset_right = 180.0
+offset_right = 221.0
 offset_bottom = 470.0
 theme_override_constants/separation = 20
 

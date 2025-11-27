@@ -401,8 +401,7 @@ func _on_endturn_pressed() -> void:
 	for b : ColonyBuilding in get_tree().get_nodes_in_group("COLONY"):
 		b.day_ended.emit()
 		
-		var bNode : BuildingsNode = get_tree().get_first_node_in_group("BUILDINGSNODE")
-		bNode._update_resources()
+	_update_resources()
 	
 	# check if house is not placed
 	%Button.play()
@@ -432,6 +431,12 @@ func _on_endturn_pressed() -> void:
 		await world.night_ended
 		%Tutorial.hide()
 		Global.tutorial = false
+
+func _update_resources() -> void:
+	satisfaction_label.text = str( Global.satisfaction)
+	money_label.text = str(Global.money)
+	food_label.text = str(Global.food)
+	citizen_label.text = str(Global.citizens)
 
 func _on_newgame_pressed() -> void:
 	if anim.is_playing() : return
