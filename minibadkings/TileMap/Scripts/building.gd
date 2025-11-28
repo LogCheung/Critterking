@@ -41,6 +41,7 @@ enum TYPE {
 @export var resourceAmt : int = 0
 @export var cooldown : int = 1
 @export var time : int = 0
+@export var active : bool = true
 
 @onready var entrance: Node2D = %Entrance
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")

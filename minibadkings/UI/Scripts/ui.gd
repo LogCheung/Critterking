@@ -446,6 +446,7 @@ func _update_traits() -> void:
 	# reset values to ensure no repeats
 	for key in Global.trait_dict.keys():
 		Global.trait_dict[key] = 0
+	Global.trait_dict[Global.TRAITTYPE.CULTURE] = 0
 	
 	var colonyBuilds = get_tree().get_nodes_in_group("COLONY")
 	
@@ -601,10 +602,8 @@ func load_world() -> void:
 	Global.expansions = SaveLoad.SaveFileData.expansions
 	rollArray = SaveLoad.SaveFileData.rolls
 	
-	Global.satisfaction = SaveLoad.SaveFileData.satisfaction
-	Global.money = SaveLoad.SaveFileData.money
-	Global.food = SaveLoad.SaveFileData.food
-	Global.citizens = SaveLoad.SaveFileData.citizens
+	Global.resource_dict = SaveLoad.SaveFileData.resource_dict.duplicate()
+	Global.trait_dict = SaveLoad.SaveFileData.trait_dict.duplicate()
 	_update_traits()
 	_update_resources()
 	

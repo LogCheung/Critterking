@@ -27,10 +27,8 @@ func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 	SaveFileData.ascension = ascension
 	SaveFileData.challenge = challenge
 	
-	SaveFileData.satisfaction = Global.satisfaction
-	SaveFileData.money = Global.money
-	SaveFileData.food = Global.food
-	SaveFileData.citizens = Global.citizens
+	SaveFileData.resource_dict = Global.resource_dict.duplicate()
+	SaveFileData.trait_dict = Global.trait_dict.duplicate()
 	# save cards
 	SaveFileData.cardsInHand.clear()
 	for card in Global.cardsInHand:

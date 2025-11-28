@@ -16,10 +16,7 @@ enum RESOURCETYPE {
 	Global.RESOURCETYPE.FOOD : 0,
 	Global.RESOURCETYPE.CITIZEN : 0,
 }
-@export var money : int = 0
-@export var food : int = 0
-@export var satisfaction : int = 0
-@export var citizens : int = 0
+
 # traits
 @export var trait_dict : Dictionary = {
 	Global.TRAITTYPE.CULTURE : 0,
