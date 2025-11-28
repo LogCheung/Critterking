@@ -95,6 +95,10 @@ func _ready() -> void:
 	ascensions.hide()
 	mainmenu.show()
 	
+	# resource and trait labels
+	_update_resources()
+	_update_traits()
+	
 func play_song(song : AudioStreamPlayer) -> void:
 	for s : AudioStreamPlayer in songs:
 		s.stop()
@@ -433,10 +437,26 @@ func _on_endturn_pressed() -> void:
 		Global.tutorial = false
 
 func _update_resources() -> void:
-	satisfaction_label.text = str( Global.satisfaction)
-	money_label.text = str(Global.money)
-	food_label.text = str(Global.food)
-	citizen_label.text = str(Global.citizens)
+	satisfaction_label.text = str(Global.resource_dict[Global.RESOURCETYPE.SATISFACTION])
+	money_label.text = str(Global.resource_dict[Global.RESOURCETYPE.MONEY])
+	food_label.text = str(Global.resource_dict[Global.RESOURCETYPE.FOOD])
+	citizen_label.text = str(Global.resource_dict[Global.RESOURCETYPE.CITIZEN])
+	
+func _update_traits() -> void:
+	# reset values to ensure no repeats
+	for key in Global.trait_dict.keys():
+		Global.trait_dict[key] = 0
+	
+	var colonyBuilds = get_tree().get_nodes_in_group("COLONY")
+	
+	for c : ColonyBuilding in colonyBuilds:
+		Global.trait_dict[c.traitType] += c.traitAmt
+				
+	# set text
+	culture_trait.text = str(Global.trait_dict[Global.TRAITTYPE.CULTURE])
+	commerce_trait.text = str(Global.trait_dict[Global.TRAITTYPE.COMMERCE])
+	fame_trait.text = str(Global.trait_dict[Global.TRAITTYPE.FAME])
+	productivity_trait.text = str(Global.trait_dict[Global.TRAITTYPE.PRODUCTIVITY])
 
 func _on_newgame_pressed() -> void:
 	if anim.is_playing() : return
@@ -580,6 +600,13 @@ func load_world() -> void:
 	Global.nights = SaveLoad.SaveFileData.nights
 	Global.expansions = SaveLoad.SaveFileData.expansions
 	rollArray = SaveLoad.SaveFileData.rolls
+	
+	Global.satisfaction = SaveLoad.SaveFileData.satisfaction
+	Global.money = SaveLoad.SaveFileData.money
+	Global.food = SaveLoad.SaveFileData.food
+	Global.citizens = SaveLoad.SaveFileData.citizens
+	_update_traits()
+	_update_resources()
 	
 	world.tileWorld.draw_build_area()
 	# load cards

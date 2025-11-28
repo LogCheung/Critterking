@@ -75,6 +75,7 @@ var knocked : bool = false
 var is_stunned : bool
 
 var dead : bool
+var highlightSprite : Sprite2D
 
 func _ready() -> void:
 	nav.velocity_computed.connect(_on_navigation_agent_2d_velocity_computed)
@@ -88,6 +89,7 @@ func _ready() -> void:
 	if type == TYPE.ZOMBIFIED:
 		await get_tree().create_timer(7.5).timeout
 		start_death()
+	duplicate_sprite()
 
 func _process(_delta: float) -> void:
 	is_stunned = statusArray.has(STATUS.STUNNED)
@@ -263,6 +265,7 @@ func on_hurt_box_building_land(body : Node2D):
 	pass
 
 func hitAnim(hit : bool, status : STATUS = STATUS.NONE) -> void:
+	highlightSprite.visible = true
 	var reg = Color(1,1,1)
 	var mod = Color(1.0, 0.0, 0.0, 1.0)
 	
@@ -277,14 +280,23 @@ func hitAnim(hit : bool, status : STATUS = STATUS.NONE) -> void:
 			
 	if hit:
 		if %Hurt and !status == STATUS.REGEN : %Hurt.play()
-		modulate = mod
+		highlightSprite.modulate = mod
 		await get_tree().create_timer(.05).timeout
-		set_modulate(reg)
+		highlightSprite.set_modulate(reg)
+		highlightSprite.visible = false
 	else: # dodged
 		if %Dodge : %Dodge.play()
-		modulate.a = 0.8
+		highlightSprite.modulate.a = 0.8
 		await get_tree().create_timer(.05).timeout
-		modulate.a = 1
+		highlightSprite.modulate.a = 1
+		highlightSprite.visible = false
+		
+func duplicate_sprite() -> void:
+	var newSprite = sprite_2d.duplicate()
+	newSprite.material = null
+	newSprite.visible = false
+	add_child(newSprite)
+	highlightSprite = newSprite
 func start_death(destroy : bool = false) -> void:
 	dead = true
 	status_sprite.visible = false

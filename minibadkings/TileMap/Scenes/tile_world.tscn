@@ -232,7 +232,6 @@ sources/0 = SubResource("TileSetAtlasSource_3cgbr")
 [node name="TileWorld" type="Node2D" groups=["TILEWORLD"]]
 y_sort_enabled = true
 script = ExtResource("1_leqhe")
-activeDecree = null
 
 [node name="Ground" type="TileMapLayer" parent="."]
 visible = false

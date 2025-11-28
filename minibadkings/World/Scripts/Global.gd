@@ -2,14 +2,31 @@ extends Node
 
 @export var expansions : int = 0
 @export var nights : int = 0
+
+enum TRAITTYPE {
+	NONE, CULTURE, COMMERCE, FAME, PRODUCTIVITY
+}
+enum RESOURCETYPE {
+	NONE, SATISFACTION, MONEY, FOOD, CITIZEN
+}
+# resources
+@export var resource_dict : Dictionary = {
+	Global.RESOURCETYPE.SATISFACTION : 0,
+	Global.RESOURCETYPE.MONEY : 0,
+	Global.RESOURCETYPE.FOOD : 0,
+	Global.RESOURCETYPE.CITIZEN : 0,
+}
 @export var money : int = 0
 @export var food : int = 0
 @export var satisfaction : int = 0
 @export var citizens : int = 0
-@export var commerce : int = 0 
-@export var culture : int = 0
-@export var fame : int = 0
-@export var productivity : int = 0
+# traits
+@export var trait_dict : Dictionary = {
+	Global.TRAITTYPE.CULTURE : 0,
+	Global.TRAITTYPE.COMMERCE : 0,
+	Global.TRAITTYPE.FAME : 0, 
+	Global.TRAITTYPE.PRODUCTIVITY : 0
+}
 
 @export var maxAscension : int = 0
 @export var wins : int = 0

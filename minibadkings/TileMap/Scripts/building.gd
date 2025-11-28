@@ -29,21 +29,15 @@ enum TYPE {
 	
 	RUINS, 
 }
-enum TRAITTYPE {
-	NONE, CULTURE, COMMERCE, FAME, PRODUCTIVITY
-}
-enum RESOURCETYPE {
-	NONE, SATISFACTION, MONEY, FOOD, CITIZEN
-}
 
 @export var type : TYPE
 @export var occupant : AllyGroup 
 @export var health : int = 20
 @export var max_health : int = 20
 @export var temporary : bool = false
-@export var traitType : TRAITTYPE = TRAITTYPE.CULTURE
+@export var traitType : Global.TRAITTYPE = Global.TRAITTYPE.CULTURE
 @export var traitAmt : int = 0
-@export var resourceType : RESOURCETYPE = RESOURCETYPE.NONE
+@export var resourceType : Global.RESOURCETYPE = Global.RESOURCETYPE.NONE
 @export var resourceAmt : int = 0
 @export var cooldown : int = 1
 @export var time : int = 0
@@ -114,6 +108,11 @@ func match_type() -> void:
 	match type:
 		TYPE.HOUSE:
 			sprite_2d.texture = HOUSEA if randi() % 2 == 0 else HOUSEB
+			traitAmt = 1
+			traitType = Global.TRAITTYPE.FAME
+			cooldown = 2
+			resourceAmt = 1
+			resourceType = Global.RESOURCETYPE.CITIZEN
 			
 			await anim.animation_finished
 			duplicate_sprite()
@@ -147,6 +146,11 @@ func match_type() -> void:
 			sprite_2d.texture = HOUSEA
 			sprite_2d.frame = 1
 			sprite_2d.offset = Vector2(0,-12)
+			
+			traitAmt = 0
+			traitType = Global.TRAITTYPE.NONE
+			resourceType = Global.RESOURCETYPE.NONE
+			resourceAmt = 0
 		TYPE.NURSERY:
 			sprite_2d.texture = NURSERY
 			#sprite_2d.offset = Vector2(0,-2)
@@ -165,20 +169,6 @@ func match_type() -> void:
 			#sprite_2d.offset = Vector2(0,-2)
 		#TYPE.CLIFF:
 			#sprite_2d.texture = CLIFF
-		TYPE.TAVERN:
-			traitAmt = 1
-			traitType = TRAITTYPE.CULTURE
-			resourceType = RESOURCETYPE.SATISFACTION
-			resourceAmt = 5
-		TYPE.MONUMENT:
-			traitAmt = 1
-			traitType = TRAITTYPE.CULTURE
-		TYPE.CASINO:
-			traitAmt = 1
-			traitType = TRAITTYPE.COMMERCE
-		TYPE.THEATRE:
-			traitAmt = 1
-			traitType = TRAITTYPE.CULTURE
 	
 func duplicate_sprite() -> void:
 	# used for buildings selected during battle
@@ -199,6 +189,7 @@ func on_destroyed() -> void:
 	await anim.animation_finished
 	type = TYPE.RUINS
 	match_type()
+	ui._update_traits()
 	
 	# alert enemies
 	var enemies = get_tree().get_nodes_in_group("ENEMY")

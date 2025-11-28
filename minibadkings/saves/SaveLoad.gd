@@ -26,6 +26,11 @@ func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 	SaveFileData.defeated = defeated
 	SaveFileData.ascension = ascension
 	SaveFileData.challenge = challenge
+	
+	SaveFileData.satisfaction = Global.satisfaction
+	SaveFileData.money = Global.money
+	SaveFileData.food = Global.food
+	SaveFileData.citizens = Global.citizens
 	# save cards
 	SaveFileData.cardsInHand.clear()
 	for card in Global.cardsInHand:

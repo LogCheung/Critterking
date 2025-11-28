@@ -124,6 +124,8 @@ func draw_build_area() -> void:
 
 	for tile in ground.get_used_cells():
 		ground.set_cell(tile,-1)
+	for tile in ring.get_used_cells():
+		ring.set_cell(tile,-1)
 	# Battlefield and drawing ring around play area
 	draw_battlefield(extra)
 	

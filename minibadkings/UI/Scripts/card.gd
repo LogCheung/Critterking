@@ -196,16 +196,6 @@ func highlight_tiles() -> void:
 		tileWorld.hover.set_cell(hoverTile,0,atlas,1)
 
 func plop() -> void:
-	if Global.partyCount >= Global.partyLimit and type <= CARDTYPE.CRAZED:
-		# precondition : is unit card and party limit is reached
-		# set to default
-		sprite_2d.scale = Vector2(1.0,1.0)
-		position = default_position
-		selected = false
-		ui.refresh_positions()
-		
-		return
-	
 	tileWorld.handle_navigable_cells()
 	tile = world.tile2
 	var ploppableTiles = tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),1)
@@ -219,6 +209,14 @@ func plop() -> void:
 			return
 		if type > Unit.TYPE.CRAZED:
 			plop_building()
+			return
+		if Global.partyCount >= Global.partyLimit and type <= CARDTYPE.CRAZED:
+			# precondition : is unit card and party limit is reached
+			# set to default
+			sprite_2d.scale = Vector2(1.0,1.0)
+			position = default_position
+			selected = false
+			ui.refresh_positions()
 			return
 		var group = load("res://Units/Scenes/unit_group.tscn").instantiate()
 		group.type = type
@@ -258,12 +256,16 @@ func plop_building() -> void:
 	
 	var buildingNode = get_tree().get_first_node_in_group("BUILDINGSNODE")
 	var building = BUILDING.instantiate() if type < CARDTYPE.TAVERN else COLONY.instantiate()
+	if type == CARDTYPE.HOUSE : building = COLONY.instantiate()
+	
 	building = match_building_type(building)
 	if building == null : return # checking if was invalid spot, then match type would return null
 	
 	building.global_position = tileWorld.ground.map_to_local(tile)
 	buildingNode.add_child(building)
 	building.set_owner(get_tree().get_current_scene())
+	
+	ui._update_traits()
 	# remove self
 	remove_self()
 
