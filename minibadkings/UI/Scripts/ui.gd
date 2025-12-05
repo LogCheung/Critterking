@@ -452,6 +452,7 @@ func _update_traits() -> void:
 	
 	for c : ColonyBuilding in colonyBuilds:
 		Global.trait_dict[c.traitType] += c.traitAmt
+		
 				
 	# set text
 	culture_trait.text = str(Global.trait_dict[Global.TRAITTYPE.CULTURE])
@@ -604,8 +605,8 @@ func load_world() -> void:
 	
 	Global.resource_dict = SaveLoad.SaveFileData.resource_dict.duplicate()
 	Global.trait_dict = SaveLoad.SaveFileData.trait_dict.duplicate()
-	_update_traits()
 	_update_resources()
+	_update_traits()
 	
 	world.tileWorld.draw_build_area()
 	# load cards

@@ -55,15 +55,18 @@ func trigger_building() -> void:
 		return 
 	
 	add_resource(resourceType,resourceAmt) # add resource
+	if type == TYPE.SCHOOL : trigger_school()
 
 
 func add_resource(rType : Global.RESOURCETYPE,rAmt : int ) -> bool:
 	if rType == Global.RESOURCETYPE.NONE : return true
 	
+	# scaling
 	var scaledAmt = 0 
 	if scalingTrait != Global.TRAITTYPE.NONE:
 		scaledAmt = scalingMult * Global.trait_dict[scalingTrait] 
 	
+	# add resource
 	Global.resource_dict[rType] += int(rAmt + scaledAmt)
 	
 	# for costs
@@ -79,7 +82,14 @@ func add_resource(rType : Global.RESOURCETYPE,rAmt : int ) -> bool:
 		
 	if type == TYPE.PANTRY : pantryActive = true
 	return true
-	
+
+func trigger_school() -> void:
+	if !active : 
+		traitAmt = 0 
+		return
+	traitAmt = int(workers.size() * .5)
+	ui._update_traits()
+
 func match_type() -> void:
 	match type:
 		# Satisfaction buildings
@@ -174,3 +184,25 @@ func match_type() -> void:
 			resourceType = Global.RESOURCETYPE.CITIZEN
 			chance = 25
 			chanceTrait = Global.TRAITTYPE.FAME
+		# Food buildings
+		TYPE.FIELD:
+			traitAmt = 1
+			traitType = Global.TRAITTYPE.PRODUCTIVITY
+			resourceType = Global.RESOURCETYPE.FOOD
+			resourceAmt = 4
+			cooldown = 1
+		TYPE.SCHOOL:
+			traitType = Global.TRAITTYPE.PRODUCTIVITY
+			costType = Global.RESOURCETYPE.MONEY
+			costAmt = 4
+			pass
+		TYPE.POND:
+			pass
+		TYPE.BAKERY:
+			resourceType = Global.RESOURCETYPE.FOOD
+			resourceAmt = 2
+			cooldown = 1
+			
+			scalingMult = 2
+			scalingTrait = Global.TRAITTYPE.PRODUCTIVITY
+			pass
