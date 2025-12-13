@@ -401,10 +401,9 @@ func _input(event: InputEvent) -> void:
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
-		#print(spawnTimer.wait_time)
 		#new_game()
-		return
-		# Engine.time_scale = 12
+		#return
+		Engine.time_scale = 12
 		#var d = load("res://UI/Scenes/decree.tscn").instantiate()
 		#ui.decrees.get_child(0).add_child(d)
 		#print(ui.rollArray)

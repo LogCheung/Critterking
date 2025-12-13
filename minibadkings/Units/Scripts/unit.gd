@@ -265,6 +265,7 @@ func on_hurt_box_building_land(body : Node2D):
 	pass
 
 func hitAnim(hit : bool, status : STATUS = STATUS.NONE) -> void:
+	if !highlightSprite:return
 	highlightSprite.visible = true
 	var reg = Color(1,1,1)
 	var mod = Color(1.0, 0.0, 0.0, 1.0)

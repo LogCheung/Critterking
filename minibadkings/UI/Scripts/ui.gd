@@ -544,7 +544,13 @@ func handle_pause() -> void:
 
 
 func _on_save_pressed(lost : bool = false) -> void:
+	if pausemenu.visible: return
+	
 	world.clear_entities()
+	# pause buildings
+	for b in get_tree().get_nodes_in_group("BUILDING"):
+		b.process_mode = Node.PROCESS_MODE_DISABLED
+	
 	# delay
 	for i in range(5):
 		if !get_tree() : break
@@ -571,7 +577,9 @@ func _on_save_pressed(lost : bool = false) -> void:
 	# Save profile data
 	SaveLoad._save_profile(self)
 	
-	#ResourceSaver.save(scene,"res://saves/savefile.tscn")
+	#unpause buildings
+	for b in get_tree().get_nodes_in_group("BUILDING"):
+		b.process_mode = Node.PROCESS_MODE_INHERIT
 
 func _on_load_pressed() -> void:
 	if anim.is_playing() : return
@@ -658,11 +666,9 @@ func load_world() -> void:
 		end_turn.hide()
 	elif world.dispatchDay:
 		dispatch.show()
-	#if !FileAccess.file_exists("res://saves/savefile.tscn"):
-		#return
-	#else:
-		#var new_scene = ResourceLoader.load("res://saves/savefile.tscn")
-		#get_tree().change_scene_to_packed(new_scene)
+		
+	for b in get_tree().get_nodes_in_group("BUILDING"):
+		b.process_mode = Node.PROCESS_MODE_INHERIT
 
 # unlocking new cards
 func _on_mainmenu_mouse_entered() -> void:

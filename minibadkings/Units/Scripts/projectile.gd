@@ -42,6 +42,7 @@ func _process(delta):
 
 # off angle chance
 func offset_angle() -> void:
+	if type == Unit.TYPE.ACIDIC: return
 	var off : float =  .3
 	DIRECTION += Vector2(randf_range(-off,off),randf_range(-off,off))
 	pass
