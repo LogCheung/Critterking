@@ -326,6 +326,7 @@ func _on_settings_pressed() -> void:
 func _on_quit_pressed() -> void:
 	if pausemenu.visible:
 		world.clear_world()
+		world.clear_entities()
 		get_tree().change_scene_to_file("res://World/Scenes/world.tscn")
 		return
 	
@@ -557,8 +558,8 @@ func _on_save_pressed(lost : bool = false) -> void:
 		await get_tree().process_frame
 	#return # disable saving
 	world = get_tree().get_first_node_in_group("WORLD")
-	var scene = PackedScene.new()
-	scene.pack(world)
+	#var scene = PackedScene.new()
+	#scene.pack(world)
 	
 	var walls = world.tileWorld.wall.tile_map_data
 	var ground = world.tileWorld.ground.tile_map_data
@@ -571,7 +572,8 @@ func _on_save_pressed(lost : bool = false) -> void:
 		if !d is Decree : continue
 		Global.decreesEquipped.append(d)
 	
-	SaveLoad._save(scene,rollArray,walls,ground,obstacles,
+	SaveLoad._save(#scene,
+	rollArray,walls,ground,obstacles,
 	ring,world.dispatchDay,defeated,currentAscn,currentChal)
 	
 	# Save profile data
@@ -649,6 +651,29 @@ func load_world() -> void:
 		dupe.update_cooldown()
 		%DecreeContainer.add_child(dupe)
 	
+	# load buildings
+	for b : Building in SaveLoad.SaveFileData.buildings:
+		var bNode = get_tree().get_first_node_in_group("BUILDINGSNODE")
+		var BUILDING = load("res://TileMap/Scenes/building.tscn")
+		var COLONY = load("res://TileMap/Scenes/colonyBuilding.tscn")
+		var isColony : bool = false
+		# determine if colony building or not
+		var building : Building = BUILDING.instantiate()
+		if b.type >= Building.TYPE.TAVERN and b.type != Building.TYPE.RUINS:
+			building = COLONY.instantiate()
+			isColony = true
+		if b.type == Building.TYPE.HOUSE:
+			building = COLONY.instantiate()
+			isColony = true
+		
+		building.type = b.type
+		building.global_position = b.global_position
+		building.health = b.health
+		building.time = b.time
+		
+		if isColony:
+			building.workers = b.workers
+		bNode.add_child(building)
 
 	#Change time
 	if currentChal == CHALLENGE.JUICED: Engine.time_scale = 2.5

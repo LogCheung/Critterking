@@ -1,7 +1,7 @@
 extends Resource
 class_name SaveDataResource
 
-@export var scene : PackedScene
+#@export var scene : PackedScene
 @export var nights : int
 @export var rolls : Array
 @export var expansions : int
@@ -16,6 +16,7 @@ class_name SaveDataResource
 @export var defeated : bool
 @export var ascension : int
 @export var challenge : int
+@export var buildings : Array = []
 
 # resources
 @export var resource_dict : Dictionary

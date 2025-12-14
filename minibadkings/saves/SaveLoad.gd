@@ -9,12 +9,13 @@ const prof_location = "user://ProfileFile.tres"
 
 @export var ProfFileData : ProfileDataResource = ProfileDataResource.new()
 
-func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
+func _save(#scene : PackedScene, 
+		rollArray : Array, walls : PackedByteArray,
 		ground : PackedByteArray, obstacles : PackedByteArray, ring : PackedByteArray,
 		dispatchDay : bool, defeated : bool, ascension : int, challenge : int):
 	
 	SaveFileData = SaveDataResource.new()
-	SaveFileData.scene = scene
+	#SaveFileData.scene = scene
 	SaveFileData.nights = Global.nights
 	SaveFileData.expansions = Global.expansions
 	SaveFileData.rolls = rollArray
@@ -48,11 +49,34 @@ func _save(scene : PackedScene, rollArray : Array, walls : PackedByteArray,
 		dupe.time = d.time
 		dupe.cooldown = d.cooldown
 		SaveFileData.decreesEquipped.append(dupe)
+	
+	# save buildings
+	SaveFileData.buildings.clear()
+	for b : Building in get_tree().get_nodes_in_group("BUILDING"):
+		#var BUILDING = load("res://TileMap/Scenes/building.tscn")
+		#var COLONY = load("res://TileMap/Scenes/colonyBuilding.tscn")
+		#var isColony : bool = false
+		## determine if colony building or not
+		#var building : Building = BUILDING.instantiate()
+		#if b.type >= Building.TYPE.TAVERN and b.type != Building.TYPE.RUINS:
+			#building = COLONY.instantiate()
+			#isColony = true
+		#if b.type == Building.TYPE.HOUSE:
+			#building = COLONY.instantiate()
+			#isColony = true
+		#
+		#building.type = b.type
+		#building.global_position = b.global_position
+		#building.health = b.health
+		#building.time = b.time
+		#
+		#if isColony:
+			#building.workers = b.workers
+			
+		SaveFileData.buildings.append(b.duplicate())
 		
 	
-	if SaveFileData == null : 
-		
-		return
+	if SaveFileData == null : return
 	ResourceSaver.save(SaveFileData,save_location)
 
 func _save_profile(ui : UI) -> void:
@@ -90,7 +114,7 @@ func _load() -> void:
 		var world = get_tree().get_first_node_in_group("WORLD")
 		world.clear_world()
 		
-		get_tree().change_scene_to_packed(SaveFileData.scene)
+		#get_tree().change_scene_to_packed(SaveFileData.scene)
 		await get_tree().process_frame
 		await get_tree().process_frame
 		var ui = get_tree().get_first_node_in_group("UI")
