@@ -202,7 +202,7 @@ func on_game_over() -> void:
 	%crtrNight.stop()
 	%crtrDay.stop()
 	%crtrOver.play()
-	%nights.text = str(Global.nights)
+	%nights.text = str(Global.nights - 1)
 	
 	await get_tree().create_timer(.125).timeout
 	_on_save_pressed(true)
@@ -558,8 +558,6 @@ func _on_save_pressed(lost : bool = false) -> void:
 		await get_tree().process_frame
 	#return # disable saving
 	world = get_tree().get_first_node_in_group("WORLD")
-	#var scene = PackedScene.new()
-	#scene.pack(world)
 	
 	var walls = world.tileWorld.wall.tile_map_data
 	var ground = world.tileWorld.ground.tile_map_data
@@ -619,8 +617,11 @@ func load_world() -> void:
 	
 	Global.resource_dict = SaveLoad.SaveFileData.resource_dict.duplicate()
 	Global.trait_dict = SaveLoad.SaveFileData.trait_dict.duplicate()
-	_update_resources()
-	_update_traits()
+	
+	# load enemy party count
+	world.enemy_parties = int(Global.nights / 2) + 3
+	world.upgraded_parties = int(Global.nights / 4)
+	world.night_is_expansion = Global.nights % 6 == 0
 	
 	world.tileWorld.draw_build_area()
 	# load cards
@@ -675,6 +676,8 @@ func load_world() -> void:
 			building.workers = b.workers
 		bNode.add_child(building)
 
+	_update_resources()
+	_update_traits()
 	#Change time
 	if currentChal == CHALLENGE.JUICED: Engine.time_scale = 2.5
 	else: Engine.time_scale = 1

@@ -1,7 +1,6 @@
 extends Resource
 class_name SaveDataResource
 
-#@export var scene : PackedScene
 @export var nights : int
 @export var rolls : Array
 @export var expansions : int
