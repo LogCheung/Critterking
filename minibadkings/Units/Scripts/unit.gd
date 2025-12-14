@@ -229,33 +229,28 @@ func find_closest(nodeArray : Array) -> void:
 
 func on_hurt_box_land(area : Area2D) -> void:
 	if hurtbox_cd.time_left > 0 : return
-	if area.owner is Unit:
-		var enemy : Unit = area.owner
+	if area.owner is not Unit: return
+	var enemy : Unit = area.owner
+	# check for knockback
+	if enemy.dodge < (randi() % 100 + 1): # check for miss
+		if knock_chance >= (randi() % 100 + 1):
+			var dir = -enemy.global_position.direction_to(global_position)
+			enemy.take_knockback(dir)
+		enemy.health -= damage - enemy.resistance
+		enemy.hitAnim(true)
+	else: enemy.hitAnim(false)
+	if enemy.health <= 0:
+		# trigger death anim
+		enemy.start_death()
+	# check for poison
+	if poison_chance >= (randi() % 100 + 1):
+		enemy.statusArray.append(Unit.STATUS.POISONED)
+		enemy.statusArray.append(Unit.STATUS.POISONED)
+		enemy.statusArray.append(Unit.STATUS.POISONED)
 		
-		
-		if enemy.dodge < (randi() % 100 + 1): # check for miss
-			if knock_chance >= (randi() % 100 + 1):
-				var dir = -enemy.global_position.direction_to(global_position)
-				enemy.take_knockback(dir)
-			enemy.health -= damage - enemy.resistance
-			enemy.hitAnim(true)
-		else: enemy.hitAnim(false)
-		
-		if enemy.health <= 0:
-			# trigger death anim
-			enemy.start_death()
-		
-		# check for knockback
-		
-		# check for poison
-		if poison_chance >= (randi() % 100 + 1):
-			enemy.statusArray.append(Unit.STATUS.POISONED)
-			enemy.statusArray.append(Unit.STATUS.POISONED)
-			enemy.statusArray.append(Unit.STATUS.POISONED)
-			
-		# check for stun
-		if enemy.stun_fatigue.time_left <= 0 and stun_chance >= (randi() % 100 + 1):
-			enemy.statusArray.append(Unit.STATUS.STUNNED)
+	# check for stun
+	if enemy.stun_fatigue.time_left <= 0 and stun_chance >= (randi() % 100 + 1):
+		enemy.statusArray.append(Unit.STATUS.STUNNED)
 		
 		hurtbox_cd.start()
 func on_hurt_box_building_land(body : Node2D):

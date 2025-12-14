@@ -426,7 +426,7 @@ func world_start() -> void:
 func check_nights() -> void:
 	if Global.nights % 2 == 0:
 		enemy_parties += 1
-	if ui.currentAscn <= 5: 
+	if ui.currentAscn < 5: 
 		if Global.nights % 3 == 0:
 			dispatchDay = true
 	
