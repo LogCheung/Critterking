@@ -55,7 +55,7 @@ func _ready() -> void:
 		anim.speed_scale = 1.5 if type != TYPE.CRAZED else 2.0
 	# ascension changes
 	if ui.currentAscn >= 2: speed += 9
-	if ui.currentAscn >= 4: health += .5 if type != TYPE.ZOMBIFIED else 0.0
+	if ui.currentAscn >= 4: health += .75 if type != TYPE.ZOMBIFIED else 0.0
 	health = max_health
 	
 
