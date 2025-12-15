@@ -252,7 +252,7 @@ func on_hurt_box_land(area : Area2D) -> void:
 	if enemy.stun_fatigue.time_left <= 0 and stun_chance >= (randi() % 100 + 1):
 		enemy.statusArray.append(Unit.STATUS.STUNNED)
 		
-		hurtbox_cd.start()
+	hurtbox_cd.start()
 func on_hurt_box_building_land(body : Node2D):
 	if body is Building and action == ACTION.RAID:
 		if body.type != Building.TYPE.TRAP or body.type != Building.TYPE.RUINS:
