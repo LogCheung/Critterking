@@ -703,6 +703,7 @@ func _on_mainmenu_mouse_entered() -> void:
 	# check if main menu in on screen
 	if %unlock.visible: return
 	if Global.wins -1 > Global.UNLOCK.size() or Global.wins <= 0 : return
+	if !Global.unlockedCards.has(Global.UNLOCK[Global.wins - 1]) : return
 	if Global.unlockedCards.has(Global.UNLOCK[Global.wins - 1][0]): return
 	%unlock.visible = true
 	pass # Replace with function body.
