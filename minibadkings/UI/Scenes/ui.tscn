@@ -550,6 +550,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Traits" type="VBoxContainer" parent="NightCounter"]
+process_mode = 4
+visible = false
 layout_mode = 0
 offset_left = 37.0
 offset_top = 97.0
@@ -574,6 +576,8 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Resources" type="VBoxContainer" parent="NightCounter"]
+process_mode = 4
+visible = false
 layout_mode = 0
 offset_left = 41.0
 offset_top = 300.0

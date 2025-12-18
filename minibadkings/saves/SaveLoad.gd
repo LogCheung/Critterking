@@ -131,6 +131,11 @@ func _load_profile() -> void:
 		Global.tutorialDecree = ProfFileData.tutorialDecree
 		
 		Global.unlockedCards = ProfFileData.unlockedCards
+		for num in Card.DEFAULT_CARDS:
+			if !Global.unlockedCards.has(num):
+				Global.unlockedCards.append(num)
+		print(Global.unlockedCards)
+		
 		Global.maxAscension = ProfFileData.maxAscn 
 		
 		var ui = get_tree().get_first_node_in_group("UI")
