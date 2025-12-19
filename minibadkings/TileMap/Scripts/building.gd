@@ -144,9 +144,10 @@ func match_type() -> void:
 				buff_tiles.append(Vector2i(tile.x,y))
 			tileWorld.buffed_tiles.append_array(buff_tiles)
 		TYPE.RUINS:
+			%fire.hide()
 			sprite_2d.texture = HOUSEA
 			sprite_2d.frame = 1
-			sprite_2d.offset = Vector2(0,-12)
+			sprite_2d.offset = Vector2(0,-16)
 			
 			traitAmt = 0
 			traitType = Global.TRAITTYPE.NONE
@@ -164,7 +165,7 @@ func match_type() -> void:
 		TYPE.FORT:
 			sprite_2d.texture = FORT
 			sprite_2d.offset = Vector2(-1,-10)
-			set_collision_layer_value(2,false)
+			#set_collision_layer_value(2,false)
 		TYPE.CAMPFIRE:
 			sprite_2d.texture = CAMPFIRE
 			#sprite_2d.offset = Vector2(0,-2)

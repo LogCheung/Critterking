@@ -91,7 +91,12 @@ func new_game() -> void:
 		add_house_card()
 	#for i in range(1):
 		#var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.CUSTOMS
+		#hCard.type = Card.CARDTYPE.FORT
+		#ui.hand_container.add_child(hCard)
+		#hCard.set_owner(get_tree().get_current_scene())
+	#for i in range(1):
+		#var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.DESTROY
 		#ui.hand_container.add_child(hCard)
 		#hCard.set_owner(get_tree().get_current_scene())
 	#Challenges
@@ -402,8 +407,8 @@ func _input(event: InputEvent) -> void:
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
 		#new_game()
-		#return
-		Engine.time_scale = 12
+		return
+		#Engine.time_scale = 12
 		#var d = load("res://UI/Scenes/decree.tscn").instantiate()
 		#ui.decrees.get_child(0).add_child(d)
 		#print(ui.rollArray)

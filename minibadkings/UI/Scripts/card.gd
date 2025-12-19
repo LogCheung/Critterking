@@ -290,10 +290,11 @@ func check_general() -> bool:
 
 func check_destroy(plopTile : Vector2) -> bool:
 	tileWorld.find_obstacle_tiles()
+	var can_destroy : bool = false
 	var buildTiles = tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),2)
 	buildTiles.append_array(tileWorld.obstacle_tiles)
-	if type != CARDTYPE.DESTROY : return false
-	if !buildTiles.has(Vector2i(plopTile)): return false
+	if type != CARDTYPE.DESTROY : return can_destroy
+	if !buildTiles.has(Vector2i(plopTile)): return can_destroy
 	
 	var pos = tileWorld.ground.map_to_local(plopTile)
 	# create destruction for organic map obstacles
@@ -301,7 +302,7 @@ func check_destroy(plopTile : Vector2) -> bool:
 		create_destroy(pos)
 		tileWorld.obstacles.set_cell(plopTile,-1)
 		tileWorld.draw_build_area()
-		return true
+		can_destroy = true
 	
 	# tile is showing tilemap coords
 	var buildings = get_tree().get_nodes_in_group("BUILDING")
@@ -310,8 +311,8 @@ func check_destroy(plopTile : Vector2) -> bool:
 	for b : Building in buildings:
 		if b.tile == Vector2i(plopTile): 
 			b.remove()
-			return true
-	return false
+			can_destroy = true
+	return can_destroy
 
 func create_destroy(pos : Vector2) -> void:
 	var des = preload("res://TileMap/Scenes/destroy.tscn").instantiate()
