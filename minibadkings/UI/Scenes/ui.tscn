@@ -500,6 +500,7 @@ script = ExtResource("1_44q3l")
 
 [node name="NightCounter" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -550,8 +551,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Traits" type="VBoxContainer" parent="NightCounter"]
-process_mode = 4
-visible = false
 layout_mode = 0
 offset_left = 37.0
 offset_top = 97.0
@@ -576,8 +575,6 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Resources" type="VBoxContainer" parent="NightCounter"]
-process_mode = 4
-visible = false
 layout_mode = 0
 offset_left = 41.0
 offset_top = 300.0
@@ -640,6 +637,7 @@ text = "we"
 
 [node name="EndTurn" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
@@ -799,7 +797,6 @@ stretch_mode = 4
 
 [node name="Cards" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -809,12 +806,14 @@ metadata/_edit_use_anchors_ = true
 
 [node name="CardShow" type="Sprite2D" parent="Cards"]
 unique_name_in_owner = true
+visible = false
 scale = Vector2(3, 3)
 texture = SubResource("CompressedTexture2D_ia477")
 offset = Vector2(320, 180)
 hframes = 20
 
 [node name="Show" type="Button" parent="Cards/CardShow"]
+visible = false
 anchors_preset = -1
 anchor_left = 0.405313
 anchor_top = 0.265
@@ -865,6 +864,45 @@ visible = false
 position = Vector2(591, 633)
 texture = SubResource("CompressedTexture2D_ia477")
 
+[node name="Shop" type="Control" parent="Cards"]
+anchors_preset = 0
+offset_top = 1.0
+offset_right = 1920.0
+offset_bottom = 1081.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Cards/Shop"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -422.99994
+offset_top = 40.000008
+offset_right = 270.0
+offset_bottom = 634.0
+grow_horizontal = 2
+scale = Vector2(1.75, 1.75)
+theme_override_constants/separation = 50
+
+[node name="TopRow" type="HBoxContainer" parent="Cards/Shop/VBoxContainer"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+theme_override_constants/separation = 125
+
+[node name="Card" parent="Cards/Shop/VBoxContainer/TopRow" instance=ExtResource("3_bujes")]
+layout_mode = 2
+
+[node name="Card2" parent="Cards/Shop/VBoxContainer/TopRow" instance=ExtResource("3_bujes")]
+layout_mode = 2
+
+[node name="Card3" parent="Cards/Shop/VBoxContainer/TopRow" instance=ExtResource("3_bujes")]
+layout_mode = 2
+
+[node name="BotRow" type="HBoxContainer" parent="Cards/Shop/VBoxContainer"]
+layout_mode = 2
+
+[node name="Card" parent="Cards/Shop/VBoxContainer/BotRow" instance=ExtResource("3_bujes")]
+layout_mode = 2
+
 [node name="Decrees" type="Control" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -897,6 +935,7 @@ alignment = 1
 
 [node name="Hand" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1501.0

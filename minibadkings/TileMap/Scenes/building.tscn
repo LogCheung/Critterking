@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cct0mtgpy7ut6"]
+[gd_scene load_steps=25 format=3 uid="uid://cct0mtgpy7ut6"]
 
 [ext_resource type="Script" uid="uid://dpq0gk0d460fx" path="res://TileMap/Scripts/building.gd" id="1_mpr6t"]
 [ext_resource type="Texture2D" uid="uid://dw3xay3qj0ihn" path="res://TileMap/Assets/fire.png" id="2_cb372"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://ba2e2y1w34bcg" path="res://UI/Assets/HealingProgress.png" id="5_j1jnl"]
 [ext_resource type="AudioStream" uid="uid://chfwyfove6ddc" path="res://Audio/sfx/Build.tres" id="6_j1jnl"]
 [ext_resource type="AudioStream" uid="uid://drnq56jfobvk6" path="res://Audio/sfx/Break.tres" id="7_cb372"]
+[ext_resource type="Texture2D" uid="uid://bn8okgvudhtxm" path="res://TileMap/Assets/LightCircle.png" id="10_chsbt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iqf5p"]
 atlas = ExtResource("2_cb372")
@@ -234,6 +235,11 @@ stream = ExtResource("7_cb372")
 unique_name_in_owner = true
 wait_time = 0.125
 one_shot = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
+position = Vector2(0, -11)
+texture = ExtResource("10_chsbt")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
