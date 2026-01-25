@@ -7,9 +7,12 @@ class_name CardPurchaseSlot
 @onready var card: Card = $Card
 
 func _ready() -> void:
+	price = card.price
 	card.shop_card = true
 	card.for_show = true
 	card.set_up()
+	card.rolltype = Card.ROLLTYPE.SHOP
+	
 	update_price()
 
 func update_price() -> void:

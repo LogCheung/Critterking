@@ -166,12 +166,8 @@ func show_hand() -> void:
 		displaying_cards = false
 		return
 	
-	shop.show()
-	for slot : CardPurchaseSlot in get_tree().get_nodes_in_group("CARDPURCAHSE"):
-		slot.card.visible = true
-		slot.price_label.visible = true
-	
 	cards.hide()
+	display_shop()
 	
 	if world.dispatchDay and Global.tutorialCharm:
 		%Tutorial.show()
@@ -197,6 +193,13 @@ func show_hand() -> void:
 		await card_placed
 		%TutorialTitle.text = "Camera"
 		%TutorialText.text = "\nUse WASD to move your camera. Hold down shift to speed up the camera!"
+
+func display_shop() -> void:
+	shop.show()
+	for slot : CardPurchaseSlot in get_tree().get_nodes_in_group("CARDPURCHASE"):
+		slot.card.visible = true
+		slot.card.randomize_type()
+		slot.price_label.visible = true
 
 func display_hand() -> void:
 	%Tutorial.hide()

@@ -406,16 +406,9 @@ func _input(event: InputEvent) -> void:
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
-		#new_game()
+		Global.resource_dict[Global.RESOURCETYPE.MONEY] += 30
 		return
-		#Engine.time_scale = 12
-		#var d = load("res://UI/Scenes/decree.tscn").instantiate()
-		#ui.decrees.get_child(0).add_child(d)
-		#print(ui.rollArray)
-		#ui._on_endturn_pressed()
-		#on_night_ended()
-		#Global.nights += 24
-		#check_nights()
+
 	#if event.is_action_pressed("cancel"):
 		#print(Global.wins)
 		#SaveLoad._reset_profile()

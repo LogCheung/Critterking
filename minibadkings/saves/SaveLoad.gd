@@ -134,7 +134,6 @@ func _load_profile() -> void:
 		for num in Card.DEFAULT_CARDS:
 			if !Global.unlockedCards.has(num):
 				Global.unlockedCards.append(num)
-		print(Global.unlockedCards)
 		
 		Global.maxAscension = ProfFileData.maxAscn 
 		

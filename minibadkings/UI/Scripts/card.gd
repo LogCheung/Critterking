@@ -67,6 +67,7 @@ enum ROLLTYPE {
 @export var level : int = 1
 @export var being_charmed : bool
 @export var charm : Charm 
+@export var price : float
 
 @onready var ui : UI = get_tree().get_first_node_in_group("UI")
 @onready var sprite_2d: Sprite2D = $Sprite2D
@@ -357,6 +358,7 @@ func check_if_merge(plopTile : Vector2) -> bool:
 func randomize_type() -> void:
 	if !for_show : return
 	if being_charmed : return
+	
 	match rolltype:
 		ROLLTYPE.GENERAL:
 			type = randi_range(CARDTYPE.BITER,CARDTYPE.DESTROY)
@@ -368,11 +370,13 @@ func randomize_type() -> void:
 			type = randi_range(CARDTYPE.HEARTLOCKET,CARDTYPE.NAIL)#randi_range(CARDTYPE.SWORD,CARDTYPE.FLAG) 
 		ROLLTYPE.BLESSING:
 			type = randi_range(CARDTYPE.INSPIRATION,CARDTYPE.CONSTRUCTION)
+		ROLLTYPE.SHOP:
+			type = randi_range(CARDTYPE.BITER,CARDTYPE.CRAZED) #randi_range(CARDTYPE.TAVERN,CARDTYPE.BAKERY)
 	if type == CARDTYPE.HOUSE : randomize_type()
 	if type == CARDTYPE.FLAG : randomize_type() # nuke flag
 	if !Global.unlockedCards.has(type) : randomize_type()
 	
-	# check if not same as other card
+	# check if not same as other card when drawing
 	var cards = get_tree().get_nodes_in_group("CARD")
 	cards = cards.filter(func(c):return c.for_show and !c.shop_card)
 	for card : Card in cards:
@@ -380,6 +384,16 @@ func randomize_type() -> void:
 		if card.type == type:
 			randomize_type()
 			return
+
+	# check if not same as other card when shopping
+	if shop_card:
+		var shopCards = get_tree().get_nodes_in_group("CARD")
+		shopCards = shopCards.filter(func(c):return c.shop_card)
+		for scard : Card in shopCards:
+			if scard == self: continue
+			if scard.type == type:
+				randomize_type()
+				return
 	match_sprite_type()
 
 func add_card_to_hand() -> void:
@@ -428,7 +442,6 @@ func add_card_to_hand() -> void:
 
 func match_building_type(building : Building) -> Building:
 	building.type = type - CARDTYPE.TRAPS + 1
-	print(building.type)
 	if building.type == Building.TYPE.CARE or building.type == Building.TYPE.HOUSE:
 		if check_if_blocking(tile):
 			sprite_2d.scale = Vector2(1.0,1.0)
@@ -486,7 +499,7 @@ func _on_selected_gui_input(e: InputEvent) -> void:
 	_on_draw_card_to_hand()
 
 func _on_purchase_card_confirm() -> void:
-	print(purchaseSelected)
+	if price > Global.resource_dict[Global.RESOURCETYPE.MONEY]: return
 	if !purchaseSelected:
 		var cards = get_tree().get_nodes_in_group("CARD")
 		cards = cards.filter(func(c):return c.shop_card)
@@ -500,7 +513,10 @@ func _on_purchase_card_confirm() -> void:
 		return
 	
 	if purchaseSelected:
+		Global.resource_dict[Global.RESOURCETYPE.MONEY] -= price
 		add_card_to_hand()
+		
+		# make invisible
 		var slot = get_parent()
 		if slot is CardPurchaseSlot: 
 			slot.card.visible = false
