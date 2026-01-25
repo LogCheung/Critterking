@@ -1,26 +1,38 @@
-[gd_scene load_steps=3 format=3 uid="uid://deavskvstfod5"]
+[gd_scene load_steps=5 format=3 uid="uid://deavskvstfod5"]
 
 [ext_resource type="Script" uid="uid://cov88s4h4fct8" path="res://UI/Scenes/card_purchase_slot.gd" id="1_e7e3x"]
 [ext_resource type="PackedScene" uid="uid://bjjg37vgshqt6" path="res://UI/Scenes/card.tscn" id="2_mvyhw"]
+[ext_resource type="FontFile" uid="uid://ggtewla8581f" path="res://Units/Debug/aseprite.otf" id="3_mvyhw"]
 
-[node name="CardPurchaseSlot" type="Control"]
+[sub_resource type="LabelSettings" id="LabelSettings_dbnau"]
+font = ExtResource("3_mvyhw")
+font_size = 14
+
+[node name="CardPurchaseSlot" type="Control" groups=["CARDPURCHASE"]]
+custom_minimum_size = Vector2(300, 272)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1662.0
-offset_bottom = -614.0
+offset_right = -1620.0
+offset_bottom = -808.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_e7e3x")
 
 [node name="Card" parent="." instance=ExtResource("2_mvyhw")]
 layout_mode = 1
-scale = Vector2(1.75, 1.75)
 
 [node name="PriceLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 255.0
-offset_top = 10.0
-offset_right = 295.0
-offset_bottom = 33.0
+offset_left = 153.0
+offset_top = 5.0
+offset_right = 199.0
+offset_bottom = 90.66667
+scale = Vector2(3, 3)
+text = "Price:
+1"
+label_settings = SubResource("LabelSettings_dbnau")
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -57,12 +57,13 @@ enum CARDTYPE {
 	
 }
 enum ROLLTYPE {
-	GENERAL, UNIT, BUILDINGS, CHARM, BLESSING
+	GENERAL, UNIT, BUILDINGS, CHARM, BLESSING, SHOP
 }
 
 @export var type : CARDTYPE
 @export var rolltype : ROLLTYPE
 @export var for_show : bool  = false
+@export var shop_card : bool = false
 @export var level : int = 1
 @export var being_charmed : bool
 @export var charm : Charm 
@@ -84,10 +85,12 @@ var choice_picked : bool = false
 var refreshing : bool = false
 
 var dispatchSelected : bool = false
+var purchaseSelected : bool = false
 
 var is_under_mouse : bool = false
 func _ready() -> void:
 	if for_show: scale = Vector2(3,3)
+	if shop_card : set_up()
 
 func set_up() -> void:
 	match_sprite_type()
@@ -151,6 +154,11 @@ func handle_drag() -> void:
 
 func set_to_default() -> void:
 	sprite_2d.scale = Vector2(1.0,1.0)
+	if shop_card: 
+		sprite_2d.material = null
+		purchaseSelected = false
+		return # only need to revert less things for shopcards
+	
 	sprite_2d.position.y = default_position.y
 	if !dispatchSelected : sprite_2d.material = null
 	
@@ -366,7 +374,7 @@ func randomize_type() -> void:
 	
 	# check if not same as other card
 	var cards = get_tree().get_nodes_in_group("CARD")
-	cards = cards.filter(func(c):return c.for_show)
+	cards = cards.filter(func(c):return c.for_show and !c.shop_card)
 	for card : Card in cards:
 		if card == self: continue
 		if card.type == type:
@@ -375,6 +383,15 @@ func randomize_type() -> void:
 	match_sprite_type()
 
 func add_card_to_hand() -> void:
+	if shop_card:
+		var dupe : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+		dupe.type = type
+		Global.cardsInHand.append(dupe)
+		dupe.for_show = false
+		dupe.shop_card = false
+		ui.hand_container.add_child(dupe) # container
+		dupe.set_owner(get_tree().get_current_scene())
+		return
 	match ui.rolltype:
 		ROLLTYPE.GENERAL,ROLLTYPE.UNIT,ROLLTYPE.BUILDINGS:
 			var dupe : Card = preload("res://UI/Scenes/card.tscn").instantiate()
@@ -407,6 +424,7 @@ func add_card_to_hand() -> void:
 			ui.decrees.get_child(0).add_child(decree)
 			decree.set_owner(get_tree().get_current_scene())
 			Global.decreesEquipped.append(decree)
+	
 
 func match_building_type(building : Building) -> Building:
 	building.type = type - CARDTYPE.TRAPS + 1
@@ -419,32 +437,25 @@ func match_building_type(building : Building) -> Building:
 			building = null
 	return building
 
-func _on_selected_pressed() -> void:
-	if choice_picked : return
-	if being_charmed : return
-	if for_show:
-		choice_picked = true
-		ui.anim.play("cardhide")
-		add_card_to_hand()
-		
-	var cards = get_tree().get_nodes_in_group("CARD")
-	cards = cards.filter(func(c):return c.for_show)
-	for c : Card in cards:
-		c.choice_picked = true
-
 func _on_selected_mouse_entered() -> void:
-	if for_show : return
+	if for_show and !shop_card: return
 	if selected : return
 	if refreshing : return
 	if setting_up : return
 	if ui.pausemenu.visible : return
+	
+	if shop_card:
+		sprite_2d.scale = Vector2(1.2,1.2)
+		return
+		
+	# enlarge when hovered
 	sprite_2d.scale = Vector2(1.5,1.5)
-	sprite_2d.position.y = default_position.y - (custom_minimum_size.y / 1.5) - 32
+	sprite_2d.position.y = default_position.y - (custom_minimum_size.y / 1.5)
 	custom_minimum_size.x = default_custom_min.x * 1.5
 	is_under_mouse = true
 	z_index = 4096
 func _on_selected_mouse_exited() -> void:
-	if for_show : return
+	if for_show and !shop_card: return
 	if selected : return
 	if refreshing : return
 	if setting_up : return
@@ -459,3 +470,48 @@ func match_sprite_type() -> void:
 	
 	%Upgrade1.visible = level == 2
 	%Upgrade2.visible = level == 3
+
+
+func _on_selected_gui_input(e: InputEvent) -> void:
+	if choice_picked : return
+	if being_charmed : return
+	if !e.is_action_released("select") : return # if not clicking bye bye
+	
+	# for buying cards
+	if shop_card:
+		_on_purchase_card_confirm()
+		return
+	
+	# for selecting cards
+	_on_draw_card_to_hand()
+
+func _on_purchase_card_confirm() -> void:
+	print(purchaseSelected)
+	if !purchaseSelected:
+		var cards = get_tree().get_nodes_in_group("CARD")
+		cards = cards.filter(func(c):return c.shop_card)
+		for c : Card in cards:
+			c.purchaseSelected = false
+			c.sprite_2d.material = null
+		
+		purchaseSelected = true
+		sprite_2d.material = preload("res://Units/Shaders/cardHighlight.tres")
+		
+		return
+	
+	if purchaseSelected:
+		add_card_to_hand()
+		var slot = get_parent()
+		if slot is CardPurchaseSlot: 
+			slot.card.visible = false
+			slot.price_label.visible = false
+func _on_draw_card_to_hand() -> void:
+	if for_show:
+		choice_picked = true
+		ui.anim.play("cardhide")
+		add_card_to_hand()
+		
+	var cards = get_tree().get_nodes_in_group("CARD")
+	cards = cards.filter(func(c):return c.for_show and !c.shop_card)
+	for c : Card in cards:
+		c.choice_picked = true

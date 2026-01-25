@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=57 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Texture2D" uid="uid://luuqbnbqgyao" path="res://UI/Assets/menus/mainmenu.png" id="3_2fejo"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://b6kejcvarih2b" path="res://UI/Assets/nightcount.png" id="11_yqd36"]
 [ext_resource type="AudioStream" uid="uid://bdq1nbxdckl0r" path="res://Audio/sfx/Card.tres" id="12_yqd36"]
 [ext_resource type="AudioStream" uid="uid://bxpbo04dxxuf4" path="res://Audio/sfx/Button.tres" id="15_8g5lr"]
+[ext_resource type="PackedScene" uid="uid://deavskvstfod5" path="res://UI/Scenes/card_purchase_slot.tscn" id="15_h2fog"]
 [ext_resource type="Texture2D" uid="uid://diy1h5txvm2w4" path="res://UI/Assets/menus/playMenu.png" id="16_onxes"]
 [ext_resource type="Texture2D" uid="uid://baf6ifj1yqp2v" path="res://UI/Assets/menus/ascensionMenuB.png" id="17_j4cnt"]
 [ext_resource type="Texture2D" uid="uid://l1xrje5n2dl7" path="res://UI/Assets/menus/unlock.png" id="17_onxes"]
@@ -500,7 +501,6 @@ script = ExtResource("1_44q3l")
 
 [node name="NightCounter" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -780,6 +780,7 @@ grow_vertical = 0
 focus_mode = 0
 icon = ExtResource("9_l2k1h")
 flat = true
+metadata/_edit_use_anchors_ = true
 
 [node name="dispatchText" type="TextureRect" parent="Dispatch"]
 layout_mode = 1
@@ -797,6 +798,7 @@ stretch_mode = 4
 
 [node name="Cards" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -806,14 +808,12 @@ metadata/_edit_use_anchors_ = true
 
 [node name="CardShow" type="Sprite2D" parent="Cards"]
 unique_name_in_owner = true
-visible = false
 scale = Vector2(3, 3)
 texture = SubResource("CompressedTexture2D_ia477")
 offset = Vector2(320, 180)
 hframes = 20
 
 [node name="Show" type="Button" parent="Cards/CardShow"]
-visible = false
 anchors_preset = -1
 anchor_left = 0.405313
 anchor_top = 0.265
@@ -864,13 +864,15 @@ visible = false
 position = Vector2(591, 633)
 texture = SubResource("CompressedTexture2D_ia477")
 
-[node name="Shop" type="Control" parent="Cards"]
+[node name="Shop" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
 anchors_preset = 0
 offset_top = 1.0
 offset_right = 1920.0
 offset_bottom = 1081.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Cards/Shop"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Shop"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -880,28 +882,52 @@ offset_top = 40.000008
 offset_right = 270.0
 offset_bottom = 634.0
 grow_horizontal = 2
-scale = Vector2(1.75, 1.75)
+scale = Vector2(1.5, 1.5)
 theme_override_constants/separation = 50
 
-[node name="TopRow" type="HBoxContainer" parent="Cards/Shop/VBoxContainer"]
+[node name="TopRow" type="HBoxContainer" parent="Shop/VBoxContainer"]
 custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
-theme_override_constants/separation = 125
+theme_override_constants/separation = 20
 
-[node name="Card" parent="Cards/Shop/VBoxContainer/TopRow" instance=ExtResource("3_bujes")]
+[node name="CardPurchaseSlot" parent="Shop/VBoxContainer/TopRow" instance=ExtResource("15_h2fog")]
 layout_mode = 2
 
-[node name="Card2" parent="Cards/Shop/VBoxContainer/TopRow" instance=ExtResource("3_bujes")]
+[node name="CardPurchaseSlot2" parent="Shop/VBoxContainer/TopRow" instance=ExtResource("15_h2fog")]
 layout_mode = 2
 
-[node name="Card3" parent="Cards/Shop/VBoxContainer/TopRow" instance=ExtResource("3_bujes")]
+[node name="CardPurchaseSlot3" parent="Shop/VBoxContainer/TopRow" instance=ExtResource("15_h2fog")]
 layout_mode = 2
 
-[node name="BotRow" type="HBoxContainer" parent="Cards/Shop/VBoxContainer"]
+[node name="BotRow" type="HBoxContainer" parent="Shop/VBoxContainer"]
 layout_mode = 2
 
-[node name="Card" parent="Cards/Shop/VBoxContainer/BotRow" instance=ExtResource("3_bujes")]
+[node name="CardPurchaseSlot" parent="Shop/VBoxContainer/BotRow" instance=ExtResource("15_h2fog")]
 layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Shop"]
+self_modulate = Color(1, 1, 1, 0)
+position = Vector2(1824, 1031)
+scale = Vector2(3, 3)
+texture = ExtResource("10_6dw6b")
+
+[node name="shopEnd" type="Button" parent="Shop/Sprite2D"]
+z_index = 4096
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -52.0
+offset_right = -28.0
+offset_bottom = -12.0
+grow_horizontal = 0
+grow_vertical = 0
+focus_mode = 0
+icon = ExtResource("9_l2k1h")
+flat = true
+metadata/_edit_use_anchors_ = true
 
 [node name="Decrees" type="Control" parent="."]
 unique_name_in_owner = true
@@ -1621,6 +1647,7 @@ bus = &"SFX"
 [connection signal="pressed" from="EndTurn/Sprite2D/endturn" to="." method="_on_endturn_pressed"]
 [connection signal="pressed" from="Dispatch/Sprite2D/dispatchEnd" to="." method="_on_dispatch_end_pressed"]
 [connection signal="pressed" from="Cards/CardShow/Show" to="." method="_on_show_pressed"]
+[connection signal="pressed" from="Shop/Sprite2D/shopEnd" to="." method="_on_shop_end_pressed"]
 [connection signal="mouse_entered" from="mainmenu" to="." method="_on_mainmenu_mouse_entered"]
 [connection signal="pressed" from="mainmenu/mainsprite/PlayMenu" to="." method="_on_play_menu_pressed"]
 [connection signal="pressed" from="mainmenu/mainsprite/Help" to="." method="_on_help_pressed"]

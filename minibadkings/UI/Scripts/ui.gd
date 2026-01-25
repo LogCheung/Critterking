@@ -47,6 +47,7 @@ signal unit_healed
 @onready var money_label: Label = %MoneyLabel
 @onready var food_label: Label = %FoodLabel
 @onready var citizen_label: Label = %CitizenLabel
+@onready var shop: Control = %Shop
 
 @export var rollArray : Array = []
 @export var currentAscn : int = 0
@@ -111,12 +112,43 @@ func control_is_visible() -> bool:
 		if c.visible : return true
 	return false
 	
+func _on_show_pressed() -> void:
+	# when deck of cards is clicked, show anim will play
+	if displaying_cards : return
+	#await get_tree().create_timer(.05).timeout
+	
+	if anim.is_playing():return
+	rolltype = rollArray.front()
+	%Shuffle.play()
+	
+	if rolltype == Card.ROLLTYPE.CHARM:
+		%CardShow.texture = preload("res://UI/Assets/menus/discoveryshow.png")
+		%CardShow.hframes = 20
+		if !Global.cardsDispatched.is_empty() : 
+			%Card3.type = Global.cardsDispatched.front().type
+		%Card3.match_sprite_type()
+	else:
+		%CardShow.texture = preload("res://UI/Assets/menus/cardshow.png")
+		%CardShow.hframes = 20
+		
+		# tutorial for decrees
+		if rolltype == Card.ROLLTYPE.BLESSING and Global.tutorialDecree:
+			%Tutorial.show()
+			%TutorialTitle.text = "Decrees"
+			%TutorialText.text = "Decrees are [color=yellow]active[/color] abilities that can be used during the night."
+			%TutorialText.text += "\n\nOnce used they will be on cooldown for a number of nights but can greatly help your defense."
+			%TutorialText.text += "\n\nAfter picking one, they will be displayed on the left."
+			Global.tutorialDecree = false
+			pass
+	anim.play("cardshow")
+	
 func display_cards(display : bool) -> void:
 	# after deck of cards is clicked and frame 18 of the anim
 	displaying_cards = true
 	var cardSprites = get_tree().get_nodes_in_group("CARD")
 	for card : Card in cardSprites:
 		if !card.for_show : continue
+		if card.shop_card : continue
 		card.rolltype = rolltype
 		card.randomize_type()
 		card.visible = display
@@ -134,23 +166,12 @@ func show_hand() -> void:
 		displaying_cards = false
 		return
 	
+	shop.show()
+	for slot : CardPurchaseSlot in get_tree().get_nodes_in_group("CARDPURCAHSE"):
+		slot.card.visible = true
+		slot.price_label.visible = true
+	
 	cards.hide()
-	%Tutorial.hide()
-	
-	hand.show()
-	end_turn.show()
-	decrees.show()
-	night_counter.show()
-	displaying_cards = false
-	await get_tree().create_timer(.05).timeout
-	for c : Card in hand_container.get_children():
-		c.set_up()
-		c.refreshing = true
-	
-	if world.dispatchDay: 
-		dispatch.show()
-	
-	refresh_positions()
 	
 	if world.dispatchDay and Global.tutorialCharm:
 		%Tutorial.show()
@@ -176,6 +197,28 @@ func show_hand() -> void:
 		await card_placed
 		%TutorialTitle.text = "Camera"
 		%TutorialText.text = "\nUse WASD to move your camera. Hold down shift to speed up the camera!"
+
+func display_hand() -> void:
+	%Tutorial.hide()
+	
+	hand.show()
+	end_turn.show()
+	decrees.show()
+	night_counter.show()
+	displaying_cards = false
+	await get_tree().create_timer(.05).timeout
+	for c : Card in hand_container.get_children():
+		c.set_up()
+		c.refreshing = true
+	
+	if world.dispatchDay: 
+		dispatch.show()
+	
+	refresh_positions()
+
+func _on_shop_end_pressed() -> void:
+	shop.hide()
+	display_hand()
 
 func save_game_delayed() -> void:
 	for i in range(5):
@@ -252,35 +295,7 @@ func _on_endless_pressed() -> void:
 	night_counter.show()
 	pass # Replace with function body.
 
-func _on_show_pressed() -> void:
-	# when deck of cards is clicked, show anim will play
-	if displaying_cards : return
-	#await get_tree().create_timer(.05).timeout
-	
-	if anim.is_playing():return
-	rolltype = rollArray.front()
-	%Shuffle.play()
-	
-	if rolltype == Card.ROLLTYPE.CHARM:
-		%CardShow.texture = preload("res://UI/Assets/menus/discoveryshow.png")
-		%CardShow.hframes = 20
-		if !Global.cardsDispatched.is_empty() : 
-			%Card3.type = Global.cardsDispatched.front().type
-		%Card3.match_sprite_type()
-	else:
-		%CardShow.texture = preload("res://UI/Assets/menus/cardshow.png")
-		%CardShow.hframes = 20
-		
-		# tutorial for decrees
-		if rolltype == Card.ROLLTYPE.BLESSING and Global.tutorialDecree:
-			%Tutorial.show()
-			%TutorialTitle.text = "Decrees"
-			%TutorialText.text = "Decrees are [color=yellow]active[/color] abilities that can be used during the night."
-			%TutorialText.text += "\n\nOnce used they will be on cooldown for a number of nights but can greatly help your defense."
-			%TutorialText.text += "\n\nAfter picking one, they will be displayed on the left."
-			Global.tutorialDecree = false
-			pass
-	anim.play("cardshow")
+
 
 func _on_play_pressed() -> void:
 	if anim.is_playing() : return
