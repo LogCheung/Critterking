@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0txv1eaq5p2b"
-path="res://.godot/imported/workerFilled.png-927defa20ea3cb56b7e550dff7a6ab21.ctex"
+uid="uid://byqvjdf31scd3"
+path="res://.godot/imported/placingToggle.png-696f832e9fe30c5c0225503d911c3349.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/Assets/alerts/workerFilled.png"
-dest_files=["res://.godot/imported/workerFilled.png-927defa20ea3cb56b7e550dff7a6ab21.ctex"]
+source_file="res://UI/Assets/alerts/placingToggle.png"
+dest_files=["res://.godot/imported/placingToggle.png-696f832e9fe30c5c0225503d911c3349.ctex"]
 
 [params]
 

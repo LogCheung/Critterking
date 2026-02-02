@@ -1,6 +1,7 @@
-[gd_scene load_steps=57 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=59 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
+[ext_resource type="Script" uid="uid://b174vncna6gct" path="res://UI/Scenes/info_overlay.gd" id="2_ffuy1"]
 [ext_resource type="Texture2D" uid="uid://luuqbnbqgyao" path="res://UI/Assets/menus/mainmenu.png" id="3_2fejo"]
 [ext_resource type="PackedScene" uid="uid://bjjg37vgshqt6" path="res://UI/Scenes/card.tscn" id="3_bujes"]
 [ext_resource type="Texture2D" uid="uid://dbhxoj0r1rhrv" path="res://UI/Assets/partyLimit.png" id="4_lpmf3"]
@@ -8,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://0aaq2moh04q8" path="res://UI/Assets/alerts/houseInHand.png" id="5_ia477"]
 [ext_resource type="Texture2D" uid="uid://bfqdqavdl2kr3" path="res://UI/Assets/menus/pause.png" id="5_n2q0n"]
 [ext_resource type="Texture2D" uid="uid://cbfi3jolrr55m" path="res://UI/Assets/cards/tutorialText.png" id="5_nvxdf"]
+[ext_resource type="Texture2D" uid="uid://byqvjdf31scd3" path="res://UI/Assets/alerts/placingToggle.png" id="5_s0jxd"]
 [ext_resource type="Texture2D" uid="uid://e0lt6th6b1bi" path="res://UI/Assets/alerts/wavetimeAlert.png" id="6_ia477"]
 [ext_resource type="FontFile" uid="uid://ggtewla8581f" path="res://Units/Debug/aseprite.otf" id="6_t0wgx"]
 [ext_resource type="Texture2D" uid="uid://3it4y7vqlqgb" path="res://UI/Assets/alerts/swarmAlert.png" id="7_l2k1h"]
@@ -499,19 +501,21 @@ _data = {
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_44q3l")
 
-[node name="NightCounter" type="Control" parent="."]
+[node name="InfoOverlay" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
+script = ExtResource("2_ffuy1")
 
-[node name="Sprite2D" type="Sprite2D" parent="NightCounter"]
+[node name="Sprite2D" type="Sprite2D" parent="InfoOverlay"]
 position = Vector2(96, 48)
 scale = Vector2(3, 3)
 texture = ExtResource("11_yqd36")
 
-[node name="DayNight" type="Label" parent="NightCounter/Sprite2D"]
+[node name="DayNight" type="Label" parent="InfoOverlay/Sprite2D"]
 unique_name_in_owner = true
 offset_left = -25.333334
 offset_top = -16.0
@@ -523,12 +527,12 @@ label_settings = SubResource("LabelSettings_yqd36")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Lim" type="Sprite2D" parent="NightCounter"]
+[node name="Lim" type="Sprite2D" parent="InfoOverlay"]
 position = Vector2(288, 48)
 scale = Vector2(3, 3)
 texture = ExtResource("4_lpmf3")
 
-[node name="PartyCurrent" type="Label" parent="NightCounter/Lim"]
+[node name="PartyCurrent" type="Label" parent="InfoOverlay/Lim"]
 unique_name_in_owner = true
 offset_left = -10.0
 offset_top = -10.333332
@@ -539,7 +543,7 @@ label_settings = SubResource("LabelSettings_lpmf3")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PartyLimit" type="Label" parent="NightCounter/Lim"]
+[node name="PartyLimit" type="Label" parent="InfoOverlay/Lim"]
 unique_name_in_owner = true
 offset_left = 9.666668
 offset_top = -3.3333325
@@ -550,53 +554,73 @@ label_settings = SubResource("LabelSettings_lpmf3")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Traits" type="VBoxContainer" parent="NightCounter"]
+[node name="Traits" type="VBoxContainer" parent="InfoOverlay"]
 layout_mode = 0
 offset_left = 37.0
 offset_top = 97.0
 offset_right = 217.0
 offset_bottom = 267.0
+mouse_filter = 2
 theme_override_constants/separation = 20
 
-[node name="CultureTrait" type="Label" parent="NightCounter/Traits"]
+[node name="CultureTrait" type="Label" parent="InfoOverlay/Traits"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="CommerceTrait" type="Label" parent="NightCounter/Traits"]
+[node name="CommerceTrait" type="Label" parent="InfoOverlay/Traits"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="FameTrait" type="Label" parent="NightCounter/Traits"]
+[node name="FameTrait" type="Label" parent="InfoOverlay/Traits"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="ProductivityTrait" type="Label" parent="NightCounter/Traits"]
+[node name="ProductivityTrait" type="Label" parent="InfoOverlay/Traits"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Resources" type="VBoxContainer" parent="NightCounter"]
+[node name="Resources" type="VBoxContainer" parent="InfoOverlay"]
 layout_mode = 0
 offset_left = 41.0
 offset_top = 300.0
 offset_right = 221.0
 offset_bottom = 470.0
+mouse_filter = 2
 theme_override_constants/separation = 20
 
-[node name="SatisfactionLabel" type="Label" parent="NightCounter/Resources"]
+[node name="SatisfactionLabel" type="Label" parent="InfoOverlay/Resources"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="MoneyLabel" type="Label" parent="NightCounter/Resources"]
+[node name="MoneyLabel" type="Label" parent="InfoOverlay/Resources"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="FoodLabel" type="Label" parent="NightCounter/Resources"]
+[node name="FoodLabel" type="Label" parent="InfoOverlay/Resources"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="CitizenLabel" type="Label" parent="NightCounter/Resources"]
+[node name="CitizenLabel" type="Label" parent="InfoOverlay/Resources"]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="AssignToggle" type="Control" parent="InfoOverlay"]
+z_index = 4096
+z_as_relative = false
+custom_minimum_size = Vector2(96, 96)
+anchors_preset = 0
+offset_left = 480.0
+offset_right = 576.0
+offset_bottom = 96.0
+
+[node name="AssignToggleSprite" type="Sprite2D" parent="InfoOverlay/AssignToggle"]
+unique_name_in_owner = true
+modulate = Color(1.353256, 1.353256, 1.353256, 1)
+scale = Vector2(3, 3)
+texture = ExtResource("5_s0jxd")
+offset = Vector2(16, 16)
+vframes = 2
+frame = 1
 
 [node name="Tutorial" type="Control" parent="."]
 unique_name_in_owner = true
@@ -634,114 +658,6 @@ theme_override_fonts/normal_font = ExtResource("6_t0wgx")
 theme_override_font_sizes/normal_font_size = 14
 bbcode_enabled = true
 text = "we"
-
-[node name="EndTurn" type="Control" parent="."]
-unique_name_in_owner = true
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1920.0
-offset_bottom = 1081.0
-mouse_filter = 1
-
-[node name="Sprite2D" type="Sprite2D" parent="EndTurn"]
-position = Vector2(1824, 1031)
-scale = Vector2(3, 3)
-texture = ExtResource("10_6dw6b")
-
-[node name="endturn" type="Button" parent="EndTurn/Sprite2D"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -96.0
-offset_top = -48.0
-offset_right = -32.0
-offset_bottom = -16.0
-grow_horizontal = 0
-grow_vertical = 0
-focus_mode = 0
-flat = true
-
-[node name="noHouse" type="TextureRect" parent="EndTurn"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = 768.0
-offset_top = 887.0
-offset_right = 832.0
-offset_bottom = 919.0
-grow_horizontal = 2
-scale = Vector2(3, 3)
-texture = ExtResource("5_ia477")
-
-[node name="noSpace" type="TextureRect" parent="EndTurn"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = 768.0
-offset_top = 887.00006
-offset_right = 832.0
-offset_bottom = 919.00006
-grow_horizontal = 2
-scale = Vector2(3, 3)
-texture = ExtResource("7_nvxdf")
-expand_mode = 2
-
-[node name="upgradedAlert" type="TextureRect" parent="EndTurn"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -335.0
-offset_right = -111.0
-offset_bottom = 64.0
-grow_horizontal = 2
-scale = Vector2(3, 3)
-texture = ExtResource("5_1rapc")
-expand_mode = 2
-stretch_mode = 4
-
-[node name="wavetimeAlert" type="TextureRect" parent="EndTurn"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -335.0
-offset_right = -111.0
-offset_bottom = 64.0
-grow_horizontal = 2
-scale = Vector2(3, 3)
-texture = ExtResource("6_ia477")
-expand_mode = 2
-stretch_mode = 4
-
-[node name="swarmAlert" type="TextureRect" parent="EndTurn"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -335.0
-offset_right = -111.0
-offset_bottom = 64.0
-grow_horizontal = 2
-scale = Vector2(3, 3)
-texture = ExtResource("7_l2k1h")
-expand_mode = 2
-stretch_mode = 4
 
 [node name="Dispatch" type="Control" parent="."]
 unique_name_in_owner = true
@@ -866,6 +782,7 @@ texture = SubResource("CompressedTexture2D_ia477")
 
 [node name="Shop" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_top = 1.0
@@ -961,11 +878,11 @@ alignment = 1
 
 [node name="Hand" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
+offset_top = 500.0
 offset_right = 1501.0
-offset_bottom = 1080.0
+offset_bottom = 900.0
 mouse_filter = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Hand"]
@@ -973,32 +890,147 @@ clip_children = 2
 layout_mode = 0
 offset_left = 1.0000027
 offset_top = -63.999886
-offset_right = 1328.6924
+offset_right = 1314.077
 offset_bottom = 816.0001
 scale = Vector2(1.3, 1.3)
+mouse_filter = 0
 theme = SubResource("Theme_48uhk")
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
 
 [node name="ScrollControl" type="Control" parent="Hand/ScrollContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(1000, 700)
+custom_minimum_size = Vector2(1000, 500)
 layout_mode = 2
+mouse_filter = 1
 
 [node name="HandContainer" type="HBoxContainer" parent="Hand/ScrollContainer/ScrollControl"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(1140, 300)
 layout_mode = 0
-offset_left = 41.538467
-offset_top = 681.53845
-offset_right = 1220.7694
-offset_bottom = 981.53845
+offset_left = 72.30769
+offset_top = 283.07684
+offset_right = 1240.0002
+offset_bottom = 583.07684
 mouse_filter = 2
 theme_override_constants/separation = 20
+
+[node name="Card" parent="Hand/ScrollContainer/ScrollControl/HandContainer" instance=ExtResource("3_bujes")]
+layout_mode = 2
 
 [node name="HandOrigin" type="Node2D" parent="Hand"]
 unique_name_in_owner = true
 position = Vector2(964, 1080)
+
+[node name="EndTurn" type="Control" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(192, 96)
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1728.0
+offset_top = 984.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="EndTurn"]
+scale = Vector2(3, 3)
+texture = ExtResource("10_6dw6b")
+offset = Vector2(32, 16)
+
+[node name="endturn" type="Button" parent="EndTurn/Sprite2D"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -32.0
+grow_horizontal = 0
+grow_vertical = 0
+focus_mode = 0
+flat = true
+
+[node name="noHouse" type="TextureRect" parent="EndTurn"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -96.0
+offset_top = -97.0
+offset_right = -32.0
+offset_bottom = -65.0
+grow_horizontal = 2
+scale = Vector2(3, 3)
+texture = ExtResource("5_ia477")
+
+[node name="noSpace" type="TextureRect" parent="EndTurn"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -96.0
+offset_top = -97.0
+offset_right = -32.0
+offset_bottom = -65.0
+grow_horizontal = 2
+scale = Vector2(3, 3)
+texture = ExtResource("7_nvxdf")
+expand_mode = 2
+
+[node name="upgradedAlert" type="TextureRect" parent="EndTurn"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -96.0
+offset_top = -97.0
+offset_right = 128.0
+offset_bottom = -33.0
+grow_horizontal = 2
+scale = Vector2(3, 3)
+texture = ExtResource("5_1rapc")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="wavetimeAlert" type="TextureRect" parent="EndTurn"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -96.0
+offset_top = -97.0
+offset_right = 128.0
+offset_bottom = -33.0
+grow_horizontal = 2
+scale = Vector2(3, 3)
+texture = ExtResource("6_ia477")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="swarmAlert" type="TextureRect" parent="EndTurn"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -96.0
+offset_top = -97.0
+offset_right = 128.0
+offset_bottom = -33.0
+grow_horizontal = 2
+scale = Vector2(3, 3)
+texture = ExtResource("7_l2k1h")
+expand_mode = 2
+stretch_mode = 4
 
 [node name="mainmenu" type="Control" parent="."]
 unique_name_in_owner = true
@@ -1644,10 +1676,11 @@ unique_name_in_owner = true
 stream = ExtResource("15_8g5lr")
 bus = &"SFX"
 
-[connection signal="pressed" from="EndTurn/Sprite2D/endturn" to="." method="_on_endturn_pressed"]
+[connection signal="gui_input" from="InfoOverlay/AssignToggle" to="InfoOverlay" method="_on_assign_toggle_gui_input"]
 [connection signal="pressed" from="Dispatch/Sprite2D/dispatchEnd" to="." method="_on_dispatch_end_pressed"]
 [connection signal="pressed" from="Cards/CardShow/Show" to="." method="_on_show_pressed"]
 [connection signal="pressed" from="Shop/Sprite2D/shopEnd" to="." method="_on_shop_end_pressed"]
+[connection signal="pressed" from="EndTurn/Sprite2D/endturn" to="." method="_on_endturn_pressed"]
 [connection signal="mouse_entered" from="mainmenu" to="." method="_on_mainmenu_mouse_entered"]
 [connection signal="pressed" from="mainmenu/mainsprite/PlayMenu" to="." method="_on_play_menu_pressed"]
 [connection signal="pressed" from="mainmenu/mainsprite/Help" to="." method="_on_help_pressed"]

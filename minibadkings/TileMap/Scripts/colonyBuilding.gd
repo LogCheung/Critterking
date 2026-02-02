@@ -206,3 +206,7 @@ func match_type() -> void:
 			scalingMult = 2
 			scalingTrait = Global.TRAITTYPE.PRODUCTIVITY
 			pass
+
+
+func _on_toggle_pressed() -> void:
+	print(toggle.button_pressed)

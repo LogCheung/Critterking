@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cuaoojwquffd"
-path="res://.godot/imported/workerEmpty.png-3983f4dbdc9209a06014ec89f8d05dc3.ctex"
+uid="uid://orgrk21fx4vu"
+path="res://.godot/imported/citizenToggle.png-b746f463db95ab82d18dc9f1f4a48421.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/Assets/alerts/workerEmpty.png"
-dest_files=["res://.godot/imported/workerEmpty.png-3983f4dbdc9209a06014ec89f8d05dc3.ctex"]
+source_file="res://UI/Assets/alerts/citizenToggle.png"
+dest_files=["res://.godot/imported/citizenToggle.png-b746f463db95ab82d18dc9f1f4a48421.ctex"]
 
 [params]
 

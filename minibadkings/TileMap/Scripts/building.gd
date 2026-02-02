@@ -50,6 +50,8 @@ enum TYPE {
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var ui : UI = get_tree().get_first_node_in_group("UI")
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
+@onready var toggle : Button = %Toggle
+@onready var citizen_toggle_sprite: Sprite2D = %CitizenToggle
 
 var buff_tiles : Array
 var tile : Vector2i
@@ -59,6 +61,9 @@ var highlightSprite : Sprite2D
 
 func _ready() -> void:
 	%fire.hide()
+	%Toggle.hide()
+	%Toggle.connect("toggled",_on_toggle_toggled)
+	
 	# set up position and blocking navigation
 	tile = tileWorld.ground.local_to_map(global_position)
 	if temporary : prevTileType = tileWorld.ground.get_cell_alternative_tile(tile)
@@ -311,3 +316,8 @@ func _on_mouse_exited() -> void:
 	if !highlightSprite: return
 	highlightSprite.visible = false
 	highlightSprite.modulate = Color(1,1,1)
+
+func _on_toggle_toggled(toggled_on: bool) -> void:
+	citizen_toggle_sprite.frame = 1 if toggled_on else 0
+	citizen_toggle_sprite.modulate.v = 1.5 if toggled_on else 1.0
+	active = toggled_on

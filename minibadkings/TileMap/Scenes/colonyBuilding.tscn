@@ -1,6 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://c37h8qvy4nsbf"]
+[gd_scene load_steps=23 format=3 uid="uid://c37h8qvy4nsbf"]
 
 [ext_resource type="Script" uid="uid://dnda20j22irtp" path="res://TileMap/Scripts/colonyBuilding.gd" id="1_ocaip"]
+[ext_resource type="Texture2D" uid="uid://orgrk21fx4vu" path="res://UI/Assets/alerts/citizenToggle.png" id="2_abe5q"]
 [ext_resource type="Texture2D" uid="uid://dw3xay3qj0ihn" path="res://TileMap/Assets/fire.png" id="2_f8lb6"]
 [ext_resource type="Texture2D" uid="uid://b2tb0eb75whjr" path="res://TileMap/Assets/buildCampfire.png" id="3_abe5q"]
 [ext_resource type="Texture2D" uid="uid://du3cwfifspbnp" path="res://UI/Assets/HealingUnder.png" id="4_ef7sn"]
@@ -134,6 +135,26 @@ y_sort_enabled = true
 collision_layer = 10
 input_pickable = true
 script = ExtResource("1_ocaip")
+
+[node name="Toggle" type="Button" parent="."]
+unique_name_in_owner = true
+z_index = 4096
+z_as_relative = false
+custom_minimum_size = Vector2(32, 32)
+offset_left = -12.0
+offset_top = -49.0
+offset_right = 20.0
+offset_bottom = -17.0
+scale = Vector2(0.75, 0.75)
+focus_mode = 0
+toggle_mode = true
+flat = true
+
+[node name="CitizenToggle" type="Sprite2D" parent="Toggle"]
+unique_name_in_owner = true
+texture = ExtResource("2_abe5q")
+offset = Vector2(16, 16)
+vframes = 2
 
 [node name="fire" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true

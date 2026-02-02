@@ -32,7 +32,6 @@ var dispatchDay : bool = false
 
 var night_is_expansion: bool = false
 func _ready() -> void:
-	
 	# Load profile data
 	Global.unlockedCards = Card.DEFAULT_CARDS
 	SaveLoad._load_profile()
@@ -246,7 +245,7 @@ func on_night_started() -> void:
 	
 	for c in ui.get_children():
 		if !c is Control: continue
-		if c == ui.night_counter or c == ui.decrees : continue
+		if c == ui.info_overlay or c == ui.decrees : continue
 		c.hide()
 
 func on_enemy_group_eliminated() -> void:

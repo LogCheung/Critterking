@@ -27,7 +27,7 @@ signal unit_healed
 @onready var crtr_pause: AudioStreamPlayer = %crtrPause
 @onready var dispatch: Control = %Dispatch
 @onready var decrees: Control = %Decrees
-@onready var night_counter: Control = %NightCounter
+@onready var info_overlay: InfoOverlay = %InfoOverlay
 @onready var songs : Array = get_tree().get_nodes_in_group("MUSIC")
 @onready var party_current: Label = %PartyCurrent
 @onready var party_limit: Label = %PartyLimit
@@ -108,7 +108,7 @@ func play_song(song : AudioStreamPlayer) -> void:
 func control_is_visible() -> bool:
 	for c in get_children():
 		if !c is Control: continue
-		if c == %NightCounter or c == %Decrees : continue
+		if c == info_overlay or c == %Decrees : continue
 		if c.visible : return true
 	return false
 	
@@ -207,7 +207,7 @@ func display_hand() -> void:
 	hand.show()
 	end_turn.show()
 	decrees.show()
-	night_counter.show()
+	info_overlay.show()
 	displaying_cards = false
 	await get_tree().create_timer(.05).timeout
 	for c : Card in hand_container.get_children():
@@ -234,7 +234,7 @@ func on_game_over() -> void:
 	world.on_night_ended()
 	hand.hide()
 	end_turn.hide()
-	night_counter.hide()
+	info_overlay.hide()
 	decrees.hide()
 	cards.hide()
 	
@@ -260,7 +260,7 @@ func victory() -> void:
 	hand.hide()
 	end_turn.hide()
 	%Tutorial.hide()
-	night_counter.hide()
+	info_overlay.hide()
 	gameover.show()
 	
 	%over.texture = load("res://UI/Assets/menus/gwj2win.png")
@@ -295,7 +295,7 @@ func _on_endless_pressed() -> void:
 	%unlock.visible = true
 	%gameover.hide()
 	end_turn.show()
-	night_counter.show()
+	info_overlay.show()
 	pass # Replace with function body.
 
 
@@ -617,7 +617,7 @@ func load_world() -> void:
 	world.create_enemy_perimeter(11 + Global.expansions, false)
 	
 	mainmenu.hide()
-	night_counter.show()
+	info_overlay.show()
 	end_turn.show()
 	hand.show()
 	decrees.show()
@@ -756,6 +756,7 @@ func hide_unlocks() -> void:
 	var i : int  = 0 
 	for card : Card in unlockCards:
 		card.visible = false
+		card.type = Card.CARDTYPE.NONE
 
 
 func _on_back_pressed() -> void:
