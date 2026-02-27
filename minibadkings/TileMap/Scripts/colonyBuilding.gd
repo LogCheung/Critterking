@@ -94,119 +94,90 @@ func match_type() -> void:
 	match type:
 		# Satisfaction buildings
 		TYPE.TAVERN:
-			traitAmt = 1
-			traitType = Global.TRAITTYPE.CULTURE
-			resourceType = Global.RESOURCETYPE.SATISFACTION
-			resourceAmt = 5
-			cooldown = 1
-			
+			set_building_properties(1,Global.TRAITTYPE.CULTURE,Global.RESOURCETYPE.SATISFACTION,
+			5,1,0,Global.RESOURCETYPE.NONE)
 		TYPE.MONUMENT:
-			traitAmt = 1
-			traitType = Global.TRAITTYPE.CULTURE
-			resourceType = Global.RESOURCETYPE.SATISFACTION
-			resourceAmt = 10
-			costType = Global.RESOURCETYPE.MONEY
-			costAmt = 5
-			cooldown = 1
-			
+			set_building_properties(1,Global.TRAITTYPE.CULTURE,Global.RESOURCETYPE.SATISFACTION,
+			10,1,5,Global.RESOURCETYPE.MONEY)
 		TYPE.CASINO:
-			traitAmt = 1
-			traitType = Global.TRAITTYPE.COMMERCE
-			resourceAmt = 2 
-			resourceType = Global.RESOURCETYPE.SATISFACTION
-			scalingMult = 2
-			scalingTrait = Global.TRAITTYPE.COMMERCE
+			set_building_properties(1,Global.TRAITTYPE.COMMERCE,Global.RESOURCETYPE.SATISFACTION,
+			2,1,0,Global.RESOURCETYPE.NONE,100.0,Global.TRAITTYPE.NONE,Global.TRAITTYPE.COMMERCE,
+			2)
+			
 		TYPE.THEATRE:
-			traitAmt = 1
-			traitType = Global.TRAITTYPE.CULTURE
-			resourceAmt = 2 
-			resourceType = Global.RESOURCETYPE.SATISFACTION
-			scalingMult = 2
-			scalingTrait = Global.TRAITTYPE.CULTURE
+			set_building_properties(1,Global.TRAITTYPE.CULTURE,Global.RESOURCETYPE.SATISFACTION,
+			2,1,0,Global.RESOURCETYPE.NONE,100.0,Global.TRAITTYPE.NONE,Global.TRAITTYPE.CULTURE,
+			2)
 		# Money buildings
 		TYPE.HALL:
-			traitAmt = 1
-			traitType = Global.TRAITTYPE.COMMERCE
-			resourceType = Global.RESOURCETYPE.MONEY
-			resourceAmt = 5
-			cooldown = 1
+			set_building_properties(1,Global.TRAITTYPE.COMMERCE,Global.RESOURCETYPE.MONEY,
+			5,1,0,Global.RESOURCETYPE.NONE)
 		TYPE.TRADINGPOST:
-			traitAmt = 2
-			traitType = Global.TRAITTYPE.COMMERCE
-			resourceType = Global.RESOURCETYPE.MONEY
-			resourceAmt = 0
-			scalingMult = 5
-			scalingTrait = Global.TRAITTYPE.FAME
-			cooldown = 1
+			set_building_properties(2,Global.TRAITTYPE.COMMERCE,Global.RESOURCETYPE.MONEY,
+			0,1,0,Global.RESOURCETYPE.NONE,100.0,Global.TRAITTYPE.NONE,Global.TRAITTYPE.FAME,
+			5)
+			
 		TYPE.MARKETPLACE:
-			resourceType = Global.RESOURCETYPE.MONEY
-			resourceAmt = 8
-			scalingMult = 6
-			scalingTrait = Global.TRAITTYPE.COMMERCE
-			cooldown = 1
+			set_building_properties(0,Global.TRAITTYPE.NONE,Global.RESOURCETYPE.MONEY,
+			8,1,0,Global.RESOURCETYPE.NONE,100.0,Global.TRAITTYPE.NONE,Global.TRAITTYPE.COMMERCE,
+			6)
 		TYPE.GARDEN:
-			traitAmt = 1
-			traitType = Global.TRAITTYPE.COMMERCE
-			resourceType = Global.RESOURCETYPE.MONEY
-			resourceAmt = 3
-			scalingMult = 2
-			scalingTrait = Global.TRAITTYPE.PRODUCTIVITY
-			cooldown = 1
+			set_building_properties(1,Global.TRAITTYPE.COMMERCE,Global.RESOURCETYPE.MONEY,
+			3,1,0,Global.RESOURCETYPE.NONE,100.0,Global.TRAITTYPE.NONE,Global.TRAITTYPE.PRODUCTIVITY,
+			2)
 		# Citizen buildings
 		TYPE.HOUSE:
 			sprite_2d.texture = HOUSEA if randi() % 2 == 0 else HOUSEB
-			traitAmt = 1
-			traitType = Global.TRAITTYPE.FAME
-			cooldown = 2
-			resourceAmt = 1
-			resourceType = Global.RESOURCETYPE.CITIZEN
+			set_building_properties(1,Global.TRAITTYPE.FAME,Global.RESOURCETYPE.CITIZEN,1,
+			2,0,Global.RESOURCETYPE.NONE)
 			
 			await anim.animation_finished
 			duplicate_sprite()
+			return
 		TYPE.CUSTOMS:
-			traitAmt = 1
-			traitType = Global.TRAITTYPE.FAME
-			resourceAmt = 1
-			resourceType = Global.RESOURCETYPE.CITIZEN
-			chance = 25
-			chanceTrait = Global.TRAITTYPE.CULTURE
+			set_building_properties(1,Global.TRAITTYPE.FAME,Global.RESOURCETYPE.CITIZEN,
+			1,1,0,Global.RESOURCETYPE.NONE,25.0,Global.TRAITTYPE.CULTURE)
+			
 		TYPE.PANTRY:
-			traitAmt = 1
-			traitType = Global.TRAITTYPE.FAME
-			chance = 25
-			chanceTrait = Global.TRAITTYPE.CULTURE
-			costType = Global.RESOURCETYPE.FOOD
-			costAmt = 1
+			set_building_properties(1,Global.TRAITTYPE.FAME,Global.RESOURCETYPE.NONE,
+			0,1,1,Global.RESOURCETYPE.FOOD,25.0,Global.TRAITTYPE.CULTURE)
 		TYPE.GUILD:
-			traitAmt = 1
-			traitType = Global.TRAITTYPE.FAME
-			resourceAmt = 1
-			resourceType = Global.RESOURCETYPE.CITIZEN
-			chance = 25
-			chanceTrait = Global.TRAITTYPE.FAME
+			set_building_properties(1,Global.TRAITTYPE.FAME,Global.RESOURCETYPE.CITIZEN,
+			1,1,0,Global.RESOURCETYPE.NONE,25.0,Global.TRAITTYPE.FAME)
+			
 		# Food buildings
 		TYPE.FIELD:
-			traitAmt = 1
-			traitType = Global.TRAITTYPE.PRODUCTIVITY
-			resourceType = Global.RESOURCETYPE.FOOD
-			resourceAmt = 4
-			cooldown = 1
+			set_building_properties(1,Global.TRAITTYPE.PRODUCTIVITY,Global.RESOURCETYPE.FOOD,
+			4,1,0,Global.RESOURCETYPE.NONE)
+
 		TYPE.SCHOOL:
-			traitType = Global.TRAITTYPE.PRODUCTIVITY
-			costType = Global.RESOURCETYPE.MONEY
-			costAmt = 4
-			pass
+			set_building_properties(1,Global.TRAITTYPE.PRODUCTIVITY,Global.RESOURCETYPE.NONE,
+			0,1,4,Global.RESOURCETYPE.MONEY)
+			
 		TYPE.POND:
 			pass
 		TYPE.BAKERY:
-			resourceType = Global.RESOURCETYPE.FOOD
-			resourceAmt = 2
-			cooldown = 1
-			
-			scalingMult = 2
-			scalingTrait = Global.TRAITTYPE.PRODUCTIVITY
-			pass
+			set_building_properties(0,Global.TRAITTYPE.PRODUCTIVITY,Global.RESOURCETYPE.FOOD,
+			2,1,0,Global.RESOURCETYPE.NONE,100.0,Global.TRAITTYPE.NONE,Global.TRAITTYPE.PRODUCTIVITY,
+			2)
+	
+	var path = "res://TileMap/Assets/"+str(TYPE.keys()[type]).to_lower()+"Build.png"
+	sprite_2d.texture = load(path)
 
-
-func _on_toggle_pressed() -> void:
-	print(toggle.button_pressed)
+func set_building_properties(tAmt : int, tType : Global.TRAITTYPE, 
+rType : Global.RESOURCETYPE, rAmt : int, cd : int, cAmt : int, 
+cType : Global.RESOURCETYPE, chNum : float = 100.0,
+chTrait : Global.TRAITTYPE = Global.TRAITTYPE.NONE,
+sTrait : Global.TRAITTYPE = Global.TRAITTYPE.NONE, 
+sMult : int = 1, ) -> void:
+	traitAmt = tAmt
+	traitType = tType
+	resourceType = rType
+	resourceAmt = rAmt
+	cooldown = cd
+	costAmt = cAmt
+	costType = cType
+	chance = chNum
+	chanceTrait = chTrait
+	scalingTrait = sTrait
+	scalingMult = sMult

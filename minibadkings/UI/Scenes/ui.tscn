@@ -605,7 +605,6 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="AssignToggle" type="Control" parent="InfoOverlay"]
-z_index = 4096
 z_as_relative = false
 custom_minimum_size = Vector2(96, 96)
 anchors_preset = 0

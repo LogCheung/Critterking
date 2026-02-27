@@ -88,16 +88,12 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	#for i in range(1):
-		#var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.FORT
-		#ui.hand_container.add_child(hCard)
-		#hCard.set_owner(get_tree().get_current_scene())
-	#for i in range(1):
-		#var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.DESTROY
-		#ui.hand_container.add_child(hCard)
-		#hCard.set_owner(get_tree().get_current_scene())
+	for i in range(1):
+		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.MONUMENT
+		ui.hand_container.add_child(hCard)
+		hCard.set_owner(get_tree().get_current_scene())
+	
 	#Challenges
 	if ui.currentChal == UI.CHALLENGE.JUICED: Engine.time_scale = 2.5
 	else: Engine.time_scale = 1

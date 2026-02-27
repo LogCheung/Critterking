@@ -12,11 +12,11 @@ CARDTYPE.ACIDIC, CARDTYPE.FLYING, CARDTYPE.CRAZED,
 CARDTYPE.TRAPS, CARDTYPE.HOUSE, CARDTYPE.CARE, CARDTYPE.FARM, CARDTYPE.SAPSTORE,
 CARDTYPE.NURSERY, CARDTYPE.STORAGE, CARDTYPE.DESTROY,
 # colony buildings
-#CARDTYPE.TAVERN,  CARDTYPE.MONUMENT, CARDTYPE.CASINO, 
-#CARDTYPE.THEATRE, CARDTYPE.HALL, CARDTYPE.TRADINGPOST, 
-#CARDTYPE.MARKETPLACE, CARDTYPE.GARDEN,CARDTYPE.CUSTOMS, 
-#CARDTYPE.PANTRY, CARDTYPE.GUILD, CARDTYPE.FIELD, 
-#CARDTYPE.SCHOOL, CARDTYPE.POND, CARDTYPE.BAKERY,
+CARDTYPE.TAVERN,  CARDTYPE.MONUMENT, CARDTYPE.CASINO, 
+CARDTYPE.THEATRE, CARDTYPE.HALL, CARDTYPE.TRADINGPOST, 
+CARDTYPE.MARKETPLACE, CARDTYPE.GARDEN,CARDTYPE.CUSTOMS, 
+CARDTYPE.PANTRY, CARDTYPE.GUILD, CARDTYPE.FIELD, 
+CARDTYPE.SCHOOL, CARDTYPE.POND, CARDTYPE.BAKERY,
 # charms
 CARDTYPE.HEARTLOCKET, CARDTYPE.RING, CARDTYPE.SWORD, CARDTYPE.FLAG, CARDTYPE.SODA, 
 CARDTYPE.ROLLERSKATE, CARDTYPE.MEDKIT, CARDTYPE.GLASSES, CARDTYPE.NAIL, 
@@ -40,11 +40,11 @@ enum CARDTYPE {
 	TRAPS , HOUSE, CARE , FARM , SAPSTORE, FORT, CAMPFIRE,# CLIFF, TUNNEL
 	NURSERY, STORAGE, 
 	
-	#TAVERN, MONUMENT, CASINO, 
-	#THEATRE, HALL, TRADINGPOST, 
-	#MARKETPLACE, GARDEN,CUSTOMS, 
-	#PANTRY, GUILD, FIELD, 
-	#SCHOOL, POND, BAKERY,
+	TAVERN, MONUMENT, CASINO, 
+	THEATRE, HALL, TRADINGPOST, 
+	MARKETPLACE, GARDEN,CUSTOMS, 
+	PANTRY, GUILD, FIELD, 
+	SCHOOL, POND, BAKERY,
 	# general
 	PONDER, DESTROY,
 	
@@ -92,9 +92,9 @@ var is_under_mouse : bool = false
 func _ready() -> void:
 	if for_show: scale = Vector2(3,3)
 	if shop_card : set_up()
+	match_sprite_type()
 
 func set_up() -> void:
-	match_sprite_type()
 	default_position = position
 	default_custom_min = custom_minimum_size
 	setting_up = false
@@ -149,9 +149,11 @@ func handle_drag() -> void:
 		if is_under_mouse : return
 		set_to_default()
 	
-	if Input.is_action_just_pressed("cancel"):
+	if Input.is_action_just_pressed("cancel") and selected:
 		set_to_default()
 		ui.refresh_positions()
+		for cell in tileWorld.hover.get_used_cells():
+			tileWorld.hover.set_cell(cell,-1)
 
 func set_to_default() -> void:
 	sprite_2d.scale = Vector2(1.0,1.0)
@@ -264,7 +266,7 @@ func plop_building() -> void:
 		return
 	
 	var buildingNode = get_tree().get_first_node_in_group("BUILDINGSNODE")
-	var building = BUILDING.instantiate()# if type < CARDTYPE.TAVERN else COLONY.instantiate()
+	var building = BUILDING.instantiate() if type < CARDTYPE.TAVERN else COLONY.instantiate()
 	if type == CARDTYPE.HOUSE : building = COLONY.instantiate()
 	
 	building = match_building_type(building)
@@ -328,7 +330,6 @@ func create_destroy(pos : Vector2) -> void:
 	des.global_position = pos
 	world.add_child(des)
 	des.set_owner(get_tree().get_current_scene())
-	pass
 
 func check_if_merge(plopTile : Vector2) -> bool:
 	if type > Unit.TYPE.CRAZED: return false
@@ -371,7 +372,7 @@ func randomize_type() -> void:
 		ROLLTYPE.BLESSING:
 			type = randi_range(CARDTYPE.INSPIRATION,CARDTYPE.CONSTRUCTION)
 		ROLLTYPE.SHOP:
-			type = randi_range(CARDTYPE.BITER,CARDTYPE.CRAZED) #randi_range(CARDTYPE.TAVERN,CARDTYPE.BAKERY)
+			type = randi_range(CARDTYPE.TAVERN,CARDTYPE.BAKERY)#randi_range(CARDTYPE.BITER,CARDTYPE.CRAZED) 
 	if type == CARDTYPE.HOUSE : randomize_type()
 	if type == CARDTYPE.FLAG : randomize_type() # nuke flag
 	if !Global.unlockedCards.has(type) : randomize_type()
