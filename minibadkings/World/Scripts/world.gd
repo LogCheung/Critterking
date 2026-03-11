@@ -88,11 +88,11 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	for i in range(1):
-		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.MONUMENT
-		ui.hand_container.add_child(hCard)
-		hCard.set_owner(get_tree().get_current_scene())
+	#for i in range(1):
+		#var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
+		#hCard.type = Card.CARDTYPE.MONUMENT
+		#ui.hand_container.add_child(hCard)
+		#hCard.set_owner(get_tree().get_current_scene())
 	
 	#Challenges
 	if ui.currentChal == UI.CHALLENGE.JUICED: Engine.time_scale = 2.5
@@ -136,7 +136,7 @@ func clear_world() -> void:
 	# cards
 	var cards = get_tree().get_nodes_in_group("CARD")
 	for c : Card in cards:
-		if c.for_show : continue
+		if c.for_show or c.inspected : continue
 		c.queue_free()
 	# obstacles
 	for cell in tileWorld.obstacles.get_used_cells():
@@ -282,6 +282,9 @@ func on_night_ended() -> void:
 	ui.rollArray.append(Card.ROLLTYPE.GENERAL)
 	start_day()
 	tileWorld.activeDecree = Decree.TYPE.NONE
+	
+	# resource consumption
+	Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] -= 5
 
 func clear_entities() -> void:
 	# clear dead enemies

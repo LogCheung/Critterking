@@ -23,7 +23,7 @@ func on_day_ended() -> void:
 	if type == TYPE.HOUSE and pantryActive:
 		trigger_building()
 		time = 0
-	if time >= cooldown:
+	if time >= cooldown and active:
 		trigger_building()
 	
 func trigger_building() -> void:
@@ -160,7 +160,15 @@ func match_type() -> void:
 			set_building_properties(0,Global.TRAITTYPE.PRODUCTIVITY,Global.RESOURCETYPE.FOOD,
 			2,1,0,Global.RESOURCETYPE.NONE,100.0,Global.TRAITTYPE.NONE,Global.TRAITTYPE.PRODUCTIVITY,
 			2)
-	
+		TYPE.RUINS:
+			%fire.hide()
+			sprite_2d.texture = HOUSEA
+			sprite_2d.frame = 1
+			sprite_2d.offset = Vector2(0,-16)
+			
+			set_building_properties(0,Global.TRAITTYPE.NONE,Global.RESOURCETYPE.NONE,0,
+			1,0,Global.RESOURCETYPE.NONE)
+
 	var path = "res://TileMap/Assets/"+str(TYPE.keys()[type]).to_lower()+"Build.png"
 	sprite_2d.texture = load(path)
 

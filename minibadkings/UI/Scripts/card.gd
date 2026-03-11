@@ -64,6 +64,7 @@ enum ROLLTYPE {
 @export var rolltype : ROLLTYPE
 @export var for_show : bool  = false
 @export var shop_card : bool = false
+@export var inspected : bool = false
 @export var level : int = 1
 @export var being_charmed : bool
 @export var charm : Charm 
@@ -112,7 +113,7 @@ func handle_drag() -> void:
 		default_position = position
 		refreshing = false
 		return
-	if for_show: return
+	if for_show or inspected: return
 	if ui.pausemenu.visible : return
 	# dragging and plopping
 	if Input.is_action_just_pressed("select") and !selected:
@@ -487,6 +488,10 @@ func match_sprite_type() -> void:
 
 
 func _on_selected_gui_input(e: InputEvent) -> void:
+	if e.is_action_released("inspect") and !selected and is_under_mouse:
+		ui.anim.play("InspectShow")
+		ui.inspection_card.type = type
+		ui.inspection_card.match_sprite_type()
 	if choice_picked : return
 	if being_charmed : return
 	if !e.is_action_released("select") : return # if not clicking bye bye

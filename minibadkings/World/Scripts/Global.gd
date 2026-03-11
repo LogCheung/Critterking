@@ -11,15 +11,17 @@ enum RESOURCETYPE {
 }
 # resources
 @export var resource_dict : Dictionary = {
+	Global.RESOURCETYPE.NONE : 0,
 	Global.RESOURCETYPE.SATISFACTION : 50,
-	Global.RESOURCETYPE.MONEY : 0,
+	Global.RESOURCETYPE.MONEY : 40,
 	Global.RESOURCETYPE.FOOD : 0,
-	Global.RESOURCETYPE.CITIZEN : 0,
+	Global.RESOURCETYPE.CITIZEN : 3,
 	Global.RESOURCETYPE.WORKER : 0,
 }
 
 # traits
 @export var trait_dict : Dictionary = {
+	Global.TRAITTYPE.NONE : 0,
 	Global.TRAITTYPE.CULTURE : 0,
 	Global.TRAITTYPE.COMMERCE : 0,
 	Global.TRAITTYPE.FAME : 0, 

@@ -48,6 +48,7 @@ signal unit_healed
 @onready var food_label: Label = %FoodLabel
 @onready var citizen_label: Label = %CitizenLabel
 @onready var shop: Control = %Shop
+@onready var inspection_card: Card = %InspectionCard
 
 @export var rollArray : Array = []
 @export var currentAscn : int = 0
@@ -220,7 +221,9 @@ func display_hand() -> void:
 	refresh_positions()
 
 func _on_shop_end_pressed() -> void:
+	save_game_delayed()
 	shop.hide()
+	_update_resources()
 	display_hand()
 
 func save_game_delayed() -> void:
@@ -420,6 +423,14 @@ func _on_cam_speed_value_changed(new_value: float) -> void:
 	#Daytime Menu
 	
 func _on_endturn_pressed() -> void:
+	# hide assign mode
+	var event : InputEventAction = InputEventAction.new()
+	event.action = "select"
+	info_overlay._on_assign_toggle_gui_input(event)
+	# hide dispatch
+	if dispatch.visible: 
+		_on_dispatch_end_pressed()
+		return
 	# run colony buildings
 	for b : ColonyBuilding in get_tree().get_nodes_in_group("COLONY"):
 		b.day_ended.emit()
@@ -521,6 +532,69 @@ func _on_dispatch_end_pressed() -> void:
 			c.queue_free()
 	
 	refresh_positions()
+
+func _on_back_pressed() -> void:
+	%playmenu.hide()
+	%mainsprite.show()
+
+# lights for play menu
+func _on_adapt_pressed() -> void:
+	if anim.is_playing() : return
+	%ascensions.show()
+	pass
+
+func _on_adapt_mouse_entered() -> void:
+	%playmenu.frame = 3
+	pass # Replace with function body.
+
+func _on_button_mouse_exited() -> void:
+	%playmenu.frame = 0
+	pass # Replace with function body.
+
+func _on_load_mouse_entered() -> void:
+	%playmenu.frame = 2
+
+func _on_play_mouse_entered() -> void:
+	%playmenu.frame = 1
+
+# ascn menu
+func _on_ascnback_pressed() -> void:
+	%ascensions.hide()
+	pass # Replace with function body.
+
+
+func _on_resolution_item_selected(index: int) -> void:
+	if get_window().mode == Window.MODE_EXCLUSIVE_FULLSCREEN:
+		return
+	match index:
+		0:
+			get_window().size = Vector2i(1920,1080)
+		1:
+			get_window().size = Vector2i(1600,900)
+		2:
+			get_window().size = Vector2i(1280,720)
+
+func _on_format_item_selected(index: int) -> void:
+	match index:
+		0:
+			get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN
+		1:
+			get_window().mode = Window.MODE_WINDOWED
+		2:
+			get_window().mode = Window.MODE_FULLSCREEN
+			get_window().borderless = true
+
+
+func _on_unlock_c_button_pressed() -> void:
+	if anim.is_playing():return
+	if !%Card4.visible:
+		anim.play("unlockC")
+	
+
+func _on_unlock_button_pressed() -> void:
+	if anim.is_playing():return
+	if !%Card4.visible:
+		anim.play("cardunlock")
 	
 func refresh_positions() -> void:
 	# Add and remove dummy card to refresh positions
@@ -757,67 +831,3 @@ func hide_unlocks() -> void:
 	for card : Card in unlockCards:
 		card.visible = false
 		card.type = Card.CARDTYPE.NONE
-
-
-func _on_back_pressed() -> void:
-	%playmenu.hide()
-	%mainsprite.show()
-
-# lights for play menu
-func _on_adapt_pressed() -> void:
-	if anim.is_playing() : return
-	%ascensions.show()
-	pass
-
-func _on_adapt_mouse_entered() -> void:
-	%playmenu.frame = 3
-	pass # Replace with function body.
-
-func _on_button_mouse_exited() -> void:
-	%playmenu.frame = 0
-	pass # Replace with function body.
-
-func _on_load_mouse_entered() -> void:
-	%playmenu.frame = 2
-
-func _on_play_mouse_entered() -> void:
-	%playmenu.frame = 1
-
-# ascn menu
-func _on_ascnback_pressed() -> void:
-	%ascensions.hide()
-	pass # Replace with function body.
-
-
-func _on_resolution_item_selected(index: int) -> void:
-	if get_window().mode == Window.MODE_EXCLUSIVE_FULLSCREEN:
-		return
-	match index:
-		0:
-			get_window().size = Vector2i(1920,1080)
-		1:
-			get_window().size = Vector2i(1600,900)
-		2:
-			get_window().size = Vector2i(1280,720)
-
-func _on_format_item_selected(index: int) -> void:
-	match index:
-		0:
-			get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN
-		1:
-			get_window().mode = Window.MODE_WINDOWED
-		2:
-			get_window().mode = Window.MODE_FULLSCREEN
-			get_window().borderless = true
-
-
-func _on_unlock_c_button_pressed() -> void:
-	if anim.is_playing():return
-	if !%Card4.visible:
-		anim.play("unlockC")
-	
-
-func _on_unlock_button_pressed() -> void:
-	if anim.is_playing():return
-	if !%Card4.visible:
-		anim.play("cardunlock")

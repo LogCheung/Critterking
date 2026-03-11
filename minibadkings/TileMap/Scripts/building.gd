@@ -52,6 +52,8 @@ enum TYPE {
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
 @onready var toggle : Button = %Toggle
 @onready var citizen_toggle_sprite: Sprite2D = %CitizenToggle
+@onready var worker_alert_sprite: Sprite2D = %WorkerAlert
+
 
 var buff_tiles : Array
 var tile : Vector2i

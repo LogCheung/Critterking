@@ -1,7 +1,8 @@
-[gd_scene load_steps=23 format=3 uid="uid://c37h8qvy4nsbf"]
+[gd_scene load_steps=24 format=3 uid="uid://c37h8qvy4nsbf"]
 
 [ext_resource type="Script" uid="uid://dnda20j22irtp" path="res://TileMap/Scripts/colonyBuilding.gd" id="1_ocaip"]
 [ext_resource type="Texture2D" uid="uid://orgrk21fx4vu" path="res://UI/Assets/alerts/citizenToggle.png" id="2_abe5q"]
+[ext_resource type="Texture2D" uid="uid://chrmk05cm6sxw" path="res://UI/Assets/alerts/workerAlert.png" id="2_ef7sn"]
 [ext_resource type="Texture2D" uid="uid://dw3xay3qj0ihn" path="res://TileMap/Assets/fire.png" id="2_f8lb6"]
 [ext_resource type="Texture2D" uid="uid://b2tb0eb75whjr" path="res://TileMap/Assets/buildCampfire.png" id="3_abe5q"]
 [ext_resource type="Texture2D" uid="uid://du3cwfifspbnp" path="res://UI/Assets/HealingUnder.png" id="4_ef7sn"]
@@ -135,6 +136,13 @@ y_sort_enabled = true
 collision_layer = 10
 input_pickable = true
 script = ExtResource("1_ocaip")
+active = false
+
+[node name="WorkerAlert" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+z_index = 1
+position = Vector2(-1, -38)
+texture = ExtResource("2_ef7sn")
 
 [node name="Toggle" type="Button" parent="."]
 unique_name_in_owner = true

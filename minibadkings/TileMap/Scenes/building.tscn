@@ -1,8 +1,9 @@
-[gd_scene load_steps=26 format=3 uid="uid://cct0mtgpy7ut6"]
+[gd_scene load_steps=27 format=3 uid="uid://cct0mtgpy7ut6"]
 
 [ext_resource type="Script" uid="uid://dpq0gk0d460fx" path="res://TileMap/Scripts/building.gd" id="1_mpr6t"]
 [ext_resource type="Texture2D" uid="uid://dw3xay3qj0ihn" path="res://TileMap/Assets/fire.png" id="2_cb372"]
 [ext_resource type="Texture2D" uid="uid://orgrk21fx4vu" path="res://UI/Assets/alerts/citizenToggle.png" id="2_g38fe"]
+[ext_resource type="Texture2D" uid="uid://chrmk05cm6sxw" path="res://UI/Assets/alerts/workerAlert.png" id="2_rtof6"]
 [ext_resource type="Texture2D" uid="uid://du3cwfifspbnp" path="res://UI/Assets/HealingUnder.png" id="3_i4c7k"]
 [ext_resource type="Texture2D" uid="uid://o7rl0dbwfksb" path="res://TileMap/Assets/houseA.png" id="3_iqf5p"]
 [ext_resource type="Texture2D" uid="uid://bv3jqqow41vyp" path="res://UI/Assets/HealingOver.png" id="4_5rqce"]
@@ -142,6 +143,13 @@ collision_layer = 10
 input_pickable = true
 script = ExtResource("1_mpr6t")
 type = 1
+active = false
+
+[node name="WorkerAlert" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+z_index = 1
+position = Vector2(-1, -38)
+texture = ExtResource("2_rtof6")
 
 [node name="Toggle" type="Button" parent="."]
 unique_name_in_owner = true
