@@ -131,6 +131,7 @@ func match_type() -> void:
 			set_building_properties(1,Global.TRAITTYPE.FAME,Global.RESOURCETYPE.CITIZEN,1,
 			2,0,Global.RESOURCETYPE.NONE)
 			
+			tileWorld.restricted_tiles.append(doorstepTile)
 			await anim.animation_finished
 			duplicate_sprite()
 			return

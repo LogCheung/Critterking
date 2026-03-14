@@ -53,6 +53,7 @@ func new_game() -> void:
 	ui.rollArray.clear()
 	ui.rollArray.append(Card.ROLLTYPE.UNIT)
 	ui.rollArray.append(Card.ROLLTYPE.UNIT)
+	ui.rollArray.append(Card.ROLLTYPE.SHOP)
 	
 	await get_tree().create_timer(.125).timeout
 	# reset data
@@ -243,6 +244,16 @@ func on_night_started() -> void:
 		if !c is Control: continue
 		if c == ui.info_overlay or c == ui.decrees : continue
 		c.hide()
+		
+	# resource consumption
+	Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] -= 5
+	Global.resource_dict[Global.RESOURCETYPE.FOOD] -= Global.partyCount * 2
+	
+	# pay wages
+	for g : AllyGroup in get_tree().get_nodes_in_group("ALLYGROUP"):
+		Global.resource_dict[Global.RESOURCETYPE.MONEY] -= g.wage
+		pass
+	ui._update_resources()
 
 func on_enemy_group_eliminated() -> void:
 	if spawned_parties < enemy_parties : return
@@ -280,12 +291,12 @@ func on_night_ended() -> void:
 	if is_combat_phase == false : return
 	if ui.anim.is_playing():return
 	ui.rollArray.append(Card.ROLLTYPE.GENERAL)
+	ui.rollArray.append(Card.ROLLTYPE.SHOP)
 	start_day()
 	tileWorld.activeDecree = Decree.TYPE.NONE
 	
-	# resource consumption
-	Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] -= 5
-
+	# reward
+	Global.resource_dict[Global.RESOURCETYPE.MONEY] += 10
 func clear_entities() -> void:
 	# clear dead enemies
 	if !get_tree():return
@@ -299,6 +310,7 @@ func clear_entities() -> void:
 	# convert units to cards
 	var unitsGroups = get_tree().get_first_node_in_group("GROUPSNODE")
 	for g : Group in unitsGroups.get_children():
+		
 		if g.conscripted :
 			g.terminate()
 			continue

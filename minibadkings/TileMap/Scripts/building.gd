@@ -121,7 +121,6 @@ func match_type() -> void:
 			cooldown = 2
 			resourceAmt = 1
 			resourceType = Global.RESOURCETYPE.CITIZEN
-			
 			await anim.animation_finished
 			duplicate_sprite()
 		TYPE.TRAP:

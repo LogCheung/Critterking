@@ -26,6 +26,9 @@ CARDTYPE.WAR, CARDTYPE.CONSCRIPTION, CARDTYPE.MASTERY,  #CARDTYPE.INFLUENCE,
 CARDTYPE.CONSTRUCTION,
 
 ]
+const ENTRANCE_BUILDINGS : Array = [
+	CARDTYPE.HOUSE,CARDTYPE.CARE
+]
 
 # Crazed is border for units, Biter is start
 # Destroy is border for buildings, TRAPS is start
@@ -56,6 +59,7 @@ enum CARDTYPE {
 	CONSTRUCTION,
 	
 }
+
 enum ROLLTYPE {
 	GENERAL, UNIT, BUILDINGS, CHARM, BLESSING, SHOP
 }
@@ -196,9 +200,13 @@ func highlight_tiles() -> void:
 	# add appropriate tiles
 	for cell in tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),1):
 		if unit_tiles.has(cell) : continue
-		tileWorld.hover.set_cell(cell,0,Vector2(0,0),0)
+		tileWorld.hover.set_cell(cell,0,Vector2(0,0),0) # white
 		if tileWorld.buffed_tiles.has(cell):
-			tileWorld.hover.set_cell(cell,0,Vector2(0,1),0)
+			tileWorld.hover.set_cell(cell,0,Vector2(0,1),0) # green
+		if type > CARDTYPE.CRAZED and tileWorld.restricted_tiles.has(cell):
+			tileWorld.hover.set_cell(cell,0,Vector2(0,2),0) # red
+		if ENTRANCE_BUILDINGS.has(type) and tileWorld.blocked_entry_tiles.has(cell):
+			tileWorld.hover.set_cell(cell,0,Vector2(0,2),0) # red
 		tileWorld.hover.visible = true
 	
 	# highlight tile hovered over with card
@@ -271,11 +279,15 @@ func plop_building() -> void:
 	if type == CARDTYPE.HOUSE : building = COLONY.instantiate()
 	
 	building = match_building_type(building)
+	if tileWorld.restricted_tiles.has(Vector2i(tile)): return
 	if building == null : return # checking if was invalid spot, then match type would return null
 	
 	building.global_position = tileWorld.ground.map_to_local(tile)
 	buildingNode.add_child(building)
 	building.set_owner(get_tree().get_current_scene())
+	
+	# update blobked entry tiles
+	tileWorld.find_blocked_entry_tiles()
 	
 	ui._update_traits()
 	# remove self
@@ -292,6 +304,7 @@ func check_if_blocking(plopTile : Vector2) -> bool:
 		takenTiles.append(Vector2i(t.x-1,t.y))
 	if takenTiles.has(Vector2i(plopTile)): return true
 	return false
+
 
 func check_general() -> bool:
 	if type == CARDTYPE.PONDER:
@@ -445,7 +458,7 @@ func add_card_to_hand() -> void:
 func match_building_type(building : Building) -> Building:
 	building.type = type - CARDTYPE.TRAPS + 1
 	if building.type == Building.TYPE.CARE or building.type == Building.TYPE.HOUSE:
-		if check_if_blocking(tile):
+		if check_if_blocking(tile) :
 			sprite_2d.scale = Vector2(1.0,1.0)
 			position = default_position
 			selected = false
@@ -489,6 +502,7 @@ func match_sprite_type() -> void:
 
 func _on_selected_gui_input(e: InputEvent) -> void:
 	if e.is_action_released("inspect") and !selected and is_under_mouse:
+		print("ok")
 		ui.anim.play("InspectShow")
 		ui.inspection_card.type = type
 		ui.inspection_card.match_sprite_type()

@@ -296,6 +296,10 @@ func match_type() -> void:
 		path += ".png"
 		
 		sprite_2d.texture = load(path)
+		
+	if Global.nights <= 3 and type != TYPE.ZOMBIFIED:
+		health -= .5
+		attack_cd.wait_time += .25
 func find_building() -> void:
 	var buildings = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
 	buildings = buildings.filter(func(b):return b.type != Building.TYPE.TRAP)

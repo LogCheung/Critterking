@@ -17,7 +17,9 @@ var aStar : AStarGrid2D
 
 var using_decree : bool
 
+var blocked_entry_tiles : Array = []
 var buffed_tiles : Array = []
+var restricted_tiles : Array = []
 var wall_tiles : Array
 var start_wall_tiles : Array
 var unit_tiles : Array
@@ -238,6 +240,16 @@ func find_obstacle_tiles() -> void:
 	for x in range(4):
 		for y in range(6,9):
 			obstacle_tiles.append_array(obstacles.get_used_cells_by_id(1,Vector2i(x,y)))
+
+func find_blocked_entry_tiles() -> void:
+	var buildTiles = ground.get_used_cells_by_id(0,Vector2(0,0),2)
+	var takenTiles = []
+	
+	for t in buildTiles:
+		takenTiles.append(t)
+		takenTiles.append(Vector2i(t.x+1,t.y))
+		takenTiles.append(Vector2i(t.x-1,t.y))
+	blocked_entry_tiles = takenTiles
 
 func set_up_astar() -> void:
 	aStar = AStarGrid2D.new()

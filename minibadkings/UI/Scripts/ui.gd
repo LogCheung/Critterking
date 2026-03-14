@@ -162,13 +162,17 @@ func show_hand() -> void:
 	print("BITER BUGGG")
 	save_game_delayed()
 	rollArray.pop_front()
+	print(rollArray)
 	if rollArray.size() > 0:
+		if rollArray.front() == Card.ROLLTYPE.SHOP:
+			cards.hide()
+			display_shop()
+			return
 		cards.show()
 		displaying_cards = false
 		return
 	
 	cards.hide()
-	display_shop()
 	
 	if world.dispatchDay and Global.tutorialCharm:
 		%Tutorial.show()
@@ -221,6 +225,7 @@ func display_hand() -> void:
 	refresh_positions()
 
 func _on_shop_end_pressed() -> void:
+	rollArray.pop_front()
 	save_game_delayed()
 	shop.hide()
 	_update_resources()
@@ -424,9 +429,10 @@ func _on_cam_speed_value_changed(new_value: float) -> void:
 	
 func _on_endturn_pressed() -> void:
 	# hide assign mode
-	var event : InputEventAction = InputEventAction.new()
-	event.action = "select"
-	info_overlay._on_assign_toggle_gui_input(event)
+	if info_overlay.assignMode:
+		var event : InputEventAction = InputEventAction.new()
+		event.action = "select"
+		info_overlay._on_assign_toggle_gui_input(event)
 	# hide dispatch
 	if dispatch.visible: 
 		_on_dispatch_end_pressed()
@@ -731,9 +737,6 @@ func load_world() -> void:
 		if dupe.charm : 
 			dupe.charm_pos.add_child(dupe.charm)
 			dupe.charm.set_owner(get_tree().get_current_scene())
-	await get_tree().process_frame
-	for card : Card in hand_container.get_children():
-		card.set_up()
 		
 	# load decrees
 	for d : Decree in SaveLoad.SaveFileData.decreesEquipped:
@@ -781,15 +784,21 @@ func load_world() -> void:
 		unit._ready()
 		
 	if !rollArray.is_empty():
-		cards.show()
+		info_overlay.hide()
 		hand.hide()
 		end_turn.hide()
+		if rollArray.front() == Card.ROLLTYPE.SHOP: display_shop()
+		else: cards.show()
 	elif world.dispatchDay:
 		dispatch.show()
 		
 	for b in get_tree().get_nodes_in_group("BUILDING"):
 		b.process_mode = Node.PROCESS_MODE_INHERIT
-
+	
+	# load cards
+	await get_tree().process_frame
+	for card : Card in hand_container.get_children():
+		card.set_up()
 # unlocking new cards
 func _on_mainmenu_mouse_entered() -> void:
 	# check if main menu in on screen
