@@ -12,6 +12,7 @@ signal mouse_clicked
 @export var is_combat_phase : bool = false
 @export var enemy_parties : int = 3
 @export var upgraded_parties : int = 0
+@export var rebel_parties : int = 1
 
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var enemy_perimeters: Node = %EnemyPerimeters
@@ -27,6 +28,7 @@ var innerFollow : PathFollow2D
 var spawned_parties : int = 0
 var upgrades_given : int = 0
 var upgrade_nums : Array = []
+var rebel_nums : Array = []
 
 var dispatchDay : bool = false
 
@@ -197,6 +199,17 @@ func spawn_enemy() -> void:
 	enemyGroupNode.add_child(enemGroup)
 	enemGroup.set_owner(get_tree().get_current_scene())
 	
+	# check to spawn rebels
+	if rebel_nums.has(spawned_parties):
+		var houses : Array = get_tree().get_nodes_in_group("BUILDING")
+		houses.filter(func(e : Building):return e.type == Building.TYPE.HOUSE)
+		
+		var randHouse = randi_range(0,houses.size() - 1)
+		var rebelHouse : Building = houses[randHouse]
+		print(rebelHouse)
+		rebelHouse.anim.play("rebel")
+	
+	
 	# let units approach player borders before activation
 	var targetTiles = tileWorld.outskirt_tiles
 	targetTiles = targetTiles.map(func(t):return tileWorld.ground.map_to_local(t))
@@ -209,6 +222,7 @@ func spawn_enemy() -> void:
 	enemGroup.global_position = closest 
 	# set groupPos to target and the units within the group will follow
 	spawned_parties += 1
+	
 	
 
 func on_night_started() -> void:
@@ -231,6 +245,15 @@ func on_night_started() -> void:
 		while upgrade_nums.has(rand):
 			rand = randi_range(0,enemy_parties - 1)
 		upgrade_nums.append(rand)
+		
+	# set rebel numbers
+	rebel_nums.clear()
+	for i in range(rebel_parties):
+		var rand = randi_range(0,enemy_parties - 1)
+		while rebel_nums.has(rand):
+			rand = randi_range(0,enemy_parties - 1)
+		rebel_nums.append(rand)
+	print(rebel_nums)
 
 	# start game and hide menus
 	tileWorld.handle_navigable_cells()

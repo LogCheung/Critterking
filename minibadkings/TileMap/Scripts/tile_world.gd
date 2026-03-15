@@ -247,7 +247,6 @@ func find_blocked_entry_tiles() -> void:
 	
 	for t in buildTiles:
 		takenTiles.append(t)
-		takenTiles.append(Vector2i(t.x+1,t.y))
 		takenTiles.append(Vector2i(t.x-1,t.y))
 	blocked_entry_tiles = takenTiles
 

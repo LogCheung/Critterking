@@ -162,7 +162,6 @@ func show_hand() -> void:
 	print("BITER BUGGG")
 	save_game_delayed()
 	rollArray.pop_front()
-	print(rollArray)
 	if rollArray.size() > 0:
 		if rollArray.front() == Card.ROLLTYPE.SHOP:
 			cards.hide()

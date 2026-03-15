@@ -191,6 +191,16 @@ func duplicate_sprite() -> void:
 	highlightSprite = newSprite
 	pass
 
+func spawn_rebels() -> void:
+	var rebelGroup : EnemyGroup = load("res://Units/Scenes/enemy_group.tscn").instantiate()
+	rebelGroup.size = 6
+	rebelGroup.tile = doorstepTile
+	rebelGroup.global_position = tileWorld.ground.map_to_local(doorstepTile)
+	
+	var enemGroupNode = get_tree().get_first_node_in_group("ENEMYGRPNODE")
+	enemGroupNode.add_child(rebelGroup)
+	rebelGroup.set_owner(get_tree().get_current_scene())
+
 func on_destroyed() -> void:
 	if type == TYPE.RUINS : return
 	# Change appearance and play destroy
