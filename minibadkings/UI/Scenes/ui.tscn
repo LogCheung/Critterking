@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=63 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Script" uid="uid://b174vncna6gct" path="res://UI/Scenes/info_overlay.gd" id="2_ffuy1"]
@@ -18,6 +18,7 @@
 [ext_resource type="FontFile" uid="uid://dqt550qq7jmvu" path="res://Units/Debug/PressStart2P.ttf" id="7_titua"]
 [ext_resource type="Script" uid="uid://dn5w3jfm4dcjv" path="res://UI/Scripts/slider.gd" id="8_6dw6b"]
 [ext_resource type="Texture2D" uid="uid://o7d76rkb77wk" path="res://UI/Assets/alerts/discoveryPrompt.png" id="8_lpmf3"]
+[ext_resource type="Script" uid="uid://dtyfxfj7mly0l" path="res://UI/Scripts/tutorial.gd" id="8_nh1tr"]
 [ext_resource type="AudioStream" uid="uid://bmkptsfk4bkc" path="res://Audio/music/crtrpause.wav" id="8_oj6tj"]
 [ext_resource type="AudioStream" uid="uid://bj8clo00ioln7" path="res://Audio/music/crtrover.wav" id="9_ftqev"]
 [ext_resource type="Texture2D" uid="uid://jtekvj8524k4" path="res://UI/Assets/continueButton.png" id="9_l2k1h"]
@@ -696,6 +697,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("8_nh1tr")
 
 [node name="box" type="Sprite2D" parent="Tutorial"]
 position = Vector2(1775, 481)

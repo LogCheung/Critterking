@@ -39,16 +39,9 @@ signal unit_healed
 @onready var hand_container: HBoxContainer = %HandContainer
 @onready var settB = settings.get_children()
 @onready var ascensions: Control = %ascensions
-@onready var culture_trait: Label = %CultureTrait
-@onready var commerce_trait: Label = %CommerceTrait
-@onready var fame_trait: Label = %FameTrait
-@onready var productivity_trait: Label = %ProductivityTrait
-@onready var satisfaction_label: Label = %SatisfactionLabel
-@onready var money_label: Label = %MoneyLabel
-@onready var food_label: Label = %FoodLabel
-@onready var citizen_label: Label = %CitizenLabel
 @onready var shop: Control = %Shop
 @onready var inspection_card: Card = %InspectionCard
+@onready var tutorial: Tutorial = %Tutorial
 
 @export var rollArray : Array = []
 @export var currentAscn : int = 0
@@ -98,8 +91,8 @@ func _ready() -> void:
 	mainmenu.show()
 	
 	# resource and trait labels
-	_update_resources()
-	_update_traits()
+	info_overlay._update_resources()
+	info_overlay._update_traits()
 	
 func play_song(song : AudioStreamPlayer) -> void:
 	for s : AudioStreamPlayer in songs:
@@ -133,14 +126,7 @@ func _on_show_pressed() -> void:
 		%CardShow.hframes = 20
 		
 		# tutorial for decrees
-		if rolltype == Card.ROLLTYPE.BLESSING and Global.tutorialDecree:
-			%Tutorial.show()
-			%TutorialTitle.text = "Decrees"
-			%TutorialText.text = "Decrees are [color=yellow]active[/color] abilities that can be used during the night."
-			%TutorialText.text += "\n\nOnce used they will be on cooldown for a number of nights but can greatly help your defense."
-			%TutorialText.text += "\n\nAfter picking one, they will be displayed on the left."
-			Global.tutorialDecree = false
-			pass
+		tutorial.play_decrees_tutorial()
 	anim.play("cardshow")
 	
 func display_cards(display : bool) -> void:
@@ -159,7 +145,6 @@ func display_cards(display : bool) -> void:
 		
 func show_hand() -> void:
 	# when card is chosen from deck of cards
-	print("BITER BUGGG")
 	save_game_delayed()
 	rollArray.pop_front()
 	if rollArray.size() > 0:
@@ -173,30 +158,8 @@ func show_hand() -> void:
 	
 	cards.hide()
 	
-	if world.dispatchDay and Global.tutorialCharm:
-		%Tutorial.show()
-		%TutorialTitle.text = "Discoveries"
-		%TutorialText.text = "Units sent out will be disabled for a night, but will come back tomorrow with an upgrade"
-		%TutorialText.text += "\n\nYou can continue without selecting if you choose."
-		Global.tutorialCharm = false
-		return
-	
-	if Global.tutorial:
-		%Tutorial.show()
-		%TutorialTitle.text = "Placing"
-		%TutorialText.text = "Place your cards by dragging them from your hand onto the map!"
-		%TutorialText.text += "\n\nIf you have two of the same unit card, you can merge them!"
-		
-		await card_placed
-		await card_placed
-		
-		%TutorialTitle.text = "Unit Types"
-		%TutorialText.text = "Units tend to fall into categories, offensive, defensive, and ranged"
-		%TutorialText.text += "\n\nDuring battle, strategize carefully to ensure a favorable matchup!"
-		
-		await card_placed
-		%TutorialTitle.text = "Camera"
-		%TutorialText.text = "\nUse WASD to move your camera. Hold down shift to speed up the camera!"
+	tutorial.play_charms_tutorial()
+	tutorial.play_day_basics_tutorial()
 
 func display_shop() -> void:
 	shop.show()
@@ -206,7 +169,7 @@ func display_shop() -> void:
 		slot.price_label.visible = true
 
 func display_hand() -> void:
-	%Tutorial.hide()
+	#%Tutorial.hide()
 	
 	hand.show()
 	end_turn.show()
@@ -227,8 +190,11 @@ func _on_shop_end_pressed() -> void:
 	rollArray.pop_front()
 	save_game_delayed()
 	shop.hide()
-	_update_resources()
+	info_overlay._update_resources()
 	display_hand()
+	
+	tutorial.play_charms_tutorial()
+	tutorial.play_day_basics_tutorial()
 
 func save_game_delayed() -> void:
 	for i in range(5):
@@ -321,11 +287,7 @@ func _on_play_pressed() -> void:
 	%crtrDay.play()
 	$AnimationPlayer.play("RESET")
 
-	if Global.tutorial:
-		%Tutorial.show()
-		%TutorialTitle.text = "Cards"
-		%TutorialText.text = "Every night you will be able to draw a card, click the deck and make your selection!"
-		%TutorialText.text += "\n\nThe first night you will be able draw twice!"
+	tutorial.play_card_tutorial()
 func _on_play_menu_pressed() -> void:
 	%mainsprite.hide()
 	%playmenu.show()
@@ -440,7 +402,7 @@ func _on_endturn_pressed() -> void:
 	for b : ColonyBuilding in get_tree().get_nodes_in_group("COLONY"):
 		b.day_ended.emit()
 		
-	_update_resources()
+	info_overlay._update_resources()
 	
 	# check if house is not placed
 	%Button.play()
@@ -455,45 +417,7 @@ func _on_endturn_pressed() -> void:
 	world.night_started.emit()
 	%noHouse.hide()
 	
-	if Global.tutorial:
-		%Tutorial.show()
-		%TutorialTitle.text = "Commanding"
-		%TutorialText.text = "Click on a unit group to select them! [color=yellow]Click a tile to move the group there.[/color]"
-		%TutorialText.text += "\n\nEnemies will approach from all sides,[color=red] keep your houses safe[/color]!"
-		%TutorialText.text += "\n\nMove your units, defeat enemies, survive!"
-		await get_tree().create_timer(15).timeout
-		
-		%TutorialTitle.text = "Healing"
-		%TutorialText.text = "If one of your unit groups has lost units. Click on them and click on your house to heal them."
-		%TutorialText.text += "\n\nBe careful as they will be temporarily out of the battle."
-		
-		await world.night_ended
-		%Tutorial.hide()
-		Global.tutorial = false
-
-func _update_resources() -> void:
-	satisfaction_label.text = str(Global.resource_dict[Global.RESOURCETYPE.SATISFACTION])
-	money_label.text = str(Global.resource_dict[Global.RESOURCETYPE.MONEY])
-	food_label.text = str(Global.resource_dict[Global.RESOURCETYPE.FOOD])
-	citizen_label.text = str(Global.resource_dict[Global.RESOURCETYPE.CITIZEN])
-	
-func _update_traits() -> void:
-	# reset values to ensure no repeats
-	for key in Global.trait_dict.keys():
-		Global.trait_dict[key] = 0
-	Global.trait_dict[Global.TRAITTYPE.CULTURE] = 0
-	
-	var colonyBuilds = get_tree().get_nodes_in_group("COLONY")
-	
-	for c : ColonyBuilding in colonyBuilds:
-		Global.trait_dict[c.traitType] += c.traitAmt
-		
-				
-	# set text
-	culture_trait.text = str(Global.trait_dict[Global.TRAITTYPE.CULTURE])
-	commerce_trait.text = str(Global.trait_dict[Global.TRAITTYPE.COMMERCE])
-	fame_trait.text = str(Global.trait_dict[Global.TRAITTYPE.FAME])
-	productivity_trait.text = str(Global.trait_dict[Global.TRAITTYPE.PRODUCTIVITY])
+	tutorial.play_command_heal_tutorial()
 
 func _on_newgame_pressed() -> void:
 	if anim.is_playing() : return
@@ -770,8 +694,8 @@ func load_world() -> void:
 			building.workers = b.workers
 		bNode.add_child(building)
 
-	_update_resources()
-	_update_traits()
+	info_overlay._update_resources()
+	info_overlay._update_traits()
 	#Change time
 	if currentChal == CHALLENGE.JUICED: Engine.time_scale = 2.5
 	else: Engine.time_scale = 1

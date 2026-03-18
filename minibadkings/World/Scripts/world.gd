@@ -202,7 +202,7 @@ func spawn_enemy() -> void:
 	# check to spawn rebels
 	if rebel_nums.has(spawned_parties):
 		var houses : Array = get_tree().get_nodes_in_group("BUILDING")
-		houses.filter(func(e : Building):return e.type == Building.TYPE.HOUSE)
+		houses = houses.filter(func(e : Building):return e.type == Building.TYPE.HOUSE)
 		
 		var randHouse = randi_range(0,houses.size() - 1)
 		var rebelHouse : Building = houses[randHouse]
@@ -276,7 +276,7 @@ func on_night_started() -> void:
 	for g : AllyGroup in get_tree().get_nodes_in_group("ALLYGROUP"):
 		Global.resource_dict[Global.RESOURCETYPE.MONEY] -= g.wage
 		pass
-	ui._update_resources()
+	ui.info_overlay._update_resources()
 
 func on_enemy_group_eliminated() -> void:
 	if spawned_parties < enemy_parties : return

@@ -289,7 +289,7 @@ func plop_building() -> void:
 	# update blobked entry tiles
 	tileWorld.find_blocked_entry_tiles()
 	
-	ui._update_traits()
+	ui.info_overlay._update_traits()
 	# remove self
 	remove_self()
 
@@ -466,6 +466,7 @@ func match_building_type(building : Building) -> Building:
 	return building
 
 func _on_selected_mouse_entered() -> void:
+	is_under_mouse = true
 	if for_show and !shop_card: return
 	if selected : return
 	if refreshing : return
@@ -480,7 +481,6 @@ func _on_selected_mouse_entered() -> void:
 	sprite_2d.scale = Vector2(1.5,1.5)
 	sprite_2d.position.y = default_position.y - (custom_minimum_size.y / 1.5)
 	custom_minimum_size.x = default_custom_min.x * 1.5
-	is_under_mouse = true
 	z_index = 4096
 func _on_selected_mouse_exited() -> void:
 	if for_show and !shop_card: return

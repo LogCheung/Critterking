@@ -88,7 +88,7 @@ func trigger_school() -> void:
 		traitAmt = 0 
 		return
 	traitAmt = int(workers.size() * .5)
-	ui._update_traits()
+	ui.info_overlay._update_traits()
 
 func match_type() -> void:
 	match type:
