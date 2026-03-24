@@ -345,7 +345,7 @@ func explode_on_death() -> void:
 	var col = CollisionShape2D.new()
 	var shape = CapsuleShape2D.new()
 	area.process_mode = Node.PROCESS_MODE_ALWAYS
-	shape.radius = 12
+	shape.radius = 20
 	shape.height = 40
 	col.rotation = 90
 	col.shape = shape

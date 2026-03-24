@@ -270,7 +270,7 @@ func _on_adj_area_entered(area: Area2D) -> void:
 	if world.is_combat_phase: return
 	if area.owner is Ally:
 		var target : Unit = area.owner
-		if type == TYPE.SAPSTORE: 
+		if type == TYPE.SAPSTORE and active: 
 			target.speed += 6
 		#if type == TYPE.RUINS: target.speed -= 6
 
@@ -284,7 +284,7 @@ func _on_orth_area_entered(area: Area2D) -> void:
 				target.attack_cd.wait_time -=.2
 			else:
 				target.attack_cd.wait_time = .1
-		if type == TYPE.FARM: 
+		if type == TYPE.FARM and active: 
 			target.max_health = target.max_health + 0.5
 			target.health = target.max_health
 

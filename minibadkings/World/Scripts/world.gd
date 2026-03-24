@@ -93,7 +93,7 @@ func new_game() -> void:
 		add_house_card()
 	#for i in range(1):
 		#var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.MONUMENT
+		#hCard.type = Card.CARDTYPE.EXPLOSIVE
 		#ui.hand_container.add_child(hCard)
 		#hCard.set_owner(get_tree().get_current_scene())
 	
@@ -199,17 +199,6 @@ func spawn_enemy() -> void:
 	enemyGroupNode.add_child(enemGroup)
 	enemGroup.set_owner(get_tree().get_current_scene())
 	
-	# check to spawn rebels
-	if rebel_nums.has(spawned_parties):
-		var houses : Array = get_tree().get_nodes_in_group("BUILDING")
-		houses = houses.filter(func(e : Building):return e.type == Building.TYPE.HOUSE)
-		
-		var randHouse = randi_range(0,houses.size() - 1)
-		var rebelHouse : Building = houses[randHouse]
-		print(rebelHouse)
-		rebelHouse.anim.play("rebel")
-	
-	
 	# let units approach player borders before activation
 	var targetTiles = tileWorld.outskirt_tiles
 	targetTiles = targetTiles.map(func(t):return tileWorld.ground.map_to_local(t))
@@ -221,8 +210,20 @@ func spawn_enemy() -> void:
 			closest = tile
 	enemGroup.global_position = closest 
 	# set groupPos to target and the units within the group will follow
-	spawned_parties += 1
 	
+	# make check for rebels
+	if rebel_nums.has(spawned_parties):
+		spawn_rebel()
+	
+	spawned_parties += 1
+
+func spawn_rebel() -> void:
+	var houses : Array = get_tree().get_nodes_in_group("BUILDING")
+	houses = houses.filter(func(e : Building):return e.type == Building.TYPE.HOUSE)
+	
+	var randHouse = randi_range(0,houses.size() - 1)
+	var rebelHouse : Building = houses[randHouse]
+	rebelHouse.anim.play("rebel")
 	
 
 func on_night_started() -> void:
@@ -238,6 +239,8 @@ func on_night_started() -> void:
 			enemy_parties += 3
 			upgraded_parties += 1
 	
+		rebel_parties = 1
+	
 	# set upgrade number
 	upgrade_nums.clear()
 	for i in range(upgraded_parties):
@@ -247,6 +250,11 @@ func on_night_started() -> void:
 		upgrade_nums.append(rand)
 		
 	# set rebel numbers
+	if Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] < 25:
+		rebel_parties = 1
+		if Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] <= 0:
+			rebel_parties = enemy_parties
+	
 	rebel_nums.clear()
 	for i in range(rebel_parties):
 		var rand = randi_range(0,enemy_parties - 1)
@@ -269,14 +277,27 @@ func on_night_started() -> void:
 		c.hide()
 		
 	# resource consumption
+	handle_resource_consumption()
+
+func handle_resource_consumption() -> void:
 	Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] -= 5
-	Global.resource_dict[Global.RESOURCETYPE.FOOD] -= Global.partyCount * 2
+	Global.resource_dict[Global.RESOURCETYPE.FOOD] -= Global.partyCount * 30
+	
+	# consider food debt
+	if Global.resource_dict[Global.RESOURCETYPE.FOOD] < 0:
+		var satisfaction_penalty = abs(Global.resource_dict[Global.RESOURCETYPE.FOOD])
+		Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] -= satisfaction_penalty
+		Global.resource_dict[Global.RESOURCETYPE.FOOD] = 0
+		
+	if Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] < 0:
+		Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] = 0 
 	
 	# pay wages
 	for g : AllyGroup in get_tree().get_nodes_in_group("ALLYGROUP"):
 		Global.resource_dict[Global.RESOURCETYPE.MONEY] -= g.wage
 		pass
 	ui.info_overlay._update_resources()
+
 
 func on_enemy_group_eliminated() -> void:
 	if spawned_parties < enemy_parties : return
@@ -425,6 +446,9 @@ func _on_spawn_timer_timeout() -> void:
 	await get_tree().create_timer(.5).timeout
 	if spawned_parties >= enemy_parties:
 		%SpawnTimer.stop()
+		
+	
+		
 func preserve_charm_in_card(card : Card, charmType : Charm.TYPE) -> Card:
 	var dupeCharm : Charm = preload("res://Units/Scenes/charm.tscn").instantiate()
 	dupeCharm.type = charmType
@@ -491,7 +515,7 @@ func expand() -> void:
 
 func handle_party_limit() -> void:
 	var houseCount = get_tree().get_nodes_in_group("BUILDING")
-	var campCount = houseCount.filter(func(e):return e.type == Building.TYPE.CAMPFIRE)
+	var campCount = houseCount.filter(func(e):return e.type == Building.TYPE.CAMPFIRE and e.active)
 	houseCount = houseCount.filter(func(e):return e.type == Building.TYPE.HOUSE)
 	houseCount = houseCount.size()
 	campCount = campCount.size()
