@@ -1730,7 +1730,6 @@ for_show = true
 
 [node name="InspectCard" type="Control" parent="."]
 process_mode = 3
-visible = false
 top_level = true
 custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 3

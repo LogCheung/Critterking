@@ -287,6 +287,8 @@ func _on_play_pressed() -> void:
 	%crtrDay.play()
 	$AnimationPlayer.play("RESET")
 	
+	# ascension 
+	%AdaptLabel.text = str(currentAscn)
 	tutorial.play_card_tutorial()
 func _on_play_menu_pressed() -> void:
 	%mainsprite.hide()
@@ -422,17 +424,21 @@ func _on_endturn_pressed() -> void:
 func _on_newgame_pressed() -> void:
 	if anim.is_playing() : return
 	Global.nights = 0
-	$AnimationPlayer.play("playAgain")
+	anim.play("playAgain")
 	world.new_game()
+	
 	await anim.animation_finished
+	
 	%crtrOver.stop()
 	gameover.hide()
 	world.start_day()
 	%crtrDay.play()
 	$AnimationPlayer.play("RESET")
 	
+	
 	# ascension 
 	%AdaptLabel.text = str(currentAscn)
+	
 
 func _on_title_pressed() -> void:
 	%Button.play()
