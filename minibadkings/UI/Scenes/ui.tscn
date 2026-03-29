@@ -575,7 +575,7 @@ offset_bottom = 96.0
 scale = Vector2(2, 2)
 texture = ExtResource("8_h440b")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="InfoOverlay"]
+[node name="ResourceContainer" type="HBoxContainer" parent="InfoOverlay"]
 layout_mode = 0
 offset_left = 158.0
 offset_top = 85.0
@@ -583,36 +583,36 @@ offset_right = 750.0
 offset_bottom = 149.0
 theme_override_constants/separation = 68
 
-[node name="PartyCurrent" parent="InfoOverlay/HBoxContainer" instance=ExtResource("6_nh1tr")]
+[node name="PartyCurrent" parent="InfoOverlay/ResourceContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 army = true
 
-[node name="CitizenLabel" parent="InfoOverlay/HBoxContainer" instance=ExtResource("6_nh1tr")]
+[node name="CitizenLabel" parent="InfoOverlay/ResourceContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 resourceType = 4
 army = false
 
-[node name="MoneyLabel" parent="InfoOverlay/HBoxContainer" instance=ExtResource("6_nh1tr")]
+[node name="MoneyLabel" parent="InfoOverlay/ResourceContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 resourceType = 2
 army = false
 
-[node name="SatisfactionLabel" parent="InfoOverlay/HBoxContainer" instance=ExtResource("6_nh1tr")]
+[node name="SatisfactionLabel" parent="InfoOverlay/ResourceContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 resourceType = 1
 army = false
 
-[node name="FoodLabel" parent="InfoOverlay/HBoxContainer" instance=ExtResource("6_nh1tr")]
+[node name="FoodLabel" parent="InfoOverlay/ResourceContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 resourceType = 3
 army = false
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="InfoOverlay"]
+[node name="TraitContainer" type="HBoxContainer" parent="InfoOverlay"]
 layout_mode = 0
 offset_left = 1170.0
 offset_top = 86.0
@@ -620,31 +620,31 @@ offset_right = 1762.0
 offset_bottom = 150.0
 theme_override_constants/separation = 68
 
-[node name="ProductivityTrait" parent="InfoOverlay/HBoxContainer2" instance=ExtResource("6_nh1tr")]
+[node name="ProductivityTrait" parent="InfoOverlay/TraitContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 army = false
 traitType = 4
 
-[node name="CultureTrait" parent="InfoOverlay/HBoxContainer2" instance=ExtResource("6_nh1tr")]
+[node name="CultureTrait" parent="InfoOverlay/TraitContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 army = false
 traitType = 1
 
-[node name="CommerceTrait" parent="InfoOverlay/HBoxContainer2" instance=ExtResource("6_nh1tr")]
+[node name="CommerceTrait" parent="InfoOverlay/TraitContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 army = false
 traitType = 2
 
-[node name="FameTrait" parent="InfoOverlay/HBoxContainer2" instance=ExtResource("6_nh1tr")]
+[node name="FameTrait" parent="InfoOverlay/TraitContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 army = false
 traitType = 3
 
-[node name="HouseLabel" parent="InfoOverlay/HBoxContainer2" instance=ExtResource("6_nh1tr")]
+[node name="HouseLabel" parent="InfoOverlay/TraitContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 resourceType = 6
@@ -698,19 +698,18 @@ mouse_filter = 2
 theme_override_constants/separation = 20
 
 [node name="AssignToggle" type="Control" parent="InfoOverlay"]
-visible = false
 z_as_relative = false
 custom_minimum_size = Vector2(96, 96)
 anchors_preset = 0
-offset_left = 555.0
-offset_top = 38.0
-offset_right = 651.0
-offset_bottom = 134.0
+offset_left = 1560.0
+offset_top = 977.0
+offset_right = 1656.0
+offset_bottom = 1073.0
 
 [node name="AssignToggleSprite" type="Sprite2D" parent="InfoOverlay/AssignToggle"]
 unique_name_in_owner = true
 modulate = Color(1.353256, 1.353256, 1.353256, 1)
-scale = Vector2(2, 2)
+scale = Vector2(3, 3)
 texture = ExtResource("5_s0jxd")
 offset = Vector2(16, 16)
 vframes = 2
@@ -988,12 +987,13 @@ offset_bottom = 900.0
 mouse_filter = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Hand"]
+unique_name_in_owner = true
 clip_children = 2
 layout_mode = 0
 offset_left = 1.0000027
-offset_top = -63.999886
-offset_right = 1314.077
-offset_bottom = 816.0001
+offset_top = -196.0
+offset_right = 1191.0
+offset_bottom = 747.8462
 scale = Vector2(1.3, 1.3)
 mouse_filter = 0
 theme = SubResource("Theme_48uhk")
@@ -1010,10 +1010,10 @@ mouse_filter = 1
 unique_name_in_owner = true
 custom_minimum_size = Vector2(1140, 300)
 layout_mode = 0
-offset_left = 72.30769
-offset_top = 283.07684
-offset_right = 1240.0002
-offset_bottom = 583.07684
+offset_left = 42.30769
+offset_top = 404.6154
+offset_right = 1182.3077
+offset_bottom = 704.61536
 mouse_filter = 2
 theme_override_constants/separation = 20
 

@@ -94,7 +94,7 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	for i in range(2):
+	for i in range(0):
 		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
 		hCard.type = Card.CARDTYPE.BOMBER
 		ui.hand_container.add_child(hCard)
@@ -350,6 +350,7 @@ func on_night_ended() -> void:
 	
 	# reward
 	Global.resource_dict[Global.RESOURCETYPE.MONEY] += 10
+	ui.info_overlay._update_resources()
 func clear_entities() -> void:
 	# clear dead enemies
 	if !get_tree():return
@@ -472,7 +473,8 @@ func _input(event: InputEvent) -> void:
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
-		Global.resource_dict[Global.RESOURCETYPE.MONEY] += 30
+		ui.info_overlay._update_resources()
+		ui.info_overlay._update_traits()
 		return
 
 	#if event.is_action_pressed("cancel"):

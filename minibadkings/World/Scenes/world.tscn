@@ -9,6 +9,7 @@
 [node name="World" type="Node2D" groups=["WORLD"]]
 y_sort_enabled = true
 script = ExtResource("1_fdxdb")
+rebel_parties = 0
 
 [node name="Game" type="Node2D" parent="."]
 unique_name_in_owner = true

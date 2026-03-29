@@ -3,7 +3,6 @@ class_name ColonyBuilding
 
 signal day_ended
 
-static var pantryActive : bool = false
 @export var costType : Global.RESOURCETYPE = Global.RESOURCETYPE.NONE
 @export var costAmt : int = 0 
 @export var workers : Array
@@ -20,6 +19,9 @@ func _ready() -> void:
 func on_day_ended() -> void:
 	time += 1
 	
+	# check pantry
+	pantryActive = check_pantry_active()
+	
 	if type == TYPE.HOUSE and pantryActive:
 		trigger_building()
 		time = 0
@@ -30,6 +32,7 @@ func trigger_building() -> void:
 	time -= cooldown
 	
 	# special cases
+	
 	# for chance of losing in the casino
 	if type == TYPE.CASINO and randi() % 4 == 0 :
 		add_resource(resourceType, -resourceAmt)
@@ -89,6 +92,14 @@ func trigger_school() -> void:
 		return
 	traitAmt = int(workers.size() * .5)
 	ui.info_overlay._update_traits()
+
+func check_pantry_active() -> bool:
+	var pantries = get_tree().get_nodes_in_group("COLONY")
+	pantries = pantries.filter(func(b: ColonyBuilding ):return b.type == TYPE.PANTRY)
+	for p  : ColonyBuilding in pantries:
+		print(p.active)
+		if p.active: return true
+	return false
 
 func match_type() -> void:
 	match type:

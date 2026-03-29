@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b2cbsdprcnn1m"
-path="res://.godot/imported/tradingBuild.png-e1873154ead6f39a61fa0f0707f1ee66.ctex"
+path="res://.godot/imported/tradingpostBuild.png-c09bab2ed1582602139806ec7c88979b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://TileMap/Assets/tradingBuild.png"
-dest_files=["res://.godot/imported/tradingBuild.png-e1873154ead6f39a61fa0f0707f1ee66.ctex"]
+source_file="res://TileMap/Assets/tradingpostBuild.png"
+dest_files=["res://.godot/imported/tradingpostBuild.png-c09bab2ed1582602139806ec7c88979b.ctex"]
 
 [params]
 

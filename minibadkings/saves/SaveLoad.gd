@@ -30,6 +30,7 @@ func _save(#scene : PackedScene,
 	
 	SaveFileData.resource_dict = Global.resource_dict.duplicate()
 	SaveFileData.trait_dict = Global.trait_dict.duplicate()
+	print(SaveFileData.resource_dict)
 	# save cards
 	SaveFileData.cardsInHand.clear()
 	for card in Global.cardsInHand:
@@ -69,6 +70,7 @@ func _save(#scene : PackedScene,
 		building.global_position = b.global_position
 		building.health = b.health
 		building.time = b.time
+		building.active = b.active
 		#
 		if isColony:
 			building.workers = b.workers
@@ -119,6 +121,7 @@ func _load() -> void:
 		await get_tree().process_frame
 		var ui = get_tree().get_first_node_in_group("UI")
 		ui.load_world()
+		
 
 func _load_profile() -> void:
 	if FileAccess.file_exists(prof_location):

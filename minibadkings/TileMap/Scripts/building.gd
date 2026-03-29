@@ -30,6 +30,7 @@ enum TYPE {
 	RUINS, 
 }
 
+static var pantryActive : bool = false
 @export var type : TYPE
 @export var occupant : AllyGroup 
 @export var health : int = 20
@@ -82,7 +83,11 @@ func _ready() -> void:
 			await anim.animation_finished
 			%fire.show()
 			%fire.play("default")
-			
+	
+	#citizen_toggle_sprite.frame = 1 if active else 0
+	#citizen_toggle_sprite.modulate.v = 1.5 if active else 1.0
+	#worker_alert_sprite.visible = !active
+	
 
 func _process(delta: float) -> void:
 	if health <= 0:
@@ -332,9 +337,21 @@ func _on_mouse_exited() -> void:
 	highlightSprite.modulate = Color(1,1,1)
 
 func _on_toggle_toggled(toggled_on: bool) -> void:
-	if Global.resource_dict[Global.RESOURCETYPE.CITIZEN] <= 0: return
-	citizen_toggle_sprite.frame = 1 if toggled_on else 0
-	citizen_toggle_sprite.modulate.v = 1.5 if toggled_on else 1.0
-	active = toggled_on
-	if Global.resource_dict[Global.RESOURCETYPE.CITIZEN] > 0 and toggled_on:
-		Global.resource_dict[Global.RESOURCETYPE.WORKER] += 1 if toggled_on else -1
+	if !active:
+		var availWorkers = Global.resource_dict[Global.RESOURCETYPE.CITIZEN] - Global.resource_dict[Global.RESOURCETYPE.WORKER]
+		if availWorkers <= 0: return
+		
+		# set active and add to workers
+		citizen_toggle_sprite.frame = 1 if toggled_on else 0
+		citizen_toggle_sprite.modulate.v = 1.5 if toggled_on else 1.0
+		active = toggled_on
+		Global.resource_dict[Global.RESOURCETYPE.WORKER] += 1 
+		worker_alert_sprite.visible = false
+	else:
+		# deactivate and remove from worker
+		Global.resource_dict[Global.RESOURCETYPE.WORKER] -= 1
+		citizen_toggle_sprite.frame = 1 if toggled_on else 0
+		citizen_toggle_sprite.modulate.v = 1.5 if toggled_on else 1.0
+		active = toggled_on
+		worker_alert_sprite.visible = true
+		

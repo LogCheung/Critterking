@@ -141,6 +141,7 @@ func handle_drag() -> void:
 	if Input.is_action_pressed("select") and selected:
 		sprite_2d.scale = Vector2(.6,.6)
 		global_position = get_global_mouse_position()
+		top_level = true
 		highlight_tiles()
 	elif Input.is_action_just_released("select") and selected:
 		if ui.dispatch.visible : 
@@ -176,6 +177,7 @@ func set_to_default() -> void:
 	
 	selected = false
 	is_under_mouse = false
+	top_level = false
 	
 	# remove highlight
 	if tileWorld.hover.get_used_cells().has(tile):

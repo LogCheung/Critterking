@@ -273,10 +273,12 @@ func _on_endless_pressed() -> void:
 
 func _on_play_pressed() -> void:
 	if anim.is_playing() : return
+	info_overlay.show_containers()
 	%Button.play()
 	$AnimationPlayer.play("MainToGame")
 	Global.nights = 0
 	world.new_game()
+	
 	await anim.animation_finished
 	%crtrMenu.stop()
 	mainmenu.hide()
@@ -284,7 +286,7 @@ func _on_play_pressed() -> void:
 	gameover.hide()
 	%crtrDay.play()
 	$AnimationPlayer.play("RESET")
-
+	
 	tutorial.play_card_tutorial()
 func _on_play_menu_pressed() -> void:
 	%mainsprite.hide()
@@ -640,6 +642,12 @@ func load_world() -> void:
 	Global.resource_dict = SaveLoad.SaveFileData.resource_dict.duplicate()
 	Global.trait_dict = SaveLoad.SaveFileData.trait_dict.duplicate()
 	
+	# reset workers to zero, buildings will correctly set workers on their own
+	Global.resource_dict[Global.RESOURCETYPE.WORKER] = 0
+	
+	info_overlay._update_resources()
+	info_overlay._update_traits()
+	
 	# load enemy party count
 	world.enemy_parties = int(Global.nights / 2) + 3
 	world.upgraded_parties = int(Global.nights / 4)
@@ -693,14 +701,18 @@ func load_world() -> void:
 		
 		if isColony:
 			building.workers = b.workers
+			
 		bNode.add_child(building)
-
-	info_overlay._update_resources()
-	info_overlay._update_traits()
+		
+		if b.active:
+			building.toggle.button_pressed = true
+	
 	#Change time
 	if currentChal == CHALLENGE.JUICED: Engine.time_scale = 2.5
 	else: Engine.time_scale = 1
 	
+	info_overlay._update_resources()
+	info_overlay._update_traits()
 
 	# verify data of units
 	world.tileWorld.set_up_astar()
@@ -725,7 +737,8 @@ func load_world() -> void:
 		card.set_up()
 		
 	%AdaptLabel.text = str(currentAscn)
-	
+	info_overlay.load_overlay()
+		
 # unlocking new cards
 func _on_mainmenu_mouse_entered() -> void:
 	# check if main menu in on screen

@@ -15,8 +15,13 @@ class_name InfoOverlay
 @onready var citizen_label: OverlayCounter = %CitizenLabel
 @onready var house_label: OverlayCounter = %HouseLabel
 @onready var party_current: OverlayCounter = %PartyCurrent
+@onready var trait_container: HBoxContainer = $TraitContainer
+@onready var resource_container: HBoxContainer = $ResourceContainer
 
 func _ready() -> void:
+	trait_container.visible = false
+	resource_container.visible = false
+	
 	assign_toggle_sprite.frame = 0
 	assign_toggle_sprite.modulate.v = 1
 	
@@ -26,6 +31,19 @@ func _ready() -> void:
 	var buildings = get_tree().get_nodes_in_group("BUILDING")
 	for b : Building in buildings:
 		b.worker_alert_sprite.visible = !b.active
+		
+func load_overlay() -> void:
+	await get_tree().create_timer(1.5).timeout
+	show_containers()
+	
+	Global.resource_dict = SaveLoad.SaveFileData.resource_dict.duplicate()
+	Global.trait_dict = SaveLoad.SaveFileData.trait_dict.duplicate()
+	
+	_update_resources()
+	_update_traits()
+func show_containers() -> void:
+	trait_container.visible = true
+	resource_container.visible = true
 
 func _on_assign_toggle_gui_input(event: InputEvent) -> void:
 	if ui.world.is_combat_phase : return

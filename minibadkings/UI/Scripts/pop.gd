@@ -1,12 +1,14 @@
 class_name Pop
 extends Label
 
+signal pop_finished
+
 var travel: Vector2 = Vector2(0, -50)
 var duration: float = 1
 var speed: float = PI / 4
 
 
-func show_value(value: int, crit: bool):
+func show_value(value: int):
 	scale = Vector2(.5,.5)
 	var tween = create_tween()
 	var valSign = "-" if value < 0 else "+"
@@ -27,3 +29,6 @@ func show_value(value: int, crit: bool):
 	tween.tween_property(self, "modulate:a", 0.0, duration)
 	tween.play()
 	tween.tween_callback(queue_free)
+	
+	await get_tree().create_timer(duration/2.0).timeout
+	pop_finished.emit()
