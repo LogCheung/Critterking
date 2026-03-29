@@ -33,6 +33,9 @@ var rebel_nums : Array = []
 var dispatchDay : bool = false
 
 var night_is_expansion: bool = false
+
+var food_debt : int
+
 func _ready() -> void:
 	# Load profile data
 	Global.unlockedCards = Card.DEFAULT_CARDS
@@ -91,11 +94,11 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	#for i in range(1):
-		#var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		#hCard.type = Card.CARDTYPE.EXPLOSIVE
-		#ui.hand_container.add_child(hCard)
-		#hCard.set_owner(get_tree().get_current_scene())
+	for i in range(2):
+		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.BOMBER
+		ui.hand_container.add_child(hCard)
+		hCard.set_owner(get_tree().get_current_scene())
 	
 	#Challenges
 	if ui.currentChal == UI.CHALLENGE.JUICED: Engine.time_scale = 2.5
@@ -276,18 +279,24 @@ func on_night_started() -> void:
 		if c == ui.info_overlay or c == ui.decrees : continue
 		c.hide()
 		
+	# handle 
+		
+		
 	# resource consumption
 	handle_resource_consumption()
 
 func handle_resource_consumption() -> void:
 	Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] -= 5
-	Global.resource_dict[Global.RESOURCETYPE.FOOD] -= Global.partyCount * 30
+	Global.resource_dict[Global.RESOURCETYPE.FOOD] -= Global.partyCount * 2
 	
 	# consider food debt
 	if Global.resource_dict[Global.RESOURCETYPE.FOOD] < 0:
 		var satisfaction_penalty = abs(Global.resource_dict[Global.RESOURCETYPE.FOOD])
 		Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] -= satisfaction_penalty
 		Global.resource_dict[Global.RESOURCETYPE.FOOD] = 0
+		food_debt = satisfaction_penalty
+	else:
+		food_debt = 0
 		
 	if Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] < 0:
 		Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] = 0 
@@ -512,29 +521,6 @@ func expand() -> void:
 	if ui.currentChal == UI.CHALLENGE.MINIMALIST: return
 	Global.expansions += 1
 	tileWorld.draw_build_area()
-
-func handle_party_limit() -> void:
-	var houseCount = get_tree().get_nodes_in_group("BUILDING")
-	var campCount = houseCount.filter(func(e):return e.type == Building.TYPE.CAMPFIRE and e.active)
-	houseCount = houseCount.filter(func(e):return e.type == Building.TYPE.HOUSE)
-	houseCount = houseCount.size()
-	campCount = campCount.size()
-	
-	Global.partyCount = get_tree().get_nodes_in_group("ALLYGROUP").size()
-	if ui.currentAscn >= 3: 
-		Global.partyLimit = 2 + (1 * houseCount) + (1 * campCount)
-	else: 
-		Global.partyLimit = 2 + (2 * houseCount) + (1 * campCount)
-	
-	ui.party_current.text = str(Global.partyCount)
-	ui.party_limit.text = str(Global.partyLimit)
-	
-	if Global.partyCount >= Global.partyLimit:
-		ui.no_space.show()
-	else:
-		ui.no_space.hide()
-		
-	pass
 
 func _on_timer_timeout() -> void:
 	SaveLoad._save_profile(ui)

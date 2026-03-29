@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://ggtewla8581f"
-path="res://.godot/imported/aseprite.otf-ba9326f6c10632557ad79f8ca6e7d301.fontdata"
+path="res://.godot/imported/aseprite.otf-a7e59ac24c5266d18d3e9931d9731207.fontdata"
 
 [deps]
 
-source_file="res://Units/Debug/aseprite.otf"
-dest_files=["res://.godot/imported/aseprite.otf-ba9326f6c10632557ad79f8ca6e7d301.fontdata"]
+source_file="res://Units/aseprite.otf"
+dest_files=["res://.godot/imported/aseprite.otf-a7e59ac24c5266d18d3e9931d9731207.fontdata"]
 
 [params]
 

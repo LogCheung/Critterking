@@ -82,6 +82,7 @@ func _ready() -> void:
 			await anim.animation_finished
 			%fire.show()
 			%fire.play("default")
+			
 
 func _process(delta: float) -> void:
 	if health <= 0:

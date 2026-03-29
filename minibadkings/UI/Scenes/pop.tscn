@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://b86nqxkcxdcq8"]
+
+[ext_resource type="Script" uid="uid://b7kvhb8otkywo" path="res://UI/Scripts/pop.gd" id="1_2nu1w"]
+[ext_resource type="FontFile" uid="uid://ggtewla8581f" path="res://Units/aseprite.otf" id="1_ti4cp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_rrrr5"]
+font = ExtResource("1_ti4cp")
+font_size = 28
+
+[node name="Pop" type="Label"]
+custom_minimum_size = Vector2(66, 76)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = -1853.0
+offset_bottom = -1004.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1"
+label_settings = SubResource("LabelSettings_rrrr5")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("1_2nu1w")

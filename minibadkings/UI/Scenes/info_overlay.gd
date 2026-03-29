@@ -5,14 +5,16 @@ class_name InfoOverlay
 
 @onready var ui : UI = get_parent()
 @onready var assign_toggle_sprite: Sprite2D = %AssignToggleSprite
-@onready var culture_trait: Label = %CultureTrait
-@onready var commerce_trait: Label = %CommerceTrait
-@onready var fame_trait: Label = %FameTrait
-@onready var productivity_trait: Label = %ProductivityTrait
-@onready var satisfaction_label: Label = %SatisfactionLabel
-@onready var money_label: Label = %MoneyLabel
-@onready var food_label: Label = %FoodLabel
-@onready var citizen_label: Label = %CitizenLabel
+@onready var culture_trait: OverlayCounter = %CultureTrait
+@onready var commerce_trait: OverlayCounter = %CommerceTrait
+@onready var fame_trait: OverlayCounter = %FameTrait
+@onready var productivity_trait: OverlayCounter = %ProductivityTrait
+@onready var satisfaction_label: OverlayCounter = %SatisfactionLabel
+@onready var money_label: OverlayCounter = %MoneyLabel
+@onready var food_label: OverlayCounter = %FoodLabel
+@onready var citizen_label: OverlayCounter = %CitizenLabel
+@onready var house_label: OverlayCounter = %HouseLabel
+@onready var party_current: OverlayCounter = %PartyCurrent
 
 func _ready() -> void:
 	assign_toggle_sprite.frame = 0
@@ -42,10 +44,12 @@ func _on_assign_toggle_gui_input(event: InputEvent) -> void:
 			ui.hand.visible = !assignMode
 
 func _update_resources() -> void:
-	satisfaction_label.text = str(Global.resource_dict[Global.RESOURCETYPE.SATISFACTION])
-	money_label.text = str(Global.resource_dict[Global.RESOURCETYPE.MONEY])
-	food_label.text = str(Global.resource_dict[Global.RESOURCETYPE.FOOD])
-	citizen_label.text = str(Global.resource_dict[Global.RESOURCETYPE.CITIZEN])
+	satisfaction_label.set_value(Global.resource_dict[Global.RESOURCETYPE.SATISFACTION])
+	money_label.set_value(Global.resource_dict[Global.RESOURCETYPE.MONEY])
+	food_label.set_value(Global.resource_dict[Global.RESOURCETYPE.FOOD])
+	citizen_label.set_value(Global.resource_dict[Global.RESOURCETYPE.CITIZEN])
+	
+	
 	
 func _update_traits() -> void:
 	# reset values to ensure no repeats
@@ -60,7 +64,35 @@ func _update_traits() -> void:
 		
 				
 	# set text
-	culture_trait.text = str(Global.trait_dict[Global.TRAITTYPE.CULTURE])
-	commerce_trait.text = str(Global.trait_dict[Global.TRAITTYPE.COMMERCE])
-	fame_trait.text = str(Global.trait_dict[Global.TRAITTYPE.FAME])
-	productivity_trait.text = str(Global.trait_dict[Global.TRAITTYPE.PRODUCTIVITY])
+	culture_trait.set_value(Global.trait_dict[Global.TRAITTYPE.CULTURE])
+	commerce_trait.set_value(Global.trait_dict[Global.TRAITTYPE.COMMERCE])
+	fame_trait.set_value(Global.trait_dict[Global.TRAITTYPE.FAME])
+	productivity_trait.set_value(Global.trait_dict[Global.TRAITTYPE.PRODUCTIVITY])
+	
+	# house counter text
+	var houseCount = get_tree().get_nodes_in_group("BUILDING")
+	houseCount = houseCount.filter(func(e):return e.type == Building.TYPE.HOUSE)
+	houseCount = houseCount.size()
+	house_label.text = str(houseCount)
+
+func handle_party_limit() -> void:
+	var houseCount = get_tree().get_nodes_in_group("BUILDING")
+	var campCount = houseCount.filter(func(e):return e.type == Building.TYPE.CAMPFIRE and e.active)
+	houseCount = houseCount.filter(func(e):return e.type == Building.TYPE.HOUSE)
+	houseCount = houseCount.size()
+	campCount = campCount.size()
+	
+	Global.partyCount = get_tree().get_nodes_in_group("ALLYGROUP").size()
+	if ui.currentAscn >= 3: 
+		Global.partyLimit = 2 + (1 * houseCount) + (1 * campCount)
+	else: 
+		Global.partyLimit = 2 + (2 * houseCount) + (1 * campCount)
+	
+	party_current.text = str(Global.partyCount) +  " / " + str(Global.partyLimit)
+	
+	if Global.partyCount >= Global.partyLimit:
+		ui.no_space.show()
+	else:
+		ui.no_space.hide()
+		
+	pass

@@ -29,8 +29,6 @@ signal unit_healed
 @onready var decrees: Control = %Decrees
 @onready var info_overlay: InfoOverlay = %InfoOverlay
 @onready var songs : Array = get_tree().get_nodes_in_group("MUSIC")
-@onready var party_current: Label = %PartyCurrent
-@onready var party_limit: Label = %PartyLimit
 @onready var no_space: TextureRect = %noSpace
 @onready var master: HSlider = %Master
 @onready var music: HSlider = %Music
@@ -68,7 +66,7 @@ func _process(delta: float) -> void:
 	elif !end_turn.visible and !%crtrNight.playing and !control_is_visible():
 		play_song(%crtrNight)
 	%DayNight.text = str(Global.nights)
-	world.handle_party_limit()
+	info_overlay.handle_party_limit()
 	
 	%ScrollControl.custom_minimum_size.x = 128 * hand_container.get_children().size()
 	%ScrollControl.custom_minimum_size.x += 20 * hand_container.get_children().size() - 1
@@ -430,6 +428,9 @@ func _on_newgame_pressed() -> void:
 	world.start_day()
 	%crtrDay.play()
 	$AnimationPlayer.play("RESET")
+	
+	# ascension 
+	%AdaptLabel.text = str(currentAscn)
 
 func _on_title_pressed() -> void:
 	%Button.play()
@@ -722,6 +723,9 @@ func load_world() -> void:
 	await get_tree().process_frame
 	for card : Card in hand_container.get_children():
 		card.set_up()
+		
+	%AdaptLabel.text = str(currentAscn)
+	
 # unlocking new cards
 func _on_mainmenu_mouse_entered() -> void:
 	# check if main menu in on screen

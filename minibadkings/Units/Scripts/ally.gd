@@ -279,6 +279,7 @@ func match_type() -> void:
 	set_up_vision()
 	
 	# Find sprite file
+	if type == TYPE.BOMBER : return
 	if type > Unit.TYPE.RANGED:
 		var typeStr = str(TYPE.keys()[type])
 		var path : String = "res://Units/Assets/Ally"
