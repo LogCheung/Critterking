@@ -216,18 +216,22 @@ func spawn_enemy() -> void:
 	
 	# make check for rebels
 	if rebel_nums.has(spawned_parties):
-		spawn_rebel()
+		spawn_rebel_or_militia(true)
 	
 	spawned_parties += 1
 
-func spawn_rebel() -> void:
+func spawn_rebel_or_militia(rebel : bool) -> void:
 	var houses : Array = get_tree().get_nodes_in_group("BUILDING")
 	houses = houses.filter(func(e : Building):return e.type == Building.TYPE.HOUSE)
 	
 	var randHouse = randi_range(0,houses.size() - 1)
 	var rebelHouse : Building = houses[randHouse]
-	rebelHouse.anim.play("rebel")
 	
+	if rebel:
+		rebelHouse.anim.play("rebel")
+	else:
+		rebelHouse.anim.play("militia")
+
 
 func on_night_started() -> void:
 	%Failcheck.start()
@@ -242,7 +246,6 @@ func on_night_started() -> void:
 			enemy_parties += 3
 			upgraded_parties += 1
 	
-		rebel_parties = 1
 	
 	# set upgrade number
 	upgrade_nums.clear()
@@ -254,7 +257,7 @@ func on_night_started() -> void:
 		
 	# set rebel numbers
 	if Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] < 25:
-		rebel_parties = 1
+		rebel_parties = 1 * ((Global.resource_dict[Global.RESOURCETYPE.CITIZEN] / 6) + 1)
 		if Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] <= 0:
 			rebel_parties = enemy_parties
 	
@@ -265,6 +268,11 @@ func on_night_started() -> void:
 			rand = randi_range(0,enemy_parties - 1)
 		rebel_nums.append(rand)
 	print(rebel_nums)
+	
+	# set/spawn militia numbers
+	if Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] >= 75:
+		spawn_rebel_or_militia(false)
+		pass
 
 	# start game and hide menus
 	tileWorld.handle_navigable_cells()
@@ -473,8 +481,9 @@ func _input(event: InputEvent) -> void:
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
-		ui.info_overlay._update_resources()
-		ui.info_overlay._update_traits()
+		#ui.info_overlay._update_resources()
+		#ui.info_overlay._update_traits()
+		spawn_rebel_or_militia(false)
 		return
 
 	#if event.is_action_pressed("cancel"):

@@ -207,6 +207,23 @@ func spawn_rebels() -> void:
 	enemGroupNode.add_child(rebelGroup)
 	rebelGroup.set_owner(get_tree().get_current_scene())
 
+func spawn_militia() -> void:
+	var militiaGroup : AllyGroup = load("res://Units/Scenes/unit_group.tscn").instantiate()
+	militiaGroup.type = randi_range(Unit.TYPE.MELEE,Unit.TYPE.CRAZED)
+	militiaGroup.tile = doorstepTile
+	militiaGroup.level = 1
+	militiaGroup.global_position = tileWorld.ground.map_to_local(militiaGroup.tile)
+	
+	militiaGroup.conscripted = true
+	
+	var groupsNode = get_tree().get_first_node_in_group("GROUPSNODE")
+	groupsNode.add_child(militiaGroup) # group ready is then called
+	militiaGroup.set_owner(get_tree().get_current_scene())
+			
+	# stage them coming from building
+	for u in militiaGroup.unitsArray:
+		u.global_position = entrance.global_position
+
 func on_destroyed() -> void:
 	if type == TYPE.RUINS : return
 	# Change appearance and play destroy
@@ -215,7 +232,7 @@ func on_destroyed() -> void:
 	await anim.animation_finished
 	type = TYPE.RUINS
 	match_type()
-	ui._update_traits()
+	ui.info_overlay._update_traits()
 	
 	# alert enemies
 	var enemies = get_tree().get_nodes_in_group("ENEMY")
@@ -337,21 +354,33 @@ func _on_mouse_exited() -> void:
 	highlightSprite.modulate = Color(1,1,1)
 
 func _on_toggle_toggled(toggled_on: bool) -> void:
+	if type == TYPE.MONUMENT : 
+		set_active(true) 
+		return
 	if !active:
 		var availWorkers = Global.resource_dict[Global.RESOURCETYPE.CITIZEN] - Global.resource_dict[Global.RESOURCETYPE.WORKER]
-		if availWorkers <= 0: return
+		if availWorkers <= 0: 
+			calculate_active_workers()
+			return
 		
-		# set active and add to workers
-		citizen_toggle_sprite.frame = 1 if toggled_on else 0
-		citizen_toggle_sprite.modulate.v = 1.5 if toggled_on else 1.0
-		active = toggled_on
-		Global.resource_dict[Global.RESOURCETYPE.WORKER] += 1 
-		worker_alert_sprite.visible = false
-	else:
-		# deactivate and remove from worker
-		Global.resource_dict[Global.RESOURCETYPE.WORKER] -= 1
-		citizen_toggle_sprite.frame = 1 if toggled_on else 0
-		citizen_toggle_sprite.modulate.v = 1.5 if toggled_on else 1.0
-		active = toggled_on
-		worker_alert_sprite.visible = true
-		
+	# set active 
+	set_active(toggled_on)
+	
+	calculate_active_workers()
+
+func set_active(condition : bool) -> void:
+	citizen_toggle_sprite.frame = 1 if condition else 0
+	citizen_toggle_sprite.modulate.v = 1.5 if condition else 1.0
+	active = condition
+	worker_alert_sprite.visible = false if condition else true
+
+func calculate_active_workers() -> void:
+	var activeBuilds = get_tree().get_nodes_in_group("BUILDING")
+	activeBuilds = activeBuilds.filter(func(b:Building):return b.active)
+	Global.resource_dict[Global.RESOURCETYPE.WORKER] = activeBuilds.size()
+	
+	# account for buildings that do not require workers
+	for b : Building in activeBuilds:
+		if b.type == TYPE.MONUMENT:
+			Global.resource_dict[Global.RESOURCETYPE.WORKER] -= 1
+	

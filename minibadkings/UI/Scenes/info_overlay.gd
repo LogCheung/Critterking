@@ -39,8 +39,8 @@ func load_overlay() -> void:
 	Global.resource_dict = SaveLoad.SaveFileData.resource_dict.duplicate()
 	Global.trait_dict = SaveLoad.SaveFileData.trait_dict.duplicate()
 	
-	_update_resources()
-	_update_traits()
+	_update_resources(false)
+	_update_traits(false)
 func show_containers() -> void:
 	trait_container.visible = true
 	resource_container.visible = true
@@ -61,15 +61,15 @@ func _on_assign_toggle_gui_input(event: InputEvent) -> void:
 			b.toggle.visible = assignMode
 			ui.hand.visible = !assignMode
 
-func _update_resources() -> void:
-	satisfaction_label.set_value(Global.resource_dict[Global.RESOURCETYPE.SATISFACTION])
-	money_label.set_value(Global.resource_dict[Global.RESOURCETYPE.MONEY])
-	food_label.set_value(Global.resource_dict[Global.RESOURCETYPE.FOOD])
-	citizen_label.set_value(Global.resource_dict[Global.RESOURCETYPE.CITIZEN])
+func _update_resources(showAnim : bool = true) -> void:
+	satisfaction_label.set_value(Global.resource_dict[Global.RESOURCETYPE.SATISFACTION],showAnim)
+	money_label.set_value(Global.resource_dict[Global.RESOURCETYPE.MONEY],showAnim)
+	food_label.set_value(Global.resource_dict[Global.RESOURCETYPE.FOOD],showAnim)
+	citizen_label.set_value(Global.resource_dict[Global.RESOURCETYPE.CITIZEN],showAnim)
 	
 	
 	
-func _update_traits() -> void:
+func _update_traits(showAnim : bool = true) -> void:
 	# reset values to ensure no repeats
 	for key in Global.trait_dict.keys():
 		Global.trait_dict[key] = 0
@@ -82,10 +82,10 @@ func _update_traits() -> void:
 		
 				
 	# set text
-	culture_trait.set_value(Global.trait_dict[Global.TRAITTYPE.CULTURE])
-	commerce_trait.set_value(Global.trait_dict[Global.TRAITTYPE.COMMERCE])
-	fame_trait.set_value(Global.trait_dict[Global.TRAITTYPE.FAME])
-	productivity_trait.set_value(Global.trait_dict[Global.TRAITTYPE.PRODUCTIVITY])
+	culture_trait.set_value(Global.trait_dict[Global.TRAITTYPE.CULTURE],showAnim)
+	commerce_trait.set_value(Global.trait_dict[Global.TRAITTYPE.COMMERCE],showAnim)
+	fame_trait.set_value(Global.trait_dict[Global.TRAITTYPE.FAME],showAnim)
+	productivity_trait.set_value(Global.trait_dict[Global.TRAITTYPE.PRODUCTIVITY],showAnim)
 	
 	# house counter text
 	var houseCount = get_tree().get_nodes_in_group("BUILDING")

@@ -40,8 +40,7 @@ func match_sprite_trait() -> void:
 		Global.TRAITTYPE.COMMERCE:
 			sprite_2d.frame = 3
 
-var pop_queue : Array
-func set_value(value : int) -> void:
+func set_value(value : int, showAnim : bool = true) -> void:
 	if army or value == int(text): return
 	var children = get_children().filter(func(e):return e is Pop)
 	if !children.is_empty():
@@ -49,7 +48,8 @@ func set_value(value : int) -> void:
 		await children[0].pop_finished
 	# if isn't army counter or value doesn't change then continue
 	
-	if value != int(text):
+	# show change animation
+	if value != int(text) and showAnim:
 		var pop : Pop = preload("res://UI/Scenes/pop.tscn").instantiate()
 		add_child(pop)
 		pop.global_position = global_position + Vector2(8,80)

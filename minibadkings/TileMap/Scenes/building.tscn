@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cct0mtgpy7ut6"]
+[gd_scene load_steps=29 format=3 uid="uid://cct0mtgpy7ut6"]
 
 [ext_resource type="Script" uid="uid://dpq0gk0d460fx" path="res://TileMap/Scripts/building.gd" id="1_mpr6t"]
 [ext_resource type="Texture2D" uid="uid://dw3xay3qj0ihn" path="res://TileMap/Assets/fire.png" id="2_cb372"]
@@ -183,11 +183,55 @@ tracks/2/keys = {
 "values": [1, 0]
 }
 
+[sub_resource type="Animation" id="Animation_d75vo"]
+resource_name = "militia"
+length = 5.0
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.9946792, 1.4946792, 1.9946792, 2.2446792, 2.4973395, 2.7446792, 3, 3.25, 3.5026603, 3.75, 4, 4.125, 4.25, 4.375, 4.5, 4.625, 4.75, 4.875),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Color(0, 0.6166665, 1.9521656, 1), Color(1, 1, 1, 1), Color(0, 0.6166665, 1.9521656, 1), Color(1, 1, 1, 1), Color(0, 0.6166665, 1.9521656, 1), Color(1, 1, 1, 1), Color(0, 0.6166665, 1.9521656, 1), Color(1, 1, 1, 1), Color(0, 0.6166665, 1.9521656, 1), Color(1, 1, 1, 1), Color(0, 0.6166665, 1.9521656, 1), Color(1, 1, 1, 1), Color(0, 0.6166665, 1.9521656, 1), Color(1, 1, 1, 1), Color(0, 0.6166665, 1.9521656, 1), Color(1, 1, 1, 1), Color(0, 0.6166665, 1.9521656, 1), Color(1, 1, 1, 1), Color(0, 0.6166665, 1.9521656, 1), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"spawn_militia"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:z_index")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_j1jnl"]
 _data = {
 &"RESET": SubResource("Animation_5rqce"),
 &"build": SubResource("Animation_i4c7k"),
 &"destroy": SubResource("Animation_j1jnl"),
+&"militia": SubResource("Animation_d75vo"),
 &"rebel": SubResource("Animation_rtof6")
 }
 

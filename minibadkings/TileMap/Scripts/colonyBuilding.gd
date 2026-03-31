@@ -110,6 +110,8 @@ func match_type() -> void:
 		TYPE.MONUMENT:
 			set_building_properties(1,Global.TRAITTYPE.CULTURE,Global.RESOURCETYPE.SATISFACTION,
 			10,1,5,Global.RESOURCETYPE.MONEY)
+			
+			set_active(true)
 		TYPE.CASINO:
 			set_building_properties(1,Global.TRAITTYPE.COMMERCE,Global.RESOURCETYPE.SATISFACTION,
 			2,1,0,Global.RESOURCETYPE.NONE,100.0,Global.TRAITTYPE.NONE,Global.TRAITTYPE.COMMERCE,
