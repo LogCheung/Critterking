@@ -27,6 +27,7 @@ buses/default_bus_layout="uid://bncso1667yex7"
 
 Global="*res://World/Scripts/Global.gd"
 SaveLoad="*res://saves/SaveLoad.gd"
+Stats="*res://World/Scripts/Stats.gd"
 
 [debug]
 

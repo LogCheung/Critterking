@@ -62,6 +62,8 @@ func trigger_building() -> void:
 
 
 func add_resource(rType : Global.RESOURCETYPE,rAmt : int ) -> bool:
+	print(rType)
+	print(rAmt)
 	if rType == Global.RESOURCETYPE.NONE : return true
 	
 	# scaling
@@ -105,101 +107,92 @@ func match_type() -> void:
 	match type:
 		# Satisfaction buildings
 		TYPE.TAVERN:
-			set_building_properties(1,Global.TRAITTYPE.CULTURE,Global.RESOURCETYPE.SATISFACTION,
-			5,1,0,Global.RESOURCETYPE.NONE)
+			#set_building_properties(1,Global.TRAITTYPE.CULTURE,Global.RESOURCETYPE.SATISFACTION,
+			#5,1,0,Global.RESOURCETYPE.NONE)
+			pass
 		TYPE.MONUMENT:
-			set_building_properties(1,Global.TRAITTYPE.CULTURE,Global.RESOURCETYPE.SATISFACTION,
-			10,1,5,Global.RESOURCETYPE.MONEY)
+			pass
 			
 			set_active(true)
 		TYPE.CASINO:
-			set_building_properties(1,Global.TRAITTYPE.COMMERCE,Global.RESOURCETYPE.SATISFACTION,
-			2,1,0,Global.RESOURCETYPE.NONE,100.0,Global.TRAITTYPE.NONE,Global.TRAITTYPE.COMMERCE,
-			2)
+			pass
 			
 		TYPE.THEATRE:
-			set_building_properties(1,Global.TRAITTYPE.CULTURE,Global.RESOURCETYPE.SATISFACTION,
-			2,1,0,Global.RESOURCETYPE.NONE,100.0,Global.TRAITTYPE.NONE,Global.TRAITTYPE.CULTURE,
-			2)
+			pass
 		# Money buildings
 		TYPE.HALL:
-			set_building_properties(1,Global.TRAITTYPE.COMMERCE,Global.RESOURCETYPE.MONEY,
-			5,1,0,Global.RESOURCETYPE.NONE)
+			pass
 		TYPE.TRADINGPOST:
-			set_building_properties(2,Global.TRAITTYPE.COMMERCE,Global.RESOURCETYPE.MONEY,
-			0,1,0,Global.RESOURCETYPE.NONE,100.0,Global.TRAITTYPE.NONE,Global.TRAITTYPE.FAME,
-			5)
+			pass
 			
 		TYPE.MARKETPLACE:
-			set_building_properties(0,Global.TRAITTYPE.NONE,Global.RESOURCETYPE.MONEY,
-			8,1,0,Global.RESOURCETYPE.NONE,100.0,Global.TRAITTYPE.NONE,Global.TRAITTYPE.COMMERCE,
-			6)
+			pass
 		TYPE.GARDEN:
-			set_building_properties(1,Global.TRAITTYPE.COMMERCE,Global.RESOURCETYPE.MONEY,
-			3,1,0,Global.RESOURCETYPE.NONE,100.0,Global.TRAITTYPE.NONE,Global.TRAITTYPE.PRODUCTIVITY,
-			2)
+			pass
 		# Citizen buildings
 		TYPE.HOUSE:
 			sprite_2d.texture = HOUSEA if randi() % 2 == 0 else HOUSEB
-			set_building_properties(1,Global.TRAITTYPE.FAME,Global.RESOURCETYPE.CITIZEN,1,
-			2,0,Global.RESOURCETYPE.NONE)
 			
 			tileWorld.restricted_tiles.append(doorstepTile)
 			await anim.animation_finished
 			duplicate_sprite()
 			return
 		TYPE.CUSTOMS:
-			set_building_properties(1,Global.TRAITTYPE.FAME,Global.RESOURCETYPE.CITIZEN,
-			1,1,0,Global.RESOURCETYPE.NONE,25.0,Global.TRAITTYPE.CULTURE)
+			pass
 			
 		TYPE.PANTRY:
-			set_building_properties(1,Global.TRAITTYPE.FAME,Global.RESOURCETYPE.NONE,
-			0,1,1,Global.RESOURCETYPE.FOOD,25.0,Global.TRAITTYPE.CULTURE)
+			pass
 		TYPE.GUILD:
-			set_building_properties(1,Global.TRAITTYPE.FAME,Global.RESOURCETYPE.CITIZEN,
-			1,1,0,Global.RESOURCETYPE.NONE,25.0,Global.TRAITTYPE.FAME)
+			pass
 			
 		# Food buildings
 		TYPE.FIELD:
-			set_building_properties(1,Global.TRAITTYPE.PRODUCTIVITY,Global.RESOURCETYPE.FOOD,
-			4,1,0,Global.RESOURCETYPE.NONE)
+			pass
 
 		TYPE.SCHOOL:
-			set_building_properties(1,Global.TRAITTYPE.PRODUCTIVITY,Global.RESOURCETYPE.NONE,
-			0,1,4,Global.RESOURCETYPE.MONEY)
-			
+			pass
 		TYPE.POND:
 			pass
 		TYPE.BAKERY:
-			set_building_properties(0,Global.TRAITTYPE.PRODUCTIVITY,Global.RESOURCETYPE.FOOD,
-			2,1,0,Global.RESOURCETYPE.NONE,100.0,Global.TRAITTYPE.NONE,Global.TRAITTYPE.PRODUCTIVITY,
-			2)
+			pass
 		TYPE.RUINS:
 			%fire.hide()
 			sprite_2d.texture = HOUSEA
 			sprite_2d.frame = 1
 			sprite_2d.offset = Vector2(0,-16)
 			
-			set_building_properties(0,Global.TRAITTYPE.NONE,Global.RESOURCETYPE.NONE,0,
-			1,0,Global.RESOURCETYPE.NONE)
-
+	
+	set_building_properties(type)
 	var path = "res://TileMap/Assets/"+str(TYPE.keys()[type]).to_lower()+"Build.png"
 	sprite_2d.texture = load(path)
 
-func set_building_properties(tAmt : int, tType : Global.TRAITTYPE, 
-rType : Global.RESOURCETYPE, rAmt : int, cd : int, cAmt : int, 
-cType : Global.RESOURCETYPE, chNum : float = 100.0,
-chTrait : Global.TRAITTYPE = Global.TRAITTYPE.NONE,
-sTrait : Global.TRAITTYPE = Global.TRAITTYPE.NONE, 
-sMult : int = 1, ) -> void:
-	traitAmt = tAmt
-	traitType = tType
-	resourceType = rType
-	resourceAmt = rAmt
-	cooldown = cd
-	costAmt = cAmt
-	costType = cType
-	chance = chNum
-	chanceTrait = chTrait
-	scalingTrait = sTrait
-	scalingMult = sMult
+#func set_building_properties(tAmt : int, tType : Global.TRAITTYPE, 
+#rType : Global.RESOURCETYPE, rAmt : int, cd : int, cAmt : int, 
+#cType : Global.RESOURCETYPE, chNum : float = 100.0,
+#chTrait : Global.TRAITTYPE = Global.TRAITTYPE.NONE,
+#sTrait : Global.TRAITTYPE = Global.TRAITTYPE.NONE, 
+#sMult : int = 1, ) -> void:
+	#traitAmt = tAmt
+	#traitType = tType
+	#resourceType = rType
+	#resourceAmt = rAmt
+	#cooldown = cd
+	#costAmt = cAmt
+	#costType = cType
+	#chance = chNum
+	#chanceTrait = chTrait
+	#scalingTrait = sTrait
+	#scalingMult = sMult
+
+func set_building_properties(bType : Building.TYPE):
+	traitAmt = Stats.coloBuilds[bType]["traitAmt"]
+	traitType = Stats.coloBuilds[bType]["traitType"]
+	resourceType = Stats.coloBuilds[bType]["resourceType"]
+	resourceAmt = Stats.coloBuilds[bType]["resourceAmt"]
+	cooldown = Stats.coloBuilds[bType]["cooldown"]
+	costAmt = Stats.coloBuilds[bType]["costAmt"]
+	costType = Stats.coloBuilds[bType]["costType"]
+	chance = Stats.coloBuilds[bType]["chance"]
+	chanceTrait = Stats.coloBuilds[bType]["chanceTrait"]
+	scalingTrait = Stats.coloBuilds[bType]["scalingTrait"]
+	scalingMult = Stats.coloBuilds[bType]["scalingMult"]
