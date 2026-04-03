@@ -918,9 +918,17 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="BotRow" type="HBoxContainer" parent="Shop/VBoxContainer"]
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
+theme_override_constants/separation = 20
 
 [node name="CardPurchaseSlot" parent="Shop/VBoxContainer/BotRow" instance=ExtResource("15_h2fog")]
+layout_mode = 2
+
+[node name="CardPurchaseSlot2" parent="Shop/VBoxContainer/BotRow" instance=ExtResource("15_h2fog")]
+layout_mode = 2
+
+[node name="CardPurchaseSlot3" parent="Shop/VBoxContainer/BotRow" instance=ExtResource("15_h2fog")]
 layout_mode = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Shop"]

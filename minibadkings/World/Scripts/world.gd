@@ -94,9 +94,9 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	for i in range(1):
+	for i in range(2):
 		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.TAVERN
+		hCard.type = Card.CARDTYPE.BOMBER
 		ui.hand_container.add_child(hCard)
 		hCard.set_owner(get_tree().get_current_scene())
 	
@@ -352,8 +352,8 @@ func on_night_ended() -> void:
 	if is_combat_phase == false : return
 	if ui.anim.is_playing():return
 	ui.rollArray.append(Card.ROLLTYPE.GENERAL)
-	ui.rollArray.append(Card.ROLLTYPE.SHOP)
 	start_day()
+	ui.rollArray.append(Card.ROLLTYPE.SHOP)
 	tileWorld.activeDecree = Decree.TYPE.NONE
 	
 	# reward
@@ -406,6 +406,8 @@ func start_day() -> void:
 	ui.cards.show()
 	
 	for card : Card in Global.cardsDispatched:
+		# find position of shop and place it before
+		var shopInd = ui.rollArray
 		ui.rollArray.append(Card.ROLLTYPE.CHARM)
 	
 	# repair buildings
@@ -483,7 +485,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		#ui.info_overlay._update_resources()
 		#ui.info_overlay._update_traits()
-		spawn_rebel_or_militia(false)
+		Engine.time_scale = 8
 		return
 
 	#if event.is_action_pressed("cancel"):

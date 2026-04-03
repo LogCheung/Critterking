@@ -105,6 +105,7 @@ func control_is_visible() -> bool:
 	return false
 	
 func _on_show_pressed() -> void:
+	print(rollArray)
 	# when deck of cards is clicked, show anim will play
 	if displaying_cards : return
 	#await get_tree().create_timer(.05).timeout
@@ -112,6 +113,7 @@ func _on_show_pressed() -> void:
 	if anim.is_playing():return
 	rolltype = rollArray.front()
 	%Shuffle.play()
+	
 	
 	if rolltype == Card.ROLLTYPE.CHARM:
 		%CardShow.texture = preload("res://UI/Assets/menus/discoveryshow.png")
@@ -729,7 +731,8 @@ func load_world() -> void:
 		info_overlay.hide()
 		hand.hide()
 		end_turn.hide()
-		if rollArray.front() == Card.ROLLTYPE.SHOP: display_shop()
+		if rollArray.front() == Card.ROLLTYPE.CHARM: display_shop()
+		elif rollArray.front() == Card.ROLLTYPE.SHOP: display_shop()
 		else: cards.show()
 	elif world.dispatchDay:
 		dispatch.show()
