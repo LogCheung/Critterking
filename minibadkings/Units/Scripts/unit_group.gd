@@ -26,6 +26,14 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if selected: highlight_tiles()
 	
+	# day time inspecting
+	if tileWorld.mouseTile == Vector2i(tile): 
+		_on_select_area_mouse_entered()
+		if Input.is_action_just_released("inspect"):
+			ui.inspect_card.inspect_card(int(type),charm)
+	elif !world.is_combat_phase:
+		_on_select_area_mouse_exited()
+	
 func respawn_units() -> void:
 	create_formation(UNIT)
 	for unit in unitsArray:
@@ -37,7 +45,6 @@ var is_under_mouse : bool = false
 func _on_select_area_mouse_entered() -> void:
 	if tileWorld.using_decree : return
 	if house : return
-	if !world.is_combat_phase: return
 	is_under_mouse = true
 	for unit : Ally in unitsArray:
 		if unit.sprite_2d.material != null:

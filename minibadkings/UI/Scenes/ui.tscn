@@ -1737,6 +1737,7 @@ scale = Vector2(3, 3)
 for_show = true
 
 [node name="InspectCard" type="Control" parent="."]
+unique_name_in_owner = true
 process_mode = 3
 top_level = true
 custom_minimum_size = Vector2(1920, 1080)

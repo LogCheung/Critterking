@@ -27,7 +27,9 @@ CARDTYPE.CONSTRUCTION,
 
 ]
 const ENTRANCE_BUILDINGS : Array = [
-	CARDTYPE.HOUSE,CARDTYPE.CARE
+	CARDTYPE.HOUSE,CARDTYPE.CARE, CARDTYPE.STORAGE, CARDTYPE.NURSERY,
+	CARDTYPE.BAKERY, CARDTYPE.SCHOOL, CARDTYPE.TRADINGPOST, CARDTYPE.HALL,
+	CARDTYPE.CASINO, CARDTYPE.TAVERN, CARDTYPE.GUILD, CARDTYPE.PANTRY
 ]
 
 # Crazed is border for units, Biter is start
@@ -281,7 +283,9 @@ func plop_building() -> void:
 	if type == CARDTYPE.HOUSE : building = COLONY.instantiate()
 	
 	building = match_building_type(building)
+	
 	if tileWorld.restricted_tiles.has(Vector2i(tile)): return
+	if ENTRANCE_BUILDINGS.has(type) and tileWorld.blocked_entry_tiles.has(Vector2i(tile)): return
 	if building == null : return # checking if was invalid spot, then match type would return null
 	
 	building.global_position = tileWorld.ground.map_to_local(tile)
@@ -289,6 +293,7 @@ func plop_building() -> void:
 	building.set_owner(get_tree().get_current_scene())
 	
 	# update blobked entry tiles
+	if ENTRANCE_BUILDINGS.has(type): tileWorld.restricted_tiles.append(building.doorstepTile)
 	tileWorld.find_blocked_entry_tiles()
 	
 	ui.info_overlay._update_traits()
@@ -504,10 +509,7 @@ func match_sprite_type() -> void:
 
 func _on_selected_gui_input(e: InputEvent) -> void:
 	if e.is_action_released("inspect") and !selected and is_under_mouse:
-		print("ok")
-		ui.anim.play("InspectShow")
-		ui.inspection_card.type = type
-		ui.inspection_card.match_sprite_type()
+		ui.inspect_card.inspect_card(type,charm)
 	if choice_picked : return
 	if being_charmed : return
 	if !e.is_action_released("select") : return # if not clicking bye bye

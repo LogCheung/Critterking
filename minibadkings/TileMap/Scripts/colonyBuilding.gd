@@ -23,13 +23,14 @@ func on_day_ended() -> void:
 	pantryActive = check_pantry_active()
 	
 	if type == TYPE.HOUSE and pantryActive:
+		print(Global.RESOURCETYPE.keys()[resourceType])
 		trigger_building()
 		time = 0
 	if time >= cooldown and active:
 		trigger_building()
 	
 func trigger_building() -> void:
-	time -= cooldown
+	time = 0
 	
 	# special cases
 	
@@ -54,7 +55,7 @@ func trigger_building() -> void:
 		
 		
 	if !add_resource(costType,-costAmt) : # consider cost
-		if type == TYPE.PANTRY : pantryActive = false
+		#if type == TYPE.PANTRY : pantryActive = false
 		return 
 	
 	add_resource(resourceType,resourceAmt) # add resource
@@ -62,8 +63,6 @@ func trigger_building() -> void:
 
 
 func add_resource(rType : Global.RESOURCETYPE,rAmt : int ) -> bool:
-	print(rType)
-	print(rAmt)
 	if rType == Global.RESOURCETYPE.NONE : return true
 	
 	# scaling
@@ -85,7 +84,6 @@ func add_resource(rType : Global.RESOURCETYPE,rAmt : int ) -> bool:
 		Global.resource_dict[rType] += abs(rAmt)
 		return false
 		
-	if type == TYPE.PANTRY : pantryActive = true
 	return true
 
 func trigger_school() -> void:
@@ -99,7 +97,6 @@ func check_pantry_active() -> bool:
 	var pantries = get_tree().get_nodes_in_group("COLONY")
 	pantries = pantries.filter(func(b: ColonyBuilding ):return b.type == TYPE.PANTRY)
 	for p  : ColonyBuilding in pantries:
-		print(p.active)
 		if p.active: return true
 	return false
 
@@ -136,6 +133,7 @@ func match_type() -> void:
 			tileWorld.restricted_tiles.append(doorstepTile)
 			await anim.animation_finished
 			duplicate_sprite()
+			set_building_properties(type)
 			return
 		TYPE.CUSTOMS:
 			pass
@@ -165,6 +163,9 @@ func match_type() -> void:
 	set_building_properties(type)
 	var path = "res://TileMap/Assets/"+str(TYPE.keys()[type]).to_lower()+"Build.png"
 	sprite_2d.texture = load(path)
+	
+	await anim.animation_finished
+	duplicate_sprite()
 
 #func set_building_properties(tAmt : int, tType : Global.TRAITTYPE, 
 #rType : Global.RESOURCETYPE, rAmt : int, cd : int, cAmt : int, 

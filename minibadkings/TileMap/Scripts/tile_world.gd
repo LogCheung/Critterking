@@ -3,6 +3,7 @@ class_name TileWorld
 
 @export var decree : Decree
 @export var activeDecree : Decree.TYPE
+@export var mouseTile : Vector2i
 
 @onready var ground : TileMapLayer = $Ground
 @onready var hover : TileMapLayer = $Hover
@@ -35,6 +36,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	for cell in active_hover.get_used_cells():
 		active_hover.set_cell(cell,-1)
+	
+	mouseTile = ground.local_to_map(get_global_mouse_position())
 	
 	# decree
 	handle_decree()
@@ -267,7 +270,6 @@ func set_up_astar() -> void:
 func handle_decree() -> void:
 	# handle size of affected area and action (maybe)
 	var mousePos = get_global_mouse_position()
-	var mouseTile = active_hover.local_to_map(mousePos + Vector2(8,8))
 	var hoveringTiles : Array
 	
 	# preconditons
@@ -326,19 +328,19 @@ func handle_decree() -> void:
 		activeDecree = Decree.TYPE.NONE
 		highlight_buildings(false,Building.TYPE.NONE)
 
-func handle_decree_action(mouseTile : Vector2i) -> void:
+func handle_decree_action(mTile : Vector2i) -> void:
 	# executed when clicked and decree is being used
 	%Decree.play()
 	match activeDecree:
 		Decree.TYPE.NONE:
 			return
 		Decree.TYPE.INSPIRATION, Decree.TYPE.DEFENSE,Decree.TYPE.MASTERY,Decree.TYPE.FORTITUDE:
-			handle_stat_modifying_decree(mouseTile)
+			handle_stat_modifying_decree(mTile)
 		Decree.TYPE.DECARE:
-			handle_stat_modifying_decree(mouseTile)
+			handle_stat_modifying_decree(mTile)
 		Decree.TYPE.WAR:
 			var bombard = preload("res://TileMap/Scenes/war_bombard.tscn").instantiate()
-			bombard.global_position = active_hover.map_to_local(mouseTile) - Vector2(0,16)
+			bombard.global_position = active_hover.map_to_local(mTile) - Vector2(0,16)
 			add_child(bombard)
 			bombard.set_owner(get_tree().get_current_scene())
 		Decree.TYPE.RECON:
@@ -414,12 +416,12 @@ func handle_decree_action(mouseTile : Vector2i) -> void:
 			
 	highlight_buildings(false,Building.TYPE.NONE)
 	
-func handle_stat_modifying_decree(mouseTile : Vector2i) -> void:
+func handle_stat_modifying_decree(mTile : Vector2i) -> void:
 	# Create affected area
 	var area : Area2D = Area2D.new()
 	var col : CollisionShape2D= CollisionShape2D.new()
 	var shape : ConvexPolygonShape2D = ConvexPolygonShape2D.new()
-	area.global_position = active_hover.map_to_local(mouseTile)
+	area.global_position = active_hover.map_to_local(mTile)
 	
 	# add points for shape
 	var usedRect = active_hover.get_used_rect()

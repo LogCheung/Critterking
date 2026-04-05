@@ -8,6 +8,16 @@ enum TYPE {
 }
 
 @export var type : TYPE
+@export var is_on_inspected_card : bool = false
+
+@onready var ui : UI = get_tree().get_first_node_in_group("UI")
+
+func _input(event: InputEvent) -> void:
+	if is_on_inspected_card:
+		var dist = get_global_mouse_position().distance_to(global_position)
+		if dist < 32 and event.is_action_released("inspect"):
+			ui.inspect_card.inspect_card(int(type) + Card.CARDTYPE.HEARTLOCKET)
+	pass
 
 func _ready() -> void:
 	match type:

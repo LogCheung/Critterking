@@ -38,7 +38,7 @@ signal unit_healed
 @onready var settB = settings.get_children()
 @onready var ascensions: Control = %ascensions
 @onready var shop: Control = %Shop
-@onready var inspection_card: Card = %InspectionCard
+@onready var inspect_card: InspectControl = %InspectCard
 @onready var tutorial: Tutorial = %Tutorial
 
 @export var rollArray : Array = []

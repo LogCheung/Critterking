@@ -267,7 +267,6 @@ func on_night_started() -> void:
 		while rebel_nums.has(rand):
 			rand = randi_range(0,enemy_parties - 1)
 		rebel_nums.append(rand)
-	print(rebel_nums)
 	
 	# set/spawn militia numbers
 	if Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] >= 75:

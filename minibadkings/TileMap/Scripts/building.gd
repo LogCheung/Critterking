@@ -84,18 +84,26 @@ func _ready() -> void:
 			%fire.show()
 			%fire.play("default")
 	
-	#citizen_toggle_sprite.frame = 1 if active else 0
-	#citizen_toggle_sprite.modulate.v = 1.5 if active else 1.0
-	#worker_alert_sprite.visible = !active
-	
 
 func _process(delta: float) -> void:
+	# highlight and inspect functionality
+	if !world.is_combat_phase and tileWorld.mouseTile == tile:
+		_on_mouse_entered()
+		if Input.is_action_just_released("inspect"):
+			ui.inspect_card.inspect_card(int(type + Card.CARDTYPE.TRAPS - 1))
+	elif !world.is_combat_phase:
+		_on_mouse_exited()
+		
+		
+	# health functionality
 	if health <= 0:
 		on_destroyed()
 	if health <= 10 and health > 0:
 		sprite_2d.modulate.v = .3	
 	else:
 		sprite_2d.modulate.v = 1
+		
+	# occupants
 	if occupants_inside():
 		if %Timer.time_left <= 0:
 			%Timer.start()
@@ -104,12 +112,14 @@ func _process(delta: float) -> void:
 		%Timer.stop()
 		bar.value = 0
 		bar.visible = false
-		
+	
+	# fort functionality
 	if type == TYPE.FORT:
 		if !world.is_combat_phase:
 			tileWorld.ground.set_cell(tile,0,Vector2(0,0),2)
 		else:
 			tileWorld.ground.set_cell(tile,0,Vector2(0,0),0)
+
 func occupants_inside() -> bool:
 	if !occupant : return false
 	#if type != TYPE.HOUSE || type != TYPE.CARE : return false
@@ -344,7 +354,7 @@ func _on_timer_timeout() -> void:
 
 func _on_mouse_entered() -> void:
 	if !highlightSprite: return
-	if Engine.time_scale == .1 and sprite_2d.material != null: 
+	if (Engine.time_scale == .1 and sprite_2d.material != null) or !world.is_combat_phase: 
 		highlightSprite.modulate = Color(3,3,3)
 		highlightSprite.visible = true
 
