@@ -21,7 +21,7 @@ const CAMPFIRE = preload("res://TileMap/Assets/buildCampfire.png")
 const CLIFF = preload("res://TileMap/Assets/buildCliff.png")
 
 const ALWAYS_ACTIVE = [
-	TYPE.TRAP, TYPE.MONUMENT
+	TYPE.TRAP, TYPE.MONUMENT, TYPE.POND, TYPE.STORAGE, TYPE.CAMPFIRE
 ]
 
 enum TYPE {

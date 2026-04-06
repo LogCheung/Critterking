@@ -89,6 +89,8 @@ func new_game() -> void:
 	await get_tree().create_timer(.125).timeout
 	tileWorld.generate_map_patterns()
 	tileWorld.draw_build_area()
+	tileWorld.restricted_tiles.clear()
+	tileWorld.blocked_entry_tiles.clear()
 	
 	ui.cards.show()
 	create_enemy_perimeter(12 + Global.expansions, true)

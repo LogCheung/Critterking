@@ -77,7 +77,7 @@ extends Node
 		"chance" : 100,
 		"chanceTrait" : Global.TRAITTYPE.NONE,
 		"scalingTrait" : Global.TRAITTYPE.FAME,
-		"scalingMult" : 8,
+		"scalingMult" : 6,
 	},
 	Building.TYPE.MARKETPLACE: {
 		"traitAmt" : 0,

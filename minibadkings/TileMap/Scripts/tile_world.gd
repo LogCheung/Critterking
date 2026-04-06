@@ -244,6 +244,14 @@ func find_obstacle_tiles() -> void:
 		for y in range(6,9):
 			obstacle_tiles.append_array(obstacles.get_used_cells_by_id(1,Vector2i(x,y)))
 
+func find_restricted_tiles() -> void:
+	restricted_tiles.clear()
+	var builds = get_tree().get_nodes_in_group("BUILDING")
+	for b : Building in builds:
+		if Card.ENTRANCE_BUILDINGS.has(b.type + Card.CARDTYPE.TRAPS - 1):
+			restricted_tiles.append(b.doorstepTile)
+	pass
+
 func find_blocked_entry_tiles() -> void:
 	var buildTiles = ground.get_used_cells_by_id(0,Vector2(0,0),2)
 	var takenTiles = []

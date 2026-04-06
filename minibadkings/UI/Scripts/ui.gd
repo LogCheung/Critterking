@@ -748,7 +748,11 @@ func load_world() -> void:
 		
 	%AdaptLabel.text = str(currentAscn)
 	info_overlay.load_overlay()
-		
+	# load tileWorld data for restrictions
+	world.tileWorld.find_restricted_tiles()
+	world.tileWorld.find_blocked_entry_tiles()
+	
+	
 # unlocking new cards
 func _on_mainmenu_mouse_entered() -> void:
 	# check if main menu in on screen

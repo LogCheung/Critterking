@@ -655,12 +655,11 @@ traitType = 3
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 924.0
-offset_top = 27.0
+offset_top = 1.0
 offset_right = 1021.33325
-offset_bottom = 83.0
+offset_bottom = 77.66667
 scale = Vector2(1.5, 1.5)
-text = "0
-"
+text = "0"
 label_settings = SubResource("LabelSettings_yqd36")
 horizontal_alignment = 1
 vertical_alignment = 1
