@@ -33,7 +33,7 @@ func _ready() -> void:
 		b.worker_alert_sprite.visible = !b.active
 
 func load_overlay() -> void:
-	await get_tree().create_timer(1.5).timeout
+	await get_tree().create_timer(2).timeout
 	show_containers()
 	
 	Global.resource_dict = SaveLoad.SaveFileData.resource_dict.duplicate()

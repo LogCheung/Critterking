@@ -654,8 +654,8 @@ func load_world() -> void:
 	# reset workers to zero, buildings will correctly set workers on their own
 	Global.resource_dict[Global.RESOURCETYPE.WORKER] = 0
 	
-	info_overlay._update_resources()
-	info_overlay._update_traits()
+	info_overlay._update_resources(false)
+	info_overlay._update_traits(false)
 	
 	# load enemy party count
 	world.enemy_parties = int(Global.nights / 2) + 3
@@ -720,8 +720,6 @@ func load_world() -> void:
 	if currentChal == CHALLENGE.JUICED: Engine.time_scale = 2.5
 	else: Engine.time_scale = 1
 	
-	info_overlay._update_resources()
-	info_overlay._update_traits()
 
 	# verify data of units
 	world.tileWorld.set_up_astar()

@@ -223,3 +223,5 @@ extends Node
 		"scalingMult" : 0,
 	}
 }
+
+var pondBuffAmt : int = 4

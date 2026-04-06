@@ -3,6 +3,7 @@ class_name ColonyBuilding
 
 signal day_ended
 
+static var pondBuffTiles : Array 
 @export var costType : Global.RESOURCETYPE = Global.RESOURCETYPE.NONE
 @export var costAmt : int = 0 
 @export var workers : int = 0
@@ -27,11 +28,20 @@ func on_day_ended() -> void:
 		time = 0
 	if time >= cooldown and active:
 		trigger_building()
+
+func _process(delta: float) -> void:
+	print(pondBuffTiles)
 	
 func trigger_building() -> void:
 	time = 0
 	
 	# special cases
+	# for fields buffed by ponds
+	if type == TYPE.FIELD:
+		# mult is number of times tile is buffed
+		var bonus = pondBuffTiles.count(tile) * Stats.pondBuffAmt
+		print(pondBuffTiles.count(tile))
+		resourceAmt = Stats.coloBuilds[type]["resourceAmt"] + bonus
 	
 	# for chance of losing in the casino
 	if type == TYPE.CASINO and randi() % 4 == 0 :
@@ -88,10 +98,32 @@ func add_resource(rType : Global.RESOURCETYPE,rAmt : int ) -> bool:
 func trigger_school() -> void:
 	if !active : 
 		traitAmt = 0 
-		
-	traitAmt = int(workers * 1)
+	else:
+		traitAmt = int(workers * 1)
 	ui.info_overlay._update_traits()
+	
+func trigger_pond(pondActive : bool) -> void:
+	var affectedTiles : Array = [
+		Vector2i(tile.x,tile.y - 1),
+		Vector2i(tile.x,tile.y + 1),
+		Vector2i(tile.x + 1,tile.y),
+		Vector2i(tile.x - 1,tile.y),
+	]
 
+	pondBuffTiles.append_array(affectedTiles)
+	
+	# everything below is useless because im stupid
+	# i want a train
+	if false:
+		# confirm that all tiles are in the array
+		for t in affectedTiles:
+			if !pondBuffTiles.has(t): return
+		# once confirmed, remove affected tiles 
+		# we do this confirmation to not 
+		# accidentally remove overlapping tiles from other ponds
+		for t in affectedTiles:
+			pondBuffTiles.remove_at(pondBuffTiles.find(t))
+	
 func check_pantry_active() -> bool:
 	var pantries = get_tree().get_nodes_in_group("COLONY")
 	pantries = pantries.filter(func(b: ColonyBuilding ):return b.type == TYPE.PANTRY)
@@ -141,11 +173,10 @@ func match_type() -> void:
 		# Food buildings
 		TYPE.FIELD:
 			pass
-
 		TYPE.SCHOOL:
 			pass
 		TYPE.POND:
-			pass
+			trigger_pond(true)
 		TYPE.BAKERY:
 			pass
 		TYPE.RUINS:
@@ -182,4 +213,4 @@ func set_active(condition : bool) -> void:
 	if ALWAYS_ACTIVE.has(type) : return
 	workers += 1 if condition else -1
 	
-	if TYPE.SCHOOL == type: trigger_school()
+	if type == TYPE.SCHOOL: trigger_school()

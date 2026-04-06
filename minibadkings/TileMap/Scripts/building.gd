@@ -244,6 +244,7 @@ func on_destroyed() -> void:
 	# Change appearance and play destroy
 	%Break.play()
 	anim.play("destroy")
+	set_active(false)
 	await anim.animation_finished
 	type = TYPE.RUINS
 	match_type()
