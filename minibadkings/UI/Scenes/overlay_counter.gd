@@ -45,7 +45,7 @@ func set_value(value : int, showAnim : bool = true) -> void:
 	var children = get_children().filter(func(e):return e is Pop)
 	if !children.is_empty():
 		# first child will be another pop scene
-		await children[0].pop_finished
+		await get_tree().create_timer(.5).timeout
 	# if isn't army counter or value doesn't change then continue
 	
 	# show change animation

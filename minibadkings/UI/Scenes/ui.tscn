@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://0aaq2moh04q8" path="res://UI/Assets/alerts/houseInHand.png" id="5_ia477"]
 [ext_resource type="Texture2D" uid="uid://bfqdqavdl2kr3" path="res://UI/Assets/menus/pause.png" id="5_n2q0n"]
 [ext_resource type="Texture2D" uid="uid://cbfi3jolrr55m" path="res://UI/Assets/cards/tutorialText.png" id="5_nvxdf"]
-[ext_resource type="Texture2D" uid="uid://byqvjdf31scd3" path="res://UI/Assets/alerts/placingToggle.png" id="5_s0jxd"]
+[ext_resource type="Texture2D" uid="uid://byqvjdf31scd3" path="res://UI/Assets/overlay/placingToggle.png" id="5_s0jxd"]
 [ext_resource type="Texture2D" uid="uid://e0lt6th6b1bi" path="res://UI/Assets/alerts/wavetimeAlert.png" id="6_ia477"]
 [ext_resource type="PackedScene" uid="uid://d3k1620rqdidi" path="res://UI/Scenes/OverlayCounter.tscn" id="6_nh1tr"]
 [ext_resource type="FontFile" uid="uid://ggtewla8581f" path="res://Units/aseprite.otf" id="6_t0wgx"]
@@ -578,9 +578,9 @@ texture = ExtResource("8_h440b")
 [node name="ResourceContainer" type="HBoxContainer" parent="InfoOverlay"]
 layout_mode = 0
 offset_left = 158.0
-offset_top = 85.0
+offset_top = 68.0
 offset_right = 750.0
-offset_bottom = 149.0
+offset_bottom = 132.0
 theme_override_constants/separation = 68
 
 [node name="PartyCurrent" parent="InfoOverlay/ResourceContainer" instance=ExtResource("6_nh1tr")]
@@ -615,9 +615,9 @@ army = false
 [node name="TraitContainer" type="HBoxContainer" parent="InfoOverlay"]
 layout_mode = 0
 offset_left = 1170.0
-offset_top = 86.0
+offset_top = 69.0
 offset_right = 1762.0
-offset_bottom = 150.0
+offset_bottom = 133.0
 theme_override_constants/separation = 68
 
 [node name="ProductivityTrait" parent="InfoOverlay/TraitContainer" instance=ExtResource("6_nh1tr")]
@@ -668,9 +668,9 @@ vertical_alignment = 1
 [node name="AdaptLabel" type="Label" parent="InfoOverlay"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_top = 39.0
+offset_top = 25.0
 offset_right = 68.0
-offset_bottom = 95.0
+offset_bottom = 81.0
 scale = Vector2(1.5, 1.5)
 text = "10"
 label_settings = SubResource("LabelSettings_nh1tr")
@@ -1739,6 +1739,7 @@ for_show = true
 [node name="InspectCard" type="Control" parent="."]
 unique_name_in_owner = true
 process_mode = 3
+visible = false
 top_level = true
 custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 3

@@ -5,7 +5,7 @@ signal day_ended
 
 @export var costType : Global.RESOURCETYPE = Global.RESOURCETYPE.NONE
 @export var costAmt : int = 0 
-@export var workers : Array
+@export var workers : int = 0
 
 @export var scalingTrait : Global.TRAITTYPE = Global.TRAITTYPE.NONE
 @export var scalingMult : float = 1
@@ -23,7 +23,6 @@ func on_day_ended() -> void:
 	pantryActive = check_pantry_active()
 	
 	if type == TYPE.HOUSE and pantryActive:
-		print(Global.RESOURCETYPE.keys()[resourceType])
 		trigger_building()
 		time = 0
 	if time >= cooldown and active:
@@ -89,8 +88,8 @@ func add_resource(rType : Global.RESOURCETYPE,rAmt : int ) -> bool:
 func trigger_school() -> void:
 	if !active : 
 		traitAmt = 0 
-		return
-	traitAmt = int(workers.size() * .5)
+		
+	traitAmt = int(workers * 1)
 	ui.info_overlay._update_traits()
 
 func check_pantry_active() -> bool:
@@ -104,13 +103,9 @@ func match_type() -> void:
 	match type:
 		# Satisfaction buildings
 		TYPE.TAVERN:
-			#set_building_properties(1,Global.TRAITTYPE.CULTURE,Global.RESOURCETYPE.SATISFACTION,
-			#5,1,0,Global.RESOURCETYPE.NONE)
 			pass
 		TYPE.MONUMENT:
 			pass
-			
-			set_active(true)
 		TYPE.CASINO:
 			pass
 			
@@ -130,10 +125,10 @@ func match_type() -> void:
 		TYPE.HOUSE:
 			sprite_2d.texture = HOUSEA if randi() % 2 == 0 else HOUSEB
 			
+			set_building_properties(type)
 			tileWorld.restricted_tiles.append(doorstepTile)
 			await anim.animation_finished
 			duplicate_sprite()
-			set_building_properties(type)
 			return
 		TYPE.CUSTOMS:
 			pass
@@ -167,24 +162,6 @@ func match_type() -> void:
 	await anim.animation_finished
 	duplicate_sprite()
 
-#func set_building_properties(tAmt : int, tType : Global.TRAITTYPE, 
-#rType : Global.RESOURCETYPE, rAmt : int, cd : int, cAmt : int, 
-#cType : Global.RESOURCETYPE, chNum : float = 100.0,
-#chTrait : Global.TRAITTYPE = Global.TRAITTYPE.NONE,
-#sTrait : Global.TRAITTYPE = Global.TRAITTYPE.NONE, 
-#sMult : int = 1, ) -> void:
-	#traitAmt = tAmt
-	#traitType = tType
-	#resourceType = rType
-	#resourceAmt = rAmt
-	#cooldown = cd
-	#costAmt = cAmt
-	#costType = cType
-	#chance = chNum
-	#chanceTrait = chTrait
-	#scalingTrait = sTrait
-	#scalingMult = sMult
-
 func set_building_properties(bType : Building.TYPE):
 	traitAmt = Stats.coloBuilds[bType]["traitAmt"]
 	traitType = Stats.coloBuilds[bType]["traitType"]
@@ -197,3 +174,11 @@ func set_building_properties(bType : Building.TYPE):
 	chanceTrait = Stats.coloBuilds[bType]["chanceTrait"]
 	scalingTrait = Stats.coloBuilds[bType]["scalingTrait"]
 	scalingMult = Stats.coloBuilds[bType]["scalingMult"]
+
+func set_active(condition : bool) -> void:
+	super.set_active(condition)
+	
+	if ALWAYS_ACTIVE.has(type) : return
+	workers += 1 if condition else -1
+	
+	if TYPE.SCHOOL == type: trigger_school()

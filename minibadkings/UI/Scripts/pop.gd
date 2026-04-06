@@ -30,5 +30,5 @@ func show_value(value: int):
 	tween.play()
 	tween.tween_callback(queue_free)
 	
-	await get_tree().create_timer(duration/2.0).timeout
+	#await get_tree().create_timer(duration/4.0).timeout
 	pop_finished.emit()

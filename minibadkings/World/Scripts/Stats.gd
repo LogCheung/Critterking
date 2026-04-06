@@ -171,7 +171,7 @@ extends Node
 		"scalingMult" : 0,
 	},
 	Building.TYPE.SCHOOL: {
-		"traitAmt" : 1,
+		"traitAmt" : 0,
 		"traitType" : Global.TRAITTYPE.PRODUCTIVITY,
 		"resourceType" : Global.RESOURCETYPE.NONE,
 		"resourceAmt": 0,

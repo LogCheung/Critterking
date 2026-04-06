@@ -20,6 +20,10 @@ const FORT = preload("res://TileMap/Assets/fort.png")
 const CAMPFIRE = preload("res://TileMap/Assets/buildCampfire.png")
 const CLIFF = preload("res://TileMap/Assets/buildCliff.png")
 
+const ALWAYS_ACTIVE = [
+	TYPE.TRAP, TYPE.MONUMENT
+]
+
 enum TYPE {
 	NONE, TRAP, HOUSE, CARE,  FARM, SAPSTORE, FORT, CAMPFIRE, #CLIFF,  TUNNEL, 
 	 NURSERY, STORAGE, 
@@ -73,6 +77,11 @@ func _ready() -> void:
 	tileWorld.ground.set_cell(tile,0,Vector2(0,0),2)
 	doorstepTile = tileWorld.ground.local_to_map(entrance.global_position)
 	match_type()
+	
+	if ALWAYS_ACTIVE.has(type):
+		set_active(true)
+	
+	ui.info_overlay._update_traits()
 	
 	if health > 0:
 		visible = true
@@ -132,11 +141,7 @@ func match_type() -> void:
 	match type:
 		TYPE.HOUSE:
 			sprite_2d.texture = HOUSEA if randi() % 2 == 0 else HOUSEB
-			traitAmt = 1
-			traitType = Global.TRAITTYPE.FAME
-			cooldown = 2
-			resourceAmt = 1
-			resourceType = Global.RESOURCETYPE.CITIZEN
+
 			await anim.animation_finished
 			duplicate_sprite()
 		TYPE.TRAP:
@@ -364,8 +369,8 @@ func _on_mouse_exited() -> void:
 	highlightSprite.modulate = Color(1,1,1)
 
 func _on_toggle_toggled(toggled_on: bool) -> void:
-	if type == TYPE.MONUMENT : 
-		set_active(true) 
+	if ALWAYS_ACTIVE.has(type): 
+		set_active(true)
 		return
 	if !active:
 		var availWorkers = Global.resource_dict[Global.RESOURCETYPE.CITIZEN] - Global.resource_dict[Global.RESOURCETYPE.WORKER]
@@ -382,7 +387,7 @@ func set_active(condition : bool) -> void:
 	citizen_toggle_sprite.frame = 1 if condition else 0
 	citizen_toggle_sprite.modulate.v = 1.5 if condition else 1.0
 	active = condition
-	worker_alert_sprite.visible = false if condition else true
+	worker_alert_sprite.visible = !condition
 
 func calculate_active_workers() -> void:
 	var activeBuilds = get_tree().get_nodes_in_group("BUILDING")
@@ -391,6 +396,6 @@ func calculate_active_workers() -> void:
 	
 	# account for buildings that do not require workers
 	for b : Building in activeBuilds:
-		if b.type == TYPE.MONUMENT:
+		if ALWAYS_ACTIVE.has(type):
 			Global.resource_dict[Global.RESOURCETYPE.WORKER] -= 1
 	

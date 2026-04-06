@@ -276,6 +276,7 @@ func _on_endless_pressed() -> void:
 func _on_play_pressed() -> void:
 	if anim.is_playing() : return
 	info_overlay.show_containers()
+	info_overlay.show()
 	%Button.play()
 	$AnimationPlayer.play("MainToGame")
 	Global.nights = 0

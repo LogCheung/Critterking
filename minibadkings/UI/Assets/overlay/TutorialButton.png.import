@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://orgrk21fx4vu"
-path="res://.godot/imported/citizenToggle.png-b746f463db95ab82d18dc9f1f4a48421.ctex"
+uid="uid://ddk82dl606haj"
+path="res://.godot/imported/TutorialButton.png-aa3709ffdab5c68c4845ba7622290990.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/Assets/alerts/citizenToggle.png"
-dest_files=["res://.godot/imported/citizenToggle.png-b746f463db95ab82d18dc9f1f4a48421.ctex"]
+source_file="res://UI/Assets/overlay/TutorialButton.png"
+dest_files=["res://.godot/imported/TutorialButton.png-aa3709ffdab5c68c4845ba7622290990.ctex"]
 
 [params]
 

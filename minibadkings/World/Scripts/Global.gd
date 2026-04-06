@@ -20,6 +20,16 @@ enum RESOURCETYPE {
 	Global.RESOURCETYPE.HOUSE : 0,
 }
 
+var default_resource_dict : Dictionary = {
+	Global.RESOURCETYPE.NONE : 0,
+	Global.RESOURCETYPE.SATISFACTION : 50,
+	Global.RESOURCETYPE.MONEY : 60,
+	Global.RESOURCETYPE.FOOD : 30,
+	Global.RESOURCETYPE.CITIZEN : 5,
+	Global.RESOURCETYPE.WORKER : 0,
+	Global.RESOURCETYPE.HOUSE : 0,
+}
+
 # traits
 @export var trait_dict : Dictionary = {
 	Global.TRAITTYPE.NONE : 0,

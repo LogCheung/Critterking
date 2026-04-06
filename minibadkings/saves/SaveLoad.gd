@@ -37,9 +37,13 @@ func _save(#scene : PackedScene,
 		var dupe = load("res://UI/Scenes/card.tscn").instantiate()
 		dupe.type = card.type
 		dupe.level = card.level
-		dupe.charm = card.charm
 		SaveFileData.cardsInHand.append(dupe)
 		dupe.for_show = false
+		
+		if card.charm:
+			var nCharm = load("res://Units/Scenes/charm.tscn").instantiate()
+			nCharm.type = card.charm.type
+			dupe.charm = nCharm
 	
 	# save decrees 
 	SaveFileData.decreesEquipped.clear()

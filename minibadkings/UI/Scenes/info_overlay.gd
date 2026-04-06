@@ -31,7 +31,7 @@ func _ready() -> void:
 	var buildings = get_tree().get_nodes_in_group("BUILDING")
 	for b : Building in buildings:
 		b.worker_alert_sprite.visible = !b.active
-		
+
 func load_overlay() -> void:
 	await get_tree().create_timer(1.5).timeout
 	show_containers()
@@ -57,6 +57,10 @@ func _on_assign_toggle_gui_input(event: InputEvent) -> void:
 		
 		var buildings = get_tree().get_nodes_in_group("BUILDING")
 		for b : Building in buildings:
+			if Building.ALWAYS_ACTIVE.has(b.type):
+				b.toggle.visible = false
+				continue
+			
 			b.worker_alert_sprite.visible = !b.active if !assignMode else false
 			b.toggle.visible = assignMode
 			ui.hand.visible = !assignMode

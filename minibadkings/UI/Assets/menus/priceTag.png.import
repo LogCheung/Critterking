@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://byqvjdf31scd3"
-path="res://.godot/imported/placingToggle.png-696f832e9fe30c5c0225503d911c3349.ctex"
+uid="uid://428fjo4vpvru"
+path="res://.godot/imported/priceTag.png-4a3ac417b1ac8cf0324a553accf83d46.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/Assets/alerts/placingToggle.png"
-dest_files=["res://.godot/imported/placingToggle.png-696f832e9fe30c5c0225503d911c3349.ctex"]
+source_file="res://UI/Assets/menus/priceTag.png"
+dest_files=["res://.godot/imported/priceTag.png-4a3ac417b1ac8cf0324a553accf83d46.ctex"]
 
 [params]
 

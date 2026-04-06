@@ -296,9 +296,9 @@ func plop_building() -> void:
 	if ENTRANCE_BUILDINGS.has(type): tileWorld.restricted_tiles.append(building.doorstepTile)
 	tileWorld.find_blocked_entry_tiles()
 	
-	ui.info_overlay._update_traits()
 	# remove self
 	remove_self()
+	
 
 func check_if_blocking(plopTile : Vector2) -> bool:
 	# tile is showing tilemap coords
@@ -447,12 +447,12 @@ func add_card_to_hand() -> void:
 			
 			Global.cardsInHand.append(newCard)
 			ui.hand_container.add_child(newCard)
-			newCard.set_owner(get_tree().get_current_scene())
+			#newCard.set_owner(get_tree().get_current_scene())
 			Global.cardsDispatched.remove_at(Global.cardsDispatched.find(card))
 			
 			newCard.for_show = false
 			newCard.charm_pos.add_child(newCharm)
-			newCharm.set_owner(get_tree().get_current_scene())
+			#newCharm.set_owner(get_tree().get_current_scene())
 			newCard.charm = newCharm
 		ROLLTYPE.BLESSING:
 			var decree : Decree = load("res://UI/Scenes/decree.tscn").instantiate()

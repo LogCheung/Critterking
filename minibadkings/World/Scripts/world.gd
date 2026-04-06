@@ -80,6 +80,10 @@ func new_game() -> void:
 	for decree in get_tree().get_nodes_in_group("DECREE"):
 		decree.queue_free()
 	
+	# resource data
+	Global.resource_dict = Global.default_resource_dict.duplicate()
+	
+	
 	# map gen with tilemap patterns
 	clear_world()
 	await get_tree().create_timer(.125).timeout
