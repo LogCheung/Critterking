@@ -163,6 +163,8 @@ func show_hand() -> void:
 
 func display_shop() -> void:
 	shop.show()
+	info_overlay.show()
+	info_overlay.show_containers()
 	for slot : CardPurchaseSlot in get_tree().get_nodes_in_group("CARDPURCHASE"):
 		slot.card.visible = true
 		slot.card.randomize_type()
@@ -747,7 +749,6 @@ func load_world() -> void:
 		card.set_up()
 		
 	%AdaptLabel.text = str(currentAscn)
-	info_overlay.load_overlay()
 	# load tileWorld data for restrictions
 	world.tileWorld.find_restricted_tiles()
 	world.tileWorld.find_blocked_entry_tiles()

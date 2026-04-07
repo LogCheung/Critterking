@@ -21,7 +21,8 @@ const CAMPFIRE = preload("res://TileMap/Assets/buildCampfire.png")
 const CLIFF = preload("res://TileMap/Assets/buildCliff.png")
 
 const ALWAYS_ACTIVE = [
-	TYPE.TRAP, TYPE.MONUMENT, TYPE.POND, TYPE.STORAGE, TYPE.CAMPFIRE
+	TYPE.TRAP, TYPE.MONUMENT, TYPE.POND, TYPE.STORAGE, TYPE.CAMPFIRE,
+	TYPE.FORT
 ]
 
 enum TYPE {
@@ -133,7 +134,7 @@ func occupants_inside() -> bool:
 	if !occupant : return false
 	#if type != TYPE.HOUSE || type != TYPE.CARE : return false
 	for unit in occupant.unitsArray:
-		if unit.visible == true:
+		if unit.visible == true and !unit.dead:
 			return false
 	return true
 

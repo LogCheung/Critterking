@@ -33,12 +33,11 @@ var healing : bool
 func _ready() -> void:
 	allyGroup = group
 	if level > 1: upgraded = true
-	super._ready()
-	selected.connect(on_selected)
-	#healthchange.connect(on_health_change)
-	#speedchange.connect(on_speed_change)
-	unselected.connect(on_unselected)
 	match_type()
+	super._ready()
+	
+	selected.connect(on_selected)
+	unselected.connect(on_unselected)
 	
 	if level > 1:  # if upgraded
 		max_health = max_health + 0.5

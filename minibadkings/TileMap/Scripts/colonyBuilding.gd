@@ -28,9 +28,6 @@ func on_day_ended() -> void:
 		time = 0
 	if time >= cooldown and active:
 		trigger_building()
-
-func _process(delta: float) -> void:
-	print(pondBuffTiles)
 	
 func trigger_building() -> void:
 	time = 0
@@ -40,7 +37,6 @@ func trigger_building() -> void:
 	if type == TYPE.FIELD:
 		# mult is number of times tile is buffed
 		var bonus = pondBuffTiles.count(tile) * Stats.pondBuffAmt
-		print(pondBuffTiles.count(tile))
 		resourceAmt = Stats.coloBuilds[type]["resourceAmt"] + bonus
 	
 	# for chance of losing in the casino

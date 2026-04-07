@@ -37,8 +37,8 @@ var navPath : Array
 var target_pos
 
 func _ready() -> void:
-	super._ready()
 	match_type()
+	super._ready()
 	
 	house_destroyed.connect(find_building)
 	aStar = tileWorld.aStar

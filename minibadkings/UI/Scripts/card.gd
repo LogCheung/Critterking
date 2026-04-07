@@ -427,6 +427,9 @@ func add_card_to_hand() -> void:
 		dupe.shop_card = false
 		ui.hand_container.add_child(dupe) # container
 		dupe.set_owner(get_tree().get_current_scene())
+		
+		# refresh city stats
+		ui.info_overlay._update_resources()
 		return
 	match ui.rolltype:
 		ROLLTYPE.GENERAL,ROLLTYPE.UNIT,ROLLTYPE.BUILDINGS:
