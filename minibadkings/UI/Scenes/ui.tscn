@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=63 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Script" uid="uid://b174vncna6gct" path="res://UI/Scenes/info_overlay.gd" id="2_ffuy1"]
@@ -26,6 +26,7 @@
 [ext_resource type="AudioStream" uid="uid://wctmm4dlcbix" path="res://Audio/music/crtrmenu.wav" id="10_n2q0n"]
 [ext_resource type="AudioStream" uid="uid://cwx4hw05ceroc" path="res://Audio/sfx/Shuffle.tres" id="11_6dw6b"]
 [ext_resource type="AudioStream" uid="uid://bdq1nbxdckl0r" path="res://Audio/sfx/Card.tres" id="12_yqd36"]
+[ext_resource type="Texture2D" uid="uid://1puwu8vsh0jh" path="res://UI/Assets/menus/crtrshop.png" id="13_nh1tr"]
 [ext_resource type="AudioStream" uid="uid://bxpbo04dxxuf4" path="res://Audio/sfx/Button.tres" id="15_8g5lr"]
 [ext_resource type="PackedScene" uid="uid://deavskvstfod5" path="res://UI/Scenes/card_purchase_slot.tscn" id="15_h2fog"]
 [ext_resource type="Texture2D" uid="uid://diy1h5txvm2w4" path="res://UI/Assets/menus/playMenu.png" id="16_onxes"]
@@ -882,24 +883,38 @@ texture = SubResource("CompressedTexture2D_ia477")
 
 [node name="Shop" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_top = 1.0
 offset_right = 1920.0
 offset_bottom = 1081.0
 
+[node name="ColorMask" type="ColorRect" parent="Shop"]
+z_index = -1
+layout_mode = 0
+offset_left = -2132.0
+offset_top = -1522.0
+offset_right = 2960.0
+offset_bottom = 1724.0
+mouse_filter = 2
+color = Color(0.050980393, 0.050980393, 0.050980393, 0.34901962)
+
+[node name="Merchant" type="Sprite2D" parent="Shop"]
+position = Vector2(958, 537)
+scale = Vector2(4, 4)
+texture = ExtResource("13_nh1tr")
+
 [node name="VBoxContainer" type="VBoxContainer" parent="Shop"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -422.99994
-offset_top = 40.000008
-offset_right = 270.0
-offset_bottom = 634.0
+offset_left = -546.5
+offset_top = 158.99997
+offset_right = 397.09985
+offset_bottom = 753.0
 grow_horizontal = 2
-scale = Vector2(1.5, 1.5)
+scale = Vector2(1.25, 1.25)
 theme_override_constants/separation = 50
 
 [node name="TopRow" type="HBoxContainer" parent="Shop/VBoxContainer"]

@@ -731,7 +731,9 @@ func load_world() -> void:
 		hand.hide()
 		end_turn.hide()
 		if rollArray.front() == Card.ROLLTYPE.CHARM: display_shop()
-		elif rollArray.front() == Card.ROLLTYPE.SHOP: display_shop()
+		elif rollArray.front() == Card.ROLLTYPE.SHOP:
+			info_overlay.show()
+			display_shop()
 		else: cards.show()
 	elif world.dispatchDay:
 		dispatch.show()
