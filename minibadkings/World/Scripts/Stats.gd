@@ -137,7 +137,7 @@ extends Node
 		"resourceType" : Global.RESOURCETYPE.NONE,
 		"resourceAmt": 0,
 		"cooldown" : 1,
-		"costAmt" : 1,
+		"costAmt" : 4,
 		"costType" : Global.RESOURCETYPE.FOOD,
 		"chance" : 100,
 		"chanceTrait" : Global.TRAITTYPE.NONE,
@@ -184,8 +184,8 @@ extends Node
 		"scalingMult" : 0,
 	},
 	Building.TYPE.POND: {
-		"traitAmt" : 0,
-		"traitType" : Global.TRAITTYPE.PRODUCTIVITY,
+		"traitAmt" : 1,
+		"traitType" : Global.TRAITTYPE.CULTURE,
 		"resourceType" : Global.RESOURCETYPE.NONE,
 		"resourceAmt": 0,
 		"cooldown" : 0,
@@ -224,4 +224,4 @@ extends Node
 	}
 }
 
-var pondBuffAmt : int = 4
+var pondBuffAmt : int = 3

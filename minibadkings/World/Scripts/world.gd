@@ -304,7 +304,7 @@ func handle_resource_consumption() -> void:
 	Global.resource_dict[Global.RESOURCETYPE.FOOD] -= Global.partyCount * 2
 	
 	var citizens = Global.resource_dict[Global.RESOURCETYPE.CITIZEN]
-	Global.resource_dict[Global.RESOURCETYPE.FOOD] -= citizens * 2
+	Global.resource_dict[Global.RESOURCETYPE.FOOD] -= citizens
 	
 	# consider food debt
 	if Global.resource_dict[Global.RESOURCETYPE.FOOD] < 0:
