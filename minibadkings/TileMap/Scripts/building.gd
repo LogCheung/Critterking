@@ -22,7 +22,7 @@ const CLIFF = preload("res://TileMap/Assets/buildCliff.png")
 
 const ALWAYS_ACTIVE = [
 	TYPE.TRAP, TYPE.MONUMENT, TYPE.POND, TYPE.STORAGE, TYPE.CAMPFIRE,
-	TYPE.FORT
+	TYPE.FORT, TYPE.RUINS
 ]
 
 enum TYPE {

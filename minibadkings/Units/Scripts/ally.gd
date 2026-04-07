@@ -322,7 +322,10 @@ func match_decree_status() -> void:
 			status_sprite.play("inspiration")
 			damage += .5
 		Decree.TYPE.DECARE:
-			if !dead : return
+			if !dead :
+				health = max_health
+				hitAnim(true,STATUS.REGEN)
+				return
 			status_sprite.visible = false
 			process_mode = Node.PROCESS_MODE_PAUSABLE
 			modulate.a8 = 255

@@ -148,14 +148,13 @@ func draw_build_area() -> void:
 				obstacles.set_cell(Vector2i(x,y),-1)
 			ground.set_cell(Vector2i(x,y),0,Vector2(0,0),1)
 			
-	# replace with enemy navigation on tiles with obstacles
+	# remove navigation on tiles with obstacles
 	find_wall_obstacles()
 	for cell in wall_tiles:
-		print(cell)
 		if ground.get_used_cells_by_id(0,Vector2(0,0),1).has(cell):
 			ground.set_cell(cell,-1)
 			continue
-		ground.set_cell(cell,0,Vector2i(0,0),5)
+		wall.set_cell(cell,-1)
 	
 	# remove nav from tiles with obstacles on top of them
 	for cell in obstacle_tiles:
@@ -174,7 +173,12 @@ func draw_build_area() -> void:
 	find_outskirt_tiles()
 	handle_navigable_cells()
 	set_up_astar()
-
+	
+	# replace walls with navigation only for enemies
+	find_wall_obstacles()
+	for cell in wall_tiles:
+		ground.set_cell(cell,0,Vector2i(0,0),5)
+	
 func draw_battlefield(extra : int) -> void:
 	# Battlefield and drawing ring around play area
 	var ringTiles : Array = []

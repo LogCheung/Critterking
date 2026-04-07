@@ -303,6 +303,9 @@ func handle_resource_consumption() -> void:
 	Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] -= 5
 	Global.resource_dict[Global.RESOURCETYPE.FOOD] -= Global.partyCount * 2
 	
+	var citizens = Global.resource_dict[Global.RESOURCETYPE.CITIZEN]
+	Global.resource_dict[Global.RESOURCETYPE.FOOD] -= citizens * 2
+	
 	# consider food debt
 	if Global.resource_dict[Global.RESOURCETYPE.FOOD] < 0:
 		var satisfaction_penalty = abs(Global.resource_dict[Global.RESOURCETYPE.FOOD])
@@ -492,6 +495,11 @@ func _input(event: InputEvent) -> void:
 		#ui.info_overlay._update_resources()
 		#ui.info_overlay._update_traits()
 		Engine.time_scale = 8
+		var decree : Decree = load("res://UI/Scenes/decree.tscn").instantiate()
+		decree.type = Decree.TYPE.DECARE
+		ui.decrees.get_child(0).add_child(decree)
+		decree.set_owner(get_tree().get_current_scene())
+		Global.decreesEquipped.append(decree)
 		return
 
 	#if event.is_action_pressed("cancel"):
