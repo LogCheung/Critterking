@@ -340,3 +340,7 @@ func _on_approach_guarantee_timeout() -> void:
 	if is_active: return
 	self.global_position = self.formation_position.global_position
 	
+
+func _on_wall_hacks_timeout() -> void:
+	nav.set_navigation_layer_value(2,true)
+	pass # Replace with function body.

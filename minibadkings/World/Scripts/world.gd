@@ -59,6 +59,7 @@ func new_game() -> void:
 	ui.rollArray.append(Card.ROLLTYPE.UNIT)
 	ui.rollArray.append(Card.ROLLTYPE.UNIT)
 	ui.rollArray.append(Card.ROLLTYPE.SHOP)
+	ui.info_overlay.load_overlay()
 	
 	await get_tree().create_timer(.125).timeout
 	# reset data

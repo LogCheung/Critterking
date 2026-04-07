@@ -744,6 +744,7 @@ func load_world() -> void:
 		b.process_mode = Node.PROCESS_MODE_INHERIT
 	
 	# load cards
+	info_overlay.load_overlay()
 	await get_tree().process_frame
 	for card : Card in hand_container.get_children():
 		card.set_up()

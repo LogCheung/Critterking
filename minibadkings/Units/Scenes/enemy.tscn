@@ -855,7 +855,14 @@ wait_time = 15.0
 one_shot = true
 autostart = true
 
+[node name="WallHacks" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 20.0
+one_shot = true
+autostart = true
+
 [connection signal="top_score_action_changed" from="UtilityAiAgent" to="." method="_on_utility_ai_agent_top_score_action_changed"]
 [connection signal="timeout" from="ApproachGuarantee" to="." method="_on_approach_guarantee_timeout"]
+[connection signal="timeout" from="WallHacks" to="." method="_on_wall_hacks_timeout"]
 
 [editable path="HitBox"]

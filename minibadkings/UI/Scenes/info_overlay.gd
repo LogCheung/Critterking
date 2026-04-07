@@ -36,9 +36,6 @@ func load_overlay() -> void:
 	await get_tree().create_timer(2).timeout
 	show_containers()
 	
-	Global.resource_dict = SaveLoad.SaveFileData.resource_dict.duplicate()
-	Global.trait_dict = SaveLoad.SaveFileData.trait_dict.duplicate()
-	
 	_update_resources(false)
 	_update_traits(false)
 func show_containers() -> void:
