@@ -13,6 +13,7 @@ extends Node
 		"chanceTrait" : Global.TRAITTYPE.NONE,
 		"scalingTrait" : Global.TRAITTYPE.NONE,
 		"scalingMult" : 0,
+		"price" : 20,
 	},
 	Building.TYPE.MONUMENT: {
 		"traitAmt" : 1,
@@ -26,6 +27,7 @@ extends Node
 		"chanceTrait" : Global.TRAITTYPE.NONE,
 		"scalingTrait" : Global.TRAITTYPE.NONE,
 		"scalingMult" : 0,
+		"price" : 20,
 	},
 	Building.TYPE.CASINO: {
 		"traitAmt" : 1,
@@ -39,6 +41,7 @@ extends Node
 		"chanceTrait" : Global.TRAITTYPE.NONE,
 		"scalingTrait" : Global.TRAITTYPE.COMMERCE,
 		"scalingMult" : 2,
+		"price" : 20,
 	},
 	Building.TYPE.THEATRE: {
 		"traitAmt" : 1,
@@ -52,6 +55,7 @@ extends Node
 		"chanceTrait" : Global.TRAITTYPE.NONE,
 		"scalingTrait" : Global.TRAITTYPE.CULTURE,
 		"scalingMult" : 2,
+		"price" : 20,
 	},
 	Building.TYPE.HALL: {
 		"traitAmt" : 1,
@@ -65,6 +69,7 @@ extends Node
 		"chanceTrait" : Global.TRAITTYPE.NONE,
 		"scalingTrait" : Global.TRAITTYPE.NONE,
 		"scalingMult" : 0,
+		"price" : 20,
 	},
 	Building.TYPE.TRADINGPOST: {
 		"traitAmt" : 2,
@@ -78,6 +83,7 @@ extends Node
 		"chanceTrait" : Global.TRAITTYPE.NONE,
 		"scalingTrait" : Global.TRAITTYPE.FAME,
 		"scalingMult" : 6,
+		"price" : 20,
 	},
 	Building.TYPE.MARKETPLACE: {
 		"traitAmt" : 0,
@@ -91,6 +97,7 @@ extends Node
 		"chanceTrait" : Global.TRAITTYPE.NONE,
 		"scalingTrait" : Global.TRAITTYPE.COMMERCE,
 		"scalingMult" : 10,
+		"price" : 20,
 	},
 	Building.TYPE.GARDEN: {
 		"traitAmt" : 1,
@@ -104,6 +111,7 @@ extends Node
 		"chanceTrait" : Global.TRAITTYPE.NONE,
 		"scalingTrait" : Global.TRAITTYPE.PRODUCTIVITY,
 		"scalingMult" : 4,
+		"price" : 20,
 	},
 	Building.TYPE.HOUSE: {
 		"traitAmt" : 1,
@@ -117,6 +125,7 @@ extends Node
 		"chanceTrait" : Global.TRAITTYPE.NONE,
 		"scalingTrait" : Global.TRAITTYPE.NONE,
 		"scalingMult" : 0,
+		"price" : 20,
 	},
 	Building.TYPE.CUSTOMS: {
 		"traitAmt" : 1,
@@ -130,6 +139,7 @@ extends Node
 		"chanceTrait" : Global.TRAITTYPE.CULTURE,
 		"scalingTrait" : Global.TRAITTYPE.NONE,
 		"scalingMult" : 0,
+		"price" : 20,
 	},
 	Building.TYPE.PANTRY: {
 		"traitAmt" : 1,
@@ -143,6 +153,7 @@ extends Node
 		"chanceTrait" : Global.TRAITTYPE.NONE,
 		"scalingTrait" : Global.TRAITTYPE.NONE,
 		"scalingMult" : 0,
+		"price" : 20,
 	},
 	Building.TYPE.GUILD: {
 		"traitAmt" : 1,
@@ -156,6 +167,7 @@ extends Node
 		"chanceTrait" : Global.TRAITTYPE.FAME,
 		"scalingTrait" : Global.TRAITTYPE.NONE,
 		"scalingMult" : 0,
+		"price" : 20,
 	},
 	Building.TYPE.FIELD: {
 		"traitAmt" : 1,
@@ -169,6 +181,7 @@ extends Node
 		"chanceTrait" : Global.TRAITTYPE.NONE,
 		"scalingTrait" : Global.TRAITTYPE.NONE,
 		"scalingMult" : 0,
+		"price" : 20,
 	},
 	Building.TYPE.SCHOOL: {
 		"traitAmt" : 0,
@@ -182,6 +195,7 @@ extends Node
 		"chanceTrait" : Global.TRAITTYPE.NONE,
 		"scalingTrait" : Global.TRAITTYPE.NONE,
 		"scalingMult" : 0,
+		"price" : 20,
 	},
 	Building.TYPE.POND: {
 		"traitAmt" : 1,
@@ -195,6 +209,7 @@ extends Node
 		"chanceTrait" : Global.TRAITTYPE.NONE,
 		"scalingTrait" : Global.TRAITTYPE.NONE,
 		"scalingMult" : 0,
+		"price" : 20,
 	},
 	Building.TYPE.BAKERY: {
 		"traitAmt" : 0,
@@ -208,6 +223,7 @@ extends Node
 		"chanceTrait" : Global.TRAITTYPE.NONE,
 		"scalingTrait" : Global.TRAITTYPE.PRODUCTIVITY,
 		"scalingMult" : 4,
+		"price" : 20,
 	},
 	Building.TYPE.RUINS: {
 		"traitAmt" : 0,
@@ -221,6 +237,7 @@ extends Node
 		"chanceTrait" : Global.TRAITTYPE.NONE,
 		"scalingTrait" : Global.TRAITTYPE.NONE,
 		"scalingMult" : 0,
+		"price" : 20,
 	}
 }
 

@@ -26,6 +26,7 @@ CARDTYPE.WAR, CARDTYPE.CONSCRIPTION, CARDTYPE.MASTERY,  #CARDTYPE.INFLUENCE,
 CARDTYPE.CONSTRUCTION,
 
 ]
+# their entrances cannot be blocked
 const ENTRANCE_BUILDINGS : Array = [
 	CARDTYPE.HOUSE,CARDTYPE.CARE, CARDTYPE.STORAGE, CARDTYPE.NURSERY,
 	CARDTYPE.BAKERY, CARDTYPE.SCHOOL, CARDTYPE.TRADINGPOST, CARDTYPE.HALL,
@@ -75,6 +76,7 @@ enum ROLLTYPE {
 @export var being_charmed : bool
 @export var charm : Charm 
 @export var price : float
+@export var purchaseSlot : CardPurchaseSlot 
 
 @onready var ui : UI = get_tree().get_first_node_in_group("UI")
 @onready var sprite_2d: Sprite2D = $Sprite2D
@@ -416,6 +418,7 @@ func randomize_type() -> void:
 			if scard.type == type:
 				randomize_type()
 				return
+				
 	match_sprite_type()
 
 func add_card_to_hand() -> void:

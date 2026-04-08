@@ -151,7 +151,11 @@ func match_type() -> void:
 			pass
 		# Citizen buildings
 		TYPE.HOUSE:
-			sprite_2d.texture = HOUSEA if randi() % 2 == 0 else HOUSEB
+			#sprite_2d.texture = HOUSEA if randi() % 2 == 0 else HOUSEB
+			var texture = CanvasTexture.new()
+			texture.diffuse_texture  = HOUSEA
+			texture.normal_texture = load("res://TileMap/Assets/houseAnorm.png")
+			sprite_2d.texture = texture
 			
 			set_building_properties(type)
 			tileWorld.restricted_tiles.append(doorstepTile)
@@ -185,7 +189,11 @@ func match_type() -> void:
 	
 	set_building_properties(type)
 	var path = "res://TileMap/Assets/"+str(TYPE.keys()[type]).to_lower()+"Build.png"
-	sprite_2d.texture = load(path)
+	var texture = CanvasTexture.new()
+	texture.diffuse_texture  = load(path)
+	texture.normal_texture = load("res://TileMap/Assets/houseNorm.png")
+	sprite_2d.texture = texture
+	#sprite_2d.texture = load(path)
 	
 	await anim.animation_finished
 	duplicate_sprite()

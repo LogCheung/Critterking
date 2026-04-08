@@ -1,15 +1,17 @@
-[gd_scene load_steps=26 format=3 uid="uid://c37h8qvy4nsbf"]
+[gd_scene load_steps=29 format=3 uid="uid://c37h8qvy4nsbf"]
 
 [ext_resource type="Script" uid="uid://dnda20j22irtp" path="res://TileMap/Scripts/colonyBuilding.gd" id="1_ocaip"]
 [ext_resource type="Texture2D" uid="uid://orgrk21fx4vu" path="res://UI/Assets/overlay/citizenToggle.png" id="2_abe5q"]
 [ext_resource type="Texture2D" uid="uid://chrmk05cm6sxw" path="res://UI/Assets/alerts/workerAlert.png" id="2_ef7sn"]
 [ext_resource type="Texture2D" uid="uid://dw3xay3qj0ihn" path="res://TileMap/Assets/fire.png" id="2_f8lb6"]
-[ext_resource type="Texture2D" uid="uid://b2tb0eb75whjr" path="res://TileMap/Assets/buildCampfire.png" id="3_abe5q"]
 [ext_resource type="Texture2D" uid="uid://du3cwfifspbnp" path="res://UI/Assets/HealingUnder.png" id="4_ef7sn"]
+[ext_resource type="Texture2D" uid="uid://o7rl0dbwfksb" path="res://TileMap/Assets/houseA.png" id="5_7fqhy"]
 [ext_resource type="Texture2D" uid="uid://bv3jqqow41vyp" path="res://UI/Assets/HealingOver.png" id="5_vjf8j"]
 [ext_resource type="Texture2D" uid="uid://ba2e2y1w34bcg" path="res://UI/Assets/HealingProgress.png" id="6_7fqhy"]
+[ext_resource type="Texture2D" uid="uid://dqt7dxj3cyepw" path="res://TileMap/Assets/houseAnorm.png" id="6_vjf8j"]
 [ext_resource type="AudioStream" uid="uid://chfwyfove6ddc" path="res://Audio/sfx/Build.tres" id="7_do5l2"]
 [ext_resource type="AudioStream" uid="uid://drnq56jfobvk6" path="res://Audio/sfx/Break.tres" id="8_a7607"]
+[ext_resource type="Texture2D" uid="uid://bn8okgvudhtxm" path="res://TileMap/Assets/LightCircle.png" id="11_ef7sn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iqf5p"]
 atlas = ExtResource("2_f8lb6")
@@ -74,6 +76,10 @@ animations = [{
 "name": &"default",
 "speed": 8.0
 }]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_a7607"]
+diffuse_texture = ExtResource("5_7fqhy")
+normal_texture = ExtResource("6_vjf8j")
 
 [sub_resource type="Animation" id="Animation_5rqce"]
 length = 0.001
@@ -266,6 +272,7 @@ vframes = 2
 
 [node name="fire" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
+visible = false
 z_index = 1
 position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_ofymc")
@@ -274,7 +281,7 @@ offset = Vector2(0, -16)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
-texture = ExtResource("3_abe5q")
+texture = SubResource("CanvasTexture_a7607")
 offset = Vector2(0, -16)
 hframes = 8
 frame = 1
@@ -356,6 +363,10 @@ stream = ExtResource("8_a7607")
 unique_name_in_owner = true
 wait_time = 0.125
 one_shot = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(-20, 3)
+texture = ExtResource("11_ef7sn")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

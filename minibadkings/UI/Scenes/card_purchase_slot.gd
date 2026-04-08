@@ -12,8 +12,8 @@ func _ready() -> void:
 	card.for_show = true
 	card.set_up()
 	card.rolltype = Card.ROLLTYPE.SHOP
+	card.purchaseSlot = self
 	
-	update_price()
 
 func update_price() -> void:
 	price_label.text = str(price)

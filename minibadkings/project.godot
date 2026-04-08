@@ -49,7 +49,7 @@ window/stretch/mode="viewport"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/utility_ai/plugin.cfg")
+enabled=PackedStringArray("res://addons/NormalMap/plugin.cfg", "res://addons/utility_ai/plugin.cfg")
 
 [global_group]
 
