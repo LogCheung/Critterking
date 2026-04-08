@@ -42,7 +42,7 @@ func _ready() -> void:
 	SaveLoad._load_profile()
 	ui._on_mainmenu_mouse_entered()
 	#unlock_every_card()
-	
+		
 	
 	# connect signals
 	night_started.connect(on_night_started)
@@ -101,14 +101,9 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	for i in range(1):
+	for i in range(0):
 		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
 		hCard.type = Card.CARDTYPE.POND
-		ui.hand_container.add_child(hCard)
-		hCard.set_owner(get_tree().get_current_scene())
-	for i in range(1):
-		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.FIELD
 		ui.hand_container.add_child(hCard)
 		hCard.set_owner(get_tree().get_current_scene())
 	

@@ -442,6 +442,7 @@ func randomize_type() -> void:
 			type = randi_range(CARDTYPE.TAVERN,CARDTYPE.BAKERY)#randi_range(CARDTYPE.BITER,CARDTYPE.CRAZED) 
 	if type == CARDTYPE.HOUSE : randomize_type()
 	if type == CARDTYPE.FLAG : randomize_type() # nuke flag
+	if type == CARDTYPE.BOMBER : randomize_type() # nuke bomber :(, nuke the nuker :(
 	if !Global.unlockedCards.has(type) : randomize_type()
 	
 	# check if not same as other card when drawing
