@@ -56,8 +56,8 @@ func _ready() -> void:
 func new_game() -> void:
 	# set up initial rolls
 	ui.rollArray.clear()
-	ui.rollArray.append(Card.ROLLTYPE.UNIT)
-	ui.rollArray.append(Card.ROLLTYPE.UNIT)
+	ui.rollArray.append(Card.ROLLTYPE.GENERAL)
+	ui.rollArray.append(Card.ROLLTYPE.GENERAL)
 	ui.rollArray.append(Card.ROLLTYPE.SHOP)
 	ui.info_overlay.load_overlay()
 	

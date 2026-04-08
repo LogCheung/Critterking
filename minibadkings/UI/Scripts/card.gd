@@ -416,7 +416,20 @@ func randomize_type() -> void:
 	
 	match rolltype:
 		ROLLTYPE.GENERAL:
-			type = randi_range(CARDTYPE.BITER,CARDTYPE.DESTROY)
+			# weight colony buildings to be rarer
+			var rng = RandomNumberGenerator.new()
+			var types : Array 
+			for i in range(CARDTYPE.size()):
+				if i > CARDTYPE.DESTROY : break
+				types.append(i)
+			
+			var weights : Array = types.duplicate()
+			for i in range(weights.size()):
+				weights[i] = 1
+				if i >= CARDTYPE.TAVERN and i <= CARDTYPE.BAKERY: # is colony index
+					weights[i] = .25
+			
+			type = types[rng.rand_weighted(weights)]
 		ROLLTYPE.UNIT:
 			type = randi_range(CARDTYPE.BITER,CARDTYPE.CRAZED)
 		ROLLTYPE.BUILDINGS:
