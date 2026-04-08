@@ -139,7 +139,7 @@ extends Node
 		"chanceTrait" : Global.TRAITTYPE.CULTURE,
 		"scalingTrait" : Global.TRAITTYPE.NONE,
 		"scalingMult" : 0,
-		"price" : 20,
+		"price" : 50,
 	},
 	Building.TYPE.PANTRY: {
 		"traitAmt" : 1,
@@ -153,7 +153,7 @@ extends Node
 		"chanceTrait" : Global.TRAITTYPE.NONE,
 		"scalingTrait" : Global.TRAITTYPE.NONE,
 		"scalingMult" : 0,
-		"price" : 20,
+		"price" : 40,
 	},
 	Building.TYPE.GUILD: {
 		"traitAmt" : 1,

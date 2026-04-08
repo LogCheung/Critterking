@@ -252,6 +252,7 @@ texture = ExtResource("2_ef7sn")
 
 [node name="Toggle" type="Button" parent="."]
 unique_name_in_owner = true
+visible = false
 z_index = 4096
 z_as_relative = false
 custom_minimum_size = Vector2(32, 32)
@@ -365,7 +366,7 @@ wait_time = 0.125
 one_shot = true
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(-20, 3)
+position = Vector2(11, 3)
 texture = ExtResource("11_ef7sn")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

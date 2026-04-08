@@ -418,7 +418,7 @@ func randomize_type() -> void:
 			if scard.type == type:
 				randomize_type()
 				return
-				
+		purchaseSlot.update_price()
 	match_sprite_type()
 
 func add_card_to_hand() -> void:
