@@ -105,7 +105,7 @@ func trigger_pond(pondActive : bool) -> void:
 		Vector2i(tile.x + 1,tile.y),
 		Vector2i(tile.x - 1,tile.y),
 	]
-
+	
 	pondBuffTiles.append_array(affectedTiles)
 	
 	# everything below is useless because im stupid

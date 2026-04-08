@@ -33,6 +33,13 @@ const ENTRANCE_BUILDINGS : Array = [
 	CARDTYPE.CASINO, CARDTYPE.TAVERN, CARDTYPE.GUILD, CARDTYPE.PANTRY
 ]
 
+const NO_ORTH_BUILDINGS : Array = [
+	CARDTYPE.FORT
+]
+const NO_AROUND_BUILDINGS : Array = [
+	CARDTYPE.CAMPFIRE
+]
+
 # Crazed is border for units, Biter is start
 # Destroy is border for buildings, TRAPS is start
 # Nail is border for charms, Heartlocket is start
@@ -204,16 +211,40 @@ func highlight_tiles() -> void:
 		unit_tiles.append(Vector2i(group.tile))
 	
 	# add appropriate tiles
-	for cell in tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),1):
+	var buildableArea = tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),1)
+	for cell in buildableArea: # for each buildable tile
 		if unit_tiles.has(cell) : continue
 		tileWorld.hover.set_cell(cell,0,Vector2(0,0),0) # white
 		if tileWorld.buffed_tiles.has(cell):
+			tileWorld.hover.set_cell(cell,0,Vector2(0,1),0) # green
+		if type == CARDTYPE.FIELD and ColonyBuilding.pondBuffTiles.has(cell):
 			tileWorld.hover.set_cell(cell,0,Vector2(0,1),0) # green
 		if type > CARDTYPE.CRAZED and tileWorld.restricted_tiles.has(cell):
 			tileWorld.hover.set_cell(cell,0,Vector2(0,2),0) # red
 		if ENTRANCE_BUILDINGS.has(type) and tileWorld.blocked_entry_tiles.has(cell):
 			tileWorld.hover.set_cell(cell,0,Vector2(0,2),0) # red
-		tileWorld.hover.visible = true
+	
+	var blockedTiles = get_tree().get_nodes_in_group("BUILDING")
+	blockedTiles = blockedTiles.map(func(b:Building):return b.tile)
+	blockedTiles.append_array(tileWorld.obstacle_tiles)
+	blockedTiles.append_array(tileWorld.wall_tiles)
+	
+	var red_cells : Array = []
+	for cell in blockedTiles:
+		if NO_ORTH_BUILDINGS.has(type): # red
+			red_cells.append(cell + Vector2i(0,1))
+			red_cells.append(cell + Vector2i(0,-1))
+			red_cells.append(cell + Vector2i(1,0))
+			red_cells.append(cell + Vector2i(-1,0))
+		if NO_AROUND_BUILDINGS.has(type): # red
+			for x in range(cell.x-1,cell.x+2):
+				for y in range(cell.y-1,cell.y+2):
+					red_cells.append(Vector2i(x,y))
+	for cell in red_cells:
+		if !buildableArea.has(cell):continue
+		tileWorld.hover.set_cell(cell,0,Vector2(0,2),0)
+	
+	tileWorld.hover.visible = true
 	
 	# highlight tile hovered over with card
 	var hoverTile = world.tileWorld.ground.local_to_map(world.get_global_mouse_position())
@@ -294,9 +325,9 @@ func plop_building() -> void:
 	buildingNode.add_child(building)
 	building.set_owner(get_tree().get_current_scene())
 	
-	# update blobked entry tiles
-	if ENTRANCE_BUILDINGS.has(type): tileWorld.restricted_tiles.append(building.doorstepTile)
+	# update restricted tiles
 	tileWorld.find_blocked_entry_tiles()
+	tileWorld.find_restricted_tiles()
 	
 	# remove self
 	remove_self()

@@ -20,6 +20,7 @@ var using_decree : bool
 
 var blocked_entry_tiles : Array = []
 var buffed_tiles : Array = []
+var buffed_building_tiles : Array = []
 var restricted_tiles : Array = []
 var wall_tiles : Array
 var start_wall_tiles : Array
@@ -252,17 +253,33 @@ func find_obstacle_tiles() -> void:
 
 func find_restricted_tiles() -> void:
 	restricted_tiles.clear()
+	print(Card.NO_ORTH_BUILDINGS.has(Card.CARDTYPE.CAMPFIRE))
 	var builds = get_tree().get_nodes_in_group("BUILDING")
 	for b : Building in builds:
-		if Card.ENTRANCE_BUILDINGS.has(b.type + Card.CARDTYPE.TRAPS - 1):
+		var type = b.type + Card.CARDTYPE.TRAPS - 1 # translated btype to cardtype
+		if Card.ENTRANCE_BUILDINGS.has(type):
 			restricted_tiles.append(b.doorstepTile)
+		if Card.NO_ORTH_BUILDINGS.has(type): # plus sign orthogonal blocked
+			restricted_tiles.append(Vector2i(b.tile.x-1,b.tile.y))
+			restricted_tiles.append(Vector2i(b.tile.x+1,b.tile.y))
+			restricted_tiles.append(Vector2i(b.tile.x,b.tile.y-1))
+			restricted_tiles.append(Vector2i(b.tile.x,b.tile.y+1))
+		if Card.NO_AROUND_BUILDINGS.has(type):
+			for x in range(b.tile.x-1,b.tile.x+2):
+				for y in range(b.tile.y-1,b.tile.y+2):
+					restricted_tiles.append(Vector2i(x,y))
 	pass
 
 func find_blocked_entry_tiles() -> void:
-	var buildTiles = ground.get_used_cells_by_id(0,Vector2(0,0),2)
+	find_obstacle_tiles()
+	find_wall_obstacles()
+	
+	var blockedTiles = ground.get_used_cells_by_id(0,Vector2(0,0),2)
+	blockedTiles.append_array(obstacle_tiles) # also consider obstacles
+	blockedTiles.append_array(wall_tiles) # also consider walls
 	var takenTiles = []
 	
-	for t in buildTiles:
+	for t in blockedTiles:
 		takenTiles.append(t)
 		takenTiles.append(Vector2i(t.x-1,t.y))
 	blocked_entry_tiles = takenTiles

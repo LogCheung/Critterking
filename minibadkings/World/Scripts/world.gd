@@ -101,7 +101,12 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	for i in range(0):
+	for i in range(1):
+		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
+		hCard.type = Card.CARDTYPE.POND
+		ui.hand_container.add_child(hCard)
+		hCard.set_owner(get_tree().get_current_scene())
+	for i in range(1):
 		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
 		hCard.type = Card.CARDTYPE.FIELD
 		ui.hand_container.add_child(hCard)
@@ -494,12 +499,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		#ui.info_overlay._update_resources()
 		#ui.info_overlay._update_traits()
-		Engine.time_scale = 8
-		var decree : Decree = load("res://UI/Scenes/decree.tscn").instantiate()
-		decree.type = Decree.TYPE.DECARE
-		ui.decrees.get_child(0).add_child(decree)
-		decree.set_owner(get_tree().get_current_scene())
-		Global.decreesEquipped.append(decree)
+		expand()
 		return
 
 	#if event.is_action_pressed("cancel"):
