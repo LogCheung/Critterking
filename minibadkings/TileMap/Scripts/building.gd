@@ -357,6 +357,7 @@ func _on_timer_timeout() -> void:
 			unit.healing = false
 			unit.visible = true
 			occupant = null
+			
 		%Timer.stop()
 
 func _on_mouse_entered() -> void:

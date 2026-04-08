@@ -51,7 +51,8 @@ func _ready() -> void:
 	if ui.currentAscn >= 9: 
 		max_health -= .25 if type != TYPE.ZOMBIFIED else 0.0
 	health = max_health
-	await get_tree().create_timer(.5).timeout
+	
+	await get_tree().create_timer(1.5).timeout
 	set_collision_layer_value(1,true)
 	
 
