@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbglwyvsw34wn"]
+
+[ext_resource type="Texture2D" uid="uid://bjvn4w1ofyrj5" path="res://UI/Assets/boxes/adjacentBox.png" id="1_6pn1e"]
+[ext_resource type="Script" uid="uid://bwilac5o3da2v" path="res://UI/Scripts/info_box.gd" id="2_qwsq7"]
+
+[node name="InfoBox" type="TextureRect"]
+texture = ExtResource("1_6pn1e")
+script = ExtResource("2_qwsq7")

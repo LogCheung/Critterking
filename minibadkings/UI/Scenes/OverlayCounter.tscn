@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://d3k1620rqdidi"]
 
 [ext_resource type="FontFile" uid="uid://ggtewla8581f" path="res://Units/aseprite.otf" id="1_8d7cr"]
-[ext_resource type="Script" uid="uid://con0bsnhrmh16" path="res://UI/Scenes/overlay_counter.gd" id="1_fq5m7"]
+[ext_resource type="Script" uid="uid://con0bsnhrmh16" path="res://UI/Scripts/overlay_counter.gd" id="1_fq5m7"]
 [ext_resource type="Texture2D" uid="uid://d1jmfbs1anny2" path="res://UI/Assets/overlay/Icons.png" id="1_olmwc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_iiq2g"]
@@ -18,7 +18,6 @@ label_settings = SubResource("LabelSettings_iiq2g")
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("1_fq5m7")
-army = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true

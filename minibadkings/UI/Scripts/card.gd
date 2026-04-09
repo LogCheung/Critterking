@@ -92,6 +92,7 @@ enum ROLLTYPE {
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
 @onready var button: Button = %Selected
 @onready var charm_pos: Node2D = %CharmPos
+@onready var box_info_container: BoxInfoContainer = $BoxInfoContainer
 
 
 var default_position : Vector2
@@ -119,8 +120,15 @@ var selected : bool = false
 var tile : Vector2i
 func _process(delta: float) -> void:
 	#top_level = selected
+	if inspected and visible:
+		if Rect2(Vector2(), size).has_point(get_local_mouse_position()):
+			box_info_container.visible = true
+		else:
+			box_info_container.visible = false
+	
 	if setting_up : return
 	handle_drag()
+	
 	
 func handle_drag() -> void:
 	if refreshing : 
@@ -556,7 +564,9 @@ func match_sprite_type() -> void:
 	
 	%Upgrade1.visible = level == 2
 	%Upgrade2.visible = level == 3
-
+	
+	# match info boxes
+	box_info_container.match_type()
 
 func _on_selected_gui_input(e: InputEvent) -> void:
 	if e.is_action_released("inspect") and !selected and is_under_mouse:

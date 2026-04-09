@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://deavskvstfod5"]
 
-[ext_resource type="Script" uid="uid://cov88s4h4fct8" path="res://UI/Scenes/card_purchase_slot.gd" id="1_e7e3x"]
+[ext_resource type="Script" uid="uid://cov88s4h4fct8" path="res://UI/Scripts/card_purchase_slot.gd" id="1_e7e3x"]
 [ext_resource type="PackedScene" uid="uid://bjjg37vgshqt6" path="res://UI/Scenes/card.tscn" id="2_mvyhw"]
 [ext_resource type="FontFile" uid="uid://ggtewla8581f" path="res://Units/aseprite.otf" id="3_mvyhw"]
 
