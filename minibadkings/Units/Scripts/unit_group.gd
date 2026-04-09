@@ -29,6 +29,7 @@ func _process(delta: float) -> void:
 	# day time inspecting
 	if tileWorld.mouseTile == Vector2i(tile): 
 		_on_select_area_mouse_entered()
+		is_under_mouse = false
 		if Input.is_action_just_released("inspect"):
 			ui.inspect_card.inspect_card(int(type),charm)
 	elif !world.is_combat_phase:

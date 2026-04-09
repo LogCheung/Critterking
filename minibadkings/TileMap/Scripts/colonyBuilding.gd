@@ -95,7 +95,7 @@ func trigger_school() -> void:
 	if !active : 
 		traitAmt = 0 
 	else:
-		traitAmt = int(workers * 1)
+		traitAmt = 1 # int(workers * 1)
 	ui.info_overlay._update_traits()
 	
 func trigger_pond(pondActive : bool) -> void:

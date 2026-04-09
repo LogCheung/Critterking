@@ -494,7 +494,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		#ui.info_overlay._update_resources()
 		#ui.info_overlay._update_traits()
-		expand()
+		#expand()
 		return
 
 	#if event.is_action_pressed("cancel"):

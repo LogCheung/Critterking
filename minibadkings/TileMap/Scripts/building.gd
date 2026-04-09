@@ -97,7 +97,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	# highlight and inspect functionality
-	if !world.is_combat_phase and tileWorld.mouseTile == tile:
+	if !world.is_combat_phase and tileWorld.mouseTile == tile and type != TYPE.RUINS:
 		_on_mouse_entered()
 		if Input.is_action_just_released("inspect"):
 			ui.inspect_card.inspect_card(int(type + Card.CARDTYPE.TRAPS - 1))
@@ -393,12 +393,9 @@ func set_active(condition : bool) -> void:
 	worker_alert_sprite.visible = !condition
 
 func calculate_active_workers() -> void:
-	var activeBuilds = get_tree().get_nodes_in_group("BUILDING")
-	activeBuilds = activeBuilds.filter(func(b:Building):return b.active)
-	Global.resource_dict[Global.RESOURCETYPE.WORKER] = activeBuilds.size()
+	var workedBuilds = get_tree().get_nodes_in_group("BUILDING")
+	workedBuilds = workedBuilds.filter(func(b:Building):return b.active)
+	workedBuilds = workedBuilds.filter(func(b:Building):return !ALWAYS_ACTIVE.has(b.type))
+	Global.resource_dict[Global.RESOURCETYPE.WORKER] = workedBuilds.size()
 	
-	# account for buildings that do not require workers
-	for b : Building in activeBuilds:
-		if ALWAYS_ACTIVE.has(type):
-			Global.resource_dict[Global.RESOURCETYPE.WORKER] -= 1
 	
