@@ -65,7 +65,6 @@ func match_type() -> void:
 		if boxTypeDict[key].has(card.type) : 
 			boxTypes.append(InfoBox.TYPE.get(key))
 
-	
 	create_boxes()
 
 func create_boxes() -> void:

@@ -12,4 +12,3 @@ enum TYPE {
 func match_type() -> void:
 	var path = "res://UI/Assets/boxes/"+ TYPE.keys()[type] +"Box.png"
 	texture = load(path)
-	pass
