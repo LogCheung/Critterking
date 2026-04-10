@@ -50,11 +50,6 @@ func _on_endturn_pressed() -> void:
 		ui._on_shop_end_pressed()
 		end_day_continue_button.frame = 0 
 		return
-	# run colony buildings
-	for b : ColonyBuilding in get_tree().get_nodes_in_group("COLONY"):
-		b.day_ended.emit()
-		
-	info_overlay._update_resources()
 	
 	# check if house is not placed
 	%Button.play()
@@ -62,11 +57,21 @@ func _on_endturn_pressed() -> void:
 		if card.type == Card.CARDTYPE.HOUSE: 
 			%noHouse.show()
 			return
+	
+	# run colony buildings
+	for b : ColonyBuilding in get_tree().get_nodes_in_group("COLONY"):
+		b.day_ended.emit()
+	
+	# start night for real
+	world.night_started.emit()
+	
+	
+	info_overlay._update_resources()
+	
 	var units = get_tree().get_nodes_in_group("ALLY")
 	for u:Ally in units:
 		u.healthchange.emit()
 		u.speedchange.emit()
-	world.night_started.emit()
 	%noHouse.hide()
 	
 	ui.tutorial.play_command_heal_tutorial()

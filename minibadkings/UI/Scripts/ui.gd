@@ -67,7 +67,6 @@ func _process(delta: float) -> void:
 	elif !end_turn.visible and !%crtrNight.playing and !control_is_visible():
 		play_song(%crtrNight)
 	%DayNight.text = str(Global.nights)
-	info_overlay.handle_party_limit()
 	
 	%ScrollControl.custom_minimum_size.x = 128 * hand_container.get_children().size()
 	%ScrollControl.custom_minimum_size.x += 20 * hand_container.get_children().size() - 1
@@ -187,6 +186,18 @@ func display_hand() -> void:
 	
 	if world.dispatchDay: 
 		dispatch.show()
+
+func refresh_positions() -> void:
+	# Add and remove dummy card to refresh positions
+	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
+	hand_container.add_child(hCard)
+	#hCard.set_owner(get_tree().get_current_scene())
+	hCard.set_up()
+	hCard.remove_self()
+	
+	var cardsInHand = hand_container.get_children()
+	for c : Card in cardsInHand:
+		c.set_up()
 
 func _on_shop_end_pressed() -> void:
 	rollArray.pop_front()
@@ -702,8 +713,11 @@ func load_world() -> void:
 	# load cards
 	info_overlay.load_overlay()
 	await get_tree().process_frame
+	await get_tree().process_frame
+	
 	for card : Card in hand_container.get_children():
 		card.set_up()
+	refresh_positions()
 		
 	%AdaptLabel.text = str(currentAscn)
 	# load tileWorld data for restrictions

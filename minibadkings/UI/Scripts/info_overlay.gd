@@ -1,6 +1,13 @@
 extends Control
 class_name InfoOverlay
 
+var projections : Dictionary = {
+	Global.RESOURCETYPE.SATISFACTION : 0,
+	Global.RESOURCETYPE.MONEY : 0,
+	Global.RESOURCETYPE.FOOD : 0,
+	Global.RESOURCETYPE.CITIZEN : 0,
+}
+
 @export var assignMode : bool = false
 
 @onready var ui : UI = get_parent()
@@ -39,6 +46,7 @@ func load_overlay() -> void:
 	
 	_update_resources(false)
 	_update_traits(false)
+	handle_party_limit()
 func show_containers() -> void:
 	trait_container.visible = true
 	resource_container.visible = true
@@ -48,8 +56,6 @@ func _update_resources(showAnim : bool = true) -> void:
 	money_label.set_value(Global.resource_dict[Global.RESOURCETYPE.MONEY],showAnim)
 	food_label.set_value(Global.resource_dict[Global.RESOURCETYPE.FOOD],showAnim)
 	citizen_label.set_value(Global.resource_dict[Global.RESOURCETYPE.CITIZEN],showAnim)
-	
-	
 	
 func _update_traits(showAnim : bool = true) -> void:
 	# reset values to ensure no repeats
@@ -74,6 +80,8 @@ func _update_traits(showAnim : bool = true) -> void:
 	houseCount = houseCount.filter(func(e):return e.type == Building.TYPE.HOUSE)
 	houseCount = houseCount.size()
 	house_label.label.text = str(houseCount)
+	
+	handle_projections()
 
 func handle_party_limit() -> void:
 	var houseCount = get_tree().get_nodes_in_group("BUILDING")
@@ -95,4 +103,51 @@ func handle_party_limit() -> void:
 	else:
 		ui.no_space.hide()
 		
-	pass
+	handle_projections()
+		
+func handle_projections() -> void:
+	# reset
+	var minus_projections : Dictionary = {}
+	for key in projections:
+		projections[key] = 0
+		minus_projections[key] = 0
+	# positives / production
+	var builds = get_tree().get_nodes_in_group("COLONY")
+	for b : ColonyBuilding in builds:
+		if b.resourceType == Global.RESOURCETYPE.NONE: continue
+		if b.time + 1 != b.cooldown: continue
+		if !b.active : continue
+		
+		var projAmt : int = b.resourceAmt
+		if b.scalingTrait != Global.TRAITTYPE.NONE:
+			projAmt += b.scalingMult * Global.trait_dict[b.scalingTrait] 
+		
+		projections[b.resourceType] += projAmt
+			
+	
+	citizen_label.set_projection_value(projections[Global.RESOURCETYPE.CITIZEN],true)
+	money_label.set_projection_value(projections[Global.RESOURCETYPE.MONEY],true)
+	satisfaction_label.set_projection_value(projections[Global.RESOURCETYPE.SATISFACTION],true)
+	food_label.set_projection_value(projections[Global.RESOURCETYPE.FOOD],true)
+	
+	
+	# negatives / consumption or cost
+	minus_projections[Global.RESOURCETYPE.SATISFACTION] -= 5
+	
+	var foodConsump = Global.resource_dict[Global.RESOURCETYPE.CITIZEN]
+	foodConsump += Global.partyCount * 2
+
+	minus_projections[Global.RESOURCETYPE.FOOD] -= foodConsump
+	
+	var foodDebt = Global.resource_dict[Global.RESOURCETYPE.FOOD] - foodConsump
+	if foodDebt < 0:
+		minus_projections[Global.RESOURCETYPE.SATISFACTION] -= abs(foodDebt)
+	
+	for g : AllyGroup in get_tree().get_nodes_in_group("ALLYGROUP"):
+		minus_projections[Global.RESOURCETYPE.MONEY] -= g.wage
+	
+	citizen_label.set_projection_value(minus_projections[Global.RESOURCETYPE.CITIZEN],false)
+	money_label.set_projection_value(minus_projections[Global.RESOURCETYPE.MONEY],false)
+	satisfaction_label.set_projection_value(minus_projections[Global.RESOURCETYPE.SATISFACTION],false)
+	food_label.set_projection_value(minus_projections[Global.RESOURCETYPE.FOOD],false)
+	

@@ -22,6 +22,8 @@ func _ready() -> void:
 	%Place.play()
 	selected = false
 	_on_select_area_mouse_exited()
+	
+	ui.info_overlay.handle_party_limit()
 
 func _process(delta: float) -> void:
 	if selected: highlight_tiles()

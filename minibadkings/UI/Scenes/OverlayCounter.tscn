@@ -1,11 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://d3k1620rqdidi"]
+[gd_scene load_steps=8 format=3 uid="uid://d3k1620rqdidi"]
 
 [ext_resource type="FontFile" uid="uid://ggtewla8581f" path="res://Units/aseprite.otf" id="1_8d7cr"]
 [ext_resource type="Script" uid="uid://con0bsnhrmh16" path="res://UI/Scripts/overlay_counter.gd" id="1_fq5m7"]
 [ext_resource type="Texture2D" uid="uid://d1jmfbs1anny2" path="res://UI/Assets/overlay/Icons.png" id="1_olmwc"]
-[ext_resource type="Texture2D" uid="uid://cikbmjc3mr562" path="res://UI/Assets/overheadInfo/foodOSTS.png" id="4_iiq2g"]
+[ext_resource type="Texture2D" uid="uid://dqq375mc7ugbg" path="res://UI/Assets/overlay/posProjection.png" id="5_upom7"]
+[ext_resource type="Texture2D" uid="uid://csifct76f28aq" path="res://UI/Assets/overlay/negativeProjection.png" id="6_3jco4"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_iiq2g"]
+font = ExtResource("1_8d7cr")
+font_size = 21
+
+[sub_resource type="LabelSettings" id="LabelSettings_upom7"]
 font = ExtResource("1_8d7cr")
 font_size = 14
 
@@ -21,10 +26,10 @@ script = ExtResource("1_fq5m7")
 [node name="Label" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_top = 75.0
-offset_right = 64.0
-offset_bottom = 127.0
-text = "1"
+offset_top = 79.0
+offset_right = 68.0
+offset_bottom = 119.0
+text = "0"
 label_settings = SubResource("LabelSettings_iiq2g")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -40,13 +45,72 @@ vframes = 2
 frame = 9
 
 [node name="overheadInfo" type="TextureRect" parent="."]
+visible = false
 layout_mode = 0
 offset_left = -127.00001
 offset_top = 144.0
 offset_right = 0.9999924
 offset_bottom = 192.0
 scale = Vector2(2.5, 2.5)
-texture = ExtResource("4_iiq2g")
+
+[node name="posProj" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = -19.0
+offset_top = 111.00001
+offset_right = 1.0
+offset_bottom = 124.00001
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("5_upom7")
+stretch_mode = 2
+
+[node name="posProjLabel" type="Label" parent="posProj"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 7.0
+offset_right = 33.0
+offset_bottom = 26.0
+scale = Vector2(0.5, 0.5)
+text = "12"
+label_settings = SubResource("LabelSettings_upom7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="posAsterisk" type="Label" parent="posProj"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 14.599998
+offset_top = -1.7000008
+offset_right = 40.6
+offset_bottom = 24.3
+scale = Vector2(0.33, 0.33)
+text = "*"
+label_settings = SubResource("LabelSettings_upom7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="negProj" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 38.0
+offset_top = 111.0
+offset_right = 58.0
+offset_bottom = 124.0
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("6_3jco4")
+stretch_mode = 2
+
+[node name="negProjLabel" type="Label" parent="negProj"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 7.0
+offset_right = 33.0
+offset_bottom = 26.0
+scale = Vector2(0.5, 0.5)
+label_settings = SubResource("LabelSettings_upom7")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

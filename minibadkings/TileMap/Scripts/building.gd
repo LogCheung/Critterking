@@ -87,6 +87,7 @@ func _ready() -> void:
 		set_active(true)
 	
 	ui.info_overlay._update_traits()
+	ui.info_overlay.handle_party_limit()
 	
 	if health > 0:
 		visible = true
@@ -396,6 +397,8 @@ func set_active(condition : bool) -> void:
 	citizen_toggle_sprite.modulate.v = 1.5 if condition else 1.0
 	active = condition
 	worker_alert_sprite.visible = !condition
+	
+	ui.info_overlay.handle_projections()
 
 func calculate_active_workers() -> void:
 	var workedBuilds = get_tree().get_nodes_in_group("BUILDING")
