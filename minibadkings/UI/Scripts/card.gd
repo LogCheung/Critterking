@@ -334,6 +334,7 @@ func remove_self() -> void:
 	selected = false
 	Global.cardsInHand.remove_at(Global.cardsInHand.find(self))
 	ui.card_placed.emit()
+	card_selected = false
 	queue_free()
 	
 func plop_building() -> void:
