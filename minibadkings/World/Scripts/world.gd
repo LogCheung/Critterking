@@ -101,7 +101,7 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	for i in range(2):
+	for i in range(0):
 		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
 		hCard.type = Card.CARDTYPE.SCHOOL
 		ui.hand_container.add_child(hCard)
