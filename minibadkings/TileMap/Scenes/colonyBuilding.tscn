@@ -1,17 +1,25 @@
-[gd_scene load_steps=29 format=3 uid="uid://c37h8qvy4nsbf"]
+[gd_scene load_steps=34 format=3 uid="uid://c37h8qvy4nsbf"]
 
 [ext_resource type="Script" uid="uid://dnda20j22irtp" path="res://TileMap/Scripts/colonyBuilding.gd" id="1_ocaip"]
 [ext_resource type="Texture2D" uid="uid://orgrk21fx4vu" path="res://UI/Assets/overlay/citizenToggle.png" id="2_abe5q"]
 [ext_resource type="Texture2D" uid="uid://chrmk05cm6sxw" path="res://UI/Assets/alerts/workerAlert.png" id="2_ef7sn"]
 [ext_resource type="Texture2D" uid="uid://dw3xay3qj0ihn" path="res://TileMap/Assets/fire.png" id="2_f8lb6"]
+[ext_resource type="Texture2D" uid="uid://b2bt3qoqnumfj" path="res://UI/Assets/overlay/citizenBarUnder.png" id="4_a7607"]
 [ext_resource type="Texture2D" uid="uid://du3cwfifspbnp" path="res://UI/Assets/HealingUnder.png" id="4_ef7sn"]
 [ext_resource type="Texture2D" uid="uid://o7rl0dbwfksb" path="res://TileMap/Assets/houseA.png" id="5_7fqhy"]
+[ext_resource type="Texture2D" uid="uid://bnks7cge5ahxe" path="res://UI/Assets/overlay/citizenBarOver.png" id="5_u2mnn"]
 [ext_resource type="Texture2D" uid="uid://bv3jqqow41vyp" path="res://UI/Assets/HealingOver.png" id="5_vjf8j"]
 [ext_resource type="Texture2D" uid="uid://ba2e2y1w34bcg" path="res://UI/Assets/HealingProgress.png" id="6_7fqhy"]
+[ext_resource type="Texture2D" uid="uid://da7ykucx0j3mv" path="res://UI/Assets/overlay/citizenBarProgress.png" id="6_pnpqb"]
 [ext_resource type="Texture2D" uid="uid://dqt7dxj3cyepw" path="res://TileMap/Assets/houseAnorm.png" id="6_vjf8j"]
 [ext_resource type="AudioStream" uid="uid://chfwyfove6ddc" path="res://Audio/sfx/Build.tres" id="7_do5l2"]
+[ext_resource type="FontFile" uid="uid://ggtewla8581f" path="res://Units/aseprite.otf" id="7_u2mnn"]
 [ext_resource type="AudioStream" uid="uid://drnq56jfobvk6" path="res://Audio/sfx/Break.tres" id="8_a7607"]
 [ext_resource type="Texture2D" uid="uid://bn8okgvudhtxm" path="res://TileMap/Assets/LightCircle.png" id="11_ef7sn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_pnpqb"]
+font = ExtResource("7_u2mnn")
+font_size = 14
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iqf5p"]
 atlas = ExtResource("2_f8lb6")
@@ -252,7 +260,6 @@ texture = ExtResource("2_ef7sn")
 
 [node name="Toggle" type="Button" parent="."]
 unique_name_in_owner = true
-visible = false
 z_index = 4096
 z_as_relative = false
 custom_minimum_size = Vector2(32, 32)
@@ -270,6 +277,42 @@ unique_name_in_owner = true
 texture = ExtResource("2_abe5q")
 offset = Vector2(16, 16)
 vframes = 2
+
+[node name="CitizenBar" type="TextureProgressBar" parent="Toggle/CitizenToggle"]
+unique_name_in_owner = true
+offset_left = 31.0
+offset_right = 47.0
+offset_bottom = 32.0
+step = 0.05
+value = 25.0
+fill_mode = 3
+texture_under = ExtResource("4_a7607")
+texture_over = ExtResource("5_u2mnn")
+texture_progress = ExtResource("6_pnpqb")
+
+[node name="current" type="Label" parent="Toggle/CitizenToggle/CitizenBar"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 2.6669998
+offset_right = 32.0
+offset_bottom = 27.667
+scale = Vector2(0.5, 0.5)
+text = "0"
+label_settings = SubResource("LabelSettings_pnpqb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="max" type="Label" parent="Toggle/CitizenToggle/CitizenBar"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 17.333336
+offset_right = 32.0
+offset_bottom = 42.334007
+scale = Vector2(0.5, 0.5)
+text = "1"
+label_settings = SubResource("LabelSettings_pnpqb")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="fire" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true

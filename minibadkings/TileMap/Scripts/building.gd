@@ -48,6 +48,8 @@ static var pantryActive : bool = false
 @export var cooldown : int = 1
 @export var time : int = 0
 @export var active : bool = true
+@export var max_workers : int = 1
+@export var workers : int = 0
 
 @onready var entrance: Node2D = %Entrance
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
@@ -59,6 +61,7 @@ static var pantryActive : bool = false
 @onready var toggle : Button = %Toggle
 @onready var citizen_toggle_sprite: Sprite2D = %CitizenToggle
 @onready var worker_alert_sprite: Sprite2D = %WorkerAlert
+@onready var citizen_bar: TextureProgressBar = %CitizenBar
 
 
 var buff_tiles : Array
@@ -68,6 +71,7 @@ var doorstepTile : Vector2i
 var highlightSprite : Sprite2D
 
 func _ready() -> void:
+	citizen_bar.hide()
 	%fire.hide()
 	%Toggle.hide()
 	%Toggle.connect("toggled",_on_toggle_toggled)
@@ -397,6 +401,14 @@ func calculate_active_workers() -> void:
 	var workedBuilds = get_tree().get_nodes_in_group("BUILDING")
 	workedBuilds = workedBuilds.filter(func(b:Building):return b.active)
 	workedBuilds = workedBuilds.filter(func(b:Building):return !ALWAYS_ACTIVE.has(b.type))
-	Global.resource_dict[Global.RESOURCETYPE.WORKER] = workedBuilds.size()
+	
+	var totalWorkers : int = 0
+	for b : Building in workedBuilds:
+		if b.max_workers > 1:
+			totalWorkers += b.workers
+		else:
+			totalWorkers += 1
+	
+	Global.resource_dict[Global.RESOURCETYPE.WORKER] = totalWorkers
 	
 	

@@ -27,6 +27,11 @@ func _on_assign_toggle_gui_input(event: InputEvent) -> void:
 			b.worker_alert_sprite.visible = !b.active if !info_overlay.assignMode  else false
 			b.toggle.visible = info_overlay.assignMode 
 			ui.hand.visible = !info_overlay.assignMode 
+		
+			if b.max_workers > 1:
+				b.citizen_bar.visible = info_overlay.assignMode
+			else:
+				b.citizen_bar.visible = false
 
 func _on_endturn_pressed() -> void:
 	# hide assign mode

@@ -700,6 +700,15 @@ scale = Vector2(3, 3)
 texture = ExtResource("8_h440b")
 offset = Vector2(320, 48)
 
+[node name="pause" type="Button" parent="InfoOverlay"]
+layout_mode = 0
+offset_left = 1831.0
+offset_top = 8.0
+offset_right = 1909.0
+offset_bottom = 91.0
+focus_mode = 0
+flat = true
+
 [node name="Tutorial" type="Control" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -1821,6 +1830,7 @@ unique_name_in_owner = true
 stream = ExtResource("15_8g5lr")
 bus = &"SFX"
 
+[connection signal="pressed" from="InfoOverlay/pause" to="." method="handle_pause"]
 [connection signal="pressed" from="Cards/CardShow/Show" to="." method="_on_show_pressed"]
 [connection signal="gui_input" from="EndTurn/AssignToggle" to="EndTurn" method="_on_assign_toggle_gui_input"]
 [connection signal="mouse_entered" from="EndTurn/AssignToggle" to="EndTurn" method="_on_button_mouse_entered" binds= [NodePath("/root/World/UI/EndTurn/AssignToggle/AssignToggleSprite")]]

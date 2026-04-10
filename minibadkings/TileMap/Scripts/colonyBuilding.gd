@@ -6,7 +6,6 @@ signal day_ended
 static var pondBuffTiles : Array 
 @export var costType : Global.RESOURCETYPE = Global.RESOURCETYPE.NONE
 @export var costAmt : int = 0 
-@export var workers : int = 0
 
 @export var scalingTrait : Global.TRAITTYPE = Global.TRAITTYPE.NONE
 @export var scalingMult : float = 1
@@ -95,7 +94,7 @@ func trigger_school() -> void:
 	if !active : 
 		traitAmt = 0 
 	else:
-		traitAmt = 1 # int(workers * 1)
+		traitAmt = int(workers * 1)
 	ui.info_overlay._update_traits()
 	
 func trigger_pond(pondActive : bool) -> void:
@@ -174,7 +173,8 @@ func match_type() -> void:
 		TYPE.FIELD:
 			pass
 		TYPE.SCHOOL:
-			pass
+			max_workers = 3
+			%max.text = str(max_workers)
 		TYPE.POND:
 			trigger_pond(true)
 		TYPE.BAKERY:
@@ -210,11 +210,29 @@ func set_building_properties(bType : Building.TYPE):
 	chanceTrait = Stats.coloBuilds[bType]["chanceTrait"]
 	scalingTrait = Stats.coloBuilds[bType]["scalingTrait"]
 	scalingMult = Stats.coloBuilds[bType]["scalingMult"]
+	
+	citizen_bar.max_value = max_workers
 
 func set_active(condition : bool) -> void:
 	super.set_active(condition)
 	
 	if ALWAYS_ACTIVE.has(type) : return
-	workers += 1 if condition else -1
 	
 	if type == TYPE.SCHOOL: trigger_school()
+
+func _on_toggle_toggled(toggled_on: bool) -> void:
+	var availWorkers = Global.resource_dict[Global.RESOURCETYPE.CITIZEN] - Global.resource_dict[Global.RESOURCETYPE.WORKER]
+	if max_workers > 1:
+		if workers >= max_workers:
+			workers = 0
+		else:
+			workers += 1 if availWorkers > 0 else -1
+		
+		set_active(workers > 0)
+		%current.text = str(workers)
+		citizen_bar.value = workers
+		
+		calculate_active_workers()
+		return
+	
+	super._on_toggle_toggled(toggled_on)

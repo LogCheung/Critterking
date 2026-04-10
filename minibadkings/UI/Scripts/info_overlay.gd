@@ -43,26 +43,6 @@ func show_containers() -> void:
 	trait_container.visible = true
 	resource_container.visible = true
 
-func _on_assign_toggle_gui_input(event: InputEvent) -> void:
-	if ui.world.is_combat_phase : return
-	if event.is_action_released("select"):
-		assignMode = !assignMode
-		assign_toggle_sprite.frame = 1 if assignMode else 0
-		assign_toggle_sprite.modulate.v = 1.5 if assignMode else 1.0
-		
-		var colorMask = get_tree().get_first_node_in_group("COLORMASK")
-		colorMask.visible = assignMode
-		
-		var buildings = get_tree().get_nodes_in_group("BUILDING")
-		for b : Building in buildings:
-			if Building.ALWAYS_ACTIVE.has(b.type):
-				b.toggle.visible = false
-				continue
-			
-			b.worker_alert_sprite.visible = !b.active if !assignMode else false
-			b.toggle.visible = assignMode
-			ui.hand.visible = !assignMode
-
 func _update_resources(showAnim : bool = true) -> void:
 	satisfaction_label.set_value(Global.resource_dict[Global.RESOURCETYPE.SATISFACTION],showAnim)
 	money_label.set_value(Global.resource_dict[Global.RESOURCETYPE.MONEY],showAnim)
