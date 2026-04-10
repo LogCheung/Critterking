@@ -246,6 +246,7 @@ func on_destroyed() -> void:
 	%Break.play()
 	anim.play("destroy")
 	set_active(false)
+	worker_alert_sprite.hide()
 	await anim.animation_finished
 	type = TYPE.RUINS
 	match_type()

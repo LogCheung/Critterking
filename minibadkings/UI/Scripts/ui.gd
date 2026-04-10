@@ -19,7 +19,6 @@ signal unit_healed
 @onready var help: Control = %Help
 @onready var settings: Control = %Settings
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
-@onready var end_turn: Control = %EndTurn
 @onready var gameover: Control = %gameover
 @onready var pausemenu: Control = %pausemenu
 @onready var crtr_day: AudioStreamPlayer = %crtrDay
@@ -41,6 +40,7 @@ signal unit_healed
 @onready var inspect_card: InspectControl = %InspectCard
 @onready var tutorial: Tutorial = %Tutorial
 @onready var end_day_continue: Sprite2D = %endDayContinue
+@onready var end_turn: EndTurn = %EndTurn
 
 @export var rollArray : Array = []
 @export var currentAscn : int = 0
@@ -169,8 +169,8 @@ func display_shop() -> void:
 	for slot : CardPurchaseSlot in get_tree().get_nodes_in_group("CARDPURCHASE"):
 		slot.card.visible = true
 		slot.card.randomize_type()
-		slot.price_label.visible = true
-	end_day_continue.frame = 1
+		slot.price_tag_texture.visible = true
+	end_turn.end_day_continue_button.frame = 1
 
 func display_hand() -> void:
 	#%Tutorial.hide()
@@ -393,44 +393,7 @@ func _on_cam_speed_value_changed(new_value: float) -> void:
 	world.camera.move_speed = new_value
 
 
-	#Daytime Menu
-	
-func _on_endturn_pressed() -> void:
-	# hide assign mode
-	if info_overlay.assignMode:
-		var event : InputEventAction = InputEventAction.new()
-		event.action = "select"
-		info_overlay._on_assign_toggle_gui_input(event)
-	# hide dispatch
-	if dispatch.visible and end_day_continue.frame == 1: 
-		_on_dispatch_end_pressed()
-		end_day_continue.frame = 0 
-		return
-	# hide shop
-	if shop.visible and end_day_continue.frame == 1: 
-		_on_shop_end_pressed()
-		end_day_continue.frame = 0 
-		return
-	# run colony buildings
-	for b : ColonyBuilding in get_tree().get_nodes_in_group("COLONY"):
-		b.day_ended.emit()
-		
-	info_overlay._update_resources()
-	
-	# check if house is not placed
-	%Button.play()
-	for card : Card in Global.cardsInHand:
-		if card.type == Card.CARDTYPE.HOUSE: 
-			%noHouse.show()
-			return
-	var units = get_tree().get_nodes_in_group("ALLY")
-	for u:Ally in units:
-		u.healthchange.emit()
-		u.speedchange.emit()
-	world.night_started.emit()
-	%noHouse.hide()
-	
-	tutorial.play_command_heal_tutorial()
+#Daytime Menu
 
 func _on_newgame_pressed() -> void:
 	if anim.is_playing() : return
@@ -731,7 +694,7 @@ func load_world() -> void:
 		else: cards.show()
 	elif world.dispatchDay:
 		dispatch.show()
-		end_day_continue.frame = 1
+		end_turn.end_day_continue_button.frame = 1
 		
 	for b in get_tree().get_nodes_in_group("BUILDING"):
 		b.process_mode = Node.PROCESS_MODE_INHERIT

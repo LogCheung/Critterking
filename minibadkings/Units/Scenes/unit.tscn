@@ -452,12 +452,12 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_daau3"]
+size = Vector2(15, 15)
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_daau3"]
 radius = 1.0
 height = 4.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_daau3"]
-size = Vector2(15, 15)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm8qt"]
 size = Vector2(5, 7)
@@ -675,12 +675,6 @@ position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_ssb4e")
 animation = &"hardy"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(-0.5, 1)
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_daau3")
-
 [node name="Flip" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Flip"]
@@ -702,6 +696,11 @@ position = Vector2(6.5, 1.5)
 shape = SubResource("RectangleShape2D_daau3")
 disabled = true
 debug_color = Color(0.793403, 0.426364, 1.92523e-07, 0.42)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 1)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_daau3")
 
 [node name="HitBox" parent="." instance=ExtResource("1_pm8qt")]
 unique_name_in_owner = true

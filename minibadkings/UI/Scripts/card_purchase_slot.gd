@@ -3,8 +3,9 @@ class_name CardPurchaseSlot
 
 @export var price : int
 
-@onready var price_label: Label = $PriceLabel
+@onready var price_label: Label = %PriceLabel
 @onready var card: Card = $Card
+@onready var price_tag_texture: TextureRect = %PriceTagTexture
 
 func _ready() -> void:
 	price = card.price

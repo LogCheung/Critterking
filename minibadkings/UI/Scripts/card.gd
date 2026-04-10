@@ -189,14 +189,14 @@ func handle_drag() -> void:
 			tileWorld.hover.set_cell(cell,-1)
 
 func set_to_default() -> void:
-	if position == default_position and sprite_2d.scale == Vector2(1.0,1.0) : return
-	
-	sprite_2d.scale = Vector2(1.0,1.0)
 	if shop_card: 
 		sprite_2d.material = null
 		purchaseSelected = false
+		scale = Vector2(1.0,1.0)
 		return # only need to revert less things for shopcards
+	if position == default_position and sprite_2d.scale == Vector2(1.0,1.0) : return
 	
+	sprite_2d.scale = Vector2(1.0,1.0)
 	sprite_2d.position.y = default_position.y
 		
 	if !dispatchSelected : sprite_2d.material = null
@@ -564,7 +564,7 @@ func _on_selected_mouse_entered() -> void:
 	if card_selected : return
 	
 	if shop_card:
-		sprite_2d.scale = Vector2(1.2,1.2)
+		scale = Vector2(1.2,1.2)
 		return
 		
 	# enlarge when hovered
@@ -626,10 +626,8 @@ func _on_purchase_card_confirm() -> void:
 		add_card_to_hand()
 		
 		# make invisible
-		var slot = get_parent()
-		if slot is CardPurchaseSlot: 
-			slot.card.visible = false
-			slot.price_label.visible = false
+		purchaseSlot.card.visible = false
+		purchaseSlot.price_tag_texture.visible = false
 func _on_draw_card_to_hand() -> void:
 	if for_show:
 		choice_picked = true
