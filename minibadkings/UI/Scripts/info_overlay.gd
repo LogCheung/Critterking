@@ -17,6 +17,7 @@ class_name InfoOverlay
 @onready var party_current: OverlayCounter = %PartyCurrent
 @onready var trait_container: HBoxContainer = $TraitContainer
 @onready var resource_container: HBoxContainer = $ResourceContainer
+@onready var tutorial_button_sprite: Sprite2D = %TutorialButtonSprite
 
 func _ready() -> void:
 	trait_container.visible = false

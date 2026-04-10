@@ -253,7 +253,6 @@ func find_obstacle_tiles() -> void:
 
 func find_restricted_tiles() -> void:
 	restricted_tiles.clear()
-	print(Card.NO_ORTH_BUILDINGS.has(Card.CARDTYPE.CAMPFIRE))
 	var builds = get_tree().get_nodes_in_group("BUILDING")
 	for b : Building in builds:
 		var type = b.type + Card.CARDTYPE.TRAPS - 1 # translated btype to cardtype

@@ -40,6 +40,7 @@ signal unit_healed
 @onready var shop: Control = %Shop
 @onready var inspect_card: InspectControl = %InspectCard
 @onready var tutorial: Tutorial = %Tutorial
+@onready var end_day_continue: Sprite2D = %endDayContinue
 
 @export var rollArray : Array = []
 @export var currentAscn : int = 0
@@ -105,7 +106,6 @@ func control_is_visible() -> bool:
 	return false
 	
 func _on_show_pressed() -> void:
-	print(rollArray)
 	# when deck of cards is clicked, show anim will play
 	if displaying_cards : return
 	#await get_tree().create_timer(.05).timeout
@@ -162,6 +162,7 @@ func show_hand() -> void:
 	tutorial.play_day_basics_tutorial()
 
 func display_shop() -> void:
+	end_turn.show()
 	shop.show()
 	info_overlay.show()
 	info_overlay.show_containers()
@@ -169,6 +170,7 @@ func display_shop() -> void:
 		slot.card.visible = true
 		slot.card.randomize_type()
 		slot.price_label.visible = true
+	end_day_continue.frame = 1
 
 func display_hand() -> void:
 	#%Tutorial.hide()
@@ -185,8 +187,6 @@ func display_hand() -> void:
 	
 	if world.dispatchDay: 
 		dispatch.show()
-	
-	refresh_positions()
 
 func _on_shop_end_pressed() -> void:
 	rollArray.pop_front()
@@ -402,8 +402,14 @@ func _on_endturn_pressed() -> void:
 		event.action = "select"
 		info_overlay._on_assign_toggle_gui_input(event)
 	# hide dispatch
-	if dispatch.visible: 
+	if dispatch.visible and end_day_continue.frame == 1: 
 		_on_dispatch_end_pressed()
+		end_day_continue.frame = 0 
+		return
+	# hide shop
+	if shop.visible and end_day_continue.frame == 1: 
+		_on_shop_end_pressed()
+		end_day_continue.frame = 0 
 		return
 	# run colony buildings
 	for b : ColonyBuilding in get_tree().get_nodes_in_group("COLONY"):
@@ -473,8 +479,6 @@ func _on_dispatch_end_pressed() -> void:
 			newCard.level = c.level
 			Global.cardsDispatched.append(newCard)
 			c.queue_free()
-	
-	refresh_positions()
 
 func _on_back_pressed() -> void:
 	%playmenu.hide()
@@ -538,18 +542,7 @@ func _on_unlock_button_pressed() -> void:
 	if anim.is_playing():return
 	if !%Card4.visible:
 		anim.play("cardunlock")
-	
-func refresh_positions() -> void:
-	# Add and remove dummy card to refresh positions
-	var hCard : Card = preload("res://UI/Scenes/card.tscn").instantiate()
-	hand_container.add_child(hCard)
-	#hCard.set_owner(get_tree().get_current_scene())
-	hCard.set_up()
-	hCard.remove_self()
-	
-	var cardsInHand = hand_container.get_children()
-	for c : Card in cardsInHand:
-		c.set_up()
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		handle_pause()
@@ -731,7 +724,6 @@ func load_world() -> void:
 	if !rollArray.is_empty():
 		info_overlay.hide()
 		hand.hide()
-		end_turn.hide()
 		if rollArray.front() == Card.ROLLTYPE.CHARM: display_shop()
 		elif rollArray.front() == Card.ROLLTYPE.SHOP:
 			info_overlay.show()
@@ -739,6 +731,7 @@ func load_world() -> void:
 		else: cards.show()
 	elif world.dispatchDay:
 		dispatch.show()
+		end_day_continue.frame = 1
 		
 	for b in get_tree().get_nodes_in_group("BUILDING"):
 		b.process_mode = Node.PROCESS_MODE_INHERIT

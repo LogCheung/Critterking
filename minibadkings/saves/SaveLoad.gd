@@ -30,7 +30,6 @@ func _save(#scene : PackedScene,
 	
 	SaveFileData.resource_dict = Global.resource_dict.duplicate()
 	SaveFileData.trait_dict = Global.trait_dict.duplicate()
-	print(SaveFileData.resource_dict)
 	# save cards
 	SaveFileData.cardsInHand.clear()
 	for card in Global.cardsInHand:

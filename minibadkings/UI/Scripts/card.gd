@@ -74,6 +74,7 @@ enum ROLLTYPE {
 	GENERAL, UNIT, BUILDINGS, CHARM, BLESSING, SHOP
 }
 
+static var card_selected : bool = false
 @export var type : CARDTYPE
 @export var rolltype : ROLLTYPE
 @export var for_show : bool  = false
@@ -94,6 +95,7 @@ enum ROLLTYPE {
 @onready var charm_pos: Node2D = %CharmPos
 @onready var box_info_container: BoxInfoContainer = $BoxInfoContainer
 
+var red_cells : Array
 
 var default_position : Vector2
 var default_custom_min : Vector2
@@ -110,9 +112,11 @@ func _ready() -> void:
 	if for_show: scale = Vector2(3,3)
 	if shop_card : set_up()
 	match_sprite_type()
-
-func set_up() -> void:
-	default_position = position
+	
+func set_up(reset_def_pos : bool = true) -> void:
+	if reset_def_pos: 
+		default_position = position
+		sprite_2d.position.y = default_position.y
 	default_custom_min = custom_minimum_size
 	setting_up = false
 
@@ -129,15 +133,17 @@ func _process(delta: float) -> void:
 	if setting_up : return
 	handle_drag()
 	
-	
 func handle_drag() -> void:
 	if refreshing : 
 		await get_tree().create_timer(.05).timeout
 		default_position = position
 		refreshing = false
 		return
-	if for_show or inspected: return
+	if for_show or inspected : return
 	if ui.pausemenu.visible : return
+	if !selected and card_selected : 
+		set_to_default()
+		return # if theres already another card being selected
 	# dragging and plopping
 	if Input.is_action_just_pressed("select") and !selected:
 		if Rect2(Vector2(), size).has_point(get_local_mouse_position()):
@@ -157,9 +163,12 @@ func handle_drag() -> void:
 				sprite_2d.material = null
 			set_to_default()
 			selected = true
+			card_selected = true
+			top_level = true
+			position = default_position
 	if Input.is_action_pressed("select") and selected:
 		sprite_2d.scale = Vector2(.6,.6)
-		global_position = get_global_mouse_position()
+		global_position = get_global_mouse_position() #+ Vector2(0,190)
 		top_level = true
 		highlight_tiles()
 	elif Input.is_action_just_released("select") and selected:
@@ -176,11 +185,12 @@ func handle_drag() -> void:
 	
 	if Input.is_action_just_pressed("cancel") and selected:
 		set_to_default()
-		ui.refresh_positions()
 		for cell in tileWorld.hover.get_used_cells():
 			tileWorld.hover.set_cell(cell,-1)
 
 func set_to_default() -> void:
+	if position == default_position and sprite_2d.scale == Vector2(1.0,1.0) : return
+	
 	sprite_2d.scale = Vector2(1.0,1.0)
 	if shop_card: 
 		sprite_2d.material = null
@@ -188,12 +198,14 @@ func set_to_default() -> void:
 		return # only need to revert less things for shopcards
 	
 	sprite_2d.position.y = default_position.y
+		
 	if !dispatchSelected : sprite_2d.material = null
 	
 	z_index = 0
 	custom_minimum_size = default_custom_min
 	position = default_position
 	
+	if selected : card_selected = false
 	selected = false
 	is_under_mouse = false
 	top_level = false
@@ -219,25 +231,28 @@ func highlight_tiles() -> void:
 		unit_tiles.append(Vector2i(group.tile))
 	
 	# add appropriate tiles
+	red_cells = []
 	var buildableArea = tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),1)
 	for cell in buildableArea: # for each buildable tile
 		if unit_tiles.has(cell) : continue
 		tileWorld.hover.set_cell(cell,0,Vector2(0,0),0) # white
-		if tileWorld.buffed_tiles.has(cell):
+		if type <= CARDTYPE.CRAZED and tileWorld.buffed_tiles.has(cell):
 			tileWorld.hover.set_cell(cell,0,Vector2(0,1),0) # green
 		if type == CARDTYPE.FIELD and ColonyBuilding.pondBuffTiles.has(cell):
 			tileWorld.hover.set_cell(cell,0,Vector2(0,1),0) # green
 		if type > CARDTYPE.CRAZED and tileWorld.restricted_tiles.has(cell):
 			tileWorld.hover.set_cell(cell,0,Vector2(0,2),0) # red
+			red_cells.append(cell)
 		if ENTRANCE_BUILDINGS.has(type) and tileWorld.blocked_entry_tiles.has(cell):
 			tileWorld.hover.set_cell(cell,0,Vector2(0,2),0) # red
+			red_cells.append(cell)
+	
 	
 	var blockedTiles = get_tree().get_nodes_in_group("BUILDING")
 	blockedTiles = blockedTiles.map(func(b:Building):return b.tile)
 	blockedTiles.append_array(tileWorld.obstacle_tiles)
 	blockedTiles.append_array(tileWorld.wall_tiles)
 	
-	var red_cells : Array = []
 	for cell in blockedTiles:
 		if NO_ORTH_BUILDINGS.has(type): # red
 			red_cells.append(cell + Vector2i(0,1))
@@ -249,11 +264,14 @@ func highlight_tiles() -> void:
 				for y in range(cell.y-1,cell.y+2):
 					red_cells.append(Vector2i(x,y))
 	for cell in red_cells:
+		if unit_tiles.has(cell):continue
 		if !buildableArea.has(cell):continue
 		tileWorld.hover.set_cell(cell,0,Vector2(0,2),0)
 	
 	tileWorld.hover.visible = true
-	
+	highlight_hovered_tile()
+
+func highlight_hovered_tile() -> void:
 	# highlight tile hovered over with card
 	var hoverTile = world.tileWorld.ground.local_to_map(world.get_global_mouse_position())
 	if tileWorld.hover.get_used_cells().has(hoverTile):
@@ -264,9 +282,13 @@ func plop() -> void:
 	tileWorld.handle_navigable_cells()
 	tile = world.tile2
 	var ploppableTiles = tileWorld.ground.get_used_cells_by_id(0,Vector2(0,0),1)
-	var hoverTiles = tileWorld.hover.get_used_cells()
+	var hoverTiles = tileWorld.hover.get_used_cells_by_id(0,Vector2(0,0)) # white
+	hoverTiles.append_array(tileWorld.hover.get_used_cells_by_id(0,Vector2(0,1))) # green
+	ploppableTiles = ploppableTiles.filter(func(t):return !red_cells.has(t))
 	ploppableTiles = ploppableTiles.filter(func(t):return hoverTiles.has(t))
 	var groupNode = get_tree().get_first_node_in_group("GROUPSNODE")
+	
+	print(tileWorld.hover.get_used_cells_by_id(0,Vector2(0,0)).has(tile))
 	
 	if ploppableTiles.has(tile):
 		if check_general() : 
@@ -299,10 +321,10 @@ func plop() -> void:
 		if check_if_merge(tile) : remove_self()
 		if check_destroy(tile): remove_self()
 		if check_general() : remove_self()
-		sprite_2d.scale = Vector2(1.0,1.0)
-		position = default_position
-		selected = false
-		ui.refresh_positions()
+		#sprite_2d.scale = Vector2(1.0,1.0)
+		#position = default_position
+		#selected = false
+		#ui.refresh_positions()
 	tileWorld.handle_navigable_cells()
 
 func remove_self() -> void:
@@ -538,6 +560,7 @@ func _on_selected_mouse_entered() -> void:
 	if refreshing : return
 	if setting_up : return
 	if ui.pausemenu.visible : return
+	if card_selected : return
 	
 	if shop_card:
 		sprite_2d.scale = Vector2(1.2,1.2)
