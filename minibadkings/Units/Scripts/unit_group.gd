@@ -27,7 +27,7 @@ func _process(delta: float) -> void:
 	if selected: highlight_tiles()
 	
 	# day time inspecting
-	if tileWorld.mouseTile == Vector2i(tile): 
+	if !world.is_combat_phase and tileWorld.mouseTile == Vector2i(tile): 
 		_on_select_area_mouse_entered()
 		is_under_mouse = false
 		if Input.is_action_just_released("inspect"):
