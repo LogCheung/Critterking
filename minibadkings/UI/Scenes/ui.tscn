@@ -576,14 +576,17 @@ layout_mode = 0
 offset_right = 960.0
 offset_bottom = 96.0
 scale = Vector2(2, 2)
+mouse_filter = 2
 texture = ExtResource("8_h440b")
 
 [node name="ResourceContainer" type="HBoxContainer" parent="InfoOverlay"]
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 0
 offset_left = 158.0
-offset_top = 68.0
+offset_top = 3.0
 offset_right = 750.0
-offset_bottom = 132.0
+offset_bottom = 123.0
+mouse_filter = 2
 theme_override_constants/separation = 68
 
 [node name="PartyCurrent" parent="InfoOverlay/ResourceContainer" instance=ExtResource("6_nh1tr")]
@@ -612,11 +615,13 @@ layout_mode = 2
 resourceType = 3
 
 [node name="TraitContainer" type="HBoxContainer" parent="InfoOverlay"]
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 0
 offset_left = 1170.0
-offset_top = 69.0
+offset_top = 4.0
 offset_right = 1762.0
-offset_bottom = 133.0
+offset_bottom = 68.0
+mouse_filter = 2
 theme_override_constants/separation = 68
 
 [node name="ProductivityTrait" parent="InfoOverlay/TraitContainer" instance=ExtResource("6_nh1tr")]
@@ -643,7 +648,6 @@ traitType = 3
 unique_name_in_owner = true
 layout_mode = 2
 resourceType = 6
-traitType = 3
 
 [node name="DayNight" type="Label" parent="InfoOverlay"]
 unique_name_in_owner = true

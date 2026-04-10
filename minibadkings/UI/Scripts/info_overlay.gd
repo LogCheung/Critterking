@@ -93,7 +93,7 @@ func _update_traits(showAnim : bool = true) -> void:
 	var houseCount = get_tree().get_nodes_in_group("BUILDING")
 	houseCount = houseCount.filter(func(e):return e.type == Building.TYPE.HOUSE)
 	houseCount = houseCount.size()
-	house_label.text = str(houseCount)
+	house_label.label.text = str(houseCount)
 
 func handle_party_limit() -> void:
 	var houseCount = get_tree().get_nodes_in_group("BUILDING")
@@ -108,7 +108,7 @@ func handle_party_limit() -> void:
 	else: 
 		Global.partyLimit = 2 + (2 * houseCount) + (1 * campCount)
 	
-	party_current.text = str(Global.partyCount) +  " / " + str(Global.partyLimit)
+	party_current.label.text = str(Global.partyCount) +  " / " + str(Global.partyLimit)
 	
 	if Global.partyCount >= Global.partyLimit:
 		ui.no_space.show()

@@ -1,14 +1,18 @@
 @tool
 class_name OverlayCounter
-extends Label
+extends Control
 
 @export var resourceType : Global.RESOURCETYPE
 @export var army : bool = false
 @export var traitType : Global.TRAITTYPE
 
 @onready var sprite_2d: Sprite2D = %Sprite2D
+@onready var overhead_info: TextureRect = $overheadInfo
+@onready var label: Label = %Label
 
 func _ready() -> void:
+	overhead_info.hide()
+	match_info_box()
 	if resourceType != Global.RESOURCETYPE.NONE:
 		match_sprite_resource()
 	else:
@@ -16,6 +20,18 @@ func _ready() -> void:
 		
 	if army:
 		sprite_2d.frame = 7
+		
+func match_info_box() -> void:
+	if army:
+		overhead_info.texture = load("res://UI/Assets/overheadInfo/armyOSTS.png")
+		return
+	
+	var path = "res://UI/Assets/overheadInfo/"
+	if resourceType != Global.RESOURCETYPE.NONE:
+		path += Global.RESOURCETYPE.keys()[resourceType] +"OSTS.png"
+	else:
+		path += Global.TRAITTYPE.keys()[traitType] +"OSTS.png"
+	overhead_info.texture = load(path)
 
 func match_sprite_resource() -> void:
 	match resourceType:
@@ -41,7 +57,7 @@ func match_sprite_trait() -> void:
 			sprite_2d.frame = 3
 
 func set_value(value : int, showAnim : bool = true) -> void:
-	if army or value == int(text): return
+	if army or value == int(label.text): return
 	var children = get_children().filter(func(e):return e is Pop)
 	if !children.is_empty():
 		# first child will be another pop scene
@@ -49,10 +65,16 @@ func set_value(value : int, showAnim : bool = true) -> void:
 	# if isn't army counter or value doesn't change then continue
 	
 	# show change animation
-	if value != int(text) and showAnim:
+	if value != int(label.text) and showAnim:
 		var pop : Pop = preload("res://UI/Scenes/pop.tscn").instantiate()
 		add_child(pop)
 		pop.global_position = global_position + Vector2(8,80)
-		pop.show_value(value - int(text))
+		pop.show_value(value - int(label.text))
 	
-	text = str(value)
+	label.text = str(value)
+
+func _on_mouse_entered() -> void:
+	overhead_info.visible = true
+	
+func _on_mouse_exited() -> void:
+	overhead_info.visible = false

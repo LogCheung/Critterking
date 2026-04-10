@@ -1,30 +1,52 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3k1620rqdidi"]
+[gd_scene load_steps=6 format=3 uid="uid://d3k1620rqdidi"]
 
 [ext_resource type="FontFile" uid="uid://ggtewla8581f" path="res://Units/aseprite.otf" id="1_8d7cr"]
 [ext_resource type="Script" uid="uid://con0bsnhrmh16" path="res://UI/Scripts/overlay_counter.gd" id="1_fq5m7"]
 [ext_resource type="Texture2D" uid="uid://d1jmfbs1anny2" path="res://UI/Assets/overlay/Icons.png" id="1_olmwc"]
+[ext_resource type="Texture2D" uid="uid://cikbmjc3mr562" path="res://UI/Assets/overheadInfo/foodOSTS.png" id="4_iiq2g"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_iiq2g"]
 font = ExtResource("1_8d7cr")
 font_size = 14
 
-[node name="OverlayCounter" type="Label"]
+[node name="OverlayCounter" type="Control"]
 custom_minimum_size = Vector2(64, 64)
-offset_top = -10.0
+layout_mode = 3
+anchors_preset = 0
+offset_top = -75.0
 offset_right = 66.0
 offset_bottom = 66.0
+script = ExtResource("1_fq5m7")
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 75.0
+offset_right = 64.0
+offset_bottom = 127.0
 text = "1"
 label_settings = SubResource("LabelSettings_iiq2g")
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("1_fq5m7")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(16, -2)
+position = Vector2(16, 63)
 scale = Vector2(2, 2)
 texture = ExtResource("1_olmwc")
 offset = Vector2(8, -10)
 hframes = 6
 vframes = 2
 frame = 9
+
+[node name="overheadInfo" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -127.00001
+offset_top = 144.0
+offset_right = 0.9999924
+offset_bottom = 192.0
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("4_iiq2g")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
