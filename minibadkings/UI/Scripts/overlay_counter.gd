@@ -106,7 +106,7 @@ func set_projection_value(value : int, positive : bool) -> void:
 func show_projections(condition : bool) -> void:
 	await get_tree().create_timer(1).timeout
 	pos_proj.visible = condition and int(pos_proj_label.text) != 0
-	neg_proj.visible = condition and int(neg_proj.text) != 0
+	neg_proj.visible = condition and int(neg_proj_label.text) != 0
 	
 	# exception for chance 
 	pos_proj.visible = %posAsterisk.visible and condition

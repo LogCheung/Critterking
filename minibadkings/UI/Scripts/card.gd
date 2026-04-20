@@ -459,6 +459,8 @@ func randomize_type() -> void:
 				weights[i] = 1
 				if i >= CARDTYPE.TAVERN and i <= CARDTYPE.BAKERY: # is colony index
 					weights[i] = .25
+				if i <= CARDTYPE.CRAZED:
+					weights[i] = 1.5
 			
 			type = types[rng.rand_weighted(weights)]
 		ROLLTYPE.UNIT:
@@ -471,6 +473,7 @@ func randomize_type() -> void:
 			type = randi_range(CARDTYPE.INSPIRATION,CARDTYPE.CONSTRUCTION)
 		ROLLTYPE.SHOP:
 			type = randi_range(CARDTYPE.TAVERN,CARDTYPE.BAKERY)#randi_range(CARDTYPE.BITER,CARDTYPE.CRAZED) 
+			price = Stats.coloBuilds[type - CARDTYPE.TRAPS + 1]['price']
 	if type == CARDTYPE.HOUSE : randomize_type()
 	if type == CARDTYPE.FLAG : randomize_type() # nuke flag
 	if type == CARDTYPE.BOMBER : randomize_type() # nuke bomber :(, nuke the nuker :(

@@ -72,6 +72,9 @@ func _process(delta: float) -> void:
 	%ScrollControl.custom_minimum_size.x += 20 * hand_container.get_children().size() - 1
 		
 func _ready() -> void:
+	var is_241_less_than_375 = 241 < 375
+	print("Is Logan going to the Netherlands? : " + str(is_241_less_than_375))
+	
 	#get settings menu
 	settB.append_array(%settingsMenu.get_children())
 	settB = settB.filter(func(b):return b != %settingsback)

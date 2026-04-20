@@ -56,11 +56,11 @@ scale = Vector2(2.5, 2.5)
 [node name="posProj" type="TextureRect" parent="."]
 visible = false
 layout_mode = 0
-offset_left = -19.0
-offset_top = 111.00001
-offset_right = 1.0
-offset_bottom = 124.00001
-scale = Vector2(2.5, 2.5)
+offset_left = -8.0
+offset_top = 113.0
+offset_right = 12.0
+offset_bottom = 127.0
+scale = Vector2(2, 2)
 texture = ExtResource("5_upom7")
 stretch_mode = 2
 
@@ -93,11 +93,11 @@ vertical_alignment = 1
 [node name="negProj" type="TextureRect" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 38.0
-offset_top = 111.0
-offset_right = 58.0
-offset_bottom = 124.0
-scale = Vector2(2.5, 2.5)
+offset_left = 32.000004
+offset_top = 113.00001
+offset_right = 52.000004
+offset_bottom = 127.00001
+scale = Vector2(2, 2)
 texture = ExtResource("6_3jco4")
 stretch_mode = 2
 

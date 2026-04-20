@@ -560,7 +560,6 @@ _data = {
 }
 
 [node name="UI" type="CanvasLayer"]
-visible = false
 script = ExtResource("1_44q3l")
 
 [node name="InfoOverlay" type="Control" parent="."]
@@ -1876,3 +1875,5 @@ bus = &"SFX"
 [connection signal="pressed" from="gameover/over/title" to="." method="_on_title_pressed"]
 [connection signal="pressed" from="gameover/unlockC/unlockCButton" to="." method="_on_unlock_c_button_pressed"]
 [connection signal="gui_input" from="InspectCard" to="InspectCard" method="_on_gui_input"]
+
+[editable path="InfoOverlay/ResourceContainer/FoodLabel"]
