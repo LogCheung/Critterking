@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://baijnx8up6ruu"
-path="res://.godot/imported/pcentchanceBox.png-295b6442367611e6b7ec913b007c18f2.ctex"
+path="res://.godot/imported/pcentChanceBox.png-f7e9fc34935ac5d005b74776a01ee8cf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/Assets/boxes/pcentchanceBox.png"
-dest_files=["res://.godot/imported/pcentchanceBox.png-295b6442367611e6b7ec913b007c18f2.ctex"]
+source_file="res://UI/Assets/boxes/pcentChanceBox.png"
+dest_files=["res://.godot/imported/pcentChanceBox.png-f7e9fc34935ac5d005b74776a01ee8cf.ctex"]
 
 [params]
 

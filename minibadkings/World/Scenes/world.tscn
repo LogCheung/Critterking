@@ -65,7 +65,6 @@ color = Color(0.050980393, 0.050980393, 0.050980393, 0.34901962)
 [node name="UI" parent="." groups=["UI"] instance=ExtResource("6_7qq3u")]
 unique_name_in_owner = true
 process_mode = 3
-visible = true
 
 [node name="Failcheck" type="Timer" parent="."]
 unique_name_in_owner = true

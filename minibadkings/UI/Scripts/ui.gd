@@ -189,6 +189,7 @@ func display_hand() -> void:
 	
 	if world.dispatchDay: 
 		dispatch.show()
+		end_turn.end_day_continue_button.frame = 1
 
 func refresh_positions() -> void:
 	# Add and remove dummy card to refresh positions
@@ -720,6 +721,7 @@ func load_world() -> void:
 	
 	for card : Card in hand_container.get_children():
 		card.set_up()
+	await get_tree().process_frame
 	refresh_positions()
 		
 	%AdaptLabel.text = str(currentAscn)
