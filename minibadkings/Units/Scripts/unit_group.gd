@@ -42,6 +42,11 @@ func respawn_units() -> void:
 	for unit in unitsArray:
 		unit.global_position = house.entrance.global_position
 		unit.set_collision_layer_value(1,false)
+	
+	for unit in unitsArray:
+		await get_tree().create_timer(1.5).timeout
+		print("ok")
+		unit.set_collision_layer_value(1,true)
 
 var is_under_mouse : bool = false
 

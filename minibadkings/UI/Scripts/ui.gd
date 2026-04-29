@@ -72,8 +72,8 @@ func _process(delta: float) -> void:
 	%ScrollControl.custom_minimum_size.x += 20 * hand_container.get_children().size() - 1
 		
 func _ready() -> void:
-	var is_241_less_than_375 = 241 < 375
-	print("Is Logan going to the Netherlands? : " + str(is_241_less_than_375))
+	#var is_241_less_than_375 = 241 < 375
+	#print("Is Logan going to the Netherlands? : " + str(is_241_less_than_375))
 	
 	#get settings menu
 	settB.append_array(%settingsMenu.get_children())
@@ -121,11 +121,11 @@ func _on_show_pressed() -> void:
 		%CardShow.texture = preload("res://UI/Assets/menus/discoveryshow.png")
 		%CardShow.hframes = 20
 		if !Global.cardsDispatched.is_empty() : 
-			%Card3.type = Global.cardsDispatched.front().type
-		%Card3.match_sprite_type()
+			%CardCharmed.type = Global.cardsDispatched.front().type
+		%CardCharmed.match_sprite_type()
 	else:
-		%CardShow.texture = preload("res://UI/Assets/menus/cardshow.png")
-		%CardShow.hframes = 20
+		%CardShow.texture = preload("res://UI/Assets/menus/choose3.png") #preload("res://UI/Assets/menus/cardshow.png")
+		%CardShow.hframes = 44 #20 
 		
 		# tutorial for decrees
 		tutorial.play_decrees_tutorial()
@@ -143,7 +143,7 @@ func display_cards(display : bool) -> void:
 		card.visible = display
 		card.choice_picked = !display
 	
-	%Card3.visible = rolltype == Card.ROLLTYPE.CHARM and display
+	%CardCharmed.visible = rolltype == Card.ROLLTYPE.CHARM and display
 		
 func show_hand() -> void:
 	# when card is chosen from deck of cards

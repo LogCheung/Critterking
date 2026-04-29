@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=66 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Script" uid="uid://b174vncna6gct" path="res://UI/Scripts/info_overlay.gd" id="2_ffuy1"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://o7d76rkb77wk" path="res://UI/Assets/alerts/discoveryPrompt.png" id="8_lpmf3"]
 [ext_resource type="Script" uid="uid://dtyfxfj7mly0l" path="res://UI/Scripts/tutorial.gd" id="8_nh1tr"]
 [ext_resource type="AudioStream" uid="uid://bmkptsfk4bkc" path="res://Audio/music/crtrpause.wav" id="8_oj6tj"]
+[ext_resource type="Texture2D" uid="uid://boiet8equlxt5" path="res://UI/Assets/menus/choose3.png" id="9_eq4ge"]
 [ext_resource type="AudioStream" uid="uid://bj8clo00ioln7" path="res://Audio/music/crtrover.wav" id="9_ftqev"]
 [ext_resource type="AudioStream" uid="uid://wctmm4dlcbix" path="res://Audio/music/crtrmenu.wav" id="10_n2q0n"]
 [ext_resource type="AudioStream" uid="uid://cwx4hw05ceroc" path="res://Audio/sfx/Shuffle.tres" id="11_6dw6b"]
@@ -779,7 +780,6 @@ stretch_mode = 4
 
 [node name="Cards" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -790,9 +790,9 @@ metadata/_edit_use_anchors_ = true
 [node name="CardShow" type="Sprite2D" parent="Cards"]
 unique_name_in_owner = true
 scale = Vector2(3, 3)
-texture = SubResource("CompressedTexture2D_ia477")
+texture = ExtResource("9_eq4ge")
 offset = Vector2(320, 180)
-hframes = 20
+hframes = 44
 
 [node name="Show" type="Button" parent="Cards/CardShow"]
 anchors_preset = -1
@@ -811,9 +811,9 @@ metadata/_edit_use_anchors_ = true
 [node name="Card" parent="Cards" instance=ExtResource("3_bujes")]
 visible = false
 layout_mode = 1
-offset_left = 291.62
+offset_left = 285.61996
 offset_top = 60.12
-offset_right = 412.38
+offset_right = 406.37997
 offset_bottom = 301.88
 scale = Vector2(3, 3)
 for_show = true
@@ -821,14 +821,24 @@ for_show = true
 [node name="Card2" parent="Cards" instance=ExtResource("3_bujes")]
 visible = false
 layout_mode = 1
-offset_left = 1251.62
+offset_left = 1245.62
 offset_top = 60.12
-offset_right = 1372.38
+offset_right = 1366.38
 offset_bottom = 301.88
 scale = Vector2(3, 3)
 for_show = true
 
 [node name="Card3" parent="Cards" instance=ExtResource("3_bujes")]
+visible = false
+layout_mode = 1
+offset_left = 766.08
+offset_top = 99.12
+offset_right = 886.84
+offset_bottom = 340.88
+scale = Vector2(3, 3)
+for_show = true
+
+[node name="CardCharmed" parent="Cards" instance=ExtResource("3_bujes")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -942,6 +952,7 @@ alignment = 1
 
 [node name="Hand" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_top = 500.0

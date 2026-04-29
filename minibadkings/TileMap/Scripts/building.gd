@@ -344,6 +344,7 @@ func _on_trans_area_exited(area: Area2D) -> void:
 	pass # Replace with function body.
 
 func _on_timer_timeout() -> void:
+	# healing timer finished
 	if ui.currentAscn >= 1:
 		bar.value += 1
 		if type == TYPE.CARE: bar.value += .5
