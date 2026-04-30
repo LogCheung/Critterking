@@ -125,7 +125,7 @@ func _on_show_pressed() -> void:
 		%CardCharmed.match_sprite_type()
 	else:
 		%CardShow.texture = preload("res://UI/Assets/menus/choose3.png") #preload("res://UI/Assets/menus/cardshow.png")
-		%CardShow.hframes = 44 #20 
+		%CardShow.hframes = 22 #20 
 		
 		# tutorial for decrees
 		tutorial.play_decrees_tutorial()
