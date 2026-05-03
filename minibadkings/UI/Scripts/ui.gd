@@ -208,6 +208,7 @@ func _on_shop_end_pressed() -> void:
 	save_game_delayed()
 	shop.hide()
 	info_overlay._update_resources()
+	info_overlay.handle_party_limit()
 	display_hand()
 	
 	tutorial.play_charms_tutorial()

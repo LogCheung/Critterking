@@ -227,6 +227,7 @@ func _on_toggle_toggled(toggled_on: bool) -> void:
 			workers = 0
 		else:
 			workers += 1 if availWorkers > 0 else -1
+			if workers < 0: workers = 0 # make sure it doesnt go negative
 		
 		set_active(workers > 0)
 		%current.text = str(workers)

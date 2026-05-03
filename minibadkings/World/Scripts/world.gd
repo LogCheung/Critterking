@@ -368,7 +368,7 @@ func on_night_ended() -> void:
 	# reward
 	Global.resource_dict[Global.RESOURCETYPE.MONEY] += 10
 	ui.info_overlay._update_resources()
-	ui.info_overlay.handle_party_limit()
+
 func clear_entities() -> void:
 	# clear dead enemies
 	if !get_tree():return
@@ -401,6 +401,8 @@ func clear_entities() -> void:
 	# clear projectiles
 	for p in get_tree().get_nodes_in_group("PROJECTILE"):
 		p.queue_free()
+		
+	ui.info_overlay.handle_party_limit()
 
 func start_day() -> void:
 	ui.crtr_night.stop()

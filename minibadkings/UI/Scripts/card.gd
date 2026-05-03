@@ -300,10 +300,6 @@ func plop() -> void:
 		if Global.partyCount >= Global.partyLimit and type <= CARDTYPE.CRAZED:
 			# precondition : is unit card and party limit is reached
 			# set to default
-			sprite_2d.scale = Vector2(1.0,1.0)
-			position = default_position
-			selected = false
-			ui.refresh_positions()
 			return
 		var group = load("res://Units/Scenes/unit_group.tscn").instantiate()
 		group.type = type

@@ -57,6 +57,7 @@ func _update_resources(showAnim : bool = true) -> void:
 	food_label.set_value(Global.resource_dict[Global.RESOURCETYPE.FOOD],showAnim)
 	citizen_label.set_value(Global.resource_dict[Global.RESOURCETYPE.CITIZEN],showAnim)
 	
+	
 func _update_traits(showAnim : bool = true) -> void:
 	# reset values to ensure no repeats
 	for key in Global.trait_dict.keys():
@@ -139,7 +140,7 @@ func handle_projections() -> void:
 
 	minus_projections[Global.RESOURCETYPE.FOOD] -= foodConsump
 	
-	var foodDebt = Global.resource_dict[Global.RESOURCETYPE.FOOD] - foodConsump
+	var foodDebt = Global.resource_dict[Global.RESOURCETYPE.FOOD] + projections[Global.RESOURCETYPE.FOOD]  - foodConsump
 	if foodDebt < 0:
 		minus_projections[Global.RESOURCETYPE.SATISFACTION] -= abs(foodDebt)
 	

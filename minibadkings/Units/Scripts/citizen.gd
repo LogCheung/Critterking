@@ -11,6 +11,9 @@ func _ready() -> void:
 	if !%NavDelay.timeout.is_connected(on_nav_delay):
 		%NavDelay.timeout.connect(on_nav_delay)
 	
+	if !world.night_started.is_connected(on_night_started):
+		world.night_started.connect(on_night_started)
+	
 	nav.target_position = workplace.entrance.global_position
 	action = ACTION.WALK
 	pass
@@ -23,6 +26,7 @@ func match_type() -> void:
 func handle_action(delta) -> void:
 	var distToTarget = global_position.distance_to(nav.target_position)
 	at_destination = distToTarget <= .5
+	
 	match action:
 		ACTION.NONE:
 			if target == workplace and !workplace.active : 
@@ -38,8 +42,9 @@ func handle_action(delta) -> void:
 		ACTION.WALK:
 			target = home if !workplace else workplace
 			if !target: return
-			print(target == workplace and !workplace.active )
 			if target == workplace and !workplace.active : target = home
+			if world.is_combat_phase: target = home
+			
 			
 			anim.play("walk")
 			nav.target_position = target.entrance.global_position
@@ -47,6 +52,10 @@ func handle_action(delta) -> void:
 	
 	if next_path_pos:
 		move_to(self.global_position.direction_to(next_path_pos), delta)
+
+func on_night_started() -> void:
+	action = ACTION.WALK
+	pass
 
 # overwrite unused functions
 func _on_behind_wall_mouse_entered() -> void:

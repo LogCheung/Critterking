@@ -16,6 +16,8 @@ func create_zombified(pos : Vector2, is_enemy : bool):
 	await get_tree().create_timer(.1).timeout
 
 func spawn_citizen(workplace : Building) -> void:
+	return # disable lol 
+	
 	# find house
 	var houses = get_tree().get_nodes_in_group("COLONY")
 	houses = houses.filter(func(e:Building): return e.type == Building.TYPE.HOUSE)
