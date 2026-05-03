@@ -792,7 +792,7 @@ unique_name_in_owner = true
 scale = Vector2(3, 3)
 texture = ExtResource("9_eq4ge")
 offset = Vector2(320, 180)
-hframes = 44
+hframes = 22
 
 [node name="Show" type="Button" parent="Cards/CardShow"]
 anchors_preset = -1

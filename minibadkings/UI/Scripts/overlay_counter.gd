@@ -68,12 +68,21 @@ func match_sprite_trait() -> void:
 			sprite_2d.frame = 3
 
 func set_value(value : int, showAnim : bool = true) -> void:
+	if resourceType == Global.RESOURCETYPE.SATISFACTION and value > 100: 
+		# satisfaction max
+		Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] = 100
+		return
+	if resourceType == Global.RESOURCETYPE.MONEY and value < 0: 
+		# money min
+		Global.resource_dict[Global.RESOURCETYPE.MONEY] = 0
+		return
+		
 	if army or value == int(label.text): return
 	var children = get_children().filter(func(e):return e is Pop)
 	if !children.is_empty():
 		# first child will be another pop scene
 		await get_tree().create_timer(.5).timeout
-	# if isn't army counter or value doesn't change then continue
+	# if isn't army counter or value doesn't change or not max then continue 
 	
 	# show change animation
 	if value != int(label.text) and showAnim:
