@@ -50,6 +50,7 @@ static var pantryActive : bool = false
 @export var active : bool = true
 @export var max_workers : int = 1
 @export var workers : int = 0
+@export var citizenWorker : Citizen
 
 @onready var entrance: Node2D = %Entrance
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
@@ -400,6 +401,10 @@ func set_active(condition : bool) -> void:
 	worker_alert_sprite.visible = !condition
 	
 	ui.info_overlay.handle_projections()
+	
+	if active and !is_instance_valid(citizenWorker):
+		var unitsNode : UnitsNode = get_tree().get_first_node_in_group("UNITSNODE")
+		unitsNode.spawn_citizen(self)
 
 func calculate_active_workers() -> void:
 	var workedBuilds = get_tree().get_nodes_in_group("BUILDING")

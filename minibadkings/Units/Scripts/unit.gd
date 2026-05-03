@@ -2,7 +2,7 @@ extends CharacterBody2D
 class_name Unit
 
 enum ACTION {
-	NONE,FORM, FIGHT, RAID, STRAFE, HEAL, STUNNED, DEAD
+	NONE,FORM, FIGHT, RAID, STRAFE, HEAL, STUNNED, DEAD, WALK
 }
 enum TYPE {
 	NONE, MELEE, SHIELDED, RANGED, TRAPJAW, EXPLOSIVE, FUNGI, 
@@ -99,7 +99,7 @@ func _process(_delta: float) -> void:
 	
 func check_formation() -> void:
 	# zombie has no formation
-	if type == TYPE.ZOMBIFIED: 
+	if type == TYPE.ZOMBIFIED or self is Citizen: 
 		in_formation = false
 		distance_from_form = 2.0
 		return
@@ -304,8 +304,8 @@ func start_death(destroy : bool = false) -> void:
 	z_index = 0
 	modulate.a8 = 200
 	
-	# remove from group unless is zombified
-	if type == TYPE.ZOMBIFIED :
+	# remove from group unless is zombified or citizen
+	if type == TYPE.ZOMBIFIED or self is Citizen :
 		queue_free()
 		return
 	var unitArr = group.unitsArray

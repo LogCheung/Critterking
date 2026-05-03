@@ -315,7 +315,6 @@ func match_decree_status() -> void:
 		Decree.TYPE.NONE:
 			return
 		Decree.TYPE.INSPIRATION:
-			#print("yesss")
 			status_sprite.visible = true
 			status_sprite.play("inspiration")
 			damage += .5
