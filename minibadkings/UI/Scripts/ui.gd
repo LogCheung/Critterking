@@ -144,6 +144,8 @@ func display_cards(display : bool) -> void:
 		card.choice_picked = !display
 	
 	%CardCharmed.visible = rolltype == Card.ROLLTYPE.CHARM and display
+	%Card3.visible = rolltype != Card.ROLLTYPE.CHARM  and display
+	
 		
 func show_hand() -> void:
 	# when card is chosen from deck of cards
@@ -513,13 +515,13 @@ func _on_format_item_selected(index: int) -> void:
 
 func _on_unlock_c_button_pressed() -> void:
 	if anim.is_playing():return
-	if !%Card4.visible:
+	if !%CardCharmed.visible:
 		anim.play("unlockC")
 	
 
 func _on_unlock_button_pressed() -> void:
 	if anim.is_playing():return
-	if !%Card4.visible:
+	if !%CardCharmed.visible:
 		anim.play("cardunlock")
 
 func _input(event: InputEvent) -> void:
@@ -530,7 +532,7 @@ func _input(event: InputEvent) -> void:
 		await anim.animation_finished
 		%unlockC.hide()
 		%Card7.hide()
-	if %Card4.visible and unlock.visible and event.is_action_pressed("select"):
+	if %CardCharmed.visible and unlock.visible and event.is_action_pressed("select"):
 		anim.play("cardunlockhide")
 		hide_unlocks()
 		await anim.animation_finished

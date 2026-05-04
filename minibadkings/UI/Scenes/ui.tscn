@@ -19,7 +19,7 @@
 [ext_resource type="Script" uid="uid://dn5w3jfm4dcjv" path="res://UI/Scripts/slider.gd" id="8_6dw6b"]
 [ext_resource type="Texture2D" uid="uid://o5sq82gqiu5b" path="res://UI/Assets/menus/crtroverhead.png" id="8_h440b"]
 [ext_resource type="Texture2D" uid="uid://o7d76rkb77wk" path="res://UI/Assets/alerts/discoveryPrompt.png" id="8_lpmf3"]
-[ext_resource type="Script" path="res://UI/Scripts/tutorial.gd" id="8_nh1tr"]
+[ext_resource type="Script" uid="uid://dtyfxfj7mly0l" path="res://UI/Scripts/tutorial.gd" id="8_nh1tr"]
 [ext_resource type="AudioStream" uid="uid://bmkptsfk4bkc" path="res://Audio/music/crtrpause.wav" id="8_oj6tj"]
 [ext_resource type="Texture2D" uid="uid://boiet8equlxt5" path="res://UI/Assets/menus/choose3.png" id="9_eq4ge"]
 [ext_resource type="AudioStream" uid="uid://bj8clo00ioln7" path="res://Audio/music/crtrover.wav" id="9_ftqev"]
@@ -819,6 +819,7 @@ scale = Vector2(3, 3)
 for_show = true
 
 [node name="Card2" parent="Cards" instance=ExtResource("3_bujes")]
+unique_name_in_owner = true
 visible = false
 layout_mode = 1
 offset_left = 1245.62
@@ -829,6 +830,7 @@ scale = Vector2(3, 3)
 for_show = true
 
 [node name="Card3" parent="Cards" instance=ExtResource("3_bujes")]
+unique_name_in_owner = true
 visible = false
 layout_mode = 1
 offset_left = 766.08
@@ -1758,7 +1760,6 @@ for_show = true
 [node name="InspectCard" type="Control" parent="."]
 unique_name_in_owner = true
 process_mode = 3
-visible = false
 top_level = true
 custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 3

@@ -272,7 +272,8 @@ func on_night_started() -> void:
 	# set modifier numbers
 	upgrade_nums = set_enemy_modifier_nums(upgraded_parties)
 	raider_nums = set_enemy_modifier_nums(raider_parties)
-		
+	print(raider_nums)
+	
 	# set rebel numbers
 	if Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] < 25:
 		rebel_parties = 1 * ((Global.resource_dict[Global.RESOURCETYPE.CITIZEN] / 6) + 1)
@@ -280,12 +281,6 @@ func on_night_started() -> void:
 			rebel_parties = enemy_parties
 	
 	rebel_nums = set_enemy_modifier_nums(rebel_parties)
-
-	
-	# set/spawn militia numbers
-	if Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] >= 75:
-		spawn_rebel_or_militia(false)
-		pass
 
 	# start game and hide menus
 	tileWorld.handle_navigable_cells()
@@ -305,6 +300,12 @@ func on_night_started() -> void:
 		
 	# resource consumption
 	handle_resource_consumption()
+	
+	# set/spawn militia numbers
+	await get_tree().create_timer(.5).timeout
+	if Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] >= 75:
+		spawn_rebel_or_militia(false)
+		pass
 
 func handle_resource_consumption() -> void:
 	Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] -= 5
