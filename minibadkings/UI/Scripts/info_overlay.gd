@@ -22,9 +22,10 @@ var projections : Dictionary = {
 @onready var citizen_label: OverlayCounter = %CitizenLabel
 @onready var house_label: OverlayCounter = %HouseLabel
 @onready var party_current: OverlayCounter = %PartyCurrent
-@onready var trait_container: HBoxContainer = $TraitContainer
-@onready var resource_container: HBoxContainer = $ResourceContainer
+@onready var trait_container: HBoxContainer = %TraitContainer
+@onready var resource_container: HBoxContainer = %ResourceContainer
 @onready var tutorial_button_sprite: Sprite2D = %TutorialButtonSprite
+@onready var overlay_texture: TextureRect = %OverlayTexture
 
 func _ready() -> void:
 	trait_container.visible = false
@@ -152,3 +153,5 @@ func handle_projections() -> void:
 	satisfaction_label.set_projection_value(minus_projections[Global.RESOURCETYPE.SATISFACTION],false)
 	food_label.set_projection_value(minus_projections[Global.RESOURCETYPE.FOOD],false)
 	
+func _on_end_turn() -> void:
+	overlay_texture.visible = !ui.world.is_combat_phase

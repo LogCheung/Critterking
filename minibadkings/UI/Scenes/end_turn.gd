@@ -67,6 +67,7 @@ func _on_endturn_pressed() -> void:
 	
 	
 	info_overlay._update_resources()
+	info_overlay._on_end_turn()
 	
 	var units = get_tree().get_nodes_in_group("ALLY")
 	for u:Ally in units:

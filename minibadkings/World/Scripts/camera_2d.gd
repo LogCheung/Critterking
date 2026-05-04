@@ -26,11 +26,12 @@ func _process(delta):
 		velocity = velocity.normalized() * base_speed
 	
 	position += velocity
-	
-		# Handle Zoom
-	if Input.is_action_just_pressed("camera_zoom_in"):
+
+func _unhandled_input(event: InputEvent) -> void:
+	# Handle Zoom
+	if event.is_action_pressed("camera_zoom_in"):
 		zoom -= Vector2(zoom_speed, zoom_speed)
-	if Input.is_action_just_pressed("camera_zoom_out"):
+	if event.is_action_pressed("camera_zoom_out"):
 		zoom += Vector2(zoom_speed, zoom_speed)
 
 	# Clamp the zoom to the defined limits

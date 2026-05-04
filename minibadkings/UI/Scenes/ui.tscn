@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=67 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Script" uid="uid://b174vncna6gct" path="res://UI/Scripts/info_overlay.gd" id="2_ffuy1"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bfqdqavdl2kr3" path="res://UI/Assets/menus/pause.png" id="5_n2q0n"]
 [ext_resource type="Texture2D" uid="uid://cbfi3jolrr55m" path="res://UI/Assets/cards/tutorialText.png" id="5_nvxdf"]
 [ext_resource type="Texture2D" uid="uid://byqvjdf31scd3" path="res://UI/Assets/overlay/placingToggle.png" id="5_s0jxd"]
+[ext_resource type="Texture2D" uid="uid://douqaic43g41s" path="res://UI/Assets/menus/nightCounterOverhead.png" id="6_didmg"]
 [ext_resource type="Texture2D" uid="uid://e0lt6th6b1bi" path="res://UI/Assets/alerts/wavetimeAlert.png" id="6_ia477"]
 [ext_resource type="PackedScene" uid="uid://d3k1620rqdidi" path="res://UI/Scenes/OverlayCounter.tscn" id="6_nh1tr"]
 [ext_resource type="FontFile" uid="uid://ggtewla8581f" path="res://Units/aseprite.otf" id="6_t0wgx"]
@@ -19,7 +20,7 @@
 [ext_resource type="Script" uid="uid://dn5w3jfm4dcjv" path="res://UI/Scripts/slider.gd" id="8_6dw6b"]
 [ext_resource type="Texture2D" uid="uid://o5sq82gqiu5b" path="res://UI/Assets/menus/crtroverhead.png" id="8_h440b"]
 [ext_resource type="Texture2D" uid="uid://o7d76rkb77wk" path="res://UI/Assets/alerts/discoveryPrompt.png" id="8_lpmf3"]
-[ext_resource type="Script" uid="uid://dtyfxfj7mly0l" path="res://UI/Scripts/tutorial.gd" id="8_nh1tr"]
+[ext_resource type="Script" path="res://UI/Scripts/tutorial.gd" id="8_nh1tr"]
 [ext_resource type="AudioStream" uid="uid://bmkptsfk4bkc" path="res://Audio/music/crtrpause.wav" id="8_oj6tj"]
 [ext_resource type="Texture2D" uid="uid://boiet8equlxt5" path="res://UI/Assets/menus/choose3.png" id="9_eq4ge"]
 [ext_resource type="AudioStream" uid="uid://bj8clo00ioln7" path="res://Audio/music/crtrover.wav" id="9_ftqev"]
@@ -46,13 +47,13 @@
 [ext_resource type="AudioStream" uid="uid://cxcri28sgiysb" path="res://Audio/music/crtrwin.wav" id="28_yp0y7"]
 [ext_resource type="Script" uid="uid://di381ls3nmwrv" path="res://UI/Scripts/inspect_card.gd" id="31_7r16j"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_yqd36"]
-font = ExtResource("6_t0wgx")
-font_size = 42
-
 [sub_resource type="LabelSettings" id="LabelSettings_nh1tr"]
 font = ExtResource("6_t0wgx")
 font_size = 28
+
+[sub_resource type="LabelSettings" id="LabelSettings_yqd36"]
+font = ExtResource("6_t0wgx")
+font_size = 42
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ia477"]
 load_path = "res://.godot/imported/discoveryshow.png-7553562f97402277057b194b770f9c25.ctex"
@@ -572,7 +573,8 @@ offset_bottom = 40.0
 mouse_filter = 2
 script = ExtResource("2_ffuy1")
 
-[node name="TextureRect" type="TextureRect" parent="InfoOverlay"]
+[node name="OverlayTexture" type="TextureRect" parent="InfoOverlay"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_right = 960.0
 offset_bottom = 96.0
@@ -580,82 +582,108 @@ scale = Vector2(2, 2)
 mouse_filter = 2
 texture = ExtResource("8_h440b")
 
-[node name="ResourceContainer" type="HBoxContainer" parent="InfoOverlay"]
+[node name="AdaptLabel" type="Label" parent="InfoOverlay/OverlayTexture"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 12.5
+offset_right = 68.0
+offset_bottom = 68.5
+scale = Vector2(0.75, 0.75)
+text = "10"
+label_settings = SubResource("LabelSettings_nh1tr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResourceContainer" type="HBoxContainer" parent="InfoOverlay/OverlayTexture"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 0
-offset_left = 158.0
-offset_top = 3.0
-offset_right = 750.0
-offset_bottom = 123.0
+offset_left = 79.0
+offset_top = 1.5
+offset_right = 671.0
+offset_bottom = 121.5
+scale = Vector2(0.5, 0.5)
 mouse_filter = 2
 theme_override_constants/separation = 68
 
-[node name="PartyCurrent" parent="InfoOverlay/ResourceContainer" instance=ExtResource("6_nh1tr")]
+[node name="PartyCurrent" parent="InfoOverlay/OverlayTexture/ResourceContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 army = true
 
-[node name="CitizenLabel" parent="InfoOverlay/ResourceContainer" instance=ExtResource("6_nh1tr")]
+[node name="CitizenLabel" parent="InfoOverlay/OverlayTexture/ResourceContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 resourceType = 4
 
-[node name="MoneyLabel" parent="InfoOverlay/ResourceContainer" instance=ExtResource("6_nh1tr")]
+[node name="MoneyLabel" parent="InfoOverlay/OverlayTexture/ResourceContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 resourceType = 2
 
-[node name="SatisfactionLabel" parent="InfoOverlay/ResourceContainer" instance=ExtResource("6_nh1tr")]
+[node name="SatisfactionLabel" parent="InfoOverlay/OverlayTexture/ResourceContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 resourceType = 1
 
-[node name="FoodLabel" parent="InfoOverlay/ResourceContainer" instance=ExtResource("6_nh1tr")]
+[node name="FoodLabel" parent="InfoOverlay/OverlayTexture/ResourceContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 resourceType = 3
 
-[node name="TraitContainer" type="HBoxContainer" parent="InfoOverlay"]
+[node name="TraitContainer" type="HBoxContainer" parent="InfoOverlay/OverlayTexture"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 0
-offset_left = 1170.0
-offset_top = 4.0
-offset_right = 1762.0
-offset_bottom = 68.0
+offset_left = 585.0
+offset_top = 2.0
+offset_right = 1177.0
+offset_bottom = 122.0
+scale = Vector2(0.5, 0.5)
 mouse_filter = 2
 theme_override_constants/separation = 68
 
-[node name="ProductivityTrait" parent="InfoOverlay/TraitContainer" instance=ExtResource("6_nh1tr")]
+[node name="ProductivityTrait" parent="InfoOverlay/OverlayTexture/TraitContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 traitType = 4
 
-[node name="CultureTrait" parent="InfoOverlay/TraitContainer" instance=ExtResource("6_nh1tr")]
+[node name="CultureTrait" parent="InfoOverlay/OverlayTexture/TraitContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 traitType = 1
 
-[node name="CommerceTrait" parent="InfoOverlay/TraitContainer" instance=ExtResource("6_nh1tr")]
+[node name="CommerceTrait" parent="InfoOverlay/OverlayTexture/TraitContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 traitType = 2
 
-[node name="FameTrait" parent="InfoOverlay/TraitContainer" instance=ExtResource("6_nh1tr")]
+[node name="FameTrait" parent="InfoOverlay/OverlayTexture/TraitContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 traitType = 3
 
-[node name="HouseLabel" parent="InfoOverlay/TraitContainer" instance=ExtResource("6_nh1tr")]
+[node name="HouseLabel" parent="InfoOverlay/OverlayTexture/TraitContainer" instance=ExtResource("6_nh1tr")]
 unique_name_in_owner = true
 layout_mode = 2
 resourceType = 6
 
+[node name="pause" type="Button" parent="InfoOverlay/OverlayTexture"]
+layout_mode = 0
+offset_left = 915.5
+offset_top = 4.0
+offset_right = 993.5
+offset_bottom = 87.0
+scale = Vector2(0.5, 0.5)
+focus_mode = 0
+flat = true
+
 [node name="DayNight" type="Label" parent="InfoOverlay"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 924.0
+offset_left = 934.0
 offset_top = 1.0
-offset_right = 1021.33325
+offset_right = 1031.3333
 offset_bottom = 77.66667
 scale = Vector2(1.5, 1.5)
 text = "0"
@@ -663,17 +691,14 @@ label_settings = SubResource("LabelSettings_yqd36")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AdaptLabel" type="Label" parent="InfoOverlay"]
-unique_name_in_owner = true
+[node name="TextureRect" type="TextureRect" parent="InfoOverlay/DayNight"]
+z_index = -1
 layout_mode = 0
-offset_top = 25.0
-offset_right = 68.0
-offset_bottom = 81.0
-scale = Vector2(1.5, 1.5)
-text = "10"
-label_settings = SubResource("LabelSettings_nh1tr")
-horizontal_alignment = 1
-vertical_alignment = 1
+offset_left = -67.99998
+offset_right = 60.000023
+offset_bottom = 65.0
+scale = Vector2(1.333, 1.333)
+texture = ExtResource("6_didmg")
 
 [node name="Traits" type="VBoxContainer" parent="InfoOverlay"]
 visible = false
@@ -700,15 +725,6 @@ visible = false
 scale = Vector2(3, 3)
 texture = ExtResource("8_h440b")
 offset = Vector2(320, 48)
-
-[node name="pause" type="Button" parent="InfoOverlay"]
-layout_mode = 0
-offset_left = 1831.0
-offset_top = 8.0
-offset_right = 1909.0
-offset_bottom = 91.0
-focus_mode = 0
-flat = true
 
 [node name="Tutorial" type="Control" parent="."]
 unique_name_in_owner = true
@@ -780,6 +796,7 @@ stretch_mode = 4
 
 [node name="Cards" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -954,7 +971,6 @@ alignment = 1
 
 [node name="Hand" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_top = 500.0
@@ -968,7 +984,7 @@ clip_children = 2
 layout_mode = 0
 offset_left = 1.0000027
 offset_top = -196.0
-offset_right = 1191.0
+offset_right = 1100.2308
 offset_bottom = 747.8462
 scale = Vector2(1.3, 1.3)
 mouse_filter = 0
@@ -984,11 +1000,11 @@ mouse_filter = 1
 
 [node name="HandContainer" type="HBoxContainer" parent="Hand/ScrollContainer/ScrollControl"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(1140, 300)
+custom_minimum_size = Vector2(1060, 300)
 layout_mode = 0
 offset_left = 42.30769
 offset_top = 404.6154
-offset_right = 1182.3077
+offset_right = 1102.3077
 offset_bottom = 704.61536
 mouse_filter = 2
 theme_override_constants/separation = 10
@@ -1012,34 +1028,48 @@ offset_bottom = 1080.0
 mouse_filter = 1
 script = ExtResource("14_didmg")
 
-[node name="AssignToggle" type="Control" parent="EndTurn"]
-z_as_relative = false
-custom_minimum_size = Vector2(96, 96)
-anchors_preset = 0
-offset_left = -108.0
-offset_right = -12.0
-offset_bottom = 96.0
-
-[node name="AssignToggleSprite" type="Sprite2D" parent="EndTurn/AssignToggle"]
+[node name="endDayContinueButton" type="Sprite2D" parent="EndTurn"]
 unique_name_in_owner = true
-modulate = Color(1.353256, 1.353256, 1.353256, 1)
 z_index = 1
-z_as_relative = false
+position = Vector2(96, 0)
 scale = Vector2(3, 3)
-texture = ExtResource("5_s0jxd")
-offset = Vector2(16, 16)
-vframes = 2
+texture = ExtResource("15_eq4ge")
+hframes = 2
 frame = 1
 
-[node name="TutorialButton" type="Control" parent="EndTurn"]
+[node name="endturn" type="Button" parent="EndTurn/endDayContinueButton"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -83.666626
+offset_top = -79.0
+offset_right = -42.666626
+offset_bottom = -49.00003
+grow_horizontal = 0
+grow_vertical = 0
+focus_mode = 0
+flat = true
+
+[node name="endDayContinue" type="Sprite2D" parent="EndTurn"]
+unique_name_in_owner = true
+scale = Vector2(3, 3)
+texture = ExtResource("15_j2ea1")
+offset = Vector2(-16, 0)
+hframes = 2
+
+[node name="TutorialButton" type="Control" parent="EndTurn/endDayContinue"]
+visible = false
 z_as_relative = false
 custom_minimum_size = Vector2(96, 96)
+layout_mode = 3
 anchors_preset = 0
-offset_left = -216.0
-offset_right = -120.0
+offset_left = -72.0
+offset_right = 24.0
 offset_bottom = 96.0
 
-[node name="TutorialButtonSprite" type="Sprite2D" parent="EndTurn/TutorialButton"]
+[node name="TutorialButtonSprite" type="Sprite2D" parent="EndTurn/endDayContinue/TutorialButton"]
 unique_name_in_owner = true
 modulate = Color(1.353256, 1.353256, 1.353256, 1)
 z_index = 1
@@ -1050,36 +1080,26 @@ offset = Vector2(16, 16)
 hframes = 2
 frame = 1
 
-[node name="endDayContinueButton" type="Sprite2D" parent="EndTurn"]
+[node name="AssignToggle" type="Control" parent="EndTurn/endDayContinue"]
+z_as_relative = false
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 3
+anchors_preset = 0
+offset_left = -36.0
+offset_right = 60.0
+offset_bottom = 96.0
+scale = Vector2(0.333, 0.333)
+
+[node name="AssignToggleSprite" type="Sprite2D" parent="EndTurn/endDayContinue/AssignToggle"]
 unique_name_in_owner = true
+modulate = Color(1.353256, 1.353256, 1.353256, 1)
 z_index = 1
-position = Vector2(96, 0)
+z_as_relative = false
 scale = Vector2(3, 3)
-texture = ExtResource("15_eq4ge")
-hframes = 2
+texture = ExtResource("5_s0jxd")
+offset = Vector2(16, 16)
+vframes = 2
 frame = 1
-
-[node name="endDayContinue" type="Sprite2D" parent="EndTurn"]
-unique_name_in_owner = true
-scale = Vector2(3, 3)
-texture = ExtResource("15_j2ea1")
-offset = Vector2(-16, 0)
-hframes = 2
-
-[node name="endturn" type="Button" parent="EndTurn/endDayContinue"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -147.66663
-offset_top = -78.99999
-offset_right = -106.666626
-offset_bottom = -49.000023
-grow_horizontal = 0
-grow_vertical = 0
-focus_mode = 0
-flat = true
 
 [node name="noHouse" type="TextureRect" parent="EndTurn"]
 unique_name_in_owner = true
@@ -1760,6 +1780,7 @@ for_show = true
 [node name="InspectCard" type="Control" parent="."]
 unique_name_in_owner = true
 process_mode = 3
+visible = false
 top_level = true
 custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 3
@@ -1842,14 +1863,14 @@ unique_name_in_owner = true
 stream = ExtResource("15_8g5lr")
 bus = &"SFX"
 
-[connection signal="pressed" from="InfoOverlay/pause" to="." method="handle_pause"]
+[connection signal="pressed" from="InfoOverlay/OverlayTexture/pause" to="." method="handle_pause"]
 [connection signal="pressed" from="Cards/CardShow/Show" to="." method="_on_show_pressed"]
-[connection signal="gui_input" from="EndTurn/AssignToggle" to="EndTurn" method="_on_assign_toggle_gui_input"]
-[connection signal="mouse_entered" from="EndTurn/AssignToggle" to="EndTurn" method="_on_button_mouse_entered" binds= [NodePath("/root/World/UI/EndTurn/AssignToggle/AssignToggleSprite")]]
-[connection signal="mouse_exited" from="EndTurn/AssignToggle" to="EndTurn" method="_on_button_mouse_exited"]
-[connection signal="mouse_entered" from="EndTurn/endDayContinue/endturn" to="EndTurn" method="_on_button_mouse_entered" binds= [NodePath("/root/World/UI/EndTurn/endDayContinueButton")]]
-[connection signal="mouse_exited" from="EndTurn/endDayContinue/endturn" to="EndTurn" method="_on_button_mouse_exited"]
-[connection signal="pressed" from="EndTurn/endDayContinue/endturn" to="EndTurn" method="_on_endturn_pressed"]
+[connection signal="mouse_entered" from="EndTurn/endDayContinueButton/endturn" to="EndTurn" method="_on_button_mouse_entered" binds= [NodePath("/root/World/UI/EndTurn/endDayContinueButton")]]
+[connection signal="mouse_exited" from="EndTurn/endDayContinueButton/endturn" to="EndTurn" method="_on_button_mouse_exited"]
+[connection signal="pressed" from="EndTurn/endDayContinueButton/endturn" to="EndTurn" method="_on_endturn_pressed"]
+[connection signal="gui_input" from="EndTurn/endDayContinue/AssignToggle" to="EndTurn" method="_on_assign_toggle_gui_input"]
+[connection signal="mouse_entered" from="EndTurn/endDayContinue/AssignToggle" to="EndTurn" method="_on_button_mouse_entered" binds= [NodePath("/root/World/UI/EndTurn/endDayContinue/AssignToggle/AssignToggleSprite")]]
+[connection signal="mouse_exited" from="EndTurn/endDayContinue/AssignToggle" to="EndTurn" method="_on_button_mouse_exited"]
 [connection signal="mouse_entered" from="mainmenu" to="." method="_on_mainmenu_mouse_entered"]
 [connection signal="pressed" from="mainmenu/mainsprite/PlayMenu" to="." method="_on_play_menu_pressed"]
 [connection signal="pressed" from="mainmenu/mainsprite/Help" to="." method="_on_help_pressed"]
@@ -1888,4 +1909,4 @@ bus = &"SFX"
 [connection signal="pressed" from="gameover/unlockC/unlockCButton" to="." method="_on_unlock_c_button_pressed"]
 [connection signal="gui_input" from="InspectCard" to="InspectCard" method="_on_gui_input"]
 
-[editable path="InfoOverlay/ResourceContainer/FoodLabel"]
+[editable path="InfoOverlay/OverlayTexture/ResourceContainer/FoodLabel"]

@@ -108,7 +108,7 @@ func new_game() -> void:
 		add_house_card()
 	for i in range(0):
 		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.SCHOOL
+		hCard.type = Card.CARDTYPE.TAVERN
 		ui.hand_container.add_child(hCard)
 		hCard.set_owner(get_tree().get_current_scene())
 	
@@ -268,6 +268,7 @@ func on_night_started() -> void:
 			enemy_parties += 3
 			upgraded_parties += 1
 	
+	raider_parties = int(enemy_parties * .25)
 	
 	# set modifier numbers
 	upgrade_nums = set_enemy_modifier_nums(upgraded_parties)
@@ -296,8 +297,6 @@ func on_night_started() -> void:
 		c.hide()
 		
 	# handle 
-		
-		
 	# resource consumption
 	handle_resource_consumption()
 	
@@ -376,6 +375,7 @@ func on_night_ended() -> void:
 	# reward
 	Global.resource_dict[Global.RESOURCETYPE.MONEY] += 10
 	ui.info_overlay._update_resources()
+	ui.info_overlay.overlay_texture.show()
 
 func clear_entities() -> void:
 	# clear dead enemies
@@ -521,12 +521,6 @@ func world_start() -> void:
 	if is_combat_phase: ui.crtr_night.play()
 
 func check_nights() -> void:
-	if Global.nights >= 2: # raider behavior enemies
-		var raiderPercentage = .25
-		raider_parties = int(enemy_parties * raiderPercentage)
-		
-		# set raider nums
-	
 	if Global.nights % 2 == 0: # wave increment
 		enemy_parties += 1
 	if ui.currentAscn < 5: 

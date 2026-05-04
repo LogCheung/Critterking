@@ -166,8 +166,10 @@ func show_hand() -> void:
 	tutorial.play_day_basics_tutorial()
 
 func display_shop() -> void:
+	end_day_continue.hide()
 	end_turn.show()
 	shop.show()
+	decrees.hide()
 	info_overlay.show()
 	info_overlay.show_containers()
 	for slot : CardPurchaseSlot in get_tree().get_nodes_in_group("CARDPURCHASE"):
@@ -206,6 +208,8 @@ func refresh_positions() -> void:
 		c.set_up()
 
 func _on_shop_end_pressed() -> void:
+	end_day_continue.show()
+	decrees.show()
 	rollArray.pop_front()
 	save_game_delayed()
 	shop.hide()
@@ -460,6 +464,9 @@ func _on_dispatch_end_pressed() -> void:
 			newCard.level = c.level
 			Global.cardsDispatched.append(newCard)
 			c.queue_free()
+			
+			refresh_positions()
+			break
 
 func _on_back_pressed() -> void:
 	%playmenu.hide()
