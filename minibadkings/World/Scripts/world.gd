@@ -269,8 +269,9 @@ func on_night_started() -> void:
 			upgraded_parties += 1
 	
 	
-	# set upgrade number
+	# set modifier numbers
 	upgrade_nums = set_enemy_modifier_nums(upgraded_parties)
+	raider_nums = set_enemy_modifier_nums(raider_parties)
 		
 	# set rebel numbers
 	if Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] < 25:
