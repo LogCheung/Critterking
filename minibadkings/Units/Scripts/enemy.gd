@@ -43,7 +43,6 @@ var navPath : Array
 var target_pos
 
 func _ready() -> void:
-	behaviorType = BEHAVIOR.ASSASSIN
 	match_type()
 	super._ready()
 	
