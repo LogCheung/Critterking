@@ -39,7 +39,7 @@ func _on_endturn_pressed() -> void:
 	if info_overlay.assignMode:
 		var event : InputEventAction = InputEventAction.new()
 		event.action = "select"
-		info_overlay._on_assign_toggle_gui_input(event)
+		_on_assign_toggle_gui_input(event)
 	# hide dispatch
 	if ui.dispatch.visible and end_day_continue_button.frame == 1: 
 		ui._on_dispatch_end_pressed()
@@ -73,6 +73,7 @@ func _on_endturn_pressed() -> void:
 		u.healthchange.emit()
 		u.speedchange.emit()
 	%noHouse.hide()
+	"res://Units/Assets/AllyAcidic/"
 	
 	ui.tutorial.play_command_heal_tutorial()
 
