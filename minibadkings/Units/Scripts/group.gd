@@ -56,6 +56,10 @@ func create_formation(unit_type : PackedScene) -> void:
 			unit.group = self
 			unit.type = type
 			
+			# enemy behavior
+			if self is EnemyGroup:
+				unit.behaviorType = self.behaviorType
+			
 			last_pos = unit.position
 			unitsNode.add_child(unit)
 			unitsArray.append(unit)

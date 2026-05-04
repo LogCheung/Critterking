@@ -7,6 +7,9 @@ signal at_border
 const ENEMY : PackedScene = preload("res://Units/Scenes/enemy.tscn")
 const RANGEDCLASS = [Unit.TYPE.RANGED,Unit.TYPE.BOMBER,Unit.TYPE.ACIDIC,Unit.TYPE.FUNGI]
 
+static var groupsAtBorder : int = 0
+@export var behaviorType : Enemy.BEHAVIOR
+
 var approaching : bool = true
 var isActive : bool = false
 
@@ -21,6 +24,7 @@ func _ready() -> void:
 	tile = tileWorld.ground.local_to_map(global_position)
 	create_formation(ENEMY)
 	at_border.connect(activate_units)
+	
 
 func _process(delta: float) -> void:
 	if !approaching : return

@@ -12,7 +12,10 @@ signal mouse_clicked
 @export var is_combat_phase : bool = false
 @export var enemy_parties : int = 3
 @export var upgraded_parties : int = 0
-@export var rebel_parties : int = 1
+@export var rebel_parties : int = 0
+@export var raider_parties : int = 0
+@export var assassin_parties : int = 0
+@export var group_parties : int = 0
 
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var enemy_perimeters: Node = %EnemyPerimeters
@@ -22,6 +25,7 @@ signal mouse_clicked
 @onready var camera: Camera2D = %Camera2D
 @onready var spawnTimer : Timer = %SpawnTimer
 
+
 var outerFollow : PathFollow2D
 var innerFollow : PathFollow2D
 
@@ -29,6 +33,7 @@ var spawned_parties : int = 0
 var upgrades_given : int = 0
 var upgrade_nums : Array = []
 var rebel_nums : Array = []
+var raider_nums : Array = []
 
 var dispatchDay : bool = false
 
@@ -204,6 +209,8 @@ func spawn_enemy() -> void:
 	enemGroup.size = randi_range(3,6)
 	if upgrade_nums.has(spawned_parties):
 		enemGroup.level = 2
+	if raider_nums.has(spawned_parties):
+		enemGroup
 	
 	var enemyGroupNode = get_tree().get_first_node_in_group("ENEMYGRPNODE")
 	enemyGroupNode.add_child(enemGroup)
@@ -239,6 +246,14 @@ func spawn_rebel_or_militia(rebel : bool) -> void:
 	else:
 		rebelHouse.anim.play("militia")
 
+func set_enemy_modifier_nums(modifierCount : int) -> Array:
+	var arr : Array = []
+	for i in range(modifierCount):
+		var rand = randi_range(0,enemy_parties - 1)
+		while arr.has(rand):
+			rand = randi_range(0,enemy_parties - 1)
+		arr.append(rand)
+	return arr
 
 func on_night_started() -> void:
 	%Failcheck.start()
@@ -255,12 +270,7 @@ func on_night_started() -> void:
 	
 	
 	# set upgrade number
-	upgrade_nums.clear()
-	for i in range(upgraded_parties):
-		var rand = randi_range(0,enemy_parties - 1)
-		while upgrade_nums.has(rand):
-			rand = randi_range(0,enemy_parties - 1)
-		upgrade_nums.append(rand)
+	upgrade_nums = set_enemy_modifier_nums(upgraded_parties)
 		
 	# set rebel numbers
 	if Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] < 25:
@@ -268,12 +278,8 @@ func on_night_started() -> void:
 		if Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] <= 0:
 			rebel_parties = enemy_parties
 	
-	rebel_nums.clear()
-	for i in range(rebel_parties):
-		var rand = randi_range(0,enemy_parties - 1)
-		while rebel_nums.has(rand):
-			rand = randi_range(0,enemy_parties - 1)
-		rebel_nums.append(rand)
+	rebel_nums = set_enemy_modifier_nums(rebel_parties)
+
 	
 	# set/spawn militia numbers
 	if Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] >= 75:
@@ -513,25 +519,32 @@ func world_start() -> void:
 	if is_combat_phase: ui.crtr_night.play()
 
 func check_nights() -> void:
-	if Global.nights % 2 == 0:
+	if Global.nights >= 2: # raider behavior enemies
+		var raiderPercentage = .25
+		raider_parties = int(enemy_parties * raiderPercentage)
+		
+		# set raider nums
+	
+	if Global.nights % 2 == 0: # wave increment
 		enemy_parties += 1
 	if ui.currentAscn < 5: 
-		if Global.nights % 3 == 0:
+		if Global.nights % 3 == 0: 
 			dispatchDay = true
 	
-	if Global.nights % 4 == 0:
+	if Global.nights % 4 == 0: # upgrade and dispatch
 		upgraded_parties += 1
 		if ui.currentAscn >= 5: dispatchDay = true 
 	
-	if Global.nights % 6 == 0:
+	if Global.nights % 6 == 0: # expansion swarm
 		night_is_expansion = true
 		add_house_card()
 		ui.rollArray.append(Card.ROLLTYPE.BLESSING)
 		expand()
 		
-	if Global.nights % 10 == 0:
+	if Global.nights % 10 == 0: # spawn timer scaling
 		%SpawnTimer.wait_time -= 1
-		
+	
+	# ascension / challenge properties
 	if Global.nights == 25 and ui.currentChal == UI.CHALLENGE.JUICED:
 		ui.victory()
 	if Global.nights == 19 && ui.currentChal == UI.CHALLENGE.MINIMALIST:

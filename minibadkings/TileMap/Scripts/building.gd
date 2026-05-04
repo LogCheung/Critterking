@@ -205,7 +205,7 @@ func match_type() -> void:
 			#sprite_2d.offset = Vector2(0,-2)
 		#TYPE.CLIFF:
 			#sprite_2d.texture = CLIFF
-		
+	duplicate_sprite()
 			
 	
 func duplicate_sprite() -> void:
@@ -215,6 +215,8 @@ func duplicate_sprite() -> void:
 	var newSprite = sprite_2d.duplicate()
 	newSprite.material = null
 	newSprite.visible = false
+	newSprite.light_mask = 10
+	newSprite.frame = 7
 	add_child(newSprite)
 	highlightSprite = newSprite
 	pass

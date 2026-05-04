@@ -168,7 +168,7 @@ pointing/emulate_touch_from_mouse=true
 
 [navigation]
 
-2d/merge_rasterizer_cell_scale=0.25
+2d/merge_rasterizer_cell_scale=0.125
 
 [rendering]
 

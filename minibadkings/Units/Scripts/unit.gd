@@ -291,6 +291,7 @@ func duplicate_sprite() -> void:
 	var newSprite = sprite_2d.duplicate()
 	newSprite.material = null
 	newSprite.visible = false
+	newSprite.light_mask = 10
 	add_child(newSprite)
 	highlightSprite = newSprite
 func start_death(destroy : bool = false) -> void:

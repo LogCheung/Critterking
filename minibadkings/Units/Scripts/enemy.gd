@@ -25,6 +25,12 @@ const UPPARALYTICNORMALSE = preload("res://Units/Assets/EnemyParalytic/EnemyUpgr
 const UPRESILIENTNORMALSE = preload("res://Units/Assets/EnemyResilient/EnemyUpgradedResilient.png")
 const UPSTINGERNORMALSE = preload("res://Units/Assets/EnemyStinger/EnemyUpgradedStinger.png")
 
+enum BEHAVIOR {
+	NONE, RAIDER, ASSASSIN, GROUP
+}
+
+@export var behaviorType : BEHAVIOR
+
 @onready var ui: UI = get_tree().get_first_node_in_group("UI")
 
 var target_in_range : bool
@@ -37,6 +43,7 @@ var navPath : Array
 var target_pos
 
 func _ready() -> void:
+	behaviorType = BEHAVIOR.ASSASSIN
 	match_type()
 	super._ready()
 	
@@ -108,8 +115,8 @@ func handle_action(delta) -> void:
 				
 				anim.play("attack")
 				dashing = type == TYPE.FLYING
-				if ranged: %Shoot.play()
-				else: %Attack.play()
+				if ranged: %Shoot.play() # audio
+				else: %Attack.play() # audio
 				
 				await anim.animation_finished
 				attack_cd.start()
@@ -118,12 +125,17 @@ func handle_action(delta) -> void:
 			elif !anim.is_playing():
 				anim.play("walk")
 		ACTION.RAID:
+			if attacking : return
 			if distToTarget <= 22:
+				if !attack_cd.time_left <= 0 : return
+				
 				anim.play("attack")
-				if ranged:
-					%Shoot.play()
-				else:
-					%Attack.play()
+				if ranged: %Shoot.play() # audio
+				else: %Attack.play() # audio
+				
+				await anim.animation_finished
+				attack_cd.start()
+				attacking = true
 				return
 			else:
 				anim.play("walk")
@@ -304,7 +316,12 @@ func find_building() -> void:
 	var buildings = get_tree().get_first_node_in_group("BUILDINGSNODE").get_children()
 	buildings = buildings.filter(func(b):return b.type != Building.TYPE.TRAP)
 	buildings = buildings.filter(func(b):return b.type != Building.TYPE.RUINS)
+	
+	if behaviorType == BEHAVIOR.ASSASSIN:
+		buildings = buildings.filter(func(b):return b.type == Building.TYPE.HOUSE)
 	if buildings.is_empty() : return
+	
+	
 	find_closest(buildings)
 	if target: nav.target_position = target.global_position
 

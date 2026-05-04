@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=3 uid="uid://c14eoupysd2xd"]
+[gd_scene load_steps=93 format=3 uid="uid://c14eoupysd2xd"]
 
 [ext_resource type="Texture2D" uid="uid://bn4niwqkt8x3n" path="res://Units/Assets/Status/defense.png" id="2_06wm5"]
 [ext_resource type="Script" uid="uid://bvqtdufd1qjrv" path="res://Units/Scripts/enemy.gd" id="2_mh310"]
@@ -19,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://b7scm4fug5tje" path="res://Audio/sfx/Hurt.tres" id="11_8inca"]
 [ext_resource type="AudioStream" uid="uid://bmrvq8a3r1mcb" path="res://Audio/sfx/Shoot.tres" id="12_7xmed"]
 [ext_resource type="AudioStream" uid="uid://w5s7eos7mc1q" path="res://Audio/sfx/Death.tres" id="13_ohg4d"]
+[ext_resource type="Script" uid="uid://cfjv52tqg44wf" path="res://Units/Scripts/considerBehavior.gd" id="15_sm18k"]
 [ext_resource type="AudioStream" uid="uid://byew5tl7rjt0" path="res://Audio/sfx/Dodge.tres" id="17_00u7o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hqdjd"]
@@ -412,6 +413,10 @@ point_count = 2
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
+[sub_resource type="Curve" id="Curve_qtoy7"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="Curve" id="Curve_ubmlb"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.797753), 0.0, 0.0, 0, 0]
 point_count = 2
@@ -675,14 +680,36 @@ metadata/_custom_type_script = "uid://dojkyt7skh8fh"
 
 [node name="fight" type="Node" parent="UtilityAiAgent"]
 script = ExtResource("7_7xmed")
+_action_id = "fight"
 metadata/_custom_type_script = "uid://bpvkdlp8jw4sj"
 
-[node name="target_in_range" type="Node" parent="UtilityAiAgent/fight" node_paths=PackedStringArray("node")]
+[node name="UtilityAiAggregation" type="Node" parent="UtilityAiAgent/fight"]
+script = ExtResource("8_ubmlb")
+metadata/_custom_type_script = "uid://b2f8vq1st70r0"
+
+[node name="target_in_range" type="Node" parent="UtilityAiAgent/fight/UtilityAiAggregation" node_paths=PackedStringArray("node")]
 script = ExtResource("8_ohg4d")
-node = NodePath("../../..")
+node = NodePath("../../../..")
 property_name = "target_in_range"
 curve = SubResource("Curve_mh310")
 metadata/_custom_type_script = "uid://dojkyt7skh8fh"
+
+[node name="UtilityAiAggregation" type="Node" parent="UtilityAiAgent/fight/UtilityAiAggregation"]
+script = ExtResource("8_ubmlb")
+aggregation_type = 4
+metadata/_custom_type_script = "uid://b2f8vq1st70r0"
+
+[node name="is_raider" type="Node" parent="UtilityAiAgent/fight/UtilityAiAggregation/UtilityAiAggregation"]
+script = ExtResource("15_sm18k")
+behaviorToBeChecked = 1
+curve = SubResource("Curve_qtoy7")
+metadata/_custom_type_script = "uid://ds3cm31xh6g85"
+
+[node name="is_assassin" type="Node" parent="UtilityAiAgent/fight/UtilityAiAggregation/UtilityAiAggregation"]
+script = ExtResource("15_sm18k")
+behaviorToBeChecked = 2
+curve = SubResource("Curve_qtoy7")
+metadata/_custom_type_script = "uid://ds3cm31xh6g85"
 
 [node name="raid" type="Node" parent="UtilityAiAgent"]
 script = ExtResource("7_7xmed")
