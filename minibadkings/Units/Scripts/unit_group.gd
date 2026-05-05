@@ -171,6 +171,8 @@ func on_being_upgraded(incLevel : int) -> void:
 			max_size += 3
 	create_formation(UNIT)
 	wage = 2 + (level - 1)
+	
+	ui.info_overlay.handle_projections()
 
 func highlight_tiles() -> void:
 	# clear hover tiles

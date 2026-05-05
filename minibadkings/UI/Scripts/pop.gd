@@ -4,7 +4,7 @@ extends Label
 signal pop_finished
 
 var travel: Vector2 = Vector2(0, -50)
-var duration: float = 1
+static var duration: float = 1
 var speed: float = PI / 4
 
 

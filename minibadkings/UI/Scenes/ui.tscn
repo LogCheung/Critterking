@@ -694,9 +694,10 @@ vertical_alignment = 1
 [node name="TextureRect" type="TextureRect" parent="InfoOverlay/DayNight"]
 z_index = -1
 layout_mode = 0
-offset_left = -67.99998
-offset_right = 60.000023
-offset_bottom = 65.0
+offset_left = -68.0
+offset_top = -0.667
+offset_right = 60.0
+offset_bottom = 64.333
 scale = Vector2(1.333, 1.333)
 texture = ExtResource("6_didmg")
 

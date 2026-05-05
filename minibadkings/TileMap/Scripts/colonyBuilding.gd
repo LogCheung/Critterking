@@ -1,8 +1,6 @@
 extends Building
 class_name ColonyBuilding
 
-signal day_ended
-
 static var pondBuffTiles : Array 
 @export var costType : Global.RESOURCETYPE = Global.RESOURCETYPE.NONE
 @export var costAmt : int = 0 
@@ -14,9 +12,9 @@ static var pondBuffTiles : Array
 
 func _ready() -> void:
 	super._ready()
-	day_ended.connect(on_day_ended)
 
 func on_day_ended() -> void:
+	super.on_day_ended()
 	time += 1
 	
 	# check pantry

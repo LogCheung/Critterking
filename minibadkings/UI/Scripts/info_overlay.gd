@@ -154,4 +154,6 @@ func handle_projections() -> void:
 	food_label.set_projection_value(minus_projections[Global.RESOURCETYPE.FOOD],false)
 	
 func _on_end_turn() -> void:
+	# add tween anim to make it look more polished
+	await get_tree().create_timer(Pop.duration).timeout
 	overlay_texture.visible = !ui.world.is_combat_phase

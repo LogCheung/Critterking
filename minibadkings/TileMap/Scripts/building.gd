@@ -2,6 +2,7 @@ extends StaticBody2D
 class_name Building
 
 signal destroyed
+signal day_ended
 
 const HIGHLIGHT = preload("res://Units/Shaders/houseHighlight.tres")
 const HOUSEA = preload("res://TileMap/Assets/houseA.png")
@@ -22,7 +23,7 @@ const CLIFF = preload("res://TileMap/Assets/buildCliff.png")
 
 const ALWAYS_ACTIVE = [
 	TYPE.TRAP, TYPE.MONUMENT, TYPE.POND, TYPE.STORAGE, TYPE.CAMPFIRE,
-	TYPE.FORT, TYPE.RUINS
+	TYPE.FORT, TYPE.RUINS, TYPE.CARE
 ]
 
 enum TYPE {
@@ -100,6 +101,9 @@ func _ready() -> void:
 			%fire.show()
 			%fire.play("default")
 	
+	# signals
+	day_ended.connect(on_day_ended)
+	world.night_ended.connect(on_day_started)
 
 func _process(delta: float) -> void:
 	# highlight and inspect functionality
@@ -232,8 +236,13 @@ func spawn_rebels() -> void:
 	rebelGroup.set_owner(get_tree().get_current_scene())
 
 func spawn_militia() -> void:
+	var unitType = randi_range(Unit.TYPE.MELEE,Unit.TYPE.CRAZED)
+	while !Global.unlockedCards.has(unitType) or unitType == Unit.TYPE.BOMBER:
+		unitType = randi_range(Unit.TYPE.MELEE,Unit.TYPE.CRAZED)
+	
+	
 	var militiaGroup : AllyGroup = load("res://Units/Scenes/unit_group.tscn").instantiate()
-	militiaGroup.type = randi_range(Unit.TYPE.MELEE,Unit.TYPE.CRAZED)
+	militiaGroup.type = unitType
 	militiaGroup.tile = doorstepTile
 	militiaGroup.level = 1
 	militiaGroup.global_position = tileWorld.ground.map_to_local(militiaGroup.tile)
@@ -381,6 +390,14 @@ func _on_mouse_exited() -> void:
 	highlightSprite.visible = false
 	highlightSprite.modulate = Color(1,1,1)
 
+func on_day_started() -> void:
+	worker_alert_sprite.visible = !active
+	pass
+
+func on_day_ended() -> void:
+	worker_alert_sprite.visible = false
+	pass
+
 func _on_toggle_toggled(toggled_on: bool) -> void:
 	if ALWAYS_ACTIVE.has(type): 
 		set_active(true)
@@ -397,6 +414,7 @@ func _on_toggle_toggled(toggled_on: bool) -> void:
 	calculate_active_workers()
 
 func set_active(condition : bool) -> void:
+	print("ok")
 	citizen_toggle_sprite.frame = 1 if condition else 0
 	citizen_toggle_sprite.modulate.v = 1.5 if condition else 1.0
 	active = condition
@@ -421,5 +439,4 @@ func calculate_active_workers() -> void:
 			totalWorkers += 1
 	
 	Global.resource_dict[Global.RESOURCETYPE.WORKER] = totalWorkers
-	
 	

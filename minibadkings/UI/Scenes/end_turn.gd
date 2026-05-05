@@ -58,8 +58,8 @@ func _on_endturn_pressed() -> void:
 			%noHouse.show()
 			return
 	
-	# run colony buildings
-	for b : ColonyBuilding in get_tree().get_nodes_in_group("COLONY"):
+	# run building functions first
+	for b : Building in get_tree().get_nodes_in_group("BUILDING"):
 		b.day_ended.emit()
 	
 	# start night for real
