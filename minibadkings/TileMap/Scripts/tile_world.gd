@@ -391,7 +391,7 @@ func handle_decree_action(mTile : Vector2i) -> void:
 			var building = get_clicked_building()
 			if building:
 				# create new unit at building's front door
-				var group : AllyGroup= preload("res://Units/Scenes/unit_group.tscn").instantiate()
+				var group : AllyGroup= load("res://Units/Scenes/unit_group.tscn").instantiate()
 				group.type = randi_range(Unit.TYPE.MELEE,Unit.TYPE.CRAZED)
 				group.tile = building.doorstepTile
 				group.level = 1

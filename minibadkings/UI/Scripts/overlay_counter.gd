@@ -89,6 +89,17 @@ func set_value(value : int, showAnim : bool = true) -> void:
 		var pop : Pop = preload("res://UI/Scenes/pop.tscn").instantiate()
 		add_child(pop)
 		pop.global_position = global_position + Vector2(8,140)
+		
+		# special case for citizen
+		if resourceType == Global.RESOURCETYPE.CITIZEN:
+			if value == Global.resource_dict[Global.RESOURCETYPE.CITIZEN]: 
+				pop.queue_free()
+				return
+			
+			pop.show_value(value - int(Global.resource_dict[Global.RESOURCETYPE.CITIZEN]))
+			return
+			
+		
 		pop.show_value(value - int(label.text))
 	
 	label.text = str(value)

@@ -215,7 +215,7 @@ extends Node
 		"traitAmt" : 0,
 		"traitType" : Global.TRAITTYPE.PRODUCTIVITY,
 		"resourceType" : Global.RESOURCETYPE.FOOD,
-		"resourceAmt": 6,
+		"resourceAmt": 4,
 		"cooldown" : 1,
 		"costAmt" : 0,
 		"costType" : Global.RESOURCETYPE.NONE,

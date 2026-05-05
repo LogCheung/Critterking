@@ -64,6 +64,12 @@ func _ready() -> void:
 	if ui.currentAscn >= 4: health += .75 if type != TYPE.ZOMBIFIED else 0.0
 	health = max_health
 	
+	# match status
+	if behaviorType != BEHAVIOR.NONE:
+		status_sprite.play(str(BEHAVIOR.keys()[behaviorType]).to_lower())
+	else:
+		status_sprite.hide()
+	
 
 func _process(delta: float) -> void:
 	super._process(delta)

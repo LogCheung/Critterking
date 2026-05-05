@@ -210,7 +210,7 @@ func spawn_enemy() -> void:
 	if upgrade_nums.has(spawned_parties):
 		enemGroup.level = 2
 	if raider_nums.has(spawned_parties):
-		enemGroup
+		enemGroup.behaviorType = Enemy.BEHAVIOR.RAIDER
 	
 	var enemyGroupNode = get_tree().get_first_node_in_group("ENEMYGRPNODE")
 	enemyGroupNode.add_child(enemGroup)

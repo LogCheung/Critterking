@@ -13,6 +13,10 @@ static var pondBuffTiles : Array
 func _ready() -> void:
 	super._ready()
 
+func on_day_started() -> void:
+	super.on_day_started()
+	if cooldown == 1: time = 0
+
 func on_day_ended() -> void:
 	super.on_day_ended()
 	time += 1
@@ -25,6 +29,7 @@ func on_day_ended() -> void:
 		time = 0
 	if time >= cooldown and active:
 		trigger_building()
+	
 	
 func trigger_building() -> void:
 	time = 0

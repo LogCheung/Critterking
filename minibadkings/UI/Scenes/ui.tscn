@@ -589,7 +589,6 @@ offset_top = 12.5
 offset_right = 68.0
 offset_bottom = 68.5
 scale = Vector2(0.75, 0.75)
-text = "10"
 label_settings = SubResource("LabelSettings_nh1tr")
 horizontal_alignment = 1
 vertical_alignment = 1

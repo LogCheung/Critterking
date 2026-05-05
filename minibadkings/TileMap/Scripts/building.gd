@@ -39,8 +39,8 @@ enum TYPE {
 static var pantryActive : bool = false
 @export var type : TYPE
 @export var occupant : AllyGroup 
-@export var health : int = 20
-@export var max_health : int = 20
+@export var health : int = 40
+@export var max_health : int = 40
 @export var temporary : bool = false
 @export var traitType : Global.TRAITTYPE = Global.TRAITTYPE.CULTURE
 @export var traitAmt : int = 0
@@ -425,6 +425,7 @@ func set_active(condition : bool) -> void:
 	if active and !is_instance_valid(citizenWorker):
 		var unitsNode : UnitsNode = get_tree().get_first_node_in_group("UNITSNODE")
 		unitsNode.spawn_citizen(self)
+		
 
 func calculate_active_workers() -> void:
 	var workedBuilds = get_tree().get_nodes_in_group("BUILDING")
@@ -439,4 +440,5 @@ func calculate_active_workers() -> void:
 			totalWorkers += 1
 	
 	Global.resource_dict[Global.RESOURCETYPE.WORKER] = totalWorkers
+	ui.info_overlay.handle_worker_limit()
 	

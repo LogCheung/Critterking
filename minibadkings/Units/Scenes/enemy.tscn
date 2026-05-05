@@ -1,6 +1,7 @@
-[gd_scene load_steps=93 format=3 uid="uid://c14eoupysd2xd"]
+[gd_scene load_steps=111 format=3 uid="uid://c14eoupysd2xd"]
 
 [ext_resource type="Texture2D" uid="uid://bn4niwqkt8x3n" path="res://Units/Assets/Status/defense.png" id="2_06wm5"]
+[ext_resource type="Texture2D" uid="uid://b8xt0m1gyc6iu" path="res://Units/Assets/Status/assassin.png" id="2_aqf0m"]
 [ext_resource type="Script" uid="uid://bvqtdufd1qjrv" path="res://Units/Scripts/enemy.gd" id="2_mh310"]
 [ext_resource type="Texture2D" uid="uid://cbhjhb3oset8l" path="res://Units/Assets/EnemyMelee/EnemyMeleeNormalSE.png" id="3_1flw5"]
 [ext_resource type="Texture2D" uid="uid://cb4h4e5bevpjt" path="res://Units/Assets/Status/attack.png" id="3_3xgcs"]
@@ -11,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://d0dhe2lv3x4u3" path="res://Units/Debug/utility_debug.tscn" id="5_wh35a"]
 [ext_resource type="Script" uid="uid://bxew2mys8y8u8" path="res://addons/utility_ai/agent/agent.gd" id="6_8inca"]
 [ext_resource type="Script" uid="uid://bpvkdlp8jw4sj" path="res://addons/utility_ai/actions/action.gd" id="7_7xmed"]
+[ext_resource type="Texture2D" uid="uid://b5ewnn7ldsbmx" path="res://Units/Assets/Status/raider.png" id="7_abhnf"]
 [ext_resource type="Texture2D" uid="uid://ciy8dhlplknc5" path="res://Units/Assets/Status/stun.png" id="7_jg3yg"]
 [ext_resource type="Script" uid="uid://dojkyt7skh8fh" path="res://addons/utility_ai/considerations/consideration_from_node.gd" id="8_ohg4d"]
 [ext_resource type="Script" uid="uid://b2f8vq1st70r0" path="res://addons/utility_ai/considerations/aggregation.gd" id="8_ubmlb"]
@@ -21,6 +23,38 @@
 [ext_resource type="AudioStream" uid="uid://w5s7eos7mc1q" path="res://Audio/sfx/Death.tres" id="13_ohg4d"]
 [ext_resource type="Script" uid="uid://cfjv52tqg44wf" path="res://Units/Scripts/considerBehavior.gd" id="15_sm18k"]
 [ext_resource type="AudioStream" uid="uid://byew5tl7rjt0" path="res://Audio/sfx/Dodge.tres" id="17_00u7o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4sf4"]
+atlas = ExtResource("2_aqf0m")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nnwo2"]
+atlas = ExtResource("2_aqf0m")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hg6o7"]
+atlas = ExtResource("2_aqf0m")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_msm84"]
+atlas = ExtResource("2_aqf0m")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tpij2"]
+atlas = ExtResource("2_aqf0m")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wuiay"]
+atlas = ExtResource("2_aqf0m")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j1fkq"]
+atlas = ExtResource("2_aqf0m")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h5rlh"]
+atlas = ExtResource("2_aqf0m")
+region = Rect2(224, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hqdjd"]
 atlas = ExtResource("2_06wm5")
@@ -150,6 +184,38 @@ region = Rect2(192, 0, 32, 32)
 atlas = ExtResource("5_3xgcs")
 region = Rect2(224, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_7kg8a"]
+atlas = ExtResource("7_abhnf")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4wta"]
+atlas = ExtResource("7_abhnf")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eq3to"]
+atlas = ExtResource("7_abhnf")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enqgr"]
+atlas = ExtResource("7_abhnf")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_841dd"]
+atlas = ExtResource("7_abhnf")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a0qnt"]
+atlas = ExtResource("7_abhnf")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7t8tx"]
+atlas = ExtResource("7_abhnf")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gpqtt"]
+atlas = ExtResource("7_abhnf")
+region = Rect2(224, 0, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ajdsu"]
 atlas = ExtResource("5_00u7o")
 region = Rect2(0, 0, 32, 32)
@@ -216,6 +282,35 @@ region = Rect2(224, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_sm18k"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4sf4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nnwo2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hg6o7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_msm84")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tpij2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wuiay")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j1fkq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h5rlh")
+}],
+"loop": true,
+"name": &"assassin",
+"speed": 3.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hqdjd")
@@ -331,6 +426,35 @@ animations = [{
 "loop": true,
 "name": &"promptSelect",
 "speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kg8a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g4wta")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eq3to")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enqgr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_841dd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a0qnt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7t8tx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gpqtt")
+}],
+"loop": true,
+"name": &"raider",
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -605,10 +729,9 @@ script = ExtResource("2_mh310")
 
 [node name="StatusSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-visible = false
 position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_sm18k")
-animation = &"inspiration"
+animation = &"raider"
 
 [node name="Flip" type="Node2D" parent="."]
 

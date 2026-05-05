@@ -58,6 +58,9 @@ func _update_resources(showAnim : bool = true) -> void:
 	food_label.set_value(Global.resource_dict[Global.RESOURCETYPE.FOOD],showAnim)
 	citizen_label.set_value(Global.resource_dict[Global.RESOURCETYPE.CITIZEN],showAnim)
 	
+	# handle worker limit for citizens
+	handle_worker_limit()
+	
 	
 func _update_traits(showAnim : bool = true) -> void:
 	# reset values to ensure no repeats
@@ -106,6 +109,13 @@ func handle_party_limit() -> void:
 		ui.no_space.hide()
 		
 	handle_projections()
+		
+func handle_worker_limit() -> void:
+	var citizenCount = Global.resource_dict[Global.RESOURCETYPE.CITIZEN]
+	var workerCount = Global.resource_dict[Global.RESOURCETYPE.WORKER]
+	
+	citizen_label.label.text = str(workerCount) +  " / " + str(citizenCount)
+	pass
 		
 func handle_projections() -> void:
 	# reset

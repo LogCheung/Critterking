@@ -609,7 +609,7 @@ func load_world() -> void:
 	# load data from save
 	currentChal = SaveLoad.SaveFileData.challenge
 	currentAscn = SaveLoad.SaveFileData.ascension
-	world.on_night_ended()
+	world.night_ended.emit()
 	world.game.process_mode = Node.PROCESS_MODE_PAUSABLE
 	world.create_enemy_perimeter(12 + Global.expansions, true)
 	world.create_enemy_perimeter(11 + Global.expansions, false)
