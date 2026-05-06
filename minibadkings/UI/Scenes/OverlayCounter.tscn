@@ -47,11 +47,11 @@ frame = 9
 [node name="overheadInfo" type="TextureRect" parent="."]
 visible = false
 layout_mode = 0
-offset_left = -127.00001
+offset_left = -158.0
 offset_top = 144.0
-offset_right = 0.9999924
+offset_right = -30.0
 offset_bottom = 192.0
-scale = Vector2(2.5, 2.5)
+scale = Vector2(3, 3)
 
 [node name="posProj" type="TextureRect" parent="."]
 visible = false

@@ -8,6 +8,7 @@ var UNIT : PackedScene = load("res://Units/Scenes/unit.tscn")
 @export var house : Building
 @export var wage : int = 2
 @export var conscripted : bool
+@export var starving : bool
 
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
 @onready var ui: UI = get_tree().get_first_node_in_group("UI")
@@ -248,3 +249,9 @@ func apply_charm() -> void:
 				pass # building buffs
 			Charm.TYPE.EDRINK:
 				unit.anim.speed_scale += .5
+
+func apply_starvation() -> void:
+	for unit : Unit in unitsArray:
+		unit.speed -= 10
+		unit.health -= 1
+	pass

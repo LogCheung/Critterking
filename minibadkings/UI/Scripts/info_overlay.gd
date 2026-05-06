@@ -144,7 +144,11 @@ func handle_projections() -> void:
 	
 	
 	# negatives / consumption or cost
-	minus_projections[Global.RESOURCETYPE.SATISFACTION] -= 5
+	var houseCount = get_tree().get_nodes_in_group("BUILDING")
+	houseCount = houseCount.filter(func(b:Building):return b.type == Building.TYPE.HOUSE)
+	houseCount = houseCount.size()
+	
+	minus_projections[Global.RESOURCETYPE.SATISFACTION] -= 2 + (3 * houseCount)
 	
 	var foodConsump = Global.resource_dict[Global.RESOURCETYPE.CITIZEN]
 	foodConsump += Global.partyCount * 2
@@ -163,6 +167,23 @@ func handle_projections() -> void:
 	satisfaction_label.set_projection_value(minus_projections[Global.RESOURCETYPE.SATISFACTION],false)
 	food_label.set_projection_value(minus_projections[Global.RESOURCETYPE.FOOD],false)
 	
+	handle_starving_parties()
+	
+func handle_starving_parties() -> void:
+	# apply starving effect
+	var starving_parties = 0
+	var foodConsump = Global.resource_dict[Global.RESOURCETYPE.CITIZEN]
+	var fedParties = Global.resource_dict[Global.RESOURCETYPE.FOOD] / 2
+	starving_parties = Global.partyCount - fedParties
+	
+	
+	if starving_parties > 0:
+		var parties = get_tree().get_nodes_in_group("ALLYGROUP")
+		for p : AllyGroup in parties:
+			p.starving = true
+		pass
+
+	pass
 func _on_end_turn() -> void:
 	# add tween anim to make it look more polished
 	await get_tree().create_timer(Pop.duration).timeout

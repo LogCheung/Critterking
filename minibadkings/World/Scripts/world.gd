@@ -10,6 +10,7 @@ signal night_ended
 signal mouse_clicked
 
 @export var is_combat_phase : bool = false
+@export var starving_parties : int = 0
 @export var enemy_parties : int = 3
 @export var upgraded_parties : int = 0
 @export var rebel_parties : int = 0
@@ -34,6 +35,7 @@ var upgrades_given : int = 0
 var upgrade_nums : Array = []
 var rebel_nums : Array = []
 var raider_nums : Array = []
+var assassin_nums : Array = []
 
 var dispatchDay : bool = false
 
@@ -211,6 +213,8 @@ func spawn_enemy() -> void:
 		enemGroup.level = 2
 	if raider_nums.has(spawned_parties):
 		enemGroup.behaviorType = Enemy.BEHAVIOR.RAIDER
+	if assassin_nums.has(spawned_parties):
+		enemGroup.behaviorType = Enemy.BEHAVIOR.ASSASSIN
 	
 	var enemyGroupNode = get_tree().get_first_node_in_group("ENEMYGRPNODE")
 	enemyGroupNode.add_child(enemGroup)
@@ -269,11 +273,13 @@ func on_night_started() -> void:
 			upgraded_parties += 1
 	
 	raider_parties = int(enemy_parties * .25)
+	assassin_parties = int(Global.nights / 12) + 3
 	
 	# set modifier numbers
 	upgrade_nums = set_enemy_modifier_nums(upgraded_parties)
 	raider_nums = set_enemy_modifier_nums(raider_parties)
-	print(raider_nums)
+	assassin_nums = set_enemy_modifier_nums(assassin_parties)
+	print(assassin_nums)
 	
 	# set rebel numbers
 	if Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] < 25:
@@ -307,11 +313,17 @@ func on_night_started() -> void:
 		pass
 
 func handle_resource_consumption() -> void:
-	Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] -= 5
-	Global.resource_dict[Global.RESOURCETYPE.FOOD] -= Global.partyCount * 2
+	var houseCount = get_tree().get_nodes_in_group("BUILDING")
+	houseCount = houseCount.filter(func(b:Building):return b.type == Building.TYPE.HOUSE)
+	houseCount = houseCount.size()
 	
 	var citizens = Global.resource_dict[Global.RESOURCETYPE.CITIZEN]
 	Global.resource_dict[Global.RESOURCETYPE.FOOD] -= citizens
+	
+	starving_parties = Global.partyCount - Global.resource_dict[Global.RESOURCETYPE.FOOD] / 2
+	Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] -= 2 + (3 * houseCount)
+	Global.resource_dict[Global.RESOURCETYPE.FOOD] -= Global.partyCount * 2
+	
 	
 	# consider food debt
 	if Global.resource_dict[Global.RESOURCETYPE.FOOD] < 0:
@@ -325,11 +337,20 @@ func handle_resource_consumption() -> void:
 	if Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] < 0:
 		Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] = 0 
 	
+	
 	# pay wages
 	for g : AllyGroup in get_tree().get_nodes_in_group("ALLYGROUP"):
 		Global.resource_dict[Global.RESOURCETYPE.MONEY] -= g.wage
 		pass
 	ui.info_overlay._update_resources()
+	
+	# apply starving effect
+	if starving_parties > 0:
+		var parties = get_tree().get_nodes_in_group("ALLYGROUP")
+		for p : AllyGroup in parties:
+			p.starving = true
+			p.queue_free()
+		pass
 
 
 func on_enemy_group_eliminated() -> void:

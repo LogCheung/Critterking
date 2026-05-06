@@ -732,6 +732,7 @@ func load_world() -> void:
 	for card : Card in hand_container.get_children():
 		card.set_up()
 	await get_tree().process_frame
+	await get_tree().process_frame
 	refresh_positions()
 		
 	%AdaptLabel.text = str(currentAscn)
