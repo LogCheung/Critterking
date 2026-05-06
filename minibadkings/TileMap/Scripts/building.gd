@@ -39,8 +39,8 @@ enum TYPE {
 static var pantryActive : bool = false
 @export var type : TYPE
 @export var occupant : AllyGroup 
-@export var health : int = 40
-@export var max_health : int = 40
+@export var health : int = 30
+@export var max_health : int = 30
 @export var temporary : bool = false
 @export var traitType : Global.TRAITTYPE = Global.TRAITTYPE.CULTURE
 @export var traitAmt : int = 0
@@ -118,8 +118,8 @@ func _process(delta: float) -> void:
 	# health functionality
 	if health <= 0:
 		on_destroyed()
-	if health <= 10 and health > 0:
-		sprite_2d.modulate.v = .3	
+	if health <= max_health / 2 and health > 0:
+		sprite_2d.modulate.v = .4
 	else:
 		sprite_2d.modulate.v = 1
 		
@@ -280,7 +280,6 @@ func on_destroyed() -> void:
 	buildings = buildings.filter(func(b):return b.type == Building.TYPE.HOUSE)
 	if buildings.is_empty():
 		ui.game_over.emit()
-		
 		# lose screen
 		
 	# kill unit inside if group is healing
@@ -289,6 +288,10 @@ func on_destroyed() -> void:
 	# remove buffed tiles
 	for t in buff_tiles:
 		tileWorld.buffed_tiles.remove_at(tileWorld.buffed_tiles.find(t))
+	
+	# tiledata update
+	tileWorld.find_blocked_entry_tiles()
+	tileWorld.find_restricted_tiles()
 	
 func remove() -> void:
 	tileWorld.ground.set_cell(tile,0,Vector2(0,0),1)
@@ -391,7 +394,7 @@ func _on_mouse_exited() -> void:
 	highlightSprite.modulate = Color(1,1,1)
 
 func on_day_started() -> void:
-	worker_alert_sprite.visible = !active
+	worker_alert_sprite.visible = !active and type != TYPE.RUINS
 	pass
 
 func on_day_ended() -> void:

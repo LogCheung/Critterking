@@ -110,7 +110,7 @@ func new_game() -> void:
 		add_house_card()
 	for i in range(0):
 		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.TAVERN
+		hCard.type = Card.CARDTYPE.GARDEN
 		ui.hand_container.add_child(hCard)
 		hCard.set_owner(get_tree().get_current_scene())
 	

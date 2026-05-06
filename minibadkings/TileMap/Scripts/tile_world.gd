@@ -347,12 +347,7 @@ func handle_decree() -> void:
 		using_decree = false
 		handle_decree_action(mouseTile)
 		
-		await get_tree().create_timer(.1).timeout
-		decree._on_mouse_exited()
-		activeDecree = Decree.TYPE.NONE
-		decree.time = decree.cooldown
-		decree.update_cooldown()
-		decree = null
+		await get_tree().create_timer(.2).timeout
 		highlight_buildings(false,Building.TYPE.NONE)
 	if using_decree and Input.is_action_just_released("cancel"):
 		activeDecree = Decree.TYPE.NONE
@@ -389,7 +384,7 @@ func handle_decree_action(mTile : Vector2i) -> void:
 		Decree.TYPE.CONSCRIPTION:
 			# highlight buildings, no hover
 			var building = get_clicked_building()
-			if building:
+			if building and building.type == Building.TYPE.HOUSE:
 				# create new unit at building's front door
 				var group : AllyGroup= load("res://Units/Scenes/unit_group.tscn").instantiate()
 				group.type = randi_range(Unit.TYPE.MELEE,Unit.TYPE.CRAZED)
@@ -409,6 +404,15 @@ func handle_decree_action(mTile : Vector2i) -> void:
 					#u.visible = false
 				
 				highlight_buildings(false,Building.TYPE.NONE)
+			else:
+				await get_tree().create_timer(.2).timeout
+				highlight_buildings(false,Building.TYPE.NONE)
+				decree._on_mouse_exited()
+				activeDecree = Decree.TYPE.NONE
+				decree.time = 0
+				decree.update_cooldown()
+				decree = null
+				return
 		#Decree.TYPE.INFLUENCE:
 			#var enemGroups = get_tree().get_first_node_in_group("ENEMYGRPNODE")
 			#enemGroups = enemGroups.get_children()
@@ -445,6 +449,14 @@ func handle_decree_action(mTile : Vector2i) -> void:
 				e.statusArray.append(Unit.STATUS.STUNNED)
 			
 	highlight_buildings(false,Building.TYPE.NONE)
+	
+	# put decree on cooldown
+	await get_tree().create_timer(.1).timeout
+	decree._on_mouse_exited()
+	activeDecree = Decree.TYPE.NONE
+	decree.time = decree.cooldown
+	decree.update_cooldown()
+	decree = null
 	
 func handle_stat_modifying_decree(mTile : Vector2i) -> void:
 	# Create affected area

@@ -184,6 +184,7 @@ func match_type() -> void:
 			pass
 		TYPE.RUINS:
 			%fire.hide()
+			sprite_2d.texture.diffuse_texture = HOUSEA
 			sprite_2d.frame = 1
 			sprite_2d.offset = Vector2(0,-16)
 			set_building_properties(type)
