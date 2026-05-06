@@ -273,7 +273,7 @@ func on_night_started() -> void:
 			upgraded_parties += 1
 	
 	raider_parties = int(enemy_parties * .25)
-	assassin_parties = int(Global.nights / 12) + 3
+	assassin_parties = int(Global.nights / 12)
 	
 	# set modifier numbers
 	upgrade_nums = set_enemy_modifier_nums(upgraded_parties)
