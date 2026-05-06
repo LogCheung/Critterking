@@ -249,7 +249,7 @@ func match_type() -> void:
 			health = 3
 			damage = 1.5
 			stun_chance = 100
-			attack_cd.wait_time = 1.5
+			attack_cd.wait_time = 2.5
 		TYPE.RESILIENT:
 			sprite_2d.texture = RESILIENTNORMALSE if !upgraded else UPRESILIENTNORMALSE
 			health = 3
