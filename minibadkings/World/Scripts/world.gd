@@ -348,8 +348,9 @@ func handle_resource_consumption() -> void:
 	if starving_parties > 0:
 		var parties = get_tree().get_nodes_in_group("ALLYGROUP")
 		for p : AllyGroup in parties:
+			#crash game
 			p.starving = true
-			p.queue_free()
+			#p.queue_free()
 		pass
 
 
