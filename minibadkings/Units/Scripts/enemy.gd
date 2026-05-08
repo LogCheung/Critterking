@@ -66,9 +66,10 @@ func _ready() -> void:
 	
 	# match status
 	if behaviorType != BEHAVIOR.NONE:
-		status_sprite.play(str(BEHAVIOR.keys()[behaviorType]).to_lower())
-	else:
-		status_sprite.hide()
+		var status = load("res://Units/Scenes/status_control.tscn").instantiate()
+		status_container.add_child(status)
+		status.play(str(BEHAVIOR.keys()[behaviorType]).to_lower())
+		status.visible = true
 	
 
 func _process(delta: float) -> void:
