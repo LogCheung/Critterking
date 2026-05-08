@@ -2,6 +2,7 @@ extends Control
 class_name InfoOverlay
 
 var projections : Dictionary = {
+	Global.RESOURCETYPE.NONE : 0,
 	Global.RESOURCETYPE.SATISFACTION : 0,
 	Global.RESOURCETYPE.MONEY : 0,
 	Global.RESOURCETYPE.FOOD : 0,
@@ -126,7 +127,7 @@ func handle_projections() -> void:
 	# positives / production
 	var builds = get_tree().get_nodes_in_group("COLONY")
 	for b : ColonyBuilding in builds:
-		if b.resourceType == Global.RESOURCETYPE.NONE: continue
+		if b.resourceType == Global.RESOURCETYPE.NONE and b.type != Building.TYPE.SCHOOL : continue
 		if b.time + 1 != b.cooldown: continue
 		if !b.active : continue
 		
@@ -138,7 +139,10 @@ func handle_projections() -> void:
 		
 		# also for minus projections
 		if b.costType != Global.RESOURCETYPE.NONE:
-			minus_projections[b.costType] -= b.costAmt
+			var cost = b.costAmt
+			if b.type == Building.TYPE.SCHOOL: cost *= b.workers
+			
+			minus_projections[b.costType] -= cost
 			
 	
 	citizen_label.set_projection_value(projections[Global.RESOURCETYPE.CITIZEN],true)

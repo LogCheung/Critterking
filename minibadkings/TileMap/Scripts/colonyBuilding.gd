@@ -225,6 +225,7 @@ func set_active(condition : bool) -> void:
 
 func _on_toggle_toggled(toggled_on: bool) -> void:
 	var availWorkers = Global.resource_dict[Global.RESOURCETYPE.CITIZEN] - Global.resource_dict[Global.RESOURCETYPE.WORKER]
+	ui.info_overlay.handle_projections()
 	if max_workers > 1:
 		if workers >= max_workers:
 			workers = 0
