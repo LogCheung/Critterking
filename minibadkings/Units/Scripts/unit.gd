@@ -39,7 +39,7 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @export var statusArray : Array
 
 @onready var sprite_2d: Sprite2D = %Sprite2D
-@onready var status_sprite: AnimatedSprite2D = %StatusSprite
+@onready var status_sprite: StatusControl = %StatusControl
 @onready var nav: NavigationAgent2D = $NavigationAgent2D
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var anim: AnimationPlayer = $AnimationPlayer
@@ -53,6 +53,7 @@ const HIGHLIGHT = preload("res://Units/Shaders/unitHighlight.tres")
 @onready var stun_fatigue: Timer = %StunFatigue
 @onready var damage_timer: Timer = %DamageTimer
 @onready var healing_timer: Timer = %HealingTimer
+@onready var status_container: HBoxContainer = %StatusContainer
 
 var next_path_pos
 
@@ -76,6 +77,7 @@ var is_stunned : bool
 
 var dead : bool
 var highlightSprite : Sprite2D
+var stunnedSprite : StatusControl
 
 func _ready() -> void:
 	nav.velocity_computed.connect(_on_navigation_agent_2d_velocity_computed)
@@ -296,7 +298,7 @@ func duplicate_sprite() -> void:
 	highlightSprite = newSprite
 func start_death(destroy : bool = false) -> void:
 	dead = true
-	status_sprite.visible = false
+	status_container.visible = false
 	sprite_2d.material = null
 	process_mode = Node.PROCESS_MODE_DISABLED
 	anim.play("death")
@@ -334,8 +336,10 @@ func take_knockback(dir : Vector2) -> void:
 func on_stun_finished() -> void:
 	statusArray.remove_at(statusArray.find(STATUS.STUNNED))
 	stun_fatigue.start()
-	status_sprite.stop()
-	status_sprite.visible = false
+	
+	if is_instance_valid(stunnedSprite):
+		stunnedSprite.stop()
+		stunnedSprite.queue_free()
 	attack_cd.paused = false
 	is_stunned = false
 

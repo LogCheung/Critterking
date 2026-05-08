@@ -135,6 +135,9 @@ func handle_projections() -> void:
 			projAmt += b.scalingMult * Global.trait_dict[b.scalingTrait] 
 		
 		projections[b.resourceType] += projAmt
+		
+		# also for minus projections
+		minus_projections[b.costType] -= b.costAmt
 			
 	
 	citizen_label.set_projection_value(projections[Global.RESOURCETYPE.CITIZEN],true)
@@ -148,10 +151,10 @@ func handle_projections() -> void:
 	houseCount = houseCount.filter(func(b:Building):return b.type == Building.TYPE.HOUSE)
 	houseCount = houseCount.size()
 	
-	minus_projections[Global.RESOURCETYPE.SATISFACTION] -= 2 + (3 * houseCount)
+	var citizens = Global.resource_dict[Global.RESOURCETYPE.CITIZEN]
+	minus_projections[Global.RESOURCETYPE.SATISFACTION] -= citizens + 3 * (houseCount - 1)
 	
-	var foodConsump = Global.resource_dict[Global.RESOURCETYPE.CITIZEN]
-	foodConsump += Global.partyCount * 2
+	var foodConsump = citizens + Global.partyCount * 2
 
 	minus_projections[Global.RESOURCETYPE.FOOD] -= foodConsump
 	
@@ -161,7 +164,7 @@ func handle_projections() -> void:
 	
 	for g : AllyGroup in get_tree().get_nodes_in_group("ALLYGROUP"):
 		minus_projections[Global.RESOURCETYPE.MONEY] -= g.wage
-	
+		
 	citizen_label.set_projection_value(minus_projections[Global.RESOURCETYPE.CITIZEN],false)
 	money_label.set_projection_value(minus_projections[Global.RESOURCETYPE.MONEY],false)
 	satisfaction_label.set_projection_value(minus_projections[Global.RESOURCETYPE.SATISFACTION],false)

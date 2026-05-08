@@ -8,7 +8,6 @@ var UNIT : PackedScene = load("res://Units/Scenes/unit.tscn")
 @export var house : Building
 @export var wage : int = 2
 @export var conscripted : bool
-@export var starving : bool
 
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
 @onready var ui: UI = get_tree().get_first_node_in_group("UI")
@@ -254,4 +253,9 @@ func apply_starvation() -> void:
 	for unit : Unit in unitsArray:
 		unit.speed -= 10
 		unit.health -= 1
+		
+		var status : StatusControl = load("res://Units/Scenes/status_control.tscn").instantiate()
+		unit.status_container.add_child(status)
+		status.play("hungry")
+		status.show() 
 	pass

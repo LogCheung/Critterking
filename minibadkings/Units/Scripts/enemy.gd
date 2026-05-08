@@ -152,11 +152,16 @@ func handle_action(delta) -> void:
 			nav.target_position = target.global_position - dir * strafe_dist
 			anim.play("walk")
 		ACTION.STUNNED:
+			if dead or is_instance_valid(stunnedSprite): return
 			if stun_cd.is_stopped() : stun_cd.start()
-			status_sprite.visible = true
-			status_sprite.play("stun")
-			attack_cd.paused = true
+			# add stun status sprite
+			var status : StatusControl = load("res://Units/Scenes/status_control.tscn").instantiate()
+			status_container.add_child(status)
+			status.play("stun")
+			status.visible = true
+			stunnedSprite = status
 			anim.stop()
+			attack_cd.paused = true
 			return
 		ACTION.DEAD:
 			return

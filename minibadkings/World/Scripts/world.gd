@@ -110,7 +110,7 @@ func new_game() -> void:
 		add_house_card()
 	for i in range(0):
 		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.GARDEN
+		hCard.type = Card.CARDTYPE.MONUMENT
 		ui.hand_container.add_child(hCard)
 		hCard.set_owner(get_tree().get_current_scene())
 	
@@ -321,7 +321,7 @@ func handle_resource_consumption() -> void:
 	Global.resource_dict[Global.RESOURCETYPE.FOOD] -= citizens
 	
 	starving_parties = Global.partyCount - Global.resource_dict[Global.RESOURCETYPE.FOOD] / 2
-	Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] -= 2 + (3 * houseCount)
+	Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] -= citizens + 3 * (houseCount - 1)
 	Global.resource_dict[Global.RESOURCETYPE.FOOD] -= Global.partyCount * 2
 	
 	
@@ -346,11 +346,14 @@ func handle_resource_consumption() -> void:
 	
 	# apply starving effect
 	if starving_parties > 0:
+		var appliedCount : int = 0
 		var parties = get_tree().get_nodes_in_group("ALLYGROUP")
 		for p : AllyGroup in parties:
+			if appliedCount >= starving_parties : break
+			appliedCount += 1
 			#crash game
 			p.starving = true
-			#p.queue_free()
+			p.apply_starvation()
 		pass
 
 
@@ -525,6 +528,9 @@ func _input(event: InputEvent) -> void:
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
+		var d : Decree = load('res://UI/Scenes/decree.tscn').instantiate()
+		d.type = Decree.TYPE.INSPIRATION
+		ui.decrees.get_child(0).add_child(d)
 		#ui.info_overlay._update_resources()
 		#ui.info_overlay._update_traits()
 		#expand()

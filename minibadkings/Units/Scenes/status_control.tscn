@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgbyfmj238wyt"]
+
+[ext_resource type="Script" uid="uid://vbj70gub0ddi" path="res://Units/Scripts/status_control.gd" id="1_hfyii"]
+[ext_resource type="PackedScene" uid="uid://cut5q8j0o6cup" path="res://Units/Scenes/status_sprite.tscn" id="1_ve725"]
+
+[node name="StatusControl" type="Control"]
+visible = false
+custom_minimum_size = Vector2(7, 0)
+layout_mode = 3
+anchors_preset = 0
+offset_top = -9.0
+offset_right = 7.0
+offset_bottom = -3.0
+mouse_filter = 2
+script = ExtResource("1_hfyii")
+
+[node name="StatusSprite" parent="." instance=ExtResource("1_ve725")]
+unique_name_in_owner = true
+visible = true
+position = Vector2(16, 8)
+offset = Vector2(-12, 0)

@@ -12,6 +12,7 @@ signal unit_died
 @export var upgraded : bool = false
 @export var level : int = 1
 @export var charm : Charm
+@export var starving : bool
 
 @onready var tileWorld : TileWorld = get_tree().get_first_node_in_group("TILEWORLD")
 @onready var unitsNode : Node2D = get_tree().get_first_node_in_group("UNITSNODE")

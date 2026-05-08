@@ -143,10 +143,14 @@ func handle_action(delta) -> void:
 				hit_box.set_collision_layer_value(2,false)
 				return
 		ACTION.STUNNED:
-			if dead:return
+			if dead or is_instance_valid(stunnedSprite):return
 			if stun_cd.is_stopped() : stun_cd.start()
-			status_sprite.visible = true
-			status_sprite.play("stun")
+			# add stun status sprite
+			var status : StatusControl = load("res://Units/Scenes/status_control.tscn").instantiate()
+			status_container.add_child(status)
+			status.play("stun")
+			status.visible = true
+			stunnedSprite = status
 			anim.stop()
 			attack_cd.paused = true
 			return 
