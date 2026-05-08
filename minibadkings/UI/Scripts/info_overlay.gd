@@ -137,7 +137,8 @@ func handle_projections() -> void:
 		projections[b.resourceType] += projAmt
 		
 		# also for minus projections
-		minus_projections[b.costType] -= b.costAmt
+		if b.costType != Global.RESOURCETYPE.NONE:
+			minus_projections[b.costType] -= b.costAmt
 			
 	
 	citizen_label.set_projection_value(projections[Global.RESOURCETYPE.CITIZEN],true)
