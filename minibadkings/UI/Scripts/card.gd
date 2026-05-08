@@ -344,7 +344,6 @@ func plop_building() -> void:
 	
 	if tileWorld.restricted_tiles.has(Vector2i(tile)): return
 	if ENTRANCE_BUILDINGS.has(type) and tileWorld.blocked_entry_tiles.has(Vector2i(tile)): return
-	if building == null : return # checking if was invalid spot, then match type would return null
 	
 	building.global_position = tileWorld.ground.map_to_local(tile)
 	buildingNode.add_child(building)
@@ -543,12 +542,6 @@ func add_card_to_hand() -> void:
 
 func match_building_type(building : Building) -> Building:
 	building.type = type - CARDTYPE.TRAPS + 1
-	if building.type == Building.TYPE.CARE or building.type == Building.TYPE.HOUSE:
-		if check_if_blocking(tile) :
-			sprite_2d.scale = Vector2(1.0,1.0)
-			position = default_position
-			selected = false
-			building = null
 	return building
 
 func _on_selected_mouse_entered() -> void:

@@ -46,7 +46,6 @@ func respawn_units() -> void:
 	
 	for unit in unitsArray:
 		await get_tree().create_timer(1.5).timeout
-		print("ok")
 		unit.set_collision_layer_value(1,true)
 
 var is_under_mouse : bool = false

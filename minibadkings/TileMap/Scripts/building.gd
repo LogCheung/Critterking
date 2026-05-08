@@ -259,13 +259,16 @@ func spawn_militia() -> void:
 
 func on_destroyed() -> void:
 	if type == TYPE.RUINS : return
+	# tiledata update
+	type = TYPE.RUINS
+	tileWorld.find_blocked_entry_tiles()
+	tileWorld.find_restricted_tiles()
 	# Change appearance and play destroy
 	%Break.play()
 	anim.play("destroy")
 	set_active(false)
 	worker_alert_sprite.hide()
 	await anim.animation_finished
-	type = TYPE.RUINS
 	match_type()
 	ui.info_overlay._update_traits()
 	
@@ -289,9 +292,6 @@ func on_destroyed() -> void:
 	for t in buff_tiles:
 		tileWorld.buffed_tiles.remove_at(tileWorld.buffed_tiles.find(t))
 	
-	# tiledata update
-	tileWorld.find_blocked_entry_tiles()
-	tileWorld.find_restricted_tiles()
 	
 func remove() -> void:
 	tileWorld.ground.set_cell(tile,0,Vector2(0,0),1)
@@ -417,7 +417,6 @@ func _on_toggle_toggled(toggled_on: bool) -> void:
 	calculate_active_workers()
 
 func set_active(condition : bool) -> void:
-	print("ok")
 	citizen_toggle_sprite.frame = 1 if condition else 0
 	citizen_toggle_sprite.modulate.v = 1.5 if condition else 1.0
 	active = condition

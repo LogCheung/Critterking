@@ -279,7 +279,6 @@ func on_night_started() -> void:
 	upgrade_nums = set_enemy_modifier_nums(upgraded_parties)
 	raider_nums = set_enemy_modifier_nums(raider_parties)
 	assassin_nums = set_enemy_modifier_nums(assassin_parties)
-	print(assassin_nums)
 	
 	# set rebel numbers
 	if Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] < 25:
@@ -528,9 +527,13 @@ func _input(event: InputEvent) -> void:
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
-		var d : Decree = load('res://UI/Scenes/decree.tscn').instantiate()
-		d.type = Decree.TYPE.INSPIRATION
-		ui.decrees.get_child(0).add_child(d)
+		#var bs = get_tree().get_nodes_in_group("BUILDING")
+		#for b : Building in bs:
+			#if b.type != Building.TYPE.HOUSE:
+				#b.health = 0
+		#var d : Decree = load('res://UI/Scenes/decree.tscn').instantiate()
+		#d.type = Decree.TYPE.INSPIRATION
+		#ui.decrees.get_child(0).add_child(d)
 		#ui.info_overlay._update_resources()
 		#ui.info_overlay._update_traits()
 		#expand()
