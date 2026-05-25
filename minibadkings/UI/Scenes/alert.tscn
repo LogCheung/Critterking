@@ -1,15 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://6cm4qvl8u634"]
+[gd_scene load_steps=3 format=3 uid="uid://6cm4qvl8u634"]
 
 [ext_resource type="Script" uid="uid://b5rp10x5pke7w" path="res://UI/Scripts/alert.gd" id="1_pp42v"]
+[ext_resource type="Texture2D" uid="uid://b0joqvxa0fcii" path="res://UI/Assets/alerts/militia.png" id="2_rhl4g"]
 
-[node name="Alert" type="Control"]
+[node name="Alert" type="Control" groups=["ALERT"]]
+custom_minimum_size = Vector2(24, 24)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 24.0
+offset_bottom = 24.0
 script = ExtResource("1_pp42v")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+texture = ExtResource("2_rhl4g")
+stretch_mode = 2

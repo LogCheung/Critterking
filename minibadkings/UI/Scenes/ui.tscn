@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=68 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Script" uid="uid://b174vncna6gct" path="res://UI/Scripts/info_overlay.gd" id="2_ffuy1"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://ddk82dl606haj" path="res://UI/Assets/overlay/TutorialButton.png" id="7_eq4ge"]
 [ext_resource type="Texture2D" uid="uid://3it4y7vqlqgb" path="res://UI/Assets/alerts/swarmAlert.png" id="7_l2k1h"]
 [ext_resource type="Texture2D" uid="uid://djapvfxyk1cj0" path="res://UI/Assets/alerts/maxPop.png" id="7_nvxdf"]
+[ext_resource type="PackedScene" uid="uid://6cm4qvl8u634" path="res://UI/Scenes/alert.tscn" id="7_ogw6s"]
 [ext_resource type="FontFile" uid="uid://dqt550qq7jmvu" path="res://Units/Debug/PressStart2P.ttf" id="7_titua"]
 [ext_resource type="Script" uid="uid://dn5w3jfm4dcjv" path="res://UI/Scripts/slider.gd" id="8_6dw6b"]
 [ext_resource type="Texture2D" uid="uid://o5sq82gqiu5b" path="res://UI/Assets/menus/crtroverhead.png" id="8_h440b"]
@@ -725,6 +726,18 @@ visible = false
 scale = Vector2(3, 3)
 texture = ExtResource("8_h440b")
 offset = Vector2(320, 48)
+
+[node name="ColonyAlerts" type="HBoxContainer" parent="InfoOverlay"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 832.0
+offset_top = 133.0
+offset_right = 960.0
+offset_bottom = 173.0
+scale = Vector2(2, 2)
+
+[node name="Alert" parent="InfoOverlay/ColonyAlerts" instance=ExtResource("7_ogw6s")]
+layout_mode = 2
 
 [node name="Tutorial" type="Control" parent="."]
 unique_name_in_owner = true

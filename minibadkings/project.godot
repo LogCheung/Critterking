@@ -76,6 +76,7 @@ PROJECTILE=""
 COLONY=""
 CARDPURCHASE=""
 COLORMASK=""
+ALERT=""
 
 [importer_defaults]
 

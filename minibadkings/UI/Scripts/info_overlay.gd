@@ -34,6 +34,7 @@ var minus_projections : Dictionary = {
 @onready var resource_container: HBoxContainer = %ResourceContainer
 @onready var tutorial_button_sprite: Sprite2D = %TutorialButtonSprite
 @onready var overlay_texture: TextureRect = %OverlayTexture
+@onready var colony_alerts: HBoxContainer = %ColonyAlerts
 
 func _ready() -> void:
 	trait_container.visible = false
@@ -80,8 +81,7 @@ func _update_traits(showAnim : bool = true) -> void:
 	
 	for c : ColonyBuilding in colonyBuilds:
 		Global.trait_dict[c.traitType] += c.traitAmt
-		
-				
+	
 	# set text
 	culture_trait.set_value(Global.trait_dict[Global.TRAITTYPE.CULTURE],showAnim)
 	commerce_trait.set_value(Global.trait_dict[Global.TRAITTYPE.COMMERCE],showAnim)
@@ -176,14 +176,13 @@ func handle_projections() -> void:
 	
 	unpaid_parties = 0
 	for g : AllyGroup in get_tree().get_nodes_in_group("ALLYGROUP"):
+		if get_projected_resource_amt(Global.RESOURCETYPE.MONEY) - g.wage < 0:
+			unpaid_parties += 1
 		minus_projections[Global.RESOURCETYPE.MONEY] -= g.wage
-	#	if Global.resource_dict[Global.RESOURCETYPE.MONEY] + projections[Global.RESOURCETYPE.MONEY]
-		
 	citizen_label.set_projection_value(minus_projections[Global.RESOURCETYPE.CITIZEN],false)
 	money_label.set_projection_value(minus_projections[Global.RESOURCETYPE.MONEY],false)
 	satisfaction_label.set_projection_value(minus_projections[Global.RESOURCETYPE.SATISFACTION],false)
 	food_label.set_projection_value(minus_projections[Global.RESOURCETYPE.FOOD],false)
-	
 	
 	handle_starving_parties()
 	handle_colony_alerts()
@@ -222,15 +221,36 @@ func handle_colony_alerts() -> void:
 		alertArray.append(ColonyAlert.TYPE.MILITIA)
 	
 	# food
-	for i in range(starving_parties):
-		alertArray.append(ColonyAlert.TYPE.REBELS)
+	var projFood = get_projected_resource_amt(Global.RESOURCETYPE.FOOD)
+	if projFood < 0:
+		alertArray.append(ColonyAlert.TYPE.STARVING)
 	
 	# wages
-	var projMoney = get_projected_resource_amt(Global.RESOURCETYPE.MONEY)
+	for i in range(unpaid_parties):
+		alertArray.append(ColonyAlert.TYPE.WAGES)
+	
+	for key in ColonyAlert.alertCountDict:
+		ColonyAlert.alertCountDict[key] = alertArray.count(key)
+	create_alerts()
+
+func create_alerts() -> void:
+	# clear alerts
+	var currentAlerts = get_tree().get_nodes_in_group("ALERT")
+	for a : ColonyAlert in currentAlerts:
+		a.queue_free()
+	
+	# make new alerts
+	for key in ColonyAlert.alertCountDict:
+		if ColonyAlert.alertCountDict[key] > 0:
+			var alert : ColonyAlert = load("res://UI/Scenes/alert.tscn").instantiate()
+			alert.type = key
+			colony_alerts.add_child(alert)
+	pass
 
 func get_projected_resource_amt(rType : Global.RESOURCETYPE) -> int:
 	var amt = Global.resource_dict[rType]
-	amt += projections[rType] - minus_projections[rType]
+	amt += projections[rType]
+	amt += minus_projections[rType]
 	return amt
 
 func _on_end_turn() -> void:
