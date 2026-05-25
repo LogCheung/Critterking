@@ -108,7 +108,7 @@ func new_game() -> void:
 	# add house card
 	for i in range(1):
 		add_house_card()
-	for i in range(0):
+	for i in range(1):
 		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
 		hCard.type = Card.CARDTYPE.SCHOOL
 		ui.hand_container.add_child(hCard)
@@ -527,6 +527,8 @@ func _input(event: InputEvent) -> void:
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
+		#SaveLoad._reset_profile()
+		#SaveLoad._load_profile()
 		#var bs = get_tree().get_nodes_in_group("BUILDING")
 		#for b : Building in bs:
 			#if b.type != Building.TYPE.HOUSE:
@@ -536,9 +538,10 @@ func _input(event: InputEvent) -> void:
 		#ui.decrees.get_child(0).add_child(d)
 		#ui.info_overlay._update_resources()
 		#ui.info_overlay._update_traits()
-		#expand()
+		#Global.nights += 29
+		#night_ended.emit()
 		return
-
+	
 	#if event.is_action_pressed("cancel"):
 		#print(Global.wins)
 		#SaveLoad._reset_profile()

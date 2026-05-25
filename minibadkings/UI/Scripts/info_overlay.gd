@@ -8,6 +8,13 @@ var projections : Dictionary = {
 	Global.RESOURCETYPE.FOOD : 0,
 	Global.RESOURCETYPE.CITIZEN : 0,
 }
+var minus_projections : Dictionary = {
+	Global.RESOURCETYPE.NONE : 0,
+	Global.RESOURCETYPE.SATISFACTION : 0,
+	Global.RESOURCETYPE.MONEY : 0,
+	Global.RESOURCETYPE.FOOD : 0,
+	Global.RESOURCETYPE.CITIZEN : 0,
+}
 
 @export var assignMode : bool = false
 
@@ -120,7 +127,6 @@ func handle_worker_limit() -> void:
 		
 func handle_projections() -> void:
 	# reset
-	var minus_projections : Dictionary = {}
 	for key in projections:
 		projections[key] = 0
 		minus_projections[key] = 0
@@ -128,6 +134,7 @@ func handle_projections() -> void:
 	var builds = get_tree().get_nodes_in_group("COLONY")
 	for b : ColonyBuilding in builds:
 		if b.resourceType == Global.RESOURCETYPE.NONE and b.type != Building.TYPE.SCHOOL : continue
+		if b.type == Building.TYPE.MARKETPLACE : continue
 		if b.time + 1 != b.cooldown: continue
 		if !b.active : continue
 		
@@ -167,31 +174,65 @@ func handle_projections() -> void:
 	if foodDebt < 0:
 		minus_projections[Global.RESOURCETYPE.SATISFACTION] -= abs(foodDebt)
 	
+	unpaid_parties = 0
 	for g : AllyGroup in get_tree().get_nodes_in_group("ALLYGROUP"):
 		minus_projections[Global.RESOURCETYPE.MONEY] -= g.wage
+	#	if Global.resource_dict[Global.RESOURCETYPE.MONEY] + projections[Global.RESOURCETYPE.MONEY]
 		
 	citizen_label.set_projection_value(minus_projections[Global.RESOURCETYPE.CITIZEN],false)
 	money_label.set_projection_value(minus_projections[Global.RESOURCETYPE.MONEY],false)
 	satisfaction_label.set_projection_value(minus_projections[Global.RESOURCETYPE.SATISFACTION],false)
 	food_label.set_projection_value(minus_projections[Global.RESOURCETYPE.FOOD],false)
 	
-	handle_starving_parties()
 	
+	handle_starving_parties()
+	handle_colony_alerts()
+
+var unpaid_parties = 0
+var starving_parties = 0
 func handle_starving_parties() -> void:
 	# apply starving effect
-	var starving_parties = 0
-	var foodConsump = Global.resource_dict[Global.RESOURCETYPE.CITIZEN]
+	starving_parties = 0
 	var fedParties = Global.resource_dict[Global.RESOURCETYPE.FOOD] / 2
 	starving_parties = Global.partyCount - fedParties
-	
 	
 	if starving_parties > 0:
 		var parties = get_tree().get_nodes_in_group("ALLYGROUP")
 		for p : AllyGroup in parties:
 			p.starving = true
 		pass
-
 	pass
+
+func handle_colony_alerts() -> void:
+	var alertArray : Array = []
+	
+	# rebels
+	var rebelCount : int = 0
+	var projSatis = get_projected_resource_amt(Global.RESOURCETYPE.SATISFACTION)
+	# find rebel count
+	if projSatis < 25:
+		rebelCount = 1 * ((Global.resource_dict[Global.RESOURCETYPE.CITIZEN] / 6) + 1)
+		if projSatis <= 0:
+			rebelCount = ui.world.enemy_parties
+	for i in range(rebelCount):
+		alertArray.append(ColonyAlert.TYPE.REBELS)
+	
+	# miltia
+	if projSatis >= 75:
+		alertArray.append(ColonyAlert.TYPE.MILITIA)
+	
+	# food
+	for i in range(starving_parties):
+		alertArray.append(ColonyAlert.TYPE.REBELS)
+	
+	# wages
+	var projMoney = get_projected_resource_amt(Global.RESOURCETYPE.MONEY)
+
+func get_projected_resource_amt(rType : Global.RESOURCETYPE) -> int:
+	var amt = Global.resource_dict[rType]
+	amt += projections[rType] - minus_projections[rType]
+	return amt
+
 func _on_end_turn() -> void:
 	# add tween anim to make it look more polished
 	await get_tree().create_timer(Pop.duration).timeout

@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://6cm4qvl8u634"]
+
+[ext_resource type="Script" uid="uid://b5rp10x5pke7w" path="res://UI/Scripts/alert.gd" id="1_pp42v"]
+
+[node name="Alert" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_pp42v")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

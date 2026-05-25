@@ -291,6 +291,7 @@ func _on_endless_pressed() -> void:
 	if Global.unlockedCards.has(Global.UNLOCK[Global.wins - 1][0]): return
 	%unlock.visible = true
 	%gameover.hide()
+	cards.show()
 	end_turn.show()
 	info_overlay.show()
 	pass # Replace with function body.
@@ -544,6 +545,11 @@ func _input(event: InputEvent) -> void:
 		hide_unlocks()
 		await anim.animation_finished
 		unlock.hide()
+	if %Card6.visible and unlock.visible and event.is_action_pressed("select"):
+		anim.play("cardunlockhide")
+		hide_unlocks()
+		await anim.animation_finished
+		unlock.hide()
 func handle_pause() -> void:
 	if mainmenu.visible or gameover.visible or help.visible or settings.visible : return
 	if pausemenu.visible:
@@ -692,7 +698,7 @@ func load_world() -> void:
 		building.time = b.time
 		
 		if isColony:
-			building.workers = b.workers
+			building.workers = b.workers - 1
 			
 		bNode.add_child(building)
 		

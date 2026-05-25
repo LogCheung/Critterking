@@ -117,9 +117,9 @@ func set_projection_value(value : int, positive : bool) -> void:
 	var builds = get_tree().get_nodes_in_group("COLONY")
 	builds = builds.filter(func(b:ColonyBuilding): return b.resourceType == resourceType)
 	for b : ColonyBuilding in builds:
-		if b.chance < 100 and b.active:
+		if (b.chance < 100 or b.type == Building.TYPE.MARKETPLACE) and b.active:
 			value -= b.resourceAmt # don't account/guarantee amt 
-			pos_proj_label.text = str(abs(value))
+			if positive: pos_proj_label.text = str(abs(value))
 			%posAsterisk.visible = true
 			pos_proj.visible = true
 
