@@ -522,6 +522,7 @@ func preserve_charm_in_card(card : Card, charmType : Charm.TYPE) -> Card:
 
 var tile2
 func _input(event: InputEvent) -> void:
+	%PointLight2D.global_position = get_global_mouse_position()
 	if event.is_action_released("select") or event.is_action_pressed("select"):
 		#if ui.unlock.visible and !ui.anim.is_playing(): ui.hide_unlocks()
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())

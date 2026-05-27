@@ -150,11 +150,6 @@ func occupants_inside() -> bool:
 
 func match_type() -> void:
 	match type:
-		TYPE.HOUSE:
-			sprite_2d.texture = HOUSEA if randi() % 2 == 0 else HOUSEB
-
-			await anim.animation_finished
-			duplicate_sprite()
 		TYPE.TRAP:
 			sprite_2d.texture = TRAPA if randi() % 2 == 0 else TRAPB
 			#sprite_2d.offset = Vector2.ZERO
@@ -193,24 +188,21 @@ func match_type() -> void:
 			resourceAmt = 0
 		TYPE.NURSERY:
 			sprite_2d.texture = NURSERY
-			#sprite_2d.offset = Vector2(0,-2)
 		TYPE.STORAGE:
 			sprite_2d.texture = STORAGE
 			sprite_2d.scale.x = -1
-		#TYPE.TUNNEL:
-			#sprite_2d.texture = TUNNELB
-			#sprite_2d.offset = Vector2(0,-8)
 		TYPE.FORT:
 			sprite_2d.texture = FORT
 			sprite_2d.offset = Vector2(-1,-10)
-			#set_collision_layer_value(2,false)
 		TYPE.CAMPFIRE:
 			sprite_2d.texture = CAMPFIRE
-			#sprite_2d.offset = Vector2(0,-2)
-		#TYPE.CLIFF:
-			#sprite_2d.texture = CLIFF
 	duplicate_sprite()
-			
+	
+	# normal map texture
+	var texture : CanvasTexture = CanvasTexture.new()
+	texture.diffuse_texture = sprite_2d.texture
+	texture.normal_texture = load("res://TileMap/Assets/norms/"+ TYPE.keys()[type].to_lower() +"Buildnorm.png")
+	sprite_2d.texture = texture
 	
 func duplicate_sprite() -> void:
 	# used for buildings selected during battle

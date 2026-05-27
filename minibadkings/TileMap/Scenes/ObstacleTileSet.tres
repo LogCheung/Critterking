@@ -1,8 +1,9 @@
-[gd_resource type="TileSet" load_steps=56 format=3 uid="uid://d2t0jti0abk2d"]
+[gd_resource type="TileSet" load_steps=58 format=3 uid="uid://d2t0jti0abk2d"]
 
 [ext_resource type="Texture2D" uid="uid://cx0b0ucjd4cee" path="res://TileMap/Assets/tiles.png" id="1_7bp73"]
-[ext_resource type="Texture2D" uid="uid://mg1gku362mus" path="res://UI/Assets/gwj2obstacles.png" id="2_5edhi"]
+[ext_resource type="Texture2D" uid="uid://cvl2ng73o4ti7" path="res://TileMap/Assets/gwj2obstacles.png" id="2_5edhi"]
 [ext_resource type="Texture2D" uid="uid://d06rjt2g5bhak" path="res://TileMap/Assets/test.png" id="3_3ax6m"]
+[ext_resource type="Texture2D" uid="uid://dv8vlniqoilvw" path="res://TileMap/Assets/tilesNorm.png" id="3_tth4i"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_h7hr0"]
 tile_data = PackedInt32Array(0, 131073, 14, 65536, 131073, 14, 1, 131073, 19, 65537, 131073, 14, 131073, 131073, 18, 2, 131073, 18, 131074, 65537, 15)
@@ -229,8 +230,12 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(0, -16, -32, 0, 0, 16, 32, 0)])
 agent_radius = 0.0
 
+[sub_resource type="CanvasTexture" id="CanvasTexture_u8cbn"]
+diffuse_texture = ExtResource("2_5edhi")
+normal_texture = ExtResource("3_tth4i")
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ymfrj"]
-texture = ExtResource("2_5edhi")
+texture = SubResource("CanvasTexture_u8cbn")
 texture_region_size = Vector2i(64, 64)
 2:7/0 = 0
 2:7/0/texture_origin = Vector2i(0, 16)

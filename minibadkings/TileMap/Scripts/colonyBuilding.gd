@@ -194,7 +194,7 @@ func match_type() -> void:
 	var path = "res://TileMap/Assets/"+str(TYPE.keys()[type]).to_lower()+"Build.png"
 	var texture = CanvasTexture.new()
 	texture.diffuse_texture  = load(path)
-	texture.normal_texture = load("res://TileMap/Assets/houseAnorm.png")
+	texture.normal_texture = load("res://TileMap/Assets/norms/"+ TYPE.keys()[type].to_lower() +"Buildnorm.png")
 	sprite_2d.texture = texture
 	#sprite_2d.texture = load(path)
 	

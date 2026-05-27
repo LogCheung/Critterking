@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bxqxjbkdfqn0q"]
+[gd_scene load_steps=7 format=3 uid="uid://bxqxjbkdfqn0q"]
 
 [ext_resource type="Script" uid="uid://dvsiuovo1wgp" path="res://World/Scripts/world.gd" id="1_fdxdb"]
 [ext_resource type="PackedScene" uid="uid://y0ju1mi4ih78" path="res://TileMap/Scenes/tile_world.tscn" id="1_jamle"]
 [ext_resource type="Script" uid="uid://djh4kkt8c6qxj" path="res://World/Scripts/units_node.gd" id="2_xvb7p"]
 [ext_resource type="Script" uid="uid://bjiaogu16dctd" path="res://World/Scripts/camera_2d.gd" id="2_yw7h8"]
 [ext_resource type="PackedScene" uid="uid://bhln07v3h2elp" path="res://UI/Scenes/ui.tscn" id="6_7qq3u"]
+[ext_resource type="Texture2D" uid="uid://bn8okgvudhtxm" path="res://TileMap/Assets/LightCircle.png" id="6_t7din"]
 
 [node name="World" type="Node2D" groups=["WORLD"]]
 y_sort_enabled = true
@@ -59,7 +60,7 @@ offset_top = -1522.0
 offset_right = 2960.0
 offset_bottom = 1724.0
 mouse_filter = 2
-color = Color(0.050980393, 0.050980393, 0.050980393, 0.34901962)
+color = Color(0.101960786, 0.101960786, 0.101960786, 0.27058825)
 
 [node name="UI" parent="." groups=["UI"] instance=ExtResource("6_7qq3u")]
 unique_name_in_owner = true
@@ -78,6 +79,11 @@ offset_right = 2543.0
 offset_bottom = 1350.0
 mouse_filter = 2
 color = Color(0.171203, 0.130829, 0.151204, 1)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+unique_name_in_owner = true
+visible = false
+texture = ExtResource("6_t7din")
 
 [connection signal="timeout" from="Game/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="Failcheck" to="." method="_on_timer_timeout"]
