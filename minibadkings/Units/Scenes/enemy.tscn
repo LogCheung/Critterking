@@ -431,6 +431,7 @@ path_max_distance = 20.0
 navigation_layers = 3
 path_postprocessing = 1
 max_neighbors = 1000
+debug_enabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 process_mode = 3
@@ -521,6 +522,8 @@ unique_name_in_owner = true
 wait_time = 20.0
 one_shot = true
 autostart = true
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
 [connection signal="top_score_action_changed" from="UtilityAiAgent" to="." method="_on_utility_ai_agent_top_score_action_changed"]
 [connection signal="timeout" from="ApproachGuarantee" to="." method="_on_approach_guarantee_timeout"]

@@ -83,6 +83,8 @@ color = Color(0.171203, 0.130829, 0.151204, 1)
 [node name="PointLight2D" type="PointLight2D" parent="."]
 unique_name_in_owner = true
 visible = false
+color = Color(1, 0.22352941, 0.21568628, 1)
+energy = 0.75
 texture = ExtResource("6_t7din")
 
 [connection signal="timeout" from="Game/SpawnTimer" to="." method="_on_spawn_timer_timeout"]

@@ -12,7 +12,7 @@ enum AGGREGATION {
 
 @export var aggregation_type: AGGREGATION = AGGREGATION.MULT
 
-var aggregation_handler = {
+var aggregation_handler : Dictionary = {
 	AGGREGATION.MULT: _multiply,
 	AGGREGATION.SUM: _sum,
 	AGGREGATION.AVG: _average,

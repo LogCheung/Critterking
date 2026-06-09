@@ -10,25 +10,25 @@ signal top_score_action_changed(top_action_id)
 ## Enable or disable the agent
 @export var enabled: bool = true
 
-var _current_top_action
-var _action_scores = []
-var _score_sorted = false
+var _current_top_action : String
+var _action_scores : Array = []
+var _score_sorted : bool = false
 
 
-func _physics_process(delta) -> void:
+func _process(delta) -> void:
 	if not enabled:
 		return
 	_process_actions()
 
 
 func _process_actions() -> void:
-	var actions = self.get_children()
+	var actions : Array = self.get_children()
 
 	if actions.size() == 0:
 		push_warning("Utility AI agent should have at least one action as child node")
 		return
 
-	var top_action = _get_highest_utility_action(actions)
+	var top_action : UtilityAiAction = _get_highest_utility_action(actions)
 
 	if top_action != null and top_action.get_action_id() != _current_top_action:
 		_current_top_action = top_action.get_action_id()
@@ -36,16 +36,16 @@ func _process_actions() -> void:
 
 
 func _get_highest_utility_action(actions: Array) -> UtilityAiAction:
-	var top_action
-	var top_action_utility = -1.0
+	var top_action : UtilityAiAction
+	var top_action_utility : float = -1.0
 
-	var all_scores = []
+	var all_scores : Array = []
 
-	for action in actions:
+	for action : UtilityAiAction in actions:
 		if not (action is UtilityAiAction):
 			push_warning("Child '%s' is not an action" % action.name)
 			continue
-		var score = action.calculate_score()
+		var score : float = action.calculate_score()
 
 		all_scores.push_back({
 			"action": action.get_action_id(),

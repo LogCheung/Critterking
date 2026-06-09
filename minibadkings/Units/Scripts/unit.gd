@@ -406,4 +406,3 @@ func on_healing_timer() -> void:
 	pass
 func on_nav_delay() -> void:
 	next_path_pos = nav.get_next_path_position()
-	pass

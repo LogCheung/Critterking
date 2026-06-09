@@ -32,6 +32,7 @@ enum BEHAVIOR {
 @export var behaviorType : BEHAVIOR
 
 @onready var ui: UI = get_tree().get_first_node_in_group("UI")
+@onready var utility_ai_agent: UtilityAiAgent = $UtilityAiAgent
 
 var target_in_range : bool
 var is_active : bool = false
@@ -39,13 +40,14 @@ var houses_exist : bool = true
 
 # astar will be used for appraoch
 var aStar : AStarGrid2D
-var navPath : Array
 var target_pos
 
 func _ready() -> void:
 	match_type()
 	super._ready()
-	
+	utility_ai_agent.enabled = false
+	action = ACTION.FORM
+
 	house_destroyed.connect(find_building)
 	aStar = tileWorld.aStar
 	if upgraded: 
@@ -167,7 +169,6 @@ func handle_action(delta) -> void:
 		ACTION.DEAD:
 			return
 	
-	_handle_navigation_path()
 	if next_path_pos:
 		move_to(self.global_position.direction_to(next_path_pos), delta)
 	
@@ -177,23 +178,17 @@ func _handle_navigation_path() -> void:
 		nav.target_position = formation_position.global_position
 		return
 	# go through each path point that astar provides to target
-	if nav.is_navigation_finished():
+	if global_position.distance_to(nav.target_position) < 16:
 		path_points.pop_front()
-	if path_points.is_empty():
-		var position_id = tileWorld.wall.local_to_map(global_position)
-		var target_id = tileWorld.wall.local_to_map(formation_position.global_position)
-		path_points = aStar.get_id_path(position_id,target_id,true)
 		
-		# add navigation only to tiles needed to get to point
-		# to reduce lag from huge nav mesh
-		for cell in path_points:
-			if tileWorld.ground.get_used_cells().has(cell): continue
-			tileWorld.ground.set_cell(cell,0,Vector2(0,0),5)
-			navPath.append(cell)
+	
+	if path_points.is_empty():
 		return
+	
 	
 	nav.target_position = tileWorld.wall.map_to_local(path_points.front())
 func become_active() -> void:
+	utility_ai_agent.enabled = true
 	is_active = true
 	vision.monitoring = true
 	sprite_2d.material = null
@@ -204,10 +199,8 @@ func become_active() -> void:
 	
 	await get_tree().create_timer(10).timeout
 	nav.set_navigation_layer_value(2,false)
-	
-	# remove nav cells that were created
-	for cell in navPath:
-		tileWorld.ground.set_cell(cell,-1)
+	%NavDelay.wait_time = .25
+
 
 func match_type() -> void:
 	match type:
@@ -372,3 +365,11 @@ func _on_approach_guarantee_timeout() -> void:
 func _on_wall_hacks_timeout() -> void:
 	nav.set_navigation_layer_value(2,true)
 	pass # Replace with function body.
+
+func on_nav_delay() -> void:
+	if !is_active:
+		_handle_navigation_path()
+		super.on_nav_delay()
+		#next_path_pos = nav.target_position
+	else:
+		super.on_nav_delay()

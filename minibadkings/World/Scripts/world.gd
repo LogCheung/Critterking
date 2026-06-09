@@ -230,6 +230,8 @@ func spawn_enemy() -> void:
 		if groupPos.distance_to(tile) < groupPos.distance_to(closest):
 			closest = tile
 	enemGroup.global_position = closest 
+	enemGroup.end_pos = tileWorld.ground.local_to_map(closest)
+	enemGroup.direct_units_to_attack()
 	# set groupPos to target and the units within the group will follow
 	
 	# make check for rebels
@@ -528,19 +530,15 @@ func _input(event: InputEvent) -> void:
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
-		#SaveLoad._reset_profile()
-		#SaveLoad._load_profile()
 		#var bs = get_tree().get_nodes_in_group("BUILDING")
 		#for b : Building in bs:
 			#if b.type != Building.TYPE.HOUSE:
 				#b.health = 0
 		#var d : Decree = load('res://UI/Scenes/decree.tscn').instantiate()
 		#d.type = Decree.TYPE.INSPIRATION
-		#ui.decrees.get_child(0).add_child(d)
-		#ui.info_overlay._update_resources()
-		#ui.info_overlay._update_traits()
-		#Global.nights += 29
-		#night_ended.emit()
+		for i in range(50):
+			spawn_enemy()
+			enemy_parties += 1
 		return
 	
 	#if event.is_action_pressed("cancel"):
