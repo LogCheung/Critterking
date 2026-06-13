@@ -567,6 +567,7 @@ script = ExtResource("1_44q3l")
 
 [node name="InfoOverlay" type="Control" parent="."]
 unique_name_in_owner = true
+z_as_relative = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -739,44 +740,6 @@ scale = Vector2(2, 2)
 [node name="Alert" parent="InfoOverlay/ColonyAlerts" instance=ExtResource("7_ogw6s")]
 layout_mode = 2
 
-[node name="Tutorial" type="Control" parent="."]
-unique_name_in_owner = true
-z_index = 4096
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-script = ExtResource("8_nh1tr")
-
-[node name="box" type="Sprite2D" parent="Tutorial"]
-visible = false
-position = Vector2(1775, 481)
-scale = Vector2(2, 2)
-texture = ExtResource("5_nvxdf")
-
-[node name="TutorialTitle" type="RichTextLabel" parent="Tutorial/box"]
-unique_name_in_owner = true
-offset_left = -69.0
-offset_top = -106.0
-offset_right = 69.5
-offset_bottom = -80.0
-theme_override_fonts/normal_font = ExtResource("6_t0wgx")
-theme_override_font_sizes/normal_font_size = 14
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TutorialText" type="RichTextLabel" parent="Tutorial/box"]
-unique_name_in_owner = true
-offset_left = -52.99994
-offset_top = -71.99999
-offset_right = 86.33331
-offset_bottom = 139.33334
-scale = Vector2(0.75, 0.75)
-theme_override_fonts/normal_font = ExtResource("6_t0wgx")
-theme_override_font_sizes/normal_font_size = 14
-bbcode_enabled = true
-text = "we"
-
 [node name="Dispatch" type="Control" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -817,12 +780,19 @@ offset_bottom = 40.0
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
+[node name="dim" type="ColorRect" parent="Cards"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.03529412, 0.039215688, 0.078431375, 0.47843137)
+
 [node name="CardShow" type="Sprite2D" parent="Cards"]
 unique_name_in_owner = true
 scale = Vector2(3, 3)
 texture = ExtResource("9_eq4ge")
 offset = Vector2(320, 180)
-hframes = 22
+hframes = 20
 
 [node name="Show" type="Button" parent="Cards/CardShow"]
 anchors_preset = -1
@@ -981,6 +951,44 @@ scale = Vector2(2.5, 2.5)
 mouse_filter = 2
 theme_override_constants/separation = 22
 alignment = 1
+
+[node name="Tutorial" type="Control" parent="."]
+unique_name_in_owner = true
+z_index = 4096
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+script = ExtResource("8_nh1tr")
+
+[node name="box" type="Sprite2D" parent="Tutorial"]
+visible = false
+position = Vector2(1775, 481)
+scale = Vector2(2, 2)
+texture = ExtResource("5_nvxdf")
+
+[node name="TutorialTitle" type="RichTextLabel" parent="Tutorial/box"]
+unique_name_in_owner = true
+offset_left = -69.0
+offset_top = -106.0
+offset_right = 69.5
+offset_bottom = -80.0
+theme_override_fonts/normal_font = ExtResource("6_t0wgx")
+theme_override_font_sizes/normal_font_size = 14
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TutorialText" type="RichTextLabel" parent="Tutorial/box"]
+unique_name_in_owner = true
+offset_left = -52.99994
+offset_top = -71.99999
+offset_right = 86.33331
+offset_bottom = 139.33334
+scale = Vector2(0.75, 0.75)
+theme_override_fonts/normal_font = ExtResource("6_t0wgx")
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "we"
 
 [node name="Hand" type="Control" parent="."]
 unique_name_in_owner = true
@@ -1831,6 +1839,15 @@ inspected = true
 libraries = {
 &"": SubResource("AnimationLibrary_pyqth")
 }
+
+[node name="dim2" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 5
+z_as_relative = false
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.101960786, 0.101960786, 0.101960786, 0.3372549)
 
 [node name="crtrPause" type="AudioStreamPlayer" parent="." groups=["MUSIC"]]
 unique_name_in_owner = true

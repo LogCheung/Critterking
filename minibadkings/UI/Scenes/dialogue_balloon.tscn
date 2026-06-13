@@ -12,12 +12,6 @@
 layer = 100
 script = ExtResource("1_wlkvu")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_right = 1920.0
-offset_bottom = 1080.0
-mouse_filter = 2
-color = Color(0.103743605, 0.103743516, 0.103743516, 0.3372549)
-
 [node name="Balloon" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 3
@@ -89,6 +83,7 @@ metadata/_custom_type_script = "uid://g32um0mltv5d"
 
 [node name="Choices" type="Control" parent="Balloon"]
 unique_name_in_owner = true
+visible = false
 anchors_preset = 0
 offset_left = 1062.0
 offset_top = 869.0
@@ -142,6 +137,7 @@ text = "adsa"
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 
+[connection signal="tree_exited" from="." to="." method="_on_tree_exited"]
 [connection signal="gui_input" from="Balloon" to="." method="_on_balloon_gui_input"]
 [connection signal="response_selected" from="ResponsesMenu" to="." method="_on_responses_menu_response_selected"]
 [connection signal="visibility_changed" from="ResponsesMenu" to="." method="_on_responses_menu_visibility_changed"]

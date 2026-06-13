@@ -1,9 +1,11 @@
 ~ start
 This here is the shop. But before you buy anything, I'd like to go over my reports.
+do ui.tutorial.highlight_overlay(true)
 do ui.tutorial.set_advisor_expression(Tutorial.STATE.PROUD)
 I will always keep track of what the colony has and what it's known for.
 As well as any news, when things crop up.
 Feel free to investigate this (by hovering your mouse) at your own leisure.
+do ui.tutorial.highlight_overlay(false)
 do ui.tutorial.set_advisor_expression(Tutorial.STATE.NORM)
 It goes without saying that without adequate resources, you'll fail to defend us.
 I implore you to buy developments with this in mind.

@@ -8,3 +8,7 @@ func _on_responses_menu_visibility_changed() -> void:
 		choices.show()
 	else:
 		choices.hide()
+
+
+func _on_tree_exited() -> void:
+	Global.dialogue_closed.emit()

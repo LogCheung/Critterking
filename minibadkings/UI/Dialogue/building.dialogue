@@ -1,7 +1,9 @@
 ~ start
 Your houses are the core of your colony, so you want to protect them. We're finished if we have no shelter.
 Your units can and should move throughout the night, so don't fret if you can't place them exactly where you want. They cannot move through buildings.
+do ui.tutorial.highlight_work_button(true)
 Most buildings will require you to assign citizens to work in them, which you can do by pressing this button. Without workers, they won't produce anything.
+do ui.tutorial.highlight_work_button(false)
 You may now construct your colony as you wish. Plan for the future and your army's movement in your city planning.
 
 => END

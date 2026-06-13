@@ -116,7 +116,7 @@ func _on_show_pressed() -> void:
 	rolltype = rollArray.front()
 	%Shuffle.play()
 	
-	
+	%dim.hide()
 	if rolltype == Card.ROLLTYPE.CHARM:
 		%CardShow.texture = preload("res://UI/Assets/menus/discoveryshow.png")
 		%CardShow.hframes = 20
@@ -125,7 +125,8 @@ func _on_show_pressed() -> void:
 		%CardCharmed.match_sprite_type()
 	else:
 		%CardShow.texture = preload("res://UI/Assets/menus/choose3.png") #preload("res://UI/Assets/menus/cardshow.png")
-		%CardShow.hframes = 22 #20 
+		%CardShow.hframes = 20 
+		%dim.show()
 		
 		# tutorial for decrees
 		if world.night_is_expansion:
@@ -149,6 +150,7 @@ func display_cards(display : bool) -> void:
 	
 		
 func show_hand() -> void:
+	%CardShow.material = null
 	# when card is chosen from deck of cards
 	if Global.cardsInHand.size() == 2: # after player takes first roll
 		tutorial.play_tutorial(Tutorial.TYPE.UNITS)
@@ -267,7 +269,6 @@ func victory() -> void:
 	
 	hand.hide()
 	end_turn.hide()
-	%Tutorial.hide()
 	info_overlay.hide()
 	gameover.show()
 	

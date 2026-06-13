@@ -1,7 +1,7 @@
 extends Node
 
 # tutorial signals
-
+signal dialogue_closed
 
 @export var expansions : int = 0
 @export var nights : int = 0
