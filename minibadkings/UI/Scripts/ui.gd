@@ -129,7 +129,7 @@ func _on_show_pressed() -> void:
 		%dim.show()
 		
 		# tutorial for decrees
-		if world.night_is_expansion:
+		if world.night_is_expansion and rolltype == Card.ROLLTYPE.BLESSING:
 			tutorial.play_tutorial(Tutorial.TYPE.DECREE)
 	anim.play("cardshow")
 	
@@ -170,15 +170,19 @@ func show_hand() -> void:
 	# tutorial
 	if world.dispatchDay:
 		tutorial.play_tutorial(Tutorial.TYPE.EXPLORATION)
-	tutorial.play_tutorial(Tutorial.TYPE.BUILDING)
-	
-	if Global.nights == 2 and !world.is_combat_phase:
-		tutorial.play_tutorial(Tutorial.TYPE.MORNING)
+	else:
+		tutorial.play_tutorial(Tutorial.TYPE.BUILDING)
 
 func display_shop() -> void:
+	%ShopStock.hide()
+	shop.show()
+	anim.play("shopshow")
+	
+	await anim.animation_finished
+	
+	%ShopStock.show()
 	end_day_continue.hide()
 	end_turn.show()
-	shop.show()
 	decrees.hide()
 	info_overlay.show()
 	info_overlay.show_containers()
@@ -231,7 +235,11 @@ func _on_shop_end_pressed() -> void:
 	
 	if world.dispatchDay:
 		tutorial.play_tutorial(Tutorial.TYPE.EXPLORATION)
-	tutorial.play_tutorial(Tutorial.TYPE.BUILDING)
+	else:
+		tutorial.play_tutorial(Tutorial.TYPE.BUILDING)
+		
+	if Global.nights >= 2 and !world.is_combat_phase:
+		tutorial.play_tutorial(Tutorial.TYPE.MORNING)
 
 func save_game_delayed() -> void:
 	for i in range(5):
@@ -647,6 +655,7 @@ func load_world() -> void:
 	world.dispatchDay = SaveLoad.SaveFileData.dispatchDay
 	Global.nights = SaveLoad.SaveFileData.nights
 	Global.expansions = SaveLoad.SaveFileData.expansions
+	Global.tutArr = SaveLoad.SaveFileData.tutArr
 	rollArray = SaveLoad.SaveFileData.rolls
 	
 	Global.resource_dict = SaveLoad.SaveFileData.resource_dict.duplicate()
@@ -743,6 +752,7 @@ func load_world() -> void:
 		b.process_mode = Node.PROCESS_MODE_INHERIT
 	
 	# load cards
+	info_overlay.show()
 	info_overlay.load_overlay()
 	await get_tree().process_frame
 	await get_tree().process_frame

@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://bhln07v3h2elp"]
+[gd_scene load_steps=69 format=3 uid="uid://bhln07v3h2elp"]
 
 [ext_resource type="Script" uid="uid://bl8pvigq15pom" path="res://UI/Scripts/ui.gd" id="1_44q3l"]
 [ext_resource type="Script" uid="uid://b174vncna6gct" path="res://UI/Scripts/info_overlay.gd" id="2_ffuy1"]
@@ -356,6 +356,18 @@ tracks/9/keys = {
 "update": 0,
 "values": [Vector2(1, 1)]
 }
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Shop/Merchant:frame")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_titua"]
 resource_name = "cardhide"
@@ -498,6 +510,23 @@ tracks/1/keys = {
 "values": [0.0, -80.0]
 }
 
+[sub_resource type="Animation" id="Animation_ogw6s"]
+resource_name = "shopshow"
+length = 1.125
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shop/Merchant:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
 [sub_resource type="Animation" id="Animation_s0jxd"]
 resource_name = "unlockC"
 length = 1.05
@@ -558,6 +587,7 @@ _data = {
 &"cardunlock": SubResource("Animation_onxes"),
 &"cardunlockhide": SubResource("Animation_48uhk"),
 &"playAgain": SubResource("Animation_yqd36"),
+&"shopshow": SubResource("Animation_ogw6s"),
 &"unlockC": SubResource("Animation_s0jxd"),
 &"unlockChide": SubResource("Animation_h2fog")
 }
@@ -859,7 +889,6 @@ texture = SubResource("CompressedTexture2D_ia477")
 
 [node name="Shop" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_top = 1.0
@@ -880,46 +909,49 @@ color = Color(0.050980393, 0.050980393, 0.050980393, 0.34901962)
 position = Vector2(958, 537)
 scale = Vector2(4, 4)
 texture = ExtResource("13_nh1tr")
+hframes = 3
+vframes = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Shop"]
+[node name="ShopStock" type="VBoxContainer" parent="Shop"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -546.5
+offset_left = -402.5
 offset_top = 158.99997
-offset_right = 397.09985
+offset_right = 541.09985
 offset_bottom = 753.0
 grow_horizontal = 2
 scale = Vector2(1.25, 1.25)
 theme_override_constants/separation = 50
 
-[node name="TopRow" type="HBoxContainer" parent="Shop/VBoxContainer"]
+[node name="TopRow" type="HBoxContainer" parent="Shop/ShopStock"]
 custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="CardPurchaseSlot" parent="Shop/VBoxContainer/TopRow" instance=ExtResource("15_h2fog")]
+[node name="CardPurchaseSlot" parent="Shop/ShopStock/TopRow" instance=ExtResource("15_h2fog")]
 layout_mode = 2
 
-[node name="CardPurchaseSlot2" parent="Shop/VBoxContainer/TopRow" instance=ExtResource("15_h2fog")]
+[node name="CardPurchaseSlot2" parent="Shop/ShopStock/TopRow" instance=ExtResource("15_h2fog")]
 layout_mode = 2
 
-[node name="CardPurchaseSlot3" parent="Shop/VBoxContainer/TopRow" instance=ExtResource("15_h2fog")]
+[node name="CardPurchaseSlot3" parent="Shop/ShopStock/TopRow" instance=ExtResource("15_h2fog")]
 layout_mode = 2
 
-[node name="BotRow" type="HBoxContainer" parent="Shop/VBoxContainer"]
+[node name="BotRow" type="HBoxContainer" parent="Shop/ShopStock"]
 custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="CardPurchaseSlot" parent="Shop/VBoxContainer/BotRow" instance=ExtResource("15_h2fog")]
+[node name="CardPurchaseSlot" parent="Shop/ShopStock/BotRow" instance=ExtResource("15_h2fog")]
 layout_mode = 2
 
-[node name="CardPurchaseSlot2" parent="Shop/VBoxContainer/BotRow" instance=ExtResource("15_h2fog")]
+[node name="CardPurchaseSlot2" parent="Shop/ShopStock/BotRow" instance=ExtResource("15_h2fog")]
 layout_mode = 2
 
-[node name="CardPurchaseSlot3" parent="Shop/VBoxContainer/BotRow" instance=ExtResource("15_h2fog")]
+[node name="CardPurchaseSlot3" parent="Shop/ShopStock/BotRow" instance=ExtResource("15_h2fog")]
 layout_mode = 2
 
 [node name="Decrees" type="Control" parent="."]

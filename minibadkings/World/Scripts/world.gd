@@ -110,7 +110,7 @@ func new_game() -> void:
 		add_house_card()
 	for i in range(0):
 		var hCard : Card = load("res://UI/Scenes/card.tscn").instantiate()
-		hCard.type = Card.CARDTYPE.SCHOOL
+		hCard.type = Card.CARDTYPE.BOMBER
 		ui.hand_container.add_child(hCard)
 		hCard.set_owner(get_tree().get_current_scene())
 	
@@ -535,10 +535,6 @@ func _input(event: InputEvent) -> void:
 			#if b.type != Building.TYPE.HOUSE:
 				#b.health = 0
 		#var d : Decree = load('res://UI/Scenes/decree.tscn').instantiate()
-		#d.type = Decree.TYPE.INSPIRATION
-		var scene = preload("res://UI/Scenes/dialogue_balloon.tscn")
-		var resource = preload("res://UI/Dialogue/units.dialogue")
-		DialogueManager.show_dialogue_balloon_scene(scene,resource)
 		#for i in range(50):
 			#spawn_enemy()
 			#enemy_parties += 1

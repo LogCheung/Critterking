@@ -16,5 +16,6 @@ I'm certain you know all this, but may you entertain my nerves and allow me to e
 - no
 	do ui.tutorial.set_advisor_expression(Tutorial.STATE.NERV)
 	Alright sir. Apologies for my intrusion. I'm certain you'll bring us through this invasion.
+	do ui.tutorial.turn_off_tutorial()
 
 => END

@@ -16,6 +16,7 @@ class_name SaveDataResource
 @export var ascension : int
 @export var challenge : int
 @export var buildings : Array = []
+@export var tutArr : Array = []
 
 # resources
 @export var resource_dict : Dictionary

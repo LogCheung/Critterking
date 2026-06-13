@@ -9,4 +9,5 @@ Would you want me to come back for the rest?
 	Alright. I will be back, your highness.
 - no
 	Alright. Good luck, your highness
+	do ui.tutorial.turn_off_tutorial()
 => END

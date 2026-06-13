@@ -10,4 +10,5 @@ do ui.tutorial.set_advisor_expression(Tutorial.STATE.PROUD)
 Please use these wisely to improve your defense at key moments.
 do ui.tutorial.set_advisor_expression(Tutorial.STATE.HAPPY)
 That is all I have to tell you. Thank you for listening to me. Farewell, your highness.
+do ui.tutorial.turn_off_tutorial()
 => END

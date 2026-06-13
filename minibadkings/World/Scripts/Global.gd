@@ -56,6 +56,7 @@ var default_resource_dict : Dictionary = {
 @export var tutorialDecree : bool = true
 @export var unlockedCards : Array = []
 
+var tutArr : Array
 # unlocks after each win
 var UNLOCK : Array = [
 	[Card.CARDTYPE.STINGER, Card.CARDTYPE.RESILIENT,Card.CARDTYPE.PARALYTIC], # first win

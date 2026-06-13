@@ -27,6 +27,7 @@ func _save(#scene : PackedScene,
 	SaveFileData.defeated = defeated
 	SaveFileData.ascension = ascension
 	SaveFileData.challenge = challenge
+	SaveFileData.tutArr = Global.tutArr
 	
 	SaveFileData.resource_dict = Global.resource_dict.duplicate()
 	SaveFileData.trait_dict = Global.trait_dict.duplicate()
