@@ -537,7 +537,7 @@ func _input(event: InputEvent) -> void:
 		#var d : Decree = load('res://UI/Scenes/decree.tscn').instantiate()
 		#d.type = Decree.TYPE.INSPIRATION
 		var scene = preload("res://UI/Scenes/dialogue_balloon.tscn")
-		var resource = preload("res://UI/Dialogue/greeting.dialogue")
+		var resource = preload("res://UI/Dialogue/units.dialogue")
 		DialogueManager.show_dialogue_balloon_scene(scene,resource)
 		#for i in range(50):
 			#spawn_enemy()

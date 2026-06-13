@@ -1,0 +1,13 @@
+~ start
+A good choice. Before you make your next, would you like me to go over them a bit more?
+- yes
+	Alright. Units will make up your army during the night.
+	There are primarily three archetypes \: melee, ranged, and defensive.
+	Melee units are quite basic, attacking at a close range with high damage.
+	Ranged units attack at a distance, but are quite frail and flee - even against orders - if approached too closely.
+	Defensive units have high effective hp or are trained to take hits. They are usually weak offensively.
+	Typically, melee beats defensive, ranged beats melee, and defensive beats ranged.
+	Please continue with these notes in mind, sir.
+- no
+	Alright sir. Keep doing what you are doing
+=> END

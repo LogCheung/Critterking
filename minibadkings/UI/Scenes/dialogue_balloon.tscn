@@ -25,7 +25,7 @@ anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1079.0
 
-[node name="TextureRect" type="TextureRect" parent="Balloon"]
+[node name="AdvisorTexture" type="TextureRect" parent="Balloon" groups=["ADVISOR"]]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0

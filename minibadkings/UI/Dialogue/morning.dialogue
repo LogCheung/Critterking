@@ -1,0 +1,12 @@
+~ start
+do ui.tutorial.set_advisor_expression(Tutorial.STATE.HAPPY)
+Thanks for dealing with that!
+do ui.tutorial.set_advisor_expression(Tutorial.STATE.NORM)
+That should be mostly everything
+Would you want me to come back for the rest?
+- yes
+	do ui.tutorial.set_advisor_expression(Tutorial.STATE.HAPPY)
+	Alright. I will be back, your highness.
+- no
+	Alright. Good luck, your highness
+=> END

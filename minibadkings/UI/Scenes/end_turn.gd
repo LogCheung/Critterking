@@ -76,7 +76,7 @@ func _on_endturn_pressed() -> void:
 	%noHouse.hide()
 	"res://Units/Assets/AllyAcidic/"
 	
-	ui.tutorial.play_command_heal_tutorial()
+	ui.tutorial.play_tutorial(Tutorial.TYPE.NIGHT)
 
 func _on_button_mouse_entered(nodePath : NodePath) -> void:
 	var sprite : Sprite2D = get_node(nodePath)

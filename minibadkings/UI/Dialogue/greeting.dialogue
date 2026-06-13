@@ -2,9 +2,17 @@
 Greetings, Your Highness.
 I'm certain you know all this, but may you entertain my nerves and allow me to explain your responsibilities?
 - yes
+	do ui.tutorial.set_advisor_expression(Tutorial.STATE.HAPPY)
 	Alright! I'll try to make this quick and thorough.
+	do ui.tutorial.set_advisor_expression(Tutorial.STATE.NORM)
 	Every night, you'll receive more resources to manage, which you choose here.
+	do ui.tutorial.set_advisor_expression(Tutorial.STATE.PROUD)
 	Of course, we've prepared extra to start our colony off with, so you'll have a lot to work with early on.
+	do ui.tutorial.set_advisor_expression(Tutorial.STATE.NORM)
+	Feel free to pick what units catch your eye.
 	
 - no
+	do ui.tutorial.set_advisor_expression(Tutorial.STATE.NERV)
 	Alright sir. Apologies for my intrusion. I'm certain you'll bring us through this invasion.
+
+=> END

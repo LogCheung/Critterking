@@ -128,7 +128,8 @@ func _on_show_pressed() -> void:
 		%CardShow.hframes = 22 #20 
 		
 		# tutorial for decrees
-		tutorial.play_decrees_tutorial()
+		if world.night_is_expansion:
+			tutorial.play_tutorial(Tutorial.TYPE.DECREE)
 	anim.play("cardshow")
 	
 func display_cards(display : bool) -> void:
@@ -149,6 +150,8 @@ func display_cards(display : bool) -> void:
 		
 func show_hand() -> void:
 	# when card is chosen from deck of cards
+	if Global.cardsInHand.size() == 2: # after player takes first roll
+		tutorial.play_tutorial(Tutorial.TYPE.UNITS)
 	save_game_delayed()
 	rollArray.pop_front()
 	if rollArray.size() > 0:
@@ -162,8 +165,13 @@ func show_hand() -> void:
 	
 	cards.hide()
 	
-	tutorial.play_charms_tutorial()
-	tutorial.play_day_basics_tutorial()
+	# tutorial
+	if world.dispatchDay:
+		tutorial.play_tutorial(Tutorial.TYPE.EXPLORATION)
+	tutorial.play_tutorial(Tutorial.TYPE.BUILDING)
+	
+	if Global.nights == 2 and !world.is_combat_phase:
+		tutorial.play_tutorial(Tutorial.TYPE.MORNING)
 
 func display_shop() -> void:
 	end_day_continue.hide()
@@ -177,6 +185,8 @@ func display_shop() -> void:
 		slot.card.randomize_type()
 		slot.price_tag_texture.visible = true
 	end_turn.end_day_continue_button.frame = 1
+	
+	tutorial.play_tutorial(Tutorial.TYPE.SHOP)
 
 func display_hand() -> void:
 	#%Tutorial.hide()
@@ -217,8 +227,9 @@ func _on_shop_end_pressed() -> void:
 	info_overlay.handle_party_limit()
 	display_hand()
 	
-	tutorial.play_charms_tutorial()
-	tutorial.play_day_basics_tutorial()
+	if world.dispatchDay:
+		tutorial.play_tutorial(Tutorial.TYPE.EXPLORATION)
+	tutorial.play_tutorial(Tutorial.TYPE.BUILDING)
 
 func save_game_delayed() -> void:
 	for i in range(5):
@@ -317,7 +328,7 @@ func _on_play_pressed() -> void:
 	
 	# ascension 
 	%AdaptLabel.text = str(currentAscn)
-	tutorial.play_card_tutorial()
+	tutorial.play_tutorial(Tutorial.TYPE.GREETING)
 func _on_play_menu_pressed() -> void:
 	%mainsprite.hide()
 	%playmenu.show()

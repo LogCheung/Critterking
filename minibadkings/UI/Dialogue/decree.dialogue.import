@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cgfksym7qubwe"
+path="res://.godot/imported/decree.dialogue-205c9c89d081f67efe08dfa90b83c990.tres"
+
+[deps]
+
+source_file="res://UI/Dialogue/decree.dialogue"
+dest_files=["res://.godot/imported/decree.dialogue-205c9c89d081f67efe08dfa90b83c990.tres"]
+
+[params]
+
+defaults=true

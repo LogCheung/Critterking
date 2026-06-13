@@ -1,0 +1,13 @@
+~ start
+Greetings again, your highness. Thank you for defending us this long.
+Every six nights we have the opportunity to expand our colony, with significant resistance.
+do ui.tutorial.set_advisor_expression(Tutorial.STATE.PROUD)
+To help you further defend, I've written you some rousing speeches to pick from.
+You may activate these decrees at your discretion by clicking on them at certain times in the night for massive effects.
+do ui.tutorial.set_advisor_expression(Tutorial.STATE.NORM)
+Of course, your critters won't want to hear the same thing every night, so there's some cooldown.
+do ui.tutorial.set_advisor_expression(Tutorial.STATE.PROUD)
+Please use these wisely to improve your defense at key moments.
+do ui.tutorial.set_advisor_expression(Tutorial.STATE.HAPPY)
+That is all I have to tell you. Thank you for listening to me. Farewell, your highness.
+=> END

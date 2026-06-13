@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://c6pnf0f7lsl1f"
+path="res://.godot/imported/morning.dialogue-c500dbebb2067717dda4e7c8745e49bc.tres"
+
+[deps]
+
+source_file="res://UI/Dialogue/morning.dialogue"
+dest_files=["res://.godot/imported/morning.dialogue-c500dbebb2067717dda4e7c8745e49bc.tres"]
+
+[params]
+
+defaults=true

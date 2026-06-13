@@ -1,0 +1,7 @@
+~ start
+do ui.tutorial.set_advisor_expression(Tutorial.STATE.NERV)
+I won't take up too much of your time here.
+Click to select your units, and click a tile to send them there. They'll attack those they see automatically. This is how you'll manage their safety and volatility.
+Send them to houses for them to recover their ranks. Units permanently die if you lose all of them.
+Command them to properly defend your colony against the invasion and you should be fine. Good luck!
+=> END
