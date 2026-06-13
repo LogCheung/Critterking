@@ -1,5 +1,9 @@
 extends Node
 
+# tutorial signals
+
+
+
 @export var expansions : int = 0
 @export var nights : int = 0
 

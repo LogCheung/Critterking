@@ -11,6 +11,10 @@
 y_sort_enabled = true
 script = ExtResource("1_fdxdb")
 
+[node name="UI" parent="." groups=["UI"] instance=ExtResource("6_7qq3u")]
+unique_name_in_owner = true
+process_mode = 3
+
 [node name="Game" type="Node2D" parent="."]
 unique_name_in_owner = true
 process_mode = 1
@@ -61,10 +65,6 @@ offset_right = 2960.0
 offset_bottom = 1724.0
 mouse_filter = 2
 color = Color(0.101960786, 0.101960786, 0.101960786, 0.27058825)
-
-[node name="UI" parent="." groups=["UI"] instance=ExtResource("6_7qq3u")]
-unique_name_in_owner = true
-process_mode = 3
 
 [node name="Failcheck" type="Timer" parent="."]
 unique_name_in_owner = true

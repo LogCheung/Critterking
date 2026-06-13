@@ -536,9 +536,12 @@ func _input(event: InputEvent) -> void:
 				#b.health = 0
 		#var d : Decree = load('res://UI/Scenes/decree.tscn').instantiate()
 		#d.type = Decree.TYPE.INSPIRATION
-		for i in range(50):
-			spawn_enemy()
-			enemy_parties += 1
+		var scene = preload("res://UI/Scenes/dialogue_balloon.tscn")
+		var resource = preload("res://UI/Dialogue/greeting.dialogue")
+		DialogueManager.show_dialogue_balloon_scene(scene,resource)
+		#for i in range(50):
+			#spawn_enemy()
+			#enemy_parties += 1
 		return
 	
 	#if event.is_action_pressed("cancel"):

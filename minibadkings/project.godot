@@ -28,6 +28,7 @@ buses/default_bus_layout="uid://bncso1667yex7"
 Global="*res://World/Scripts/Global.gd"
 SaveLoad="*res://saves/SaveLoad.gd"
 Stats="*res://World/Scripts/Stats.gd"
+DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
 [debug]
 
@@ -53,7 +54,7 @@ project/assembly_name="Critterking"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/utility_ai/plugin.cfg")
+enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/utility_ai/plugin.cfg")
 
 [global_group]
 
@@ -162,6 +163,10 @@ inspect={
 [input_devices]
 
 pointing/emulate_touch_from_mouse=true
+
+[internationalization]
+
+locale/translations_pot_files=PackedStringArray("res://UI/Dialogue/greeting.dialogue")
 
 [layer_names]
 

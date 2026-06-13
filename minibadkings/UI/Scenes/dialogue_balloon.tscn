@@ -1,0 +1,147 @@
+[gd_scene load_steps=8 format=3 uid="uid://e7aljlx1xvkb"]
+
+[ext_resource type="Texture2D" uid="uid://crda45rls6cj3" path="res://UI/Assets/dialogue/adviseNorm.png" id="1_4snm6"]
+[ext_resource type="Script" uid="uid://cg8rhvqp21hvi" path="res://UI/Scripts/dialogue_balloon.gd" id="1_wlkvu"]
+[ext_resource type="FontFile" uid="uid://ggtewla8581f" path="res://Units/aseprite.otf" id="2_yh0wx"]
+[ext_resource type="Script" uid="uid://g32um0mltv5d" path="res://addons/dialogue_manager/dialogue_label.gd" id="3_wlkvu"]
+[ext_resource type="Texture2D" uid="uid://d3jdfa4o8jy2g" path="res://UI/Assets/dialogue/yesResponse.png" id="4_shqal"]
+[ext_resource type="Texture2D" uid="uid://ck5n8p6iyomxx" path="res://UI/Assets/dialogue/noResponse.png" id="5_b70yq"]
+[ext_resource type="Script" uid="uid://bb52rsfwhkxbn" path="res://addons/dialogue_manager/dialogue_responses_menu.gd" id="8_31u7s"]
+
+[node name="DialogueBalloon" type="CanvasLayer"]
+layer = 100
+script = ExtResource("1_wlkvu")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+color = Color(0.103743605, 0.103743516, 0.103743516, 0.3372549)
+
+[node name="Balloon" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1079.0
+
+[node name="TextureRect" type="TextureRect" parent="Balloon"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -383.0
+offset_right = 480.0
+offset_bottom = -255.0
+grow_vertical = 0
+scale = Vector2(3, 3)
+texture = ExtResource("1_4snm6")
+
+[node name="Control" type="Control" parent="Balloon"]
+custom_minimum_size = Vector2(20, 10)
+anchors_preset = 0
+offset_left = 1837.0
+offset_top = 1037.0
+offset_right = 1857.0
+offset_bottom = 1047.0
+size_flags_vertical = 8
+
+[node name="Progress" type="Polygon2D" parent="Balloon/Control"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-447, 19)
+scale = Vector2(2, 2)
+polygon = PackedVector2Array(0, 0, 10, 10, 14.119003, 5.8809814, 20, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Balloon/Control"]
+autoplay = "progress"
+
+[node name="CharacterLabel" type="RichTextLabel" parent="Balloon"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 63.0
+offset_top = 894.0
+offset_right = 1833.0
+offset_bottom = 922.0
+mouse_filter = 1
+bbcode_enabled = true
+text = "Character"
+fit_content = true
+scroll_active = false
+
+[node name="DialogueLabel" type="RichTextLabel" parent="Balloon"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 362.00003
+offset_top = 934.0001
+offset_right = 1689.4999
+offset_bottom = 1111.3335
+scale = Vector2(0.8, 0.8)
+theme_override_constants/line_separation = 6
+theme_override_fonts/normal_font = ExtResource("2_yh0wx")
+theme_override_font_sizes/normal_font_size = 42
+text = "Most buildings will require you to assign citizens to work in them, which you can do by pressing this button. Without workers, they won't produce anything."
+script = ExtResource("3_wlkvu")
+skip_pause_at_abbreviations = PackedStringArray("Mr", "Mrs", "Ms", "Dr", "etc", "eg", "ex")
+metadata/_custom_type_script = "uid://g32um0mltv5d"
+
+[node name="Choices" type="Control" parent="Balloon"]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = 1062.0
+offset_top = 869.0
+offset_right = 1360.0
+offset_bottom = 909.0
+
+[node name="YES" type="TextureRect" parent="Balloon/Choices"]
+layout_mode = 0
+offset_top = -74.0
+offset_right = 48.0
+offset_bottom = -34.0
+scale = Vector2(3, 3)
+texture = ExtResource("4_shqal")
+
+[node name="NO" type="TextureRect" parent="Balloon/Choices"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = -74.0
+offset_right = 192.0
+offset_bottom = -34.0
+scale = Vector2(3, 3)
+texture = ExtResource("5_b70yq")
+
+[node name="ResponsesMenu" type="VBoxContainer" parent="." node_paths=PackedStringArray("response_template")]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = -1
+anchor_left = 0.55300003
+anchor_top = 0.76400006
+anchor_right = 0.55300003
+anchor_bottom = 0.76400006
+offset_left = 0.23999023
+offset_top = 85.879944
+offset_right = 90.23999
+offset_bottom = 373.87994
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 4.712389
+size_flags_vertical = 8
+theme_override_constants/separation = 2
+script = ExtResource("8_31u7s")
+response_template = NodePath("ResponseExample")
+hide_failed_responses = true
+
+[node name="ResponseExample" type="Button" parent="ResponsesMenu"]
+custom_minimum_size = Vector2(0, 144)
+layout_mode = 2
+action_mode = 0
+text = "adsa"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+
+[connection signal="gui_input" from="Balloon" to="." method="_on_balloon_gui_input"]
+[connection signal="response_selected" from="ResponsesMenu" to="." method="_on_responses_menu_response_selected"]
+[connection signal="visibility_changed" from="ResponsesMenu" to="." method="_on_responses_menu_visibility_changed"]

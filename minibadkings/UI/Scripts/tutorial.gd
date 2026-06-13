@@ -5,6 +5,7 @@ extends Control
 @onready var tutorial_text: RichTextLabel = %TutorialText
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
 @onready var ui : UI = get_tree().get_first_node_in_group("UI")
+#@onready var choices: Control = %Choices
 
 func play_card_tutorial() -> void:
 	if Global.tutorial:
