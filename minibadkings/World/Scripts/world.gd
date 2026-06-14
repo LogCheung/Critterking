@@ -67,6 +67,7 @@ func new_game() -> void:
 	ui.rollArray.append(Card.ROLLTYPE.UNIT)
 	ui.rollArray.append(Card.ROLLTYPE.SHOP)
 	ui.info_overlay.load_overlay()
+	ui.info_overlay.show()
 	
 	await get_tree().create_timer(.125).timeout
 	# reset data
@@ -535,9 +536,9 @@ func _input(event: InputEvent) -> void:
 			#if b.type != Building.TYPE.HOUSE:
 				#b.health = 0
 		#var d : Decree = load('res://UI/Scenes/decree.tscn').instantiate()
-		#for i in range(50):
-			#spawn_enemy()
-			#enemy_parties += 1
+		for i in range(10):
+			spawn_enemy()
+			enemy_parties += 1
 		return
 	
 	#if event.is_action_pressed("cancel"):

@@ -47,7 +47,8 @@ func _ready() -> void:
 	super._ready()
 	utility_ai_agent.enabled = false
 	action = ACTION.FORM
-
+	
+	%CollisionShape2D.disabled = true
 	house_destroyed.connect(find_building)
 	aStar = tileWorld.aStar
 	if upgraded: 
@@ -100,7 +101,7 @@ func handle_action(delta) -> void:
 	match action:
 		ACTION.FORM:
 			distToTarget = distance_from_form
-			if distToTarget <= 16:
+			if distToTarget <= 12:
 				anim.play("idle")
 				# precheck if it is behind something
 				is_behind_wall = true if $behindWall.has_overlapping_bodies() else false
@@ -178,9 +179,12 @@ func _handle_navigation_path() -> void:
 		nav.target_position = formation_position.global_position
 		return
 	# go through each path point that astar provides to target
-	if global_position.distance_to(nav.target_position) < 16 or nav.is_navigation_finished():
+	if nav.is_navigation_finished():
 		path_points.pop_front()
 	if path_points.is_empty():
+		var position_id = tileWorld.wall.local_to_map(global_position)
+		var target_id = tileWorld.wall.local_to_map(formation_position.global_position)
+		path_points = aStar.get_id_path(position_id,target_id,true)
 		return
 	
 	

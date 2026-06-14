@@ -732,26 +732,6 @@ offset_bottom = 64.333
 scale = Vector2(1.333, 1.333)
 texture = ExtResource("6_didmg")
 
-[node name="Traits" type="VBoxContainer" parent="InfoOverlay"]
-visible = false
-layout_mode = 0
-offset_left = 68.0
-offset_top = 97.0
-offset_right = 100.0
-offset_bottom = 413.0
-mouse_filter = 2
-theme_override_constants/separation = 20
-
-[node name="Resources" type="VBoxContainer" parent="InfoOverlay"]
-custom_minimum_size = Vector2(32, 0)
-layout_mode = 0
-offset_left = 167.0
-offset_top = 97.0
-offset_right = 199.0
-offset_bottom = 749.0
-mouse_filter = 2
-theme_override_constants/separation = 20
-
 [node name="Sprite2D2" type="Sprite2D" parent="InfoOverlay"]
 visible = false
 scale = Vector2(3, 3)
@@ -1879,6 +1859,7 @@ z_index = 5
 z_as_relative = false
 offset_right = 1920.0
 offset_bottom = 1080.0
+mouse_filter = 2
 color = Color(0.101960786, 0.101960786, 0.101960786, 0.3372549)
 
 [node name="crtrPause" type="AudioStreamPlayer" parent="." groups=["MUSIC"]]
