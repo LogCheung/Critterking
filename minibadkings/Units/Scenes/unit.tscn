@@ -492,7 +492,7 @@ autostart = true
 
 [node name="NavDelay" type="Timer" parent="Timers"]
 unique_name_in_owner = true
-wait_time = 0.25
+wait_time = 0.125
 autostart = true
 
 [node name="Attack" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]

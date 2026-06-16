@@ -18,6 +18,9 @@ func _on_assign_toggle_gui_input(event: InputEvent) -> void:
 		var colorMask = get_tree().get_first_node_in_group("COLORMASK")
 		colorMask.visible = info_overlay.assignMode 
 		
+		ui.hand.visible = !info_overlay.assignMode 
+		ui.hand.process_mode = Node.PROCESS_MODE_DISABLED if info_overlay.assignMode else Node.PROCESS_MODE_INHERIT
+		
 		var buildings = get_tree().get_nodes_in_group("BUILDING")
 		for b : Building in buildings:
 			if Building.ALWAYS_ACTIVE.has(b.type):
@@ -26,7 +29,6 @@ func _on_assign_toggle_gui_input(event: InputEvent) -> void:
 			
 			b.worker_alert_sprite.visible = !b.active if !info_overlay.assignMode  else false
 			b.toggle.visible = info_overlay.assignMode 
-			ui.hand.visible = !info_overlay.assignMode 
 		
 			if b.max_workers > 1:
 				b.citizen_bar.visible = info_overlay.assignMode

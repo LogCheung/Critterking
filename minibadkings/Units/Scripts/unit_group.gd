@@ -8,6 +8,7 @@ var UNIT : PackedScene = load("res://Units/Scenes/unit.tscn")
 @export var house : Building
 @export var wage : int = 2
 @export var conscripted : bool
+static var group_selected : bool = false
 
 @onready var world : World = get_tree().get_first_node_in_group("WORLD")
 @onready var ui: UI = get_tree().get_first_node_in_group("UI")
@@ -76,7 +77,7 @@ func _input(event: InputEvent) -> void:
 		else: Engine.time_scale = 1
 		var mouse_pos = get_global_mouse_position()
 		var pos = tileWorld.ground.local_to_map(mouse_pos) # now tile cord
-		if !tileWorld.hover.get_used_cells().has(Vector2i(pos)): # can't go to where clicked
+		if !tileWorld.hover.get_used_cells().has(Vector2i(pos)) or check_group_hovered(): # can't go to where clicked
 			tileWorld.hover.visible = false
 			selected = false
 			check_on_house(mouse_pos)
@@ -98,9 +99,32 @@ func _on_select_area_input_event(viewport: Node, event: InputEvent, shape_idx: i
 		if is_under_mouse:
 			selected = !selected
 			if selected: 
+				if check_group_selected() : 
+					selected = false
+					return
 				on_selected()
 			else:
 				unzoom_camera()
+				
+func check_group_hovered() -> bool:
+	var hovered : bool = false
+	var groups = get_tree().get_nodes_in_group("ALLYGROUP")
+	for g : AllyGroup in groups:
+		if g.is_under_mouse:
+			hovered = true
+			
+	return hovered
+	
+func check_group_selected() -> bool:
+	group_selected = false
+	var groups = get_tree().get_nodes_in_group("ALLYGROUP")
+	for g : AllyGroup in groups:
+		if g == self : continue
+		if g.selected:
+			group_selected = true
+			
+	return group_selected
+	
 func on_selected() -> void:
 	if house:
 		selected = false
