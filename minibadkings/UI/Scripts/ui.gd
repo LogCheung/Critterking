@@ -756,6 +756,8 @@ func load_world() -> void:
 	info_overlay.load_overlay()
 	await get_tree().process_frame
 	await get_tree().process_frame
+	await get_tree().process_frame
+	
 	
 	for card : Card in hand_container.get_children():
 		card.set_up()
