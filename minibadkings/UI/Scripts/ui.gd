@@ -759,11 +759,11 @@ func load_world() -> void:
 	await get_tree().process_frame
 	
 	
-	for card : Card in hand_container.get_children():
-		card.set_up()
-	await get_tree().process_frame
-	await get_tree().process_frame
-	refresh_positions()
+	#for card : Card in hand_container.get_children():
+		#card.set_up()
+	#await get_tree().process_frame
+	#await get_tree().process_frame
+	#refresh_positions()
 		
 	%AdaptLabel.text = str(currentAscn)
 	# load tileWorld data for restrictions

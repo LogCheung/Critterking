@@ -536,9 +536,11 @@ func _input(event: InputEvent) -> void:
 			#if b.type != Building.TYPE.HOUSE:
 				#b.health = 0
 		#var d : Decree = load('res://UI/Scenes/decree.tscn').instantiate()
-		for i in range(10):
-			spawn_enemy()
-			enemy_parties += 1
+		#d.type = Decree.TYPE.CONSCRIPTION
+		#ui.decrees.get_child(0).add_child(d)
+		#for i in range(10):
+			#spawn_enemy()
+			#enemy_parties += 1
 		return
 	
 	#if event.is_action_pressed("cancel"):

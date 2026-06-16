@@ -135,7 +135,7 @@ func _process(delta: float) -> void:
 	
 func handle_drag() -> void:
 	if refreshing : 
-		await get_tree().create_timer(.05).timeout
+		await get_tree().create_timer(.1).timeout
 		default_position = position
 		refreshing = false
 		return
