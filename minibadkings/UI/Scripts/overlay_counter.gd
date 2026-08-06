@@ -32,14 +32,14 @@ func _ready() -> void:
 		
 func match_info_box() -> void:
 	if army:
-		overhead_info.texture = load("res://UI/Assets/overheadInfo/armyOSTS.png")
+		overhead_info.texture = preload("res://UI/Assets/overheadInfo/armyOSTS.png")
 		return
 	
 	var path = "res://UI/Assets/overheadInfo/"
 	if resourceType != Global.RESOURCETYPE.NONE:
-		path += Global.RESOURCETYPE.keys()[resourceType] +"OSTS.png"
+		path += Global.RESOURCETYPE.keys()[resourceType].to_lower() +"OSTS.png"
 	else:
-		path += Global.TRAITTYPE.keys()[traitType] +"OSTS.png"
+		path += Global.TRAITTYPE.keys()[traitType].to_lower() +"OSTS.png"
 	overhead_info.texture = load(path)
 
 func match_sprite_resource() -> void:
