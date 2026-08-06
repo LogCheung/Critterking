@@ -747,6 +747,8 @@ func load_world() -> void:
 	elif world.dispatchDay:
 		dispatch.show()
 		end_turn.end_day_continue_button.frame = 1
+	else:
+		display_hand()
 		
 	for b in get_tree().get_nodes_in_group("BUILDING"):
 		b.process_mode = Node.PROCESS_MODE_INHERIT
@@ -757,7 +759,6 @@ func load_world() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	await get_tree().process_frame
-	
 	
 	#for card : Card in hand_container.get_children():
 		#card.set_up()
