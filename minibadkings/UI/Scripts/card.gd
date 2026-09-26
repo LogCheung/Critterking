@@ -26,6 +26,9 @@ CARDTYPE.WAR, CARDTYPE.CONSCRIPTION, CARDTYPE.MASTERY,  #CARDTYPE.INFLUENCE,
 CARDTYPE.CONSTRUCTION,
 
 ]
+# starter buildings
+
+
 # their entrances cannot be blocked
 const ENTRANCE_BUILDINGS : Array = [
 	CARDTYPE.HOUSE,CARDTYPE.CARE, CARDTYPE.STORAGE, CARDTYPE.NURSERY,
@@ -59,7 +62,7 @@ enum CARDTYPE {
 	PANTRY, GUILD, FIELD, 
 	SCHOOL, POND, BAKERY,
 	# general
-	PONDER, DESTROY,
+	DESTROY, PONDER, 
 	
 	HEARTLOCKET, RING, SWORD, FLAG, 
 	SODA, ROLLERSKATE, MEDKIT, GLASSES, BERRIES, PILLS, DOLLHOUSE, EDRINK, NAIL, 
@@ -444,7 +447,7 @@ func randomize_type() -> void:
 			var rng = RandomNumberGenerator.new()
 			var types : Array 
 			for i in range(CARDTYPE.size()):
-				if i > CARDTYPE.DESTROY : break
+				if i > CARDTYPE.PONDER : break
 				types.append(i)
 			
 			var weights : Array = types.duplicate()
@@ -459,13 +462,13 @@ func randomize_type() -> void:
 		ROLLTYPE.UNIT:
 			type = randi_range(CARDTYPE.BITER,CARDTYPE.CRAZED)
 		ROLLTYPE.BUILDINGS:
-			type = randi_range(CARDTYPE.TRAPS,CARDTYPE.DESTROY)
+			type = randi_range(CARDTYPE.TRAPS,CARDTYPE.PONDER)
 		ROLLTYPE.CHARM:
 			type = randi_range(CARDTYPE.HEARTLOCKET,CARDTYPE.NAIL)#randi_range(CARDTYPE.SWORD,CARDTYPE.FLAG) 
 		ROLLTYPE.BLESSING:
 			type = randi_range(CARDTYPE.INSPIRATION,CARDTYPE.CONSTRUCTION)
 		ROLLTYPE.SHOP:
-			type = randi_range(CARDTYPE.TAVERN,CARDTYPE.BAKERY)#randi_range(CARDTYPE.BITER,CARDTYPE.CRAZED) 
+			type = randi_range(CARDTYPE.TRAPS,CARDTYPE.BAKERY)#randi_range(CARDTYPE.BITER,CARDTYPE.CRAZED) 
 			price = Stats.coloBuilds[type - CARDTYPE.TRAPS + 1]['price']
 	if type == CARDTYPE.HOUSE : randomize_type()
 	if type == CARDTYPE.FLAG : randomize_type() # nuke flag

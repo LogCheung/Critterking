@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cg6xxglor1wup"]
+[gd_scene format=3 uid="uid://cg6xxglor1wup"]
 
 [ext_resource type="Script" uid="uid://1u7s8yxiymhc" path="res://Units/Scripts/bombard.gd" id="1_oai4r"]
 [ext_resource type="Texture2D" uid="uid://dadb0e4qcag4d" path="res://Units/Assets/bombard.png" id="2_xnkvy"]
@@ -62,46 +62,44 @@ _data = {
 &"splash": SubResource("Animation_hc2lc")
 }
 
-[node name="bombard" type="Path2D"]
+[node name="bombard" type="Path2D" unique_id=762780678]
 z_index = 4096
 curve = SubResource("Curve2D_xnkvy")
 script = ExtResource("1_oai4r")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="."]
+[node name="PathFollow2D" type="PathFollow2D" parent="." unique_id=635718115]
 unique_name_in_owner = true
 
-[node name="Node2D" type="Node2D" parent="PathFollow2D"]
+[node name="Node2D" type="Node2D" parent="PathFollow2D" unique_id=2142687605]
 unique_name_in_owner = true
 
-[node name="Sprite2D" type="Sprite2D" parent="PathFollow2D/Node2D"]
+[node name="Sprite2D" type="Sprite2D" parent="PathFollow2D/Node2D" unique_id=1905307165]
 unique_name_in_owner = true
 texture = ExtResource("2_xnkvy")
 
-[node name="HurtBox" type="Area2D" parent="PathFollow2D/Node2D/Sprite2D"]
+[node name="HurtBox" type="Area2D" parent="PathFollow2D/Node2D/Sprite2D" unique_id=429010187]
 unique_name_in_owner = true
 rotation = -1.0472
 collision_layer = 0
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/Node2D/Sprite2D/HurtBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/Node2D/Sprite2D/HurtBox" unique_id=345590784]
 rotation = -0.523599
 shape = SubResource("CapsuleShape2D_cp5rl")
 
-[node name="Hurt" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
+[node name="Hurt" type="AudioStreamPlayer" parent="." unique_id=587176304 groups=["AUDIO"]]
 unique_name_in_owner = true
 stream = ExtResource("3_thnri")
 
-[node name="Death" type="AudioStreamPlayer" parent="." groups=["AUDIO"]]
+[node name="Death" type="AudioStreamPlayer" parent="." unique_id=132469104 groups=["AUDIO"]]
 unique_name_in_owner = true
 stream = ExtResource("4_cp5rl")
 
-[node name="Anim" type="AnimationPlayer" parent="."]
+[node name="Anim" type="AnimationPlayer" parent="." unique_id=265857169]
 unique_name_in_owner = true
-libraries = {
-&"": SubResource("AnimationLibrary_xa7gf")
-}
+libraries/ = SubResource("AnimationLibrary_xa7gf")
 
-[node name="Splash" type="Sprite2D" parent="."]
+[node name="Splash" type="Sprite2D" parent="." unique_id=320354373]
 unique_name_in_owner = true
 visible = false
 z_index = 1
@@ -109,6 +107,6 @@ texture = ExtResource("3_cp5rl")
 hframes = 8
 frame = 1
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=1123620616]
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

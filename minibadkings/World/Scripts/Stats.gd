@@ -1,6 +1,36 @@
 extends Node
 
 @export var coloBuilds : Dictionary = {
+	# Non colony buildings
+	Building.TYPE.TRAP : {
+		"price" : 40,
+	},
+	Building.TYPE.CARE : {
+		"price" : 30,
+	},
+	Building.TYPE.FARM : {
+		"price" : 50,
+	},
+	Building.TYPE.SAPSTORE : {
+		"price" : 50,
+	},
+	Building.TYPE.FORT : {
+		"price" : 50,
+	},
+	Building.TYPE.CAMPFIRE : {
+		"price" : 75,
+	},
+	Building.TYPE.NURSERY : {
+		"price" : 60,
+	},
+	Building.TYPE.STORAGE : {
+		"price" : 60,
+	},
+	Building.TYPE.DESTROY : {
+		"price" : 40,
+	},
+
+	# Colony buildings
 	Building.TYPE.TAVERN: {
 		"traitAmt" : 1,
 		"traitType" : Global.TRAITTYPE.CULTURE,
