@@ -26,9 +26,9 @@ CARDTYPE.WAR, CARDTYPE.CONSCRIPTION, CARDTYPE.MASTERY,  #CARDTYPE.INFLUENCE,
 CARDTYPE.CONSTRUCTION,
 
 ]
-# starter buildings
-
-
+const BASIC_BUILDINGS : Array = [
+	CARDTYPE.TAVERN, CARDTYPE.HALL, CARDTYPE.FIELD, 
+]
 # their entrances cannot be blocked
 const ENTRANCE_BUILDINGS : Array = [
 	CARDTYPE.HOUSE,CARDTYPE.CARE, CARDTYPE.STORAGE, CARDTYPE.NURSERY,
@@ -74,7 +74,7 @@ enum CARDTYPE {
 }
 
 enum ROLLTYPE {
-	GENERAL, UNIT, BUILDINGS, CHARM, BLESSING, SHOP, DESTROY
+	GENERAL, UNIT, BUILDINGS, CHARM, BLESSING, SHOP, DESTROY, BASIC
 }
 
 static var card_selected : bool = false
@@ -472,6 +472,12 @@ func randomize_type() -> void:
 			price = Stats.coloBuilds[type - CARDTYPE.TRAPS + 1]['price']
 		ROLLTYPE.DESTROY:
 			type = CARDTYPE.DESTROY
+		ROLLTYPE.BASIC:
+			if Global.nights <= 3:
+				type = BASIC_BUILDINGS.pick_random()
+			else:
+				rolltype = ROLLTYPE.SHOP
+				randomize_type()
 	if type == CARDTYPE.HOUSE : randomize_type()
 	if type == CARDTYPE.FLAG : randomize_type() # nuke flag
 	if type == CARDTYPE.BOMBER : randomize_type() # nuke bomber :(, nuke the nuker :(

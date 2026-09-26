@@ -535,6 +535,8 @@ func _input(event: InputEvent) -> void:
 		tile2 = tileWorld.ground.local_to_map(get_global_mouse_position())
 		mouse_clicked.emit()
 	if event.is_action_pressed("ui_accept"):
+		ui.display_shop()
+		Global.nights += 1
 		#var bs = get_tree().get_nodes_in_group("BUILDING")
 		#for b : Building in bs:
 			#if b.type != Building.TYPE.HOUSE:

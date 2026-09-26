@@ -21,6 +21,9 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_e7e3x")
+price = null
+destroySlot = null
+basicSlot = null
 
 [node name="Card" parent="." instance=ExtResource("2_mvyhw")]
 layout_mode = 1
