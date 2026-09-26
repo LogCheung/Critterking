@@ -136,12 +136,14 @@ func _on_show_pressed() -> void:
 func display_cards(display : bool) -> void:
 	# after deck of cards is clicked and frame 18 of the anim
 	displaying_cards = true
-	var cardSprites = get_tree().get_nodes_in_group("CARD")
+	var cardSprites = cards.get_children().filter(func(e):return e is Card)
 	for card : Card in cardSprites:
 		if !card.for_show : continue
 		if card.shop_card : continue
-		card.rolltype = rolltype
-		card.randomize_type()
+		if display:
+			card.rolltype = rolltype
+			card.randomize_type()
+			print(Card.CARDTYPE.keys()[card.type])
 		card.visible = display
 		card.choice_picked = !display
 	

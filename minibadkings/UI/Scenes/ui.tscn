@@ -933,6 +933,7 @@ layout_mode = 2
 
 [node name="CardPurchaseSlot3" parent="Shop/ShopStock/BotRow" instance=ExtResource("15_h2fog")]
 layout_mode = 2
+destroySlot = true
 
 [node name="Decrees" type="Control" parent="."]
 unique_name_in_owner = true
@@ -1814,7 +1815,6 @@ for_show = true
 [node name="InspectCard" type="Control" parent="."]
 unique_name_in_owner = true
 process_mode = 3
-visible = false
 top_level = true
 custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 3

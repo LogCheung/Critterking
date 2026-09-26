@@ -74,7 +74,7 @@ enum CARDTYPE {
 }
 
 enum ROLLTYPE {
-	GENERAL, UNIT, BUILDINGS, CHARM, BLESSING, SHOP
+	GENERAL, UNIT, BUILDINGS, CHARM, BLESSING, SHOP, DESTROY
 }
 
 static var card_selected : bool = false
@@ -470,6 +470,8 @@ func randomize_type() -> void:
 		ROLLTYPE.SHOP:
 			type = randi_range(CARDTYPE.TRAPS,CARDTYPE.BAKERY)#randi_range(CARDTYPE.BITER,CARDTYPE.CRAZED) 
 			price = Stats.coloBuilds[type - CARDTYPE.TRAPS + 1]['price']
+		ROLLTYPE.DESTROY:
+			type = CARDTYPE.DESTROY
 	if type == CARDTYPE.HOUSE : randomize_type()
 	if type == CARDTYPE.FLAG : randomize_type() # nuke flag
 	if type == CARDTYPE.BOMBER : randomize_type() # nuke bomber :(, nuke the nuker :(
