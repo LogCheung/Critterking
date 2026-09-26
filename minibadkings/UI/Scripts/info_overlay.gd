@@ -166,6 +166,11 @@ func handle_projections() -> void:
 	var citizens = Global.resource_dict[Global.RESOURCETYPE.CITIZEN]
 	minus_projections[Global.RESOURCETYPE.SATISFACTION] -= citizens + 3 * (houseCount - 1)
 	
+	# satisfaction drain from ruins
+	var ruins = get_tree().get_nodes_in_group("BUILDING")
+	ruins = ruins.filter(func(b : Building):return b.type == Building.TYPE.RUINS).size()
+	minus_projections[Global.RESOURCETYPE.SATISFACTION] -= ruins
+	
 	var foodConsump = citizens + Global.partyCount * 2
 
 	minus_projections[Global.RESOURCETYPE.FOOD] -= foodConsump

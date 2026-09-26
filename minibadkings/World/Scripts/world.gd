@@ -326,6 +326,10 @@ func handle_resource_consumption() -> void:
 	Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] -= citizens + 3 * (houseCount - 1)
 	Global.resource_dict[Global.RESOURCETYPE.FOOD] -= Global.partyCount * 2
 	
+	var ruins = get_tree().get_nodes_in_group("BUILDING")
+	ruins = ruins.filter(func(b : Building):return b.type == Building.TYPE.RUINS).size()
+	Global.resource_dict[Global.RESOURCETYPE.SATISFACTION] -= ruins
+	
 	
 	# consider food debt
 	if Global.resource_dict[Global.RESOURCETYPE.FOOD] < 0:
