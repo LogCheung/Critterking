@@ -10,7 +10,6 @@ https://github.com/user-attachments/assets/e036f259-2c1e-4ca0-91c2-9cd98caa7e1d
 
 Update 1 is almost ready. <br/>
 Playable demo of Update 1 is available upon request. <br/>
-Gameplay video of Update 1 at bottom of README. <br/>
 Steam Page: https://store.steampowered.com/app/4073470/Critterking/  <br/>
 # Design Goals / Phases
 - Jam Build
@@ -42,4 +41,14 @@ Steam Page: https://store.steampowered.com/app/4073470/Critterking/  <br/>
 - Adaptation Difficulty Modifiers & Special Challenges
 - Save/Load System & Card Unlock System
 - Drawing Cards & Building Shop
-- Tutorial & Advisor Dialogue 
+- Tutorial & Advisor Dialogue
+# Design Reflection
+- By far the most fun we've had playing our game and more most success developing it. Design started with taking systems from games we liked (combat from bad north, deckbuilding and emphasis on planning from 9 Kings & Mini Motorways), and it helped we were excited to make this game.
+- Playtesting for pre-jam build went well, with mostly bugfixes and no major design changes needed. Though we scored lower on graphics than we hoped, the plain map of the jam build was not to player's liking. Procedural generation to bring more life and variety in the map helped with visual aesthetic and allowed us to use terrain as a feature of the game, players now had opportunities to use chokepoints or were prompted with the challenge of natural obstacles.
+- For our Steam Release, we planned to add more unit types to have more strategies emerge rather than spamming ranged units. Designing in triangles (rock paper scissors) where each unit would counter each other helped us plan for balance. Though each unit triangle still required playtesting and balancing tweaks to account for interactions with other triangles. Decrees and Charms/Expeditions were added to enhance the combat experience without introducing too much complexity.
+- Our major update is built on the basis of evolving the game from a simple RTS style tactics game to a fuller strategy game with colony simulation mechanics and resource management that would tie into the existing combat features. Scope increased dramatically, and we are still finding ways to balance this new system, though the depth and new player decisions it introduces cannot be denied. 
+
+# Contributions
+- Design : Logan Cheung & Micah Rodriguez
+- Programming : Logan Cheung
+- Art & Music & SFX : Micah Rodriguez
