@@ -1,6 +1,13 @@
 # Critterking
 A roguelike where you build the colony you defend. Select and place cards to construct an army and a colony that supports them to beat back the ever-threating invaders!
 <br/> <br/>
+
+
+https://github.com/user-attachments/assets/e036f259-2c1e-4ca0-91c2-9cd98caa7e1d
+
+
+
+
 Update 1 is almost ready. <br/>
 Playable demo of Update 1 is available upon request. <br/>
 Gameplay video of Update 1 at bottom of README. <br/>
